@@ -52,17 +52,5 @@ Sistema web responsivo desenvolvido para automatizar o processo de controle e ra
 ## 💻 Requisitos Técnicos
 
 - **Responsividade**: Compatível com computadores, tablets e celulares
-- **Integração**: Considerar integração com SISB (Sistema de Inspeção Brasileiro)
 - **Formato de Exportação**: Excel (.xlsx)
 
-## 📝 Situação Atual
-
-- Processos realizados manualmente (papel/planilhas)
-- Faturamento através do sistema "Sempre Tecnologia"
-- Necessidade de automatização para reduzir erros manuais
-
-## 🏛️ Conformidade Regulatória
-
-- **Órgão Fiscalizador**: DIPOVA/Ministério da Agricultura
-- **Frequência de Envio**: Mensal
-- **Formato**: Padronizado pelo órgão
