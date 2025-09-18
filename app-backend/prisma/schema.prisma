@@ -13,3 +13,92 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Cargo {
+  id       Int       @id @default(autoincrement())
+  cargo    String    @db.VarChar(100)
+  usuarios Usuario[]
+}
+
+model Usuario {
+  id       Int    @id @default(autoincrement())
+  nome     String @db.VarChar(100)
+  username String @db.VarChar(100)
+  senha    String @db.VarChar(50)
+
+  cargoId Int
+  cargo   Cargo @relation(fields: [cargoId], references: [id])
+
+  relatoriosDiarios RelatorioExpedicaoDiaria[]
+}
+
+model Cliente {
+  id                  Int    @id @default(autoincrement())
+  nome                String @db.VarChar(100)
+  CPF                 String @db.VarChar(11)
+  CNPJ                String @db.VarChar(14)
+  endereco            String @db.VarChar(255)
+  telefone            String @db.VarChar(100)
+  codigoIdentificacao String @db.VarChar(255)
+
+  relatoriosDiarios RelatorioExpedicaoDiaria[]
+  relatoriosMensais RelatorioExpedicaoMensal[]
+}
+
+model Produto {
+  id         Int      @id @default(autoincrement())
+  nome       String   @db.VarChar(255)
+  undMedida  String   @db.VarChar(10)
+  quantidade Decimal  @db.Decimal(8, 2)
+  validade   DateTime
+
+  relatoriosDiarios RelatorioExpedicaoDiaria[]
+  relatoriosMensais RelatorioExpedicaoMensal[]
+}
+
+model Veiculo {
+  id        Int    @id @default(autoincrement())
+  modelo    String @db.VarChar(100)
+  placa     String @db.VarChar(10)
+  categoria String @db.VarChar(20)
+  marca     String @db.VarChar(30)
+
+  relatoriosDiarios RelatorioExpedicaoDiaria[]
+}
+
+model RelatorioExpedicaoDiaria {
+  id                Int      @id @default(autoincrement())
+  quantidade        Int
+  notaFiscal        Int
+  dataProducao      DateTime
+  destino           String   @db.VarChar(50)
+  temperatura       Decimal
+  condicaoSanitaria Boolean
+  entregador        String   @db.VarChar(100)
+
+  usuarioId Int
+  veiculoId Int
+  produtoId Int
+  clienteId Int
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  veiculo Veiculo @relation(fields: [veiculoId], references: [id])
+  produto Produto @relation(fields: [produtoId], references: [id])
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+}
+
+model RelatorioExpedicaoMensal {
+  id            Int      @id @default(autoincrement())
+  quantidade    Decimal
+  destino       String   @db.VarChar(50)
+  temperatura   Decimal
+  entregador    String   @db.VarChar(100)
+  dataProducao  DateTime
+  dataExpedicao DateTime
+
+  produtoId Int
+  clienteId Int
+
+  produto Produto @relation(fields: [produtoId], references: [id])
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+}
