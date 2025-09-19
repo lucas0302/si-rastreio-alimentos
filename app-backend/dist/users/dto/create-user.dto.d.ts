@@ -1,5 +1,7 @@
+import { role } from 'generated/prisma';
 export declare class CreateUserDto {
     name: string;
-    email: string;
+    username: string;
     password: string;
+    role: role;
 }

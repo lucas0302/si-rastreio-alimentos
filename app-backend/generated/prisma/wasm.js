@@ -120,70 +120,65 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CargoScalarFieldEnum = {
+exports.Prisma.UsersScalarFieldEnum = {
   id: 'id',
-  cargo: 'cargo'
-};
-
-exports.Prisma.UsuarioScalarFieldEnum = {
-  id: 'id',
-  nome: 'nome',
+  name: 'name',
   username: 'username',
-  senha: 'senha',
-  cargoId: 'cargoId'
+  password: 'password',
+  role: 'role'
 };
 
-exports.Prisma.ClienteScalarFieldEnum = {
+exports.Prisma.ClientScalarFieldEnum = {
   id: 'id',
-  nome: 'nome',
-  CPF: 'CPF',
-  CNPJ: 'CNPJ',
-  endereco: 'endereco',
-  telefone: 'telefone',
-  codigoIdentificacao: 'codigoIdentificacao'
+  name: 'name',
+  cpf: 'cpf',
+  cnpj: 'cnpj',
+  address: 'address',
+  phone: 'phone',
+  identificationCode: 'identificationCode'
 };
 
-exports.Prisma.ProdutoScalarFieldEnum = {
+exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
-  nome: 'nome',
-  undMedida: 'undMedida',
-  quantidade: 'quantidade',
-  validade: 'validade'
+  name: 'name',
+  unit: 'unit',
+  quantity: 'quantity',
+  expiration: 'expiration'
 };
 
-exports.Prisma.VeiculoScalarFieldEnum = {
+exports.Prisma.VehicleScalarFieldEnum = {
   id: 'id',
-  modelo: 'modelo',
-  placa: 'placa',
-  categoria: 'categoria',
-  marca: 'marca'
+  model: 'model',
+  plate: 'plate',
+  category: 'category',
+  brand: 'brand'
 };
 
-exports.Prisma.RelatorioExpedicaoDiariaScalarFieldEnum = {
+exports.Prisma.DailyShipmentReportScalarFieldEnum = {
   id: 'id',
-  quantidade: 'quantidade',
-  notaFiscal: 'notaFiscal',
-  dataProducao: 'dataProducao',
-  destino: 'destino',
-  temperatura: 'temperatura',
-  condicaoSanitaria: 'condicaoSanitaria',
-  entregador: 'entregador',
-  usuarioId: 'usuarioId',
-  veiculoId: 'veiculoId',
-  produtoId: 'produtoId',
-  clienteId: 'clienteId'
+  quantity: 'quantity',
+  invoiceNumber: 'invoiceNumber',
+  productionDate: 'productionDate',
+  destination: 'destination',
+  temperature: 'temperature',
+  sanitaryCondition: 'sanitaryCondition',
+  deliverer: 'deliverer',
+  userId: 'userId',
+  vehicleId: 'vehicleId',
+  productId: 'productId',
+  clientId: 'clientId'
 };
 
-exports.Prisma.RelatorioExpedicaoMensalScalarFieldEnum = {
+exports.Prisma.MonthlyShipmentReportScalarFieldEnum = {
   id: 'id',
-  quantidade: 'quantidade',
-  destino: 'destino',
-  temperatura: 'temperatura',
-  entregador: 'entregador',
-  dataProducao: 'dataProducao',
-  dataExpedicao: 'dataExpedicao',
-  produtoId: 'produtoId',
-  clienteId: 'clienteId'
+  quantity: 'quantity',
+  destination: 'destination',
+  temperature: 'temperature',
+  deliverer: 'deliverer',
+  productionDate: 'productionDate',
+  shipmentDate: 'shipmentDate',
+  productId: 'productId',
+  clientId: 'clientId'
 };
 
 exports.Prisma.SortOrder = {
@@ -195,16 +190,18 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.role = exports.$Enums.role = {
+  admin: 'admin',
+  manager: 'manager'
+};
 
 exports.Prisma.ModelName = {
-  Cargo: 'Cargo',
-  Usuario: 'Usuario',
-  Cliente: 'Cliente',
-  Produto: 'Produto',
-  Veiculo: 'Veiculo',
-  RelatorioExpedicaoDiaria: 'RelatorioExpedicaoDiaria',
-  RelatorioExpedicaoMensal: 'RelatorioExpedicaoMensal'
+  Users: 'Users',
+  Client: 'Client',
+  Product: 'Product',
+  Vehicle: 'Vehicle',
+  DailyShipmentReport: 'DailyShipmentReport',
+  MonthlyShipmentReport: 'MonthlyShipmentReport'
 };
 
 /**

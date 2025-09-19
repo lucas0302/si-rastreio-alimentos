@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -14,91 +8,97 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cargo {
-  id       Int       @id @default(autoincrement())
-  cargo    String    @db.VarChar(100)
-  usuarios Usuario[]
-}
-
-model Usuario {
+model Users {
   id       Int    @id @default(autoincrement())
-  nome     String @db.VarChar(100)
+  name     String @db.VarChar(100)
   username String @db.VarChar(100)
-  senha    String @db.VarChar(50)
+  password String @db.VarChar(50)
 
-  cargoId Int
-  cargo   Cargo @relation(fields: [cargoId], references: [id])
+  role         role                  @default(manager)
+  dailyReports DailyShipmentReport[]
 
-  relatoriosDiarios RelatorioExpedicaoDiaria[]
+  @@map("users")
 }
 
-model Cliente {
-  id                  Int    @id @default(autoincrement())
-  nome                String @db.VarChar(100)
-  CPF                 String @db.VarChar(11)
-  CNPJ                String @db.VarChar(14)
-  endereco            String @db.VarChar(255)
-  telefone            String @db.VarChar(100)
-  codigoIdentificacao String @db.VarChar(255)
+model Client {
+  id                 Int                     @id @default(autoincrement())
+  name               String                  @db.VarChar(100)
+  cpf                String                  @db.VarChar(11)
+  cnpj               String                  @db.VarChar(14)
+  address            String                  @db.VarChar(255)
+  phone              String                  @db.VarChar(100)
+  identificationCode String                  @db.VarChar(255)
+  dailyReports       DailyShipmentReport[]
+  monthlyReports     MonthlyShipmentReport[]
 
-  relatoriosDiarios RelatorioExpedicaoDiaria[]
-  relatoriosMensais RelatorioExpedicaoMensal[]
+  @@map("client")
 }
 
-model Produto {
-  id         Int      @id @default(autoincrement())
-  nome       String   @db.VarChar(255)
-  undMedida  String   @db.VarChar(10)
-  quantidade Decimal  @db.Decimal(8, 2)
-  validade   DateTime
+model Product {
+  id             Int                     @id @default(autoincrement())
+  name           String                  @db.VarChar(255)
+  unit           String                  @db.VarChar(10)
+  quantity       Decimal                 @db.Decimal(8, 2)
+  expiration     DateTime
+  dailyReports   DailyShipmentReport[]
+  monthlyReports MonthlyShipmentReport[]
 
-  relatoriosDiarios RelatorioExpedicaoDiaria[]
-  relatoriosMensais RelatorioExpedicaoMensal[]
+  @@map("product")
 }
 
-model Veiculo {
-  id        Int    @id @default(autoincrement())
-  modelo    String @db.VarChar(100)
-  placa     String @db.VarChar(10)
-  categoria String @db.VarChar(20)
-  marca     String @db.VarChar(30)
+model Vehicle {
+  id           Int                   @id @default(autoincrement())
+  model        String                @db.VarChar(100)
+  plate        String                @db.VarChar(10)
+  category     String                @db.VarChar(20)
+  brand        String                @db.VarChar(30)
+  dailyReports DailyShipmentReport[]
 
-  relatoriosDiarios RelatorioExpedicaoDiaria[]
+  @@map("vehicle")
 }
 
-model RelatorioExpedicaoDiaria {
+model DailyShipmentReport {
   id                Int      @id @default(autoincrement())
-  quantidade        Int
-  notaFiscal        Int
-  dataProducao      DateTime
-  destino           String   @db.VarChar(50)
-  temperatura       Decimal
-  condicaoSanitaria Boolean
-  entregador        String   @db.VarChar(100)
+  quantity          Int
+  invoiceNumber     Int
+  productionDate    DateTime
+  destination       String   @db.VarChar(50)
+  temperature       Decimal
+  sanitaryCondition Boolean
+  deliverer         String   @db.VarChar(100)
 
-  usuarioId Int
-  veiculoId Int
-  produtoId Int
-  clienteId Int
+  userId    Int
+  vehicleId Int
+  productId Int
+  clientId  Int
 
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
-  veiculo Veiculo @relation(fields: [veiculoId], references: [id])
-  produto Produto @relation(fields: [produtoId], references: [id])
-  cliente Cliente @relation(fields: [clienteId], references: [id])
+  client  Client  @relation(fields: [clientId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+  users   Users   @relation(fields: [userId], references: [id])
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+
+  @@map("daily_shipment_report")
 }
 
-model RelatorioExpedicaoMensal {
-  id            Int      @id @default(autoincrement())
-  quantidade    Decimal
-  destino       String   @db.VarChar(50)
-  temperatura   Decimal
-  entregador    String   @db.VarChar(100)
-  dataProducao  DateTime
-  dataExpedicao DateTime
+model MonthlyShipmentReport {
+  id             Int      @id @default(autoincrement())
+  quantity       Decimal
+  destination    String   @db.VarChar(50)
+  temperature    Decimal
+  deliverer      String   @db.VarChar(100)
+  productionDate DateTime
+  shipmentDate   DateTime
 
-  produtoId Int
-  clienteId Int
+  productId Int
+  clientId  Int
 
-  produto Produto @relation(fields: [produtoId], references: [id])
-  cliente Cliente @relation(fields: [clienteId], references: [id])
+  client  Client  @relation(fields: [clientId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("monthly_shipment_report")
+}
+
+enum role {
+  admin
+  manager
 }

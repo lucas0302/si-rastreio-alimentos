@@ -14,40 +14,52 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Cargo
+ * Model Users
  * 
  */
-export type Cargo = $Result.DefaultSelection<Prisma.$CargoPayload>
+export type Users = $Result.DefaultSelection<Prisma.$UsersPayload>
 /**
- * Model Usuario
+ * Model Client
  * 
  */
-export type Usuario = $Result.DefaultSelection<Prisma.$UsuarioPayload>
+export type Client = $Result.DefaultSelection<Prisma.$ClientPayload>
 /**
- * Model Cliente
+ * Model Product
  * 
  */
-export type Cliente = $Result.DefaultSelection<Prisma.$ClientePayload>
+export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
- * Model Produto
+ * Model Vehicle
  * 
  */
-export type Produto = $Result.DefaultSelection<Prisma.$ProdutoPayload>
+export type Vehicle = $Result.DefaultSelection<Prisma.$VehiclePayload>
 /**
- * Model Veiculo
+ * Model DailyShipmentReport
  * 
  */
-export type Veiculo = $Result.DefaultSelection<Prisma.$VeiculoPayload>
+export type DailyShipmentReport = $Result.DefaultSelection<Prisma.$DailyShipmentReportPayload>
 /**
- * Model RelatorioExpedicaoDiaria
+ * Model MonthlyShipmentReport
  * 
  */
-export type RelatorioExpedicaoDiaria = $Result.DefaultSelection<Prisma.$RelatorioExpedicaoDiariaPayload>
+export type MonthlyShipmentReport = $Result.DefaultSelection<Prisma.$MonthlyShipmentReportPayload>
+
 /**
- * Model RelatorioExpedicaoMensal
- * 
+ * Enums
  */
-export type RelatorioExpedicaoMensal = $Result.DefaultSelection<Prisma.$RelatorioExpedicaoMensalPayload>
+export namespace $Enums {
+  export const role: {
+  admin: 'admin',
+  manager: 'manager'
+};
+
+export type role = (typeof role)[keyof typeof role]
+
+}
+
+export type role = $Enums.role
+
+export const role: typeof $Enums.role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -56,8 +68,8 @@ export type RelatorioExpedicaoMensal = $Result.DefaultSelection<Prisma.$Relatori
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Cargos
- * const cargos = await prisma.cargo.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.users.findMany()
  * ```
  *
  *
@@ -77,8 +89,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Cargos
-   * const cargos = await prisma.cargo.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.users.findMany()
    * ```
    *
    *
@@ -168,74 +180,64 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.cargo`: Exposes CRUD operations for the **Cargo** model.
+   * `prisma.users`: Exposes CRUD operations for the **Users** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Cargos
-    * const cargos = await prisma.cargo.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.users.findMany()
     * ```
     */
-  get cargo(): Prisma.CargoDelegate<ExtArgs, ClientOptions>;
+  get users(): Prisma.UsersDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.usuario`: Exposes CRUD operations for the **Usuario** model.
+   * `prisma.client`: Exposes CRUD operations for the **Client** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Usuarios
-    * const usuarios = await prisma.usuario.findMany()
+    * // Fetch zero or more Clients
+    * const clients = await prisma.client.findMany()
     * ```
     */
-  get usuario(): Prisma.UsuarioDelegate<ExtArgs, ClientOptions>;
+  get client(): Prisma.ClientDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.cliente`: Exposes CRUD operations for the **Cliente** model.
+   * `prisma.product`: Exposes CRUD operations for the **Product** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Clientes
-    * const clientes = await prisma.cliente.findMany()
+    * // Fetch zero or more Products
+    * const products = await prisma.product.findMany()
     * ```
     */
-  get cliente(): Prisma.ClienteDelegate<ExtArgs, ClientOptions>;
+  get product(): Prisma.ProductDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.produto`: Exposes CRUD operations for the **Produto** model.
+   * `prisma.vehicle`: Exposes CRUD operations for the **Vehicle** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Produtos
-    * const produtos = await prisma.produto.findMany()
+    * // Fetch zero or more Vehicles
+    * const vehicles = await prisma.vehicle.findMany()
     * ```
     */
-  get produto(): Prisma.ProdutoDelegate<ExtArgs, ClientOptions>;
+  get vehicle(): Prisma.VehicleDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.veiculo`: Exposes CRUD operations for the **Veiculo** model.
+   * `prisma.dailyShipmentReport`: Exposes CRUD operations for the **DailyShipmentReport** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Veiculos
-    * const veiculos = await prisma.veiculo.findMany()
+    * // Fetch zero or more DailyShipmentReports
+    * const dailyShipmentReports = await prisma.dailyShipmentReport.findMany()
     * ```
     */
-  get veiculo(): Prisma.VeiculoDelegate<ExtArgs, ClientOptions>;
+  get dailyShipmentReport(): Prisma.DailyShipmentReportDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.relatorioExpedicaoDiaria`: Exposes CRUD operations for the **RelatorioExpedicaoDiaria** model.
+   * `prisma.monthlyShipmentReport`: Exposes CRUD operations for the **MonthlyShipmentReport** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more RelatorioExpedicaoDiarias
-    * const relatorioExpedicaoDiarias = await prisma.relatorioExpedicaoDiaria.findMany()
+    * // Fetch zero or more MonthlyShipmentReports
+    * const monthlyShipmentReports = await prisma.monthlyShipmentReport.findMany()
     * ```
     */
-  get relatorioExpedicaoDiaria(): Prisma.RelatorioExpedicaoDiariaDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.relatorioExpedicaoMensal`: Exposes CRUD operations for the **RelatorioExpedicaoMensal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RelatorioExpedicaoMensals
-    * const relatorioExpedicaoMensals = await prisma.relatorioExpedicaoMensal.findMany()
-    * ```
-    */
-  get relatorioExpedicaoMensal(): Prisma.RelatorioExpedicaoMensalDelegate<ExtArgs, ClientOptions>;
+  get monthlyShipmentReport(): Prisma.MonthlyShipmentReportDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -676,13 +678,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Cargo: 'Cargo',
-    Usuario: 'Usuario',
-    Cliente: 'Cliente',
-    Produto: 'Produto',
-    Veiculo: 'Veiculo',
-    RelatorioExpedicaoDiaria: 'RelatorioExpedicaoDiaria',
-    RelatorioExpedicaoMensal: 'RelatorioExpedicaoMensal'
+    Users: 'Users',
+    Client: 'Client',
+    Product: 'Product',
+    Vehicle: 'Vehicle',
+    DailyShipmentReport: 'DailyShipmentReport',
+    MonthlyShipmentReport: 'MonthlyShipmentReport'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -701,525 +702,451 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "cargo" | "usuario" | "cliente" | "produto" | "veiculo" | "relatorioExpedicaoDiaria" | "relatorioExpedicaoMensal"
+      modelProps: "users" | "client" | "product" | "vehicle" | "dailyShipmentReport" | "monthlyShipmentReport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Cargo: {
-        payload: Prisma.$CargoPayload<ExtArgs>
-        fields: Prisma.CargoFieldRefs
+      Users: {
+        payload: Prisma.$UsersPayload<ExtArgs>
+        fields: Prisma.UsersFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.CargoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload> | null
+            args: Prisma.UsersFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.CargoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           findFirst: {
-            args: Prisma.CargoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload> | null
+            args: Prisma.UsersFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.CargoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           findMany: {
-            args: Prisma.CargoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>[]
+            args: Prisma.UsersFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>[]
           }
           create: {
-            args: Prisma.CargoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           createMany: {
-            args: Prisma.CargoCreateManyArgs<ExtArgs>
+            args: Prisma.UsersCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.CargoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>[]
+            args: Prisma.UsersCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>[]
           }
           delete: {
-            args: Prisma.CargoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           update: {
-            args: Prisma.CargoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           deleteMany: {
-            args: Prisma.CargoDeleteManyArgs<ExtArgs>
+            args: Prisma.UsersDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.CargoUpdateManyArgs<ExtArgs>
+            args: Prisma.UsersUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.CargoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>[]
+            args: Prisma.UsersUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>[]
           }
           upsert: {
-            args: Prisma.CargoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CargoPayload>
+            args: Prisma.UsersUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
           aggregate: {
-            args: Prisma.CargoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCargo>
+            args: Prisma.UsersAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUsers>
           }
           groupBy: {
-            args: Prisma.CargoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CargoGroupByOutputType>[]
+            args: Prisma.UsersGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UsersGroupByOutputType>[]
           }
           count: {
-            args: Prisma.CargoCountArgs<ExtArgs>
-            result: $Utils.Optional<CargoCountAggregateOutputType> | number
+            args: Prisma.UsersCountArgs<ExtArgs>
+            result: $Utils.Optional<UsersCountAggregateOutputType> | number
           }
         }
       }
-      Usuario: {
-        payload: Prisma.$UsuarioPayload<ExtArgs>
-        fields: Prisma.UsuarioFieldRefs
+      Client: {
+        payload: Prisma.$ClientPayload<ExtArgs>
+        fields: Prisma.ClientFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.UsuarioFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
+            args: Prisma.ClientFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.UsuarioFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           findFirst: {
-            args: Prisma.UsuarioFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload> | null
+            args: Prisma.ClientFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.UsuarioFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           findMany: {
-            args: Prisma.UsuarioFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+            args: Prisma.ClientFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
           }
           create: {
-            args: Prisma.UsuarioCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           createMany: {
-            args: Prisma.UsuarioCreateManyArgs<ExtArgs>
+            args: Prisma.ClientCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.UsuarioCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+            args: Prisma.ClientCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
           }
           delete: {
-            args: Prisma.UsuarioDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           update: {
-            args: Prisma.UsuarioUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           deleteMany: {
-            args: Prisma.UsuarioDeleteManyArgs<ExtArgs>
+            args: Prisma.ClientDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.UsuarioUpdateManyArgs<ExtArgs>
+            args: Prisma.ClientUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.UsuarioUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>[]
+            args: Prisma.ClientUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
           }
           upsert: {
-            args: Prisma.UsuarioUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UsuarioPayload>
+            args: Prisma.ClientUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
           }
           aggregate: {
-            args: Prisma.UsuarioAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUsuario>
+            args: Prisma.ClientAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClient>
           }
           groupBy: {
-            args: Prisma.UsuarioGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UsuarioGroupByOutputType>[]
+            args: Prisma.ClientGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClientGroupByOutputType>[]
           }
           count: {
-            args: Prisma.UsuarioCountArgs<ExtArgs>
-            result: $Utils.Optional<UsuarioCountAggregateOutputType> | number
+            args: Prisma.ClientCountArgs<ExtArgs>
+            result: $Utils.Optional<ClientCountAggregateOutputType> | number
           }
         }
       }
-      Cliente: {
-        payload: Prisma.$ClientePayload<ExtArgs>
-        fields: Prisma.ClienteFieldRefs
+      Product: {
+        payload: Prisma.$ProductPayload<ExtArgs>
+        fields: Prisma.ProductFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ClienteFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload> | null
+            args: Prisma.ProductFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ClienteFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           findFirst: {
-            args: Prisma.ClienteFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload> | null
+            args: Prisma.ProductFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ClienteFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           findMany: {
-            args: Prisma.ClienteFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>[]
+            args: Prisma.ProductFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>[]
           }
           create: {
-            args: Prisma.ClienteCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           createMany: {
-            args: Prisma.ClienteCreateManyArgs<ExtArgs>
+            args: Prisma.ProductCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ClienteCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>[]
+            args: Prisma.ProductCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>[]
           }
           delete: {
-            args: Prisma.ClienteDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           update: {
-            args: Prisma.ClienteUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           deleteMany: {
-            args: Prisma.ClienteDeleteManyArgs<ExtArgs>
+            args: Prisma.ProductDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ClienteUpdateManyArgs<ExtArgs>
+            args: Prisma.ProductUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ClienteUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>[]
+            args: Prisma.ProductUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>[]
           }
           upsert: {
-            args: Prisma.ClienteUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientePayload>
+            args: Prisma.ProductUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductPayload>
           }
           aggregate: {
-            args: Prisma.ClienteAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCliente>
+            args: Prisma.ProductAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProduct>
           }
           groupBy: {
-            args: Prisma.ClienteGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ClienteGroupByOutputType>[]
+            args: Prisma.ProductGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ClienteCountArgs<ExtArgs>
-            result: $Utils.Optional<ClienteCountAggregateOutputType> | number
+            args: Prisma.ProductCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductCountAggregateOutputType> | number
           }
         }
       }
-      Produto: {
-        payload: Prisma.$ProdutoPayload<ExtArgs>
-        fields: Prisma.ProdutoFieldRefs
+      Vehicle: {
+        payload: Prisma.$VehiclePayload<ExtArgs>
+        fields: Prisma.VehicleFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ProdutoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload> | null
+            args: Prisma.VehicleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ProdutoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           findFirst: {
-            args: Prisma.ProdutoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload> | null
+            args: Prisma.VehicleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ProdutoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           findMany: {
-            args: Prisma.ProdutoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>[]
+            args: Prisma.VehicleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>[]
           }
           create: {
-            args: Prisma.ProdutoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           createMany: {
-            args: Prisma.ProdutoCreateManyArgs<ExtArgs>
+            args: Prisma.VehicleCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ProdutoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>[]
+            args: Prisma.VehicleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>[]
           }
           delete: {
-            args: Prisma.ProdutoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           update: {
-            args: Prisma.ProdutoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           deleteMany: {
-            args: Prisma.ProdutoDeleteManyArgs<ExtArgs>
+            args: Prisma.VehicleDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ProdutoUpdateManyArgs<ExtArgs>
+            args: Prisma.VehicleUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ProdutoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>[]
+            args: Prisma.VehicleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>[]
           }
           upsert: {
-            args: Prisma.ProdutoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProdutoPayload>
+            args: Prisma.VehicleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VehiclePayload>
           }
           aggregate: {
-            args: Prisma.ProdutoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProduto>
+            args: Prisma.VehicleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVehicle>
           }
           groupBy: {
-            args: Prisma.ProdutoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProdutoGroupByOutputType>[]
+            args: Prisma.VehicleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VehicleGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ProdutoCountArgs<ExtArgs>
-            result: $Utils.Optional<ProdutoCountAggregateOutputType> | number
+            args: Prisma.VehicleCountArgs<ExtArgs>
+            result: $Utils.Optional<VehicleCountAggregateOutputType> | number
           }
         }
       }
-      Veiculo: {
-        payload: Prisma.$VeiculoPayload<ExtArgs>
-        fields: Prisma.VeiculoFieldRefs
+      DailyShipmentReport: {
+        payload: Prisma.$DailyShipmentReportPayload<ExtArgs>
+        fields: Prisma.DailyShipmentReportFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.VeiculoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload> | null
+            args: Prisma.DailyShipmentReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.VeiculoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           findFirst: {
-            args: Prisma.VeiculoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload> | null
+            args: Prisma.DailyShipmentReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.VeiculoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           findMany: {
-            args: Prisma.VeiculoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>[]
+            args: Prisma.DailyShipmentReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>[]
           }
           create: {
-            args: Prisma.VeiculoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           createMany: {
-            args: Prisma.VeiculoCreateManyArgs<ExtArgs>
+            args: Prisma.DailyShipmentReportCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.VeiculoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>[]
+            args: Prisma.DailyShipmentReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>[]
           }
           delete: {
-            args: Prisma.VeiculoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           update: {
-            args: Prisma.VeiculoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           deleteMany: {
-            args: Prisma.VeiculoDeleteManyArgs<ExtArgs>
+            args: Prisma.DailyShipmentReportDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.VeiculoUpdateManyArgs<ExtArgs>
+            args: Prisma.DailyShipmentReportUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.VeiculoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>[]
+            args: Prisma.DailyShipmentReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>[]
           }
           upsert: {
-            args: Prisma.VeiculoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VeiculoPayload>
+            args: Prisma.DailyShipmentReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyShipmentReportPayload>
           }
           aggregate: {
-            args: Prisma.VeiculoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateVeiculo>
+            args: Prisma.DailyShipmentReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDailyShipmentReport>
           }
           groupBy: {
-            args: Prisma.VeiculoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<VeiculoGroupByOutputType>[]
+            args: Prisma.DailyShipmentReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DailyShipmentReportGroupByOutputType>[]
           }
           count: {
-            args: Prisma.VeiculoCountArgs<ExtArgs>
-            result: $Utils.Optional<VeiculoCountAggregateOutputType> | number
+            args: Prisma.DailyShipmentReportCountArgs<ExtArgs>
+            result: $Utils.Optional<DailyShipmentReportCountAggregateOutputType> | number
           }
         }
       }
-      RelatorioExpedicaoDiaria: {
-        payload: Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>
-        fields: Prisma.RelatorioExpedicaoDiariaFieldRefs
+      MonthlyShipmentReport: {
+        payload: Prisma.$MonthlyShipmentReportPayload<ExtArgs>
+        fields: Prisma.MonthlyShipmentReportFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.RelatorioExpedicaoDiariaFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload> | null
+            args: Prisma.MonthlyShipmentReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.RelatorioExpedicaoDiariaFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           findFirst: {
-            args: Prisma.RelatorioExpedicaoDiariaFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload> | null
+            args: Prisma.MonthlyShipmentReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.RelatorioExpedicaoDiariaFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           findMany: {
-            args: Prisma.RelatorioExpedicaoDiariaFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>[]
+            args: Prisma.MonthlyShipmentReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>[]
           }
           create: {
-            args: Prisma.RelatorioExpedicaoDiariaCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           createMany: {
-            args: Prisma.RelatorioExpedicaoDiariaCreateManyArgs<ExtArgs>
+            args: Prisma.MonthlyShipmentReportCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.RelatorioExpedicaoDiariaCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>[]
+            args: Prisma.MonthlyShipmentReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>[]
           }
           delete: {
-            args: Prisma.RelatorioExpedicaoDiariaDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           update: {
-            args: Prisma.RelatorioExpedicaoDiariaUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           deleteMany: {
-            args: Prisma.RelatorioExpedicaoDiariaDeleteManyArgs<ExtArgs>
+            args: Prisma.MonthlyShipmentReportDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.RelatorioExpedicaoDiariaUpdateManyArgs<ExtArgs>
+            args: Prisma.MonthlyShipmentReportUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.RelatorioExpedicaoDiariaUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>[]
+            args: Prisma.MonthlyShipmentReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>[]
           }
           upsert: {
-            args: Prisma.RelatorioExpedicaoDiariaUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoDiariaPayload>
+            args: Prisma.MonthlyShipmentReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonthlyShipmentReportPayload>
           }
           aggregate: {
-            args: Prisma.RelatorioExpedicaoDiariaAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRelatorioExpedicaoDiaria>
+            args: Prisma.MonthlyShipmentReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMonthlyShipmentReport>
           }
           groupBy: {
-            args: Prisma.RelatorioExpedicaoDiariaGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RelatorioExpedicaoDiariaGroupByOutputType>[]
+            args: Prisma.MonthlyShipmentReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MonthlyShipmentReportGroupByOutputType>[]
           }
           count: {
-            args: Prisma.RelatorioExpedicaoDiariaCountArgs<ExtArgs>
-            result: $Utils.Optional<RelatorioExpedicaoDiariaCountAggregateOutputType> | number
-          }
-        }
-      }
-      RelatorioExpedicaoMensal: {
-        payload: Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>
-        fields: Prisma.RelatorioExpedicaoMensalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RelatorioExpedicaoMensalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RelatorioExpedicaoMensalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          findFirst: {
-            args: Prisma.RelatorioExpedicaoMensalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RelatorioExpedicaoMensalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          findMany: {
-            args: Prisma.RelatorioExpedicaoMensalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>[]
-          }
-          create: {
-            args: Prisma.RelatorioExpedicaoMensalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          createMany: {
-            args: Prisma.RelatorioExpedicaoMensalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.RelatorioExpedicaoMensalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>[]
-          }
-          delete: {
-            args: Prisma.RelatorioExpedicaoMensalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          update: {
-            args: Prisma.RelatorioExpedicaoMensalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          deleteMany: {
-            args: Prisma.RelatorioExpedicaoMensalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RelatorioExpedicaoMensalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.RelatorioExpedicaoMensalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>[]
-          }
-          upsert: {
-            args: Prisma.RelatorioExpedicaoMensalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RelatorioExpedicaoMensalPayload>
-          }
-          aggregate: {
-            args: Prisma.RelatorioExpedicaoMensalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRelatorioExpedicaoMensal>
-          }
-          groupBy: {
-            args: Prisma.RelatorioExpedicaoMensalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RelatorioExpedicaoMensalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RelatorioExpedicaoMensalCountArgs<ExtArgs>
-            result: $Utils.Optional<RelatorioExpedicaoMensalCountAggregateOutputType> | number
+            args: Prisma.MonthlyShipmentReportCountArgs<ExtArgs>
+            result: $Utils.Optional<MonthlyShipmentReportCountAggregateOutputType> | number
           }
         }
       }
@@ -1315,13 +1242,12 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    cargo?: CargoOmit
-    usuario?: UsuarioOmit
-    cliente?: ClienteOmit
-    produto?: ProdutoOmit
-    veiculo?: VeiculoOmit
-    relatorioExpedicaoDiaria?: RelatorioExpedicaoDiariaOmit
-    relatorioExpedicaoMensal?: RelatorioExpedicaoMensalOmit
+    users?: UsersOmit
+    client?: ClientOmit
+    product?: ProductOmit
+    vehicle?: VehicleOmit
+    dailyShipmentReport?: DailyShipmentReportOmit
+    monthlyShipmentReport?: MonthlyShipmentReportOmit
   }
 
   /* Types for Logging */
@@ -1398,175 +1324,144 @@ export namespace Prisma {
 
 
   /**
-   * Count Type CargoCountOutputType
+   * Count Type UsersCountOutputType
    */
 
-  export type CargoCountOutputType = {
-    usuarios: number
+  export type UsersCountOutputType = {
+    dailyReports: number
   }
 
-  export type CargoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | CargoCountOutputTypeCountUsuariosArgs
+  export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | UsersCountOutputTypeCountDailyReportsArgs
   }
 
   // Custom InputTypes
   /**
-   * CargoCountOutputType without action
+   * UsersCountOutputType without action
    */
-  export type CargoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CargoCountOutputType
+     * Select specific fields to fetch from the UsersCountOutputType
      */
-    select?: CargoCountOutputTypeSelect<ExtArgs> | null
+    select?: UsersCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * CargoCountOutputType without action
+   * UsersCountOutputType without action
    */
-  export type CargoCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UsuarioWhereInput
+  export type UsersCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyShipmentReportWhereInput
   }
 
 
   /**
-   * Count Type UsuarioCountOutputType
+   * Count Type ClientCountOutputType
    */
 
-  export type UsuarioCountOutputType = {
-    relatoriosDiarios: number
+  export type ClientCountOutputType = {
+    dailyReports: number
+    monthlyReports: number
   }
 
-  export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | UsuarioCountOutputTypeCountRelatoriosDiariosArgs
+  export type ClientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | ClientCountOutputTypeCountDailyReportsArgs
+    monthlyReports?: boolean | ClientCountOutputTypeCountMonthlyReportsArgs
   }
 
   // Custom InputTypes
   /**
-   * UsuarioCountOutputType without action
+   * ClientCountOutputType without action
    */
-  export type UsuarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UsuarioCountOutputType
+     * Select specific fields to fetch from the ClientCountOutputType
      */
-    select?: UsuarioCountOutputTypeSelect<ExtArgs> | null
+    select?: ClientCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UsuarioCountOutputType without action
+   * ClientCountOutputType without action
    */
-  export type UsuarioCountOutputTypeCountRelatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoDiariaWhereInput
+  export type ClientCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyShipmentReportWhereInput
+  }
+
+  /**
+   * ClientCountOutputType without action
+   */
+  export type ClientCountOutputTypeCountMonthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MonthlyShipmentReportWhereInput
   }
 
 
   /**
-   * Count Type ClienteCountOutputType
+   * Count Type ProductCountOutputType
    */
 
-  export type ClienteCountOutputType = {
-    relatoriosDiarios: number
-    relatoriosMensais: number
+  export type ProductCountOutputType = {
+    dailyReports: number
+    monthlyReports: number
   }
 
-  export type ClienteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | ClienteCountOutputTypeCountRelatoriosDiariosArgs
-    relatoriosMensais?: boolean | ClienteCountOutputTypeCountRelatoriosMensaisArgs
+  export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | ProductCountOutputTypeCountDailyReportsArgs
+    monthlyReports?: boolean | ProductCountOutputTypeCountMonthlyReportsArgs
   }
 
   // Custom InputTypes
   /**
-   * ClienteCountOutputType without action
+   * ProductCountOutputType without action
    */
-  export type ClienteCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ClienteCountOutputType
+     * Select specific fields to fetch from the ProductCountOutputType
      */
-    select?: ClienteCountOutputTypeSelect<ExtArgs> | null
+    select?: ProductCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * ClienteCountOutputType without action
+   * ProductCountOutputType without action
    */
-  export type ClienteCountOutputTypeCountRelatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoDiariaWhereInput
+  export type ProductCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyShipmentReportWhereInput
   }
 
   /**
-   * ClienteCountOutputType without action
+   * ProductCountOutputType without action
    */
-  export type ClienteCountOutputTypeCountRelatoriosMensaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoMensalWhereInput
+  export type ProductCountOutputTypeCountMonthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MonthlyShipmentReportWhereInput
   }
 
 
   /**
-   * Count Type ProdutoCountOutputType
+   * Count Type VehicleCountOutputType
    */
 
-  export type ProdutoCountOutputType = {
-    relatoriosDiarios: number
-    relatoriosMensais: number
+  export type VehicleCountOutputType = {
+    dailyReports: number
   }
 
-  export type ProdutoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | ProdutoCountOutputTypeCountRelatoriosDiariosArgs
-    relatoriosMensais?: boolean | ProdutoCountOutputTypeCountRelatoriosMensaisArgs
+  export type VehicleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | VehicleCountOutputTypeCountDailyReportsArgs
   }
 
   // Custom InputTypes
   /**
-   * ProdutoCountOutputType without action
+   * VehicleCountOutputType without action
    */
-  export type ProdutoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProdutoCountOutputType
+     * Select specific fields to fetch from the VehicleCountOutputType
      */
-    select?: ProdutoCountOutputTypeSelect<ExtArgs> | null
+    select?: VehicleCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * ProdutoCountOutputType without action
+   * VehicleCountOutputType without action
    */
-  export type ProdutoCountOutputTypeCountRelatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoDiariaWhereInput
-  }
-
-  /**
-   * ProdutoCountOutputType without action
-   */
-  export type ProdutoCountOutputTypeCountRelatoriosMensaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoMensalWhereInput
-  }
-
-
-  /**
-   * Count Type VeiculoCountOutputType
-   */
-
-  export type VeiculoCountOutputType = {
-    relatoriosDiarios: number
-  }
-
-  export type VeiculoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | VeiculoCountOutputTypeCountRelatoriosDiariosArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * VeiculoCountOutputType without action
-   */
-  export type VeiculoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the VeiculoCountOutputType
-     */
-    select?: VeiculoCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * VeiculoCountOutputType without action
-   */
-  export type VeiculoCountOutputTypeCountRelatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoDiariaWhereInput
+  export type VehicleCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyShipmentReportWhereInput
   }
 
 
@@ -1575,1458 +1470,380 @@ export namespace Prisma {
    */
 
   /**
-   * Model Cargo
+   * Model Users
    */
 
-  export type AggregateCargo = {
-    _count: CargoCountAggregateOutputType | null
-    _avg: CargoAvgAggregateOutputType | null
-    _sum: CargoSumAggregateOutputType | null
-    _min: CargoMinAggregateOutputType | null
-    _max: CargoMaxAggregateOutputType | null
+  export type AggregateUsers = {
+    _count: UsersCountAggregateOutputType | null
+    _avg: UsersAvgAggregateOutputType | null
+    _sum: UsersSumAggregateOutputType | null
+    _min: UsersMinAggregateOutputType | null
+    _max: UsersMaxAggregateOutputType | null
   }
 
-  export type CargoAvgAggregateOutputType = {
+  export type UsersAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type CargoSumAggregateOutputType = {
+  export type UsersSumAggregateOutputType = {
     id: number | null
   }
 
-  export type CargoMinAggregateOutputType = {
+  export type UsersMinAggregateOutputType = {
     id: number | null
-    cargo: string | null
-  }
-
-  export type CargoMaxAggregateOutputType = {
-    id: number | null
-    cargo: string | null
-  }
-
-  export type CargoCountAggregateOutputType = {
-    id: number
-    cargo: number
-    _all: number
-  }
-
-
-  export type CargoAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type CargoSumAggregateInputType = {
-    id?: true
-  }
-
-  export type CargoMinAggregateInputType = {
-    id?: true
-    cargo?: true
-  }
-
-  export type CargoMaxAggregateInputType = {
-    id?: true
-    cargo?: true
-  }
-
-  export type CargoCountAggregateInputType = {
-    id?: true
-    cargo?: true
-    _all?: true
-  }
-
-  export type CargoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Cargo to aggregate.
-     */
-    where?: CargoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Cargos to fetch.
-     */
-    orderBy?: CargoOrderByWithRelationInput | CargoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: CargoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Cargos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Cargos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Cargos
-    **/
-    _count?: true | CargoCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: CargoAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CargoSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: CargoMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: CargoMaxAggregateInputType
-  }
-
-  export type GetCargoAggregateType<T extends CargoAggregateArgs> = {
-        [P in keyof T & keyof AggregateCargo]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCargo[P]>
-      : GetScalarType<T[P], AggregateCargo[P]>
-  }
-
-
-
-
-  export type CargoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CargoWhereInput
-    orderBy?: CargoOrderByWithAggregationInput | CargoOrderByWithAggregationInput[]
-    by: CargoScalarFieldEnum[] | CargoScalarFieldEnum
-    having?: CargoScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CargoCountAggregateInputType | true
-    _avg?: CargoAvgAggregateInputType
-    _sum?: CargoSumAggregateInputType
-    _min?: CargoMinAggregateInputType
-    _max?: CargoMaxAggregateInputType
-  }
-
-  export type CargoGroupByOutputType = {
-    id: number
-    cargo: string
-    _count: CargoCountAggregateOutputType | null
-    _avg: CargoAvgAggregateOutputType | null
-    _sum: CargoSumAggregateOutputType | null
-    _min: CargoMinAggregateOutputType | null
-    _max: CargoMaxAggregateOutputType | null
-  }
-
-  type GetCargoGroupByPayload<T extends CargoGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CargoGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CargoGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CargoGroupByOutputType[P]>
-            : GetScalarType<T[P], CargoGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CargoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cargo?: boolean
-    usuarios?: boolean | Cargo$usuariosArgs<ExtArgs>
-    _count?: boolean | CargoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["cargo"]>
-
-  export type CargoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cargo?: boolean
-  }, ExtArgs["result"]["cargo"]>
-
-  export type CargoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cargo?: boolean
-  }, ExtArgs["result"]["cargo"]>
-
-  export type CargoSelectScalar = {
-    id?: boolean
-    cargo?: boolean
-  }
-
-  export type CargoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cargo", ExtArgs["result"]["cargo"]>
-  export type CargoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | Cargo$usuariosArgs<ExtArgs>
-    _count?: boolean | CargoCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type CargoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type CargoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $CargoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Cargo"
-    objects: {
-      usuarios: Prisma.$UsuarioPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      cargo: string
-    }, ExtArgs["result"]["cargo"]>
-    composites: {}
-  }
-
-  type CargoGetPayload<S extends boolean | null | undefined | CargoDefaultArgs> = $Result.GetResult<Prisma.$CargoPayload, S>
-
-  type CargoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CargoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CargoCountAggregateInputType | true
-    }
-
-  export interface CargoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cargo'], meta: { name: 'Cargo' } }
-    /**
-     * Find zero or one Cargo that matches the filter.
-     * @param {CargoFindUniqueArgs} args - Arguments to find a Cargo
-     * @example
-     * // Get one Cargo
-     * const cargo = await prisma.cargo.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CargoFindUniqueArgs>(args: SelectSubset<T, CargoFindUniqueArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Cargo that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CargoFindUniqueOrThrowArgs} args - Arguments to find a Cargo
-     * @example
-     * // Get one Cargo
-     * const cargo = await prisma.cargo.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CargoFindUniqueOrThrowArgs>(args: SelectSubset<T, CargoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Cargo that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoFindFirstArgs} args - Arguments to find a Cargo
-     * @example
-     * // Get one Cargo
-     * const cargo = await prisma.cargo.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CargoFindFirstArgs>(args?: SelectSubset<T, CargoFindFirstArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Cargo that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoFindFirstOrThrowArgs} args - Arguments to find a Cargo
-     * @example
-     * // Get one Cargo
-     * const cargo = await prisma.cargo.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CargoFindFirstOrThrowArgs>(args?: SelectSubset<T, CargoFindFirstOrThrowArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Cargos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Cargos
-     * const cargos = await prisma.cargo.findMany()
-     * 
-     * // Get first 10 Cargos
-     * const cargos = await prisma.cargo.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const cargoWithIdOnly = await prisma.cargo.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends CargoFindManyArgs>(args?: SelectSubset<T, CargoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Cargo.
-     * @param {CargoCreateArgs} args - Arguments to create a Cargo.
-     * @example
-     * // Create one Cargo
-     * const Cargo = await prisma.cargo.create({
-     *   data: {
-     *     // ... data to create a Cargo
-     *   }
-     * })
-     * 
-     */
-    create<T extends CargoCreateArgs>(args: SelectSubset<T, CargoCreateArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Cargos.
-     * @param {CargoCreateManyArgs} args - Arguments to create many Cargos.
-     * @example
-     * // Create many Cargos
-     * const cargo = await prisma.cargo.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends CargoCreateManyArgs>(args?: SelectSubset<T, CargoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Cargos and returns the data saved in the database.
-     * @param {CargoCreateManyAndReturnArgs} args - Arguments to create many Cargos.
-     * @example
-     * // Create many Cargos
-     * const cargo = await prisma.cargo.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Cargos and only return the `id`
-     * const cargoWithIdOnly = await prisma.cargo.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends CargoCreateManyAndReturnArgs>(args?: SelectSubset<T, CargoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Cargo.
-     * @param {CargoDeleteArgs} args - Arguments to delete one Cargo.
-     * @example
-     * // Delete one Cargo
-     * const Cargo = await prisma.cargo.delete({
-     *   where: {
-     *     // ... filter to delete one Cargo
-     *   }
-     * })
-     * 
-     */
-    delete<T extends CargoDeleteArgs>(args: SelectSubset<T, CargoDeleteArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Cargo.
-     * @param {CargoUpdateArgs} args - Arguments to update one Cargo.
-     * @example
-     * // Update one Cargo
-     * const cargo = await prisma.cargo.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends CargoUpdateArgs>(args: SelectSubset<T, CargoUpdateArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Cargos.
-     * @param {CargoDeleteManyArgs} args - Arguments to filter Cargos to delete.
-     * @example
-     * // Delete a few Cargos
-     * const { count } = await prisma.cargo.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends CargoDeleteManyArgs>(args?: SelectSubset<T, CargoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Cargos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Cargos
-     * const cargo = await prisma.cargo.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends CargoUpdateManyArgs>(args: SelectSubset<T, CargoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Cargos and returns the data updated in the database.
-     * @param {CargoUpdateManyAndReturnArgs} args - Arguments to update many Cargos.
-     * @example
-     * // Update many Cargos
-     * const cargo = await prisma.cargo.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Cargos and only return the `id`
-     * const cargoWithIdOnly = await prisma.cargo.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends CargoUpdateManyAndReturnArgs>(args: SelectSubset<T, CargoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Cargo.
-     * @param {CargoUpsertArgs} args - Arguments to update or create a Cargo.
-     * @example
-     * // Update or create a Cargo
-     * const cargo = await prisma.cargo.upsert({
-     *   create: {
-     *     // ... data to create a Cargo
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Cargo we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CargoUpsertArgs>(args: SelectSubset<T, CargoUpsertArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Cargos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoCountArgs} args - Arguments to filter Cargos to count.
-     * @example
-     * // Count the number of Cargos
-     * const count = await prisma.cargo.count({
-     *   where: {
-     *     // ... the filter for the Cargos we want to count
-     *   }
-     * })
-    **/
-    count<T extends CargoCountArgs>(
-      args?: Subset<T, CargoCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CargoCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Cargo.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CargoAggregateArgs>(args: Subset<T, CargoAggregateArgs>): Prisma.PrismaPromise<GetCargoAggregateType<T>>
-
-    /**
-     * Group by Cargo.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CargoGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends CargoGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CargoGroupByArgs['orderBy'] }
-        : { orderBy?: CargoGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CargoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCargoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Cargo model
-   */
-  readonly fields: CargoFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Cargo.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CargoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuarios<T extends Cargo$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, Cargo$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Cargo model
-   */
-  interface CargoFieldRefs {
-    readonly id: FieldRef<"Cargo", 'Int'>
-    readonly cargo: FieldRef<"Cargo", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Cargo findUnique
-   */
-  export type CargoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter, which Cargo to fetch.
-     */
-    where: CargoWhereUniqueInput
-  }
-
-  /**
-   * Cargo findUniqueOrThrow
-   */
-  export type CargoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter, which Cargo to fetch.
-     */
-    where: CargoWhereUniqueInput
-  }
-
-  /**
-   * Cargo findFirst
-   */
-  export type CargoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter, which Cargo to fetch.
-     */
-    where?: CargoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Cargos to fetch.
-     */
-    orderBy?: CargoOrderByWithRelationInput | CargoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Cargos.
-     */
-    cursor?: CargoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Cargos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Cargos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Cargos.
-     */
-    distinct?: CargoScalarFieldEnum | CargoScalarFieldEnum[]
-  }
-
-  /**
-   * Cargo findFirstOrThrow
-   */
-  export type CargoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter, which Cargo to fetch.
-     */
-    where?: CargoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Cargos to fetch.
-     */
-    orderBy?: CargoOrderByWithRelationInput | CargoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Cargos.
-     */
-    cursor?: CargoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Cargos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Cargos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Cargos.
-     */
-    distinct?: CargoScalarFieldEnum | CargoScalarFieldEnum[]
-  }
-
-  /**
-   * Cargo findMany
-   */
-  export type CargoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter, which Cargos to fetch.
-     */
-    where?: CargoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Cargos to fetch.
-     */
-    orderBy?: CargoOrderByWithRelationInput | CargoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Cargos.
-     */
-    cursor?: CargoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Cargos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Cargos.
-     */
-    skip?: number
-    distinct?: CargoScalarFieldEnum | CargoScalarFieldEnum[]
-  }
-
-  /**
-   * Cargo create
-   */
-  export type CargoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Cargo.
-     */
-    data: XOR<CargoCreateInput, CargoUncheckedCreateInput>
-  }
-
-  /**
-   * Cargo createMany
-   */
-  export type CargoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Cargos.
-     */
-    data: CargoCreateManyInput | CargoCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Cargo createManyAndReturn
-   */
-  export type CargoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * The data used to create many Cargos.
-     */
-    data: CargoCreateManyInput | CargoCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Cargo update
-   */
-  export type CargoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Cargo.
-     */
-    data: XOR<CargoUpdateInput, CargoUncheckedUpdateInput>
-    /**
-     * Choose, which Cargo to update.
-     */
-    where: CargoWhereUniqueInput
-  }
-
-  /**
-   * Cargo updateMany
-   */
-  export type CargoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Cargos.
-     */
-    data: XOR<CargoUpdateManyMutationInput, CargoUncheckedUpdateManyInput>
-    /**
-     * Filter which Cargos to update
-     */
-    where?: CargoWhereInput
-    /**
-     * Limit how many Cargos to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Cargo updateManyAndReturn
-   */
-  export type CargoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * The data used to update Cargos.
-     */
-    data: XOR<CargoUpdateManyMutationInput, CargoUncheckedUpdateManyInput>
-    /**
-     * Filter which Cargos to update
-     */
-    where?: CargoWhereInput
-    /**
-     * Limit how many Cargos to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Cargo upsert
-   */
-  export type CargoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Cargo to update in case it exists.
-     */
-    where: CargoWhereUniqueInput
-    /**
-     * In case the Cargo found by the `where` argument doesn't exist, create a new Cargo with this data.
-     */
-    create: XOR<CargoCreateInput, CargoUncheckedCreateInput>
-    /**
-     * In case the Cargo was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CargoUpdateInput, CargoUncheckedUpdateInput>
-  }
-
-  /**
-   * Cargo delete
-   */
-  export type CargoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-    /**
-     * Filter which Cargo to delete.
-     */
-    where: CargoWhereUniqueInput
-  }
-
-  /**
-   * Cargo deleteMany
-   */
-  export type CargoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Cargos to delete
-     */
-    where?: CargoWhereInput
-    /**
-     * Limit how many Cargos to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Cargo.usuarios
-   */
-  export type Cargo$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Usuario
-     */
-    select?: UsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Usuario
-     */
-    omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    where?: UsuarioWhereInput
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
-    cursor?: UsuarioWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
-  }
-
-  /**
-   * Cargo without action
-   */
-  export type CargoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Cargo
-     */
-    select?: CargoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Cargo
-     */
-    omit?: CargoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CargoInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Usuario
-   */
-
-  export type AggregateUsuario = {
-    _count: UsuarioCountAggregateOutputType | null
-    _avg: UsuarioAvgAggregateOutputType | null
-    _sum: UsuarioSumAggregateOutputType | null
-    _min: UsuarioMinAggregateOutputType | null
-    _max: UsuarioMaxAggregateOutputType | null
-  }
-
-  export type UsuarioAvgAggregateOutputType = {
-    id: number | null
-    cargoId: number | null
-  }
-
-  export type UsuarioSumAggregateOutputType = {
-    id: number | null
-    cargoId: number | null
-  }
-
-  export type UsuarioMinAggregateOutputType = {
-    id: number | null
-    nome: string | null
+    name: string | null
     username: string | null
-    senha: string | null
-    cargoId: number | null
+    password: string | null
+    role: $Enums.role | null
   }
 
-  export type UsuarioMaxAggregateOutputType = {
+  export type UsersMaxAggregateOutputType = {
     id: number | null
-    nome: string | null
+    name: string | null
     username: string | null
-    senha: string | null
-    cargoId: number | null
+    password: string | null
+    role: $Enums.role | null
   }
 
-  export type UsuarioCountAggregateOutputType = {
+  export type UsersCountAggregateOutputType = {
     id: number
-    nome: number
+    name: number
     username: number
-    senha: number
-    cargoId: number
+    password: number
+    role: number
     _all: number
   }
 
 
-  export type UsuarioAvgAggregateInputType = {
+  export type UsersAvgAggregateInputType = {
     id?: true
-    cargoId?: true
   }
 
-  export type UsuarioSumAggregateInputType = {
+  export type UsersSumAggregateInputType = {
     id?: true
-    cargoId?: true
   }
 
-  export type UsuarioMinAggregateInputType = {
+  export type UsersMinAggregateInputType = {
     id?: true
-    nome?: true
+    name?: true
     username?: true
-    senha?: true
-    cargoId?: true
+    password?: true
+    role?: true
   }
 
-  export type UsuarioMaxAggregateInputType = {
+  export type UsersMaxAggregateInputType = {
     id?: true
-    nome?: true
+    name?: true
     username?: true
-    senha?: true
-    cargoId?: true
+    password?: true
+    role?: true
   }
 
-  export type UsuarioCountAggregateInputType = {
+  export type UsersCountAggregateInputType = {
     id?: true
-    nome?: true
+    name?: true
     username?: true
-    senha?: true
-    cargoId?: true
+    password?: true
+    role?: true
     _all?: true
   }
 
-  export type UsuarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Usuario to aggregate.
+     * Filter which Users to aggregate.
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Usuarios to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: UsuarioWhereUniqueInput
+    cursor?: UsersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Usuarios from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Usuarios.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Usuarios
+     * Count returned Users
     **/
-    _count?: true | UsuarioCountAggregateInputType
+    _count?: true | UsersCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: UsuarioAvgAggregateInputType
+    _avg?: UsersAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: UsuarioSumAggregateInputType
+    _sum?: UsersSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: UsuarioMinAggregateInputType
+    _min?: UsersMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: UsuarioMaxAggregateInputType
+    _max?: UsersMaxAggregateInputType
   }
 
-  export type GetUsuarioAggregateType<T extends UsuarioAggregateArgs> = {
-        [P in keyof T & keyof AggregateUsuario]: P extends '_count' | 'count'
+  export type GetUsersAggregateType<T extends UsersAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsers]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUsuario[P]>
-      : GetScalarType<T[P], AggregateUsuario[P]>
+        : GetScalarType<T[P], AggregateUsers[P]>
+      : GetScalarType<T[P], AggregateUsers[P]>
   }
 
 
 
 
-  export type UsuarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UsuarioWhereInput
-    orderBy?: UsuarioOrderByWithAggregationInput | UsuarioOrderByWithAggregationInput[]
-    by: UsuarioScalarFieldEnum[] | UsuarioScalarFieldEnum
-    having?: UsuarioScalarWhereWithAggregatesInput
+  export type UsersGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsersWhereInput
+    orderBy?: UsersOrderByWithAggregationInput | UsersOrderByWithAggregationInput[]
+    by: UsersScalarFieldEnum[] | UsersScalarFieldEnum
+    having?: UsersScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: UsuarioCountAggregateInputType | true
-    _avg?: UsuarioAvgAggregateInputType
-    _sum?: UsuarioSumAggregateInputType
-    _min?: UsuarioMinAggregateInputType
-    _max?: UsuarioMaxAggregateInputType
+    _count?: UsersCountAggregateInputType | true
+    _avg?: UsersAvgAggregateInputType
+    _sum?: UsersSumAggregateInputType
+    _min?: UsersMinAggregateInputType
+    _max?: UsersMaxAggregateInputType
   }
 
-  export type UsuarioGroupByOutputType = {
+  export type UsersGroupByOutputType = {
     id: number
-    nome: string
+    name: string
     username: string
-    senha: string
-    cargoId: number
-    _count: UsuarioCountAggregateOutputType | null
-    _avg: UsuarioAvgAggregateOutputType | null
-    _sum: UsuarioSumAggregateOutputType | null
-    _min: UsuarioMinAggregateOutputType | null
-    _max: UsuarioMaxAggregateOutputType | null
+    password: string
+    role: $Enums.role
+    _count: UsersCountAggregateOutputType | null
+    _avg: UsersAvgAggregateOutputType | null
+    _sum: UsersSumAggregateOutputType | null
+    _min: UsersMinAggregateOutputType | null
+    _max: UsersMaxAggregateOutputType | null
   }
 
-  type GetUsuarioGroupByPayload<T extends UsuarioGroupByArgs> = Prisma.PrismaPromise<
+  type GetUsersGroupByPayload<T extends UsersGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UsuarioGroupByOutputType, T['by']> &
+      PickEnumerable<UsersGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof UsuarioGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UsersGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
-            : GetScalarType<T[P], UsuarioGroupByOutputType[P]>
+              : GetScalarType<T[P], UsersGroupByOutputType[P]>
+            : GetScalarType<T[P], UsersGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type UsuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
+    name?: boolean
     username?: boolean
-    senha?: boolean
-    cargoId?: boolean
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-    relatoriosDiarios?: boolean | Usuario$relatoriosDiariosArgs<ExtArgs>
-    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuario"]>
+    password?: boolean
+    role?: boolean
+    dailyReports?: boolean | Users$dailyReportsArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["users"]>
 
-  export type UsuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
+    name?: boolean
     username?: boolean
-    senha?: boolean
-    cargoId?: boolean
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuario"]>
+    password?: boolean
+    role?: boolean
+  }, ExtArgs["result"]["users"]>
 
-  export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UsersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
+    name?: boolean
     username?: boolean
-    senha?: boolean
-    cargoId?: boolean
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["usuario"]>
+    password?: boolean
+    role?: boolean
+  }, ExtArgs["result"]["users"]>
 
-  export type UsuarioSelectScalar = {
+  export type UsersSelectScalar = {
     id?: boolean
-    nome?: boolean
+    name?: boolean
     username?: boolean
-    senha?: boolean
-    cargoId?: boolean
+    password?: boolean
+    role?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "username" | "senha" | "cargoId", ExtArgs["result"]["usuario"]>
-  export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-    relatoriosDiarios?: boolean | Usuario$relatoriosDiariosArgs<ExtArgs>
-    _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
+  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "password" | "role", ExtArgs["result"]["users"]>
+  export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | Users$dailyReportsArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-  }
-  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cargo?: boolean | CargoDefaultArgs<ExtArgs>
-  }
+  export type UsersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UsersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $UsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Usuario"
+  export type $UsersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Users"
     objects: {
-      cargo: Prisma.$CargoPayload<ExtArgs>
-      relatoriosDiarios: Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>[]
+      dailyReports: Prisma.$DailyShipmentReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nome: string
+      name: string
       username: string
-      senha: string
-      cargoId: number
-    }, ExtArgs["result"]["usuario"]>
+      password: string
+      role: $Enums.role
+    }, ExtArgs["result"]["users"]>
     composites: {}
   }
 
-  type UsuarioGetPayload<S extends boolean | null | undefined | UsuarioDefaultArgs> = $Result.GetResult<Prisma.$UsuarioPayload, S>
+  type UsersGetPayload<S extends boolean | null | undefined | UsersDefaultArgs> = $Result.GetResult<Prisma.$UsersPayload, S>
 
-  type UsuarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UsuarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UsuarioCountAggregateInputType | true
+  type UsersCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UsersFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UsersCountAggregateInputType | true
     }
 
-  export interface UsuarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Usuario'], meta: { name: 'Usuario' } }
+  export interface UsersDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Users'], meta: { name: 'Users' } }
     /**
-     * Find zero or one Usuario that matches the filter.
-     * @param {UsuarioFindUniqueArgs} args - Arguments to find a Usuario
+     * Find zero or one Users that matches the filter.
+     * @param {UsersFindUniqueArgs} args - Arguments to find a Users
      * @example
-     * // Get one Usuario
-     * const usuario = await prisma.usuario.findUnique({
+     * // Get one Users
+     * const users = await prisma.users.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends UsuarioFindUniqueArgs>(args: SelectSubset<T, UsuarioFindUniqueArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UsersFindUniqueArgs>(args: SelectSubset<T, UsersFindUniqueArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Usuario that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Users that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {UsuarioFindUniqueOrThrowArgs} args - Arguments to find a Usuario
+     * @param {UsersFindUniqueOrThrowArgs} args - Arguments to find a Users
      * @example
-     * // Get one Usuario
-     * const usuario = await prisma.usuario.findUniqueOrThrow({
+     * // Get one Users
+     * const users = await prisma.users.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends UsuarioFindUniqueOrThrowArgs>(args: SelectSubset<T, UsuarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UsersFindUniqueOrThrowArgs>(args: SelectSubset<T, UsersFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Usuario that matches the filter.
+     * Find the first Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioFindFirstArgs} args - Arguments to find a Usuario
+     * @param {UsersFindFirstArgs} args - Arguments to find a Users
      * @example
-     * // Get one Usuario
-     * const usuario = await prisma.usuario.findFirst({
+     * // Get one Users
+     * const users = await prisma.users.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends UsuarioFindFirstArgs>(args?: SelectSubset<T, UsuarioFindFirstArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UsersFindFirstArgs>(args?: SelectSubset<T, UsersFindFirstArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Usuario that matches the filter or
+     * Find the first Users that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioFindFirstOrThrowArgs} args - Arguments to find a Usuario
+     * @param {UsersFindFirstOrThrowArgs} args - Arguments to find a Users
      * @example
-     * // Get one Usuario
-     * const usuario = await prisma.usuario.findFirstOrThrow({
+     * // Get one Users
+     * const users = await prisma.users.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends UsuarioFindFirstOrThrowArgs>(args?: SelectSubset<T, UsuarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UsersFindFirstOrThrowArgs>(args?: SelectSubset<T, UsersFindFirstOrThrowArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Usuarios that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UsersFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Usuarios
-     * const usuarios = await prisma.usuario.findMany()
+     * // Get all Users
+     * const users = await prisma.users.findMany()
      * 
-     * // Get first 10 Usuarios
-     * const usuarios = await prisma.usuario.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.users.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.findMany({ select: { id: true } })
+     * const usersWithIdOnly = await prisma.users.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends UsuarioFindManyArgs>(args?: SelectSubset<T, UsuarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UsersFindManyArgs>(args?: SelectSubset<T, UsersFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Usuario.
-     * @param {UsuarioCreateArgs} args - Arguments to create a Usuario.
+     * Create a Users.
+     * @param {UsersCreateArgs} args - Arguments to create a Users.
      * @example
-     * // Create one Usuario
-     * const Usuario = await prisma.usuario.create({
+     * // Create one Users
+     * const Users = await prisma.users.create({
      *   data: {
-     *     // ... data to create a Usuario
+     *     // ... data to create a Users
      *   }
      * })
      * 
      */
-    create<T extends UsuarioCreateArgs>(args: SelectSubset<T, UsuarioCreateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UsersCreateArgs>(args: SelectSubset<T, UsersCreateArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Usuarios.
-     * @param {UsuarioCreateManyArgs} args - Arguments to create many Usuarios.
+     * Create many Users.
+     * @param {UsersCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Usuarios
-     * const usuario = await prisma.usuario.createMany({
+     * // Create many Users
+     * const users = await prisma.users.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends UsuarioCreateManyArgs>(args?: SelectSubset<T, UsuarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UsersCreateManyArgs>(args?: SelectSubset<T, UsersCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Usuarios and returns the data saved in the database.
-     * @param {UsuarioCreateManyAndReturnArgs} args - Arguments to create many Usuarios.
+     * Create many Users and returns the data saved in the database.
+     * @param {UsersCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Usuarios
-     * const usuario = await prisma.usuario.createManyAndReturn({
+     * // Create many Users
+     * const users = await prisma.users.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Usuarios and only return the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.createManyAndReturn({
+     * // Create many Users and only return the `id`
+     * const usersWithIdOnly = await prisma.users.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3036,28 +1853,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends UsuarioCreateManyAndReturnArgs>(args?: SelectSubset<T, UsuarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UsersCreateManyAndReturnArgs>(args?: SelectSubset<T, UsersCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Usuario.
-     * @param {UsuarioDeleteArgs} args - Arguments to delete one Usuario.
+     * Delete a Users.
+     * @param {UsersDeleteArgs} args - Arguments to delete one Users.
      * @example
-     * // Delete one Usuario
-     * const Usuario = await prisma.usuario.delete({
+     * // Delete one Users
+     * const Users = await prisma.users.delete({
      *   where: {
-     *     // ... filter to delete one Usuario
+     *     // ... filter to delete one Users
      *   }
      * })
      * 
      */
-    delete<T extends UsuarioDeleteArgs>(args: SelectSubset<T, UsuarioDeleteArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UsersDeleteArgs>(args: SelectSubset<T, UsersDeleteArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Usuario.
-     * @param {UsuarioUpdateArgs} args - Arguments to update one Usuario.
+     * Update one Users.
+     * @param {UsersUpdateArgs} args - Arguments to update one Users.
      * @example
-     * // Update one Usuario
-     * const usuario = await prisma.usuario.update({
+     * // Update one Users
+     * const users = await prisma.users.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3067,30 +1884,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends UsuarioUpdateArgs>(args: SelectSubset<T, UsuarioUpdateArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UsersUpdateArgs>(args: SelectSubset<T, UsersUpdateArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Usuarios.
-     * @param {UsuarioDeleteManyArgs} args - Arguments to filter Usuarios to delete.
+     * Delete zero or more Users.
+     * @param {UsersDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few Usuarios
-     * const { count } = await prisma.usuario.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.users.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends UsuarioDeleteManyArgs>(args?: SelectSubset<T, UsuarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UsersDeleteManyArgs>(args?: SelectSubset<T, UsersDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Usuarios.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UsersUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Usuarios
-     * const usuario = await prisma.usuario.updateMany({
+     * // Update many Users
+     * const users = await prisma.users.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3100,14 +1917,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends UsuarioUpdateManyArgs>(args: SelectSubset<T, UsuarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UsersUpdateManyArgs>(args: SelectSubset<T, UsersUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Usuarios and returns the data updated in the database.
-     * @param {UsuarioUpdateManyAndReturnArgs} args - Arguments to update many Usuarios.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UsersUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many Usuarios
-     * const usuario = await prisma.usuario.updateManyAndReturn({
+     * // Update many Users
+     * const users = await prisma.users.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3116,8 +1933,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Usuarios and only return the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.updateManyAndReturn({
+     * // Update zero or more Users and only return the `id`
+     * const usersWithIdOnly = await prisma.users.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3130,56 +1947,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends UsuarioUpdateManyAndReturnArgs>(args: SelectSubset<T, UsuarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UsersUpdateManyAndReturnArgs>(args: SelectSubset<T, UsersUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Usuario.
-     * @param {UsuarioUpsertArgs} args - Arguments to update or create a Usuario.
+     * Create or update one Users.
+     * @param {UsersUpsertArgs} args - Arguments to update or create a Users.
      * @example
-     * // Update or create a Usuario
-     * const usuario = await prisma.usuario.upsert({
+     * // Update or create a Users
+     * const users = await prisma.users.upsert({
      *   create: {
-     *     // ... data to create a Usuario
+     *     // ... data to create a Users
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Usuario we want to update
+     *     // ... the filter for the Users we want to update
      *   }
      * })
      */
-    upsert<T extends UsuarioUpsertArgs>(args: SelectSubset<T, UsuarioUpsertArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UsersUpsertArgs>(args: SelectSubset<T, UsersUpsertArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Usuarios.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioCountArgs} args - Arguments to filter Usuarios to count.
+     * @param {UsersCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of Usuarios
-     * const count = await prisma.usuario.count({
+     * // Count the number of Users
+     * const count = await prisma.users.count({
      *   where: {
-     *     // ... the filter for the Usuarios we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends UsuarioCountArgs>(
-      args?: Subset<T, UsuarioCountArgs>,
+    count<T extends UsersCountArgs>(
+      args?: Subset<T, UsersCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], UsuarioCountAggregateOutputType>
+          : GetScalarType<T['select'], UsersCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Usuario.
+     * Allows you to perform aggregations operations on a Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UsersAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3199,13 +2016,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends UsuarioAggregateArgs>(args: Subset<T, UsuarioAggregateArgs>): Prisma.PrismaPromise<GetUsuarioAggregateType<T>>
+    aggregate<T extends UsersAggregateArgs>(args: Subset<T, UsersAggregateArgs>): Prisma.PrismaPromise<GetUsersAggregateType<T>>
 
     /**
-     * Group by Usuario.
+     * Group by Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UsuarioGroupByArgs} args - Group by arguments.
+     * @param {UsersGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3220,14 +2037,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends UsuarioGroupByArgs,
+      T extends UsersGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UsuarioGroupByArgs['orderBy'] }
-        : { orderBy?: UsuarioGroupByArgs['orderBy'] },
+        ? { orderBy: UsersGroupByArgs['orderBy'] }
+        : { orderBy?: UsersGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3276,23 +2093,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, UsuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsuarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UsersGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsersGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Usuario model
+   * Fields of the Users model
    */
-  readonly fields: UsuarioFieldRefs;
+  readonly fields: UsersFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Usuario.
+   * The delegate class that acts as a "Promise-like" for Users.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UsersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    cargo<T extends CargoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CargoDefaultArgs<ExtArgs>>): Prisma__CargoClient<$Result.GetResult<Prisma.$CargoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    relatoriosDiarios<T extends Usuario$relatoriosDiariosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$relatoriosDiariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyReports<T extends Users$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Users$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3319,854 +2135,846 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Usuario model
+   * Fields of the Users model
    */
-  interface UsuarioFieldRefs {
-    readonly id: FieldRef<"Usuario", 'Int'>
-    readonly nome: FieldRef<"Usuario", 'String'>
-    readonly username: FieldRef<"Usuario", 'String'>
-    readonly senha: FieldRef<"Usuario", 'String'>
-    readonly cargoId: FieldRef<"Usuario", 'Int'>
+  interface UsersFieldRefs {
+    readonly id: FieldRef<"Users", 'Int'>
+    readonly name: FieldRef<"Users", 'String'>
+    readonly username: FieldRef<"Users", 'String'>
+    readonly password: FieldRef<"Users", 'String'>
+    readonly role: FieldRef<"Users", 'role'>
   }
     
 
   // Custom InputTypes
   /**
-   * Usuario findUnique
+   * Users findUnique
    */
-  export type UsuarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * Filter, which Usuario to fetch.
+     * Filter, which Users to fetch.
      */
-    where: UsuarioWhereUniqueInput
+    where: UsersWhereUniqueInput
   }
 
   /**
-   * Usuario findUniqueOrThrow
+   * Users findUniqueOrThrow
    */
-  export type UsuarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * Filter, which Usuario to fetch.
+     * Filter, which Users to fetch.
      */
-    where: UsuarioWhereUniqueInput
+    where: UsersWhereUniqueInput
   }
 
   /**
-   * Usuario findFirst
+   * Users findFirst
    */
-  export type UsuarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * Filter, which Usuario to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Usuarios to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Usuarios.
+     * Sets the position for searching for Users.
      */
-    cursor?: UsuarioWhereUniqueInput
+    cursor?: UsersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Usuarios from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Usuarios.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Usuarios.
+     * Filter by unique combinations of Users.
      */
-    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
 
   /**
-   * Usuario findFirstOrThrow
+   * Users findFirstOrThrow
    */
-  export type UsuarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * Filter, which Usuario to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Usuarios to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Usuarios.
+     * Sets the position for searching for Users.
      */
-    cursor?: UsuarioWhereUniqueInput
+    cursor?: UsersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Usuarios from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Usuarios.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Usuarios.
+     * Filter by unique combinations of Users.
      */
-    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
 
   /**
-   * Usuario findMany
+   * Users findMany
    */
-  export type UsuarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * Filter, which Usuarios to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Usuarios to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Usuarios.
+     * Sets the position for listing Users.
      */
-    cursor?: UsuarioWhereUniqueInput
+    cursor?: UsersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Usuarios from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Usuarios.
+     * Skip the first `n` Users.
      */
     skip?: number
-    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
+    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
 
   /**
-   * Usuario create
+   * Users create
    */
-  export type UsuarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * The data needed to create a Usuario.
+     * The data needed to create a Users.
      */
-    data: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
+    data: XOR<UsersCreateInput, UsersUncheckedCreateInput>
   }
 
   /**
-   * Usuario createMany
+   * Users createMany
    */
-  export type UsuarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Usuarios.
+     * The data used to create many Users.
      */
-    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
+    data: UsersCreateManyInput | UsersCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Usuario createManyAndReturn
+   * Users createManyAndReturn
    */
-  export type UsuarioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UsersSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
-     * The data used to create many Usuarios.
+     * The data used to create many Users.
      */
-    data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
+    data: UsersCreateManyInput | UsersCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Usuario update
+   * Users update
    */
-  export type UsuarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
     /**
-     * The data needed to update a Usuario.
+     * The data needed to update a Users.
      */
-    data: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
+    data: XOR<UsersUpdateInput, UsersUncheckedUpdateInput>
     /**
-     * Choose, which Usuario to update.
+     * Choose, which Users to update.
      */
-    where: UsuarioWhereUniqueInput
+    where: UsersWhereUniqueInput
   }
 
   /**
-   * Usuario updateMany
+   * Users updateMany
    */
-  export type UsuarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Usuarios.
+     * The data used to update Users.
      */
-    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
+    data: XOR<UsersUpdateManyMutationInput, UsersUncheckedUpdateManyInput>
     /**
-     * Filter which Usuarios to update
+     * Filter which Users to update
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
-     * Limit how many Usuarios to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * Usuario updateManyAndReturn
+   * Users updateManyAndReturn
    */
-  export type UsuarioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UsersSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
-     * The data used to update Usuarios.
+     * The data used to update Users.
      */
-    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyInput>
+    data: XOR<UsersUpdateManyMutationInput, UsersUncheckedUpdateManyInput>
     /**
-     * Filter which Usuarios to update
+     * Filter which Users to update
      */
-    where?: UsuarioWhereInput
+    where?: UsersWhereInput
     /**
-     * Limit how many Usuarios to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Usuario upsert
-   */
-  export type UsuarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Usuario
-     */
-    select?: UsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Usuario
-     */
-    omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Usuario to update in case it exists.
-     */
-    where: UsuarioWhereUniqueInput
-    /**
-     * In case the Usuario found by the `where` argument doesn't exist, create a new Usuario with this data.
-     */
-    create: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
-    /**
-     * In case the Usuario was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UsuarioUpdateInput, UsuarioUncheckedUpdateInput>
-  }
-
-  /**
-   * Usuario delete
-   */
-  export type UsuarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Usuario
-     */
-    select?: UsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Usuario
-     */
-    omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    /**
-     * Filter which Usuario to delete.
-     */
-    where: UsuarioWhereUniqueInput
-  }
-
-  /**
-   * Usuario deleteMany
-   */
-  export type UsuarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Usuarios to delete
-     */
-    where?: UsuarioWhereInput
-    /**
-     * Limit how many Usuarios to delete.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * Usuario.relatoriosDiarios
+   * Users upsert
    */
-  export type Usuario$relatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the Users
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the Users
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoDiariaWhereInput
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    include?: UsersInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Users to update in case it exists.
+     */
+    where: UsersWhereUniqueInput
+    /**
+     * In case the Users found by the `where` argument doesn't exist, create a new Users with this data.
+     */
+    create: XOR<UsersCreateInput, UsersUncheckedCreateInput>
+    /**
+     * In case the Users was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsersUpdateInput, UsersUncheckedUpdateInput>
+  }
+
+  /**
+   * Users delete
+   */
+  export type UsersDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Users
+     */
+    select?: UsersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Users
+     */
+    omit?: UsersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersInclude<ExtArgs> | null
+    /**
+     * Filter which Users to delete.
+     */
+    where: UsersWhereUniqueInput
+  }
+
+  /**
+   * Users deleteMany
+   */
+  export type UsersDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UsersWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Users.dailyReports
+   */
+  export type Users$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyShipmentReport
+     */
+    select?: DailyShipmentReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyShipmentReport
+     */
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyShipmentReportInclude<ExtArgs> | null
+    where?: DailyShipmentReportWhereInput
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
+    cursor?: DailyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Usuario without action
+   * Users without action
    */
-  export type UsuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UsersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Usuario
+     * Select specific fields to fetch from the Users
      */
-    select?: UsuarioSelect<ExtArgs> | null
+    select?: UsersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Usuario
+     * Omit specific fields from the Users
      */
-    omit?: UsuarioOmit<ExtArgs> | null
+    omit?: UsersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UsuarioInclude<ExtArgs> | null
+    include?: UsersInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Cliente
+   * Model Client
    */
 
-  export type AggregateCliente = {
-    _count: ClienteCountAggregateOutputType | null
-    _avg: ClienteAvgAggregateOutputType | null
-    _sum: ClienteSumAggregateOutputType | null
-    _min: ClienteMinAggregateOutputType | null
-    _max: ClienteMaxAggregateOutputType | null
+  export type AggregateClient = {
+    _count: ClientCountAggregateOutputType | null
+    _avg: ClientAvgAggregateOutputType | null
+    _sum: ClientSumAggregateOutputType | null
+    _min: ClientMinAggregateOutputType | null
+    _max: ClientMaxAggregateOutputType | null
   }
 
-  export type ClienteAvgAggregateOutputType = {
+  export type ClientAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type ClienteSumAggregateOutputType = {
+  export type ClientSumAggregateOutputType = {
     id: number | null
   }
 
-  export type ClienteMinAggregateOutputType = {
+  export type ClientMinAggregateOutputType = {
     id: number | null
-    nome: string | null
-    CPF: string | null
-    CNPJ: string | null
-    endereco: string | null
-    telefone: string | null
-    codigoIdentificacao: string | null
+    name: string | null
+    cpf: string | null
+    cnpj: string | null
+    address: string | null
+    phone: string | null
+    identificationCode: string | null
   }
 
-  export type ClienteMaxAggregateOutputType = {
+  export type ClientMaxAggregateOutputType = {
     id: number | null
-    nome: string | null
-    CPF: string | null
-    CNPJ: string | null
-    endereco: string | null
-    telefone: string | null
-    codigoIdentificacao: string | null
+    name: string | null
+    cpf: string | null
+    cnpj: string | null
+    address: string | null
+    phone: string | null
+    identificationCode: string | null
   }
 
-  export type ClienteCountAggregateOutputType = {
+  export type ClientCountAggregateOutputType = {
     id: number
-    nome: number
-    CPF: number
-    CNPJ: number
-    endereco: number
-    telefone: number
-    codigoIdentificacao: number
+    name: number
+    cpf: number
+    cnpj: number
+    address: number
+    phone: number
+    identificationCode: number
     _all: number
   }
 
 
-  export type ClienteAvgAggregateInputType = {
+  export type ClientAvgAggregateInputType = {
     id?: true
   }
 
-  export type ClienteSumAggregateInputType = {
+  export type ClientSumAggregateInputType = {
     id?: true
   }
 
-  export type ClienteMinAggregateInputType = {
+  export type ClientMinAggregateInputType = {
     id?: true
-    nome?: true
-    CPF?: true
-    CNPJ?: true
-    endereco?: true
-    telefone?: true
-    codigoIdentificacao?: true
+    name?: true
+    cpf?: true
+    cnpj?: true
+    address?: true
+    phone?: true
+    identificationCode?: true
   }
 
-  export type ClienteMaxAggregateInputType = {
+  export type ClientMaxAggregateInputType = {
     id?: true
-    nome?: true
-    CPF?: true
-    CNPJ?: true
-    endereco?: true
-    telefone?: true
-    codigoIdentificacao?: true
+    name?: true
+    cpf?: true
+    cnpj?: true
+    address?: true
+    phone?: true
+    identificationCode?: true
   }
 
-  export type ClienteCountAggregateInputType = {
+  export type ClientCountAggregateInputType = {
     id?: true
-    nome?: true
-    CPF?: true
-    CNPJ?: true
-    endereco?: true
-    telefone?: true
-    codigoIdentificacao?: true
+    name?: true
+    cpf?: true
+    cnpj?: true
+    address?: true
+    phone?: true
+    identificationCode?: true
     _all?: true
   }
 
-  export type ClienteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Cliente to aggregate.
+     * Filter which Client to aggregate.
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clientes to fetch.
+     * Determine the order of Clients to fetch.
      */
-    orderBy?: ClienteOrderByWithRelationInput | ClienteOrderByWithRelationInput[]
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ClienteWhereUniqueInput
+    cursor?: ClientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clientes from the position of the cursor.
+     * Take `±n` Clients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clientes.
+     * Skip the first `n` Clients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Clientes
+     * Count returned Clients
     **/
-    _count?: true | ClienteCountAggregateInputType
+    _count?: true | ClientCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ClienteAvgAggregateInputType
+    _avg?: ClientAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ClienteSumAggregateInputType
+    _sum?: ClientSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ClienteMinAggregateInputType
+    _min?: ClientMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ClienteMaxAggregateInputType
+    _max?: ClientMaxAggregateInputType
   }
 
-  export type GetClienteAggregateType<T extends ClienteAggregateArgs> = {
-        [P in keyof T & keyof AggregateCliente]: P extends '_count' | 'count'
+  export type GetClientAggregateType<T extends ClientAggregateArgs> = {
+        [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCliente[P]>
-      : GetScalarType<T[P], AggregateCliente[P]>
+        : GetScalarType<T[P], AggregateClient[P]>
+      : GetScalarType<T[P], AggregateClient[P]>
   }
 
 
 
 
-  export type ClienteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ClienteWhereInput
-    orderBy?: ClienteOrderByWithAggregationInput | ClienteOrderByWithAggregationInput[]
-    by: ClienteScalarFieldEnum[] | ClienteScalarFieldEnum
-    having?: ClienteScalarWhereWithAggregatesInput
+  export type ClientGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClientWhereInput
+    orderBy?: ClientOrderByWithAggregationInput | ClientOrderByWithAggregationInput[]
+    by: ClientScalarFieldEnum[] | ClientScalarFieldEnum
+    having?: ClientScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ClienteCountAggregateInputType | true
-    _avg?: ClienteAvgAggregateInputType
-    _sum?: ClienteSumAggregateInputType
-    _min?: ClienteMinAggregateInputType
-    _max?: ClienteMaxAggregateInputType
+    _count?: ClientCountAggregateInputType | true
+    _avg?: ClientAvgAggregateInputType
+    _sum?: ClientSumAggregateInputType
+    _min?: ClientMinAggregateInputType
+    _max?: ClientMaxAggregateInputType
   }
 
-  export type ClienteGroupByOutputType = {
+  export type ClientGroupByOutputType = {
     id: number
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    _count: ClienteCountAggregateOutputType | null
-    _avg: ClienteAvgAggregateOutputType | null
-    _sum: ClienteSumAggregateOutputType | null
-    _min: ClienteMinAggregateOutputType | null
-    _max: ClienteMaxAggregateOutputType | null
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    _count: ClientCountAggregateOutputType | null
+    _avg: ClientAvgAggregateOutputType | null
+    _sum: ClientSumAggregateOutputType | null
+    _min: ClientMinAggregateOutputType | null
+    _max: ClientMaxAggregateOutputType | null
   }
 
-  type GetClienteGroupByPayload<T extends ClienteGroupByArgs> = Prisma.PrismaPromise<
+  type GetClientGroupByPayload<T extends ClientGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ClienteGroupByOutputType, T['by']> &
+      PickEnumerable<ClientGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ClienteGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ClientGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ClienteGroupByOutputType[P]>
-            : GetScalarType<T[P], ClienteGroupByOutputType[P]>
+              : GetScalarType<T[P], ClientGroupByOutputType[P]>
+            : GetScalarType<T[P], ClientGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ClienteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ClientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    CPF?: boolean
-    CNPJ?: boolean
-    endereco?: boolean
-    telefone?: boolean
-    codigoIdentificacao?: boolean
-    relatoriosDiarios?: boolean | Cliente$relatoriosDiariosArgs<ExtArgs>
-    relatoriosMensais?: boolean | Cliente$relatoriosMensaisArgs<ExtArgs>
-    _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["cliente"]>
+    name?: boolean
+    cpf?: boolean
+    cnpj?: boolean
+    address?: boolean
+    phone?: boolean
+    identificationCode?: boolean
+    dailyReports?: boolean | Client$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Client$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["client"]>
 
-  export type ClienteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ClientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    CPF?: boolean
-    CNPJ?: boolean
-    endereco?: boolean
-    telefone?: boolean
-    codigoIdentificacao?: boolean
-  }, ExtArgs["result"]["cliente"]>
+    name?: boolean
+    cpf?: boolean
+    cnpj?: boolean
+    address?: boolean
+    phone?: boolean
+    identificationCode?: boolean
+  }, ExtArgs["result"]["client"]>
 
-  export type ClienteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    CPF?: boolean
-    CNPJ?: boolean
-    endereco?: boolean
-    telefone?: boolean
-    codigoIdentificacao?: boolean
-  }, ExtArgs["result"]["cliente"]>
+    name?: boolean
+    cpf?: boolean
+    cnpj?: boolean
+    address?: boolean
+    phone?: boolean
+    identificationCode?: boolean
+  }, ExtArgs["result"]["client"]>
 
-  export type ClienteSelectScalar = {
+  export type ClientSelectScalar = {
     id?: boolean
-    nome?: boolean
-    CPF?: boolean
-    CNPJ?: boolean
-    endereco?: boolean
-    telefone?: boolean
-    codigoIdentificacao?: boolean
+    name?: boolean
+    cpf?: boolean
+    cnpj?: boolean
+    address?: boolean
+    phone?: boolean
+    identificationCode?: boolean
   }
 
-  export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "CPF" | "CNPJ" | "endereco" | "telefone" | "codigoIdentificacao", ExtArgs["result"]["cliente"]>
-  export type ClienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | Cliente$relatoriosDiariosArgs<ExtArgs>
-    relatoriosMensais?: boolean | Cliente$relatoriosMensaisArgs<ExtArgs>
-    _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
+  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cpf" | "cnpj" | "address" | "phone" | "identificationCode", ExtArgs["result"]["client"]>
+  export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | Client$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Client$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ClienteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ClienteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $ClientePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Cliente"
+  export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Client"
     objects: {
-      relatoriosDiarios: Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>[]
-      relatoriosMensais: Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>[]
+      dailyReports: Prisma.$DailyShipmentReportPayload<ExtArgs>[]
+      monthlyReports: Prisma.$MonthlyShipmentReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nome: string
-      CPF: string
-      CNPJ: string
-      endereco: string
-      telefone: string
-      codigoIdentificacao: string
-    }, ExtArgs["result"]["cliente"]>
+      name: string
+      cpf: string
+      cnpj: string
+      address: string
+      phone: string
+      identificationCode: string
+    }, ExtArgs["result"]["client"]>
     composites: {}
   }
 
-  type ClienteGetPayload<S extends boolean | null | undefined | ClienteDefaultArgs> = $Result.GetResult<Prisma.$ClientePayload, S>
+  type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> = $Result.GetResult<Prisma.$ClientPayload, S>
 
-  type ClienteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ClienteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ClienteCountAggregateInputType | true
+  type ClientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClientCountAggregateInputType | true
     }
 
-  export interface ClienteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cliente'], meta: { name: 'Cliente' } }
+  export interface ClientDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Client'], meta: { name: 'Client' } }
     /**
-     * Find zero or one Cliente that matches the filter.
-     * @param {ClienteFindUniqueArgs} args - Arguments to find a Cliente
+     * Find zero or one Client that matches the filter.
+     * @param {ClientFindUniqueArgs} args - Arguments to find a Client
      * @example
-     * // Get one Cliente
-     * const cliente = await prisma.cliente.findUnique({
+     * // Get one Client
+     * const client = await prisma.client.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ClienteFindUniqueArgs>(args: SelectSubset<T, ClienteFindUniqueArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ClientFindUniqueArgs>(args: SelectSubset<T, ClientFindUniqueArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Cliente that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Client that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ClienteFindUniqueOrThrowArgs} args - Arguments to find a Cliente
+     * @param {ClientFindUniqueOrThrowArgs} args - Arguments to find a Client
      * @example
-     * // Get one Cliente
-     * const cliente = await prisma.cliente.findUniqueOrThrow({
+     * // Get one Client
+     * const client = await prisma.client.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ClienteFindUniqueOrThrowArgs>(args: SelectSubset<T, ClienteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ClientFindUniqueOrThrowArgs>(args: SelectSubset<T, ClientFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Cliente that matches the filter.
+     * Find the first Client that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteFindFirstArgs} args - Arguments to find a Cliente
+     * @param {ClientFindFirstArgs} args - Arguments to find a Client
      * @example
-     * // Get one Cliente
-     * const cliente = await prisma.cliente.findFirst({
+     * // Get one Client
+     * const client = await prisma.client.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ClienteFindFirstArgs>(args?: SelectSubset<T, ClienteFindFirstArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ClientFindFirstArgs>(args?: SelectSubset<T, ClientFindFirstArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Cliente that matches the filter or
+     * Find the first Client that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteFindFirstOrThrowArgs} args - Arguments to find a Cliente
+     * @param {ClientFindFirstOrThrowArgs} args - Arguments to find a Client
      * @example
-     * // Get one Cliente
-     * const cliente = await prisma.cliente.findFirstOrThrow({
+     * // Get one Client
+     * const client = await prisma.client.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ClienteFindFirstOrThrowArgs>(args?: SelectSubset<T, ClienteFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ClientFindFirstOrThrowArgs>(args?: SelectSubset<T, ClientFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Clientes that matches the filter.
+     * Find zero or more Clients that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ClientFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Clientes
-     * const clientes = await prisma.cliente.findMany()
+     * // Get all Clients
+     * const clients = await prisma.client.findMany()
      * 
-     * // Get first 10 Clientes
-     * const clientes = await prisma.cliente.findMany({ take: 10 })
+     * // Get first 10 Clients
+     * const clients = await prisma.client.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const clienteWithIdOnly = await prisma.cliente.findMany({ select: { id: true } })
+     * const clientWithIdOnly = await prisma.client.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ClienteFindManyArgs>(args?: SelectSubset<T, ClienteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ClientFindManyArgs>(args?: SelectSubset<T, ClientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Cliente.
-     * @param {ClienteCreateArgs} args - Arguments to create a Cliente.
+     * Create a Client.
+     * @param {ClientCreateArgs} args - Arguments to create a Client.
      * @example
-     * // Create one Cliente
-     * const Cliente = await prisma.cliente.create({
+     * // Create one Client
+     * const Client = await prisma.client.create({
      *   data: {
-     *     // ... data to create a Cliente
+     *     // ... data to create a Client
      *   }
      * })
      * 
      */
-    create<T extends ClienteCreateArgs>(args: SelectSubset<T, ClienteCreateArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ClientCreateArgs>(args: SelectSubset<T, ClientCreateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Clientes.
-     * @param {ClienteCreateManyArgs} args - Arguments to create many Clientes.
+     * Create many Clients.
+     * @param {ClientCreateManyArgs} args - Arguments to create many Clients.
      * @example
-     * // Create many Clientes
-     * const cliente = await prisma.cliente.createMany({
+     * // Create many Clients
+     * const client = await prisma.client.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ClienteCreateManyArgs>(args?: SelectSubset<T, ClienteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ClientCreateManyArgs>(args?: SelectSubset<T, ClientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Clientes and returns the data saved in the database.
-     * @param {ClienteCreateManyAndReturnArgs} args - Arguments to create many Clientes.
+     * Create many Clients and returns the data saved in the database.
+     * @param {ClientCreateManyAndReturnArgs} args - Arguments to create many Clients.
      * @example
-     * // Create many Clientes
-     * const cliente = await prisma.cliente.createManyAndReturn({
+     * // Create many Clients
+     * const client = await prisma.client.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Clientes and only return the `id`
-     * const clienteWithIdOnly = await prisma.cliente.createManyAndReturn({
+     * // Create many Clients and only return the `id`
+     * const clientWithIdOnly = await prisma.client.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -4176,28 +2984,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ClienteCreateManyAndReturnArgs>(args?: SelectSubset<T, ClienteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ClientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Cliente.
-     * @param {ClienteDeleteArgs} args - Arguments to delete one Cliente.
+     * Delete a Client.
+     * @param {ClientDeleteArgs} args - Arguments to delete one Client.
      * @example
-     * // Delete one Cliente
-     * const Cliente = await prisma.cliente.delete({
+     * // Delete one Client
+     * const Client = await prisma.client.delete({
      *   where: {
-     *     // ... filter to delete one Cliente
+     *     // ... filter to delete one Client
      *   }
      * })
      * 
      */
-    delete<T extends ClienteDeleteArgs>(args: SelectSubset<T, ClienteDeleteArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ClientDeleteArgs>(args: SelectSubset<T, ClientDeleteArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Cliente.
-     * @param {ClienteUpdateArgs} args - Arguments to update one Cliente.
+     * Update one Client.
+     * @param {ClientUpdateArgs} args - Arguments to update one Client.
      * @example
-     * // Update one Cliente
-     * const cliente = await prisma.cliente.update({
+     * // Update one Client
+     * const client = await prisma.client.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4207,30 +3015,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ClienteUpdateArgs>(args: SelectSubset<T, ClienteUpdateArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ClientUpdateArgs>(args: SelectSubset<T, ClientUpdateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Clientes.
-     * @param {ClienteDeleteManyArgs} args - Arguments to filter Clientes to delete.
+     * Delete zero or more Clients.
+     * @param {ClientDeleteManyArgs} args - Arguments to filter Clients to delete.
      * @example
-     * // Delete a few Clientes
-     * const { count } = await prisma.cliente.deleteMany({
+     * // Delete a few Clients
+     * const { count } = await prisma.client.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ClienteDeleteManyArgs>(args?: SelectSubset<T, ClienteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ClientDeleteManyArgs>(args?: SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clientes.
+     * Update zero or more Clients.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ClientUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Clientes
-     * const cliente = await prisma.cliente.updateMany({
+     * // Update many Clients
+     * const client = await prisma.client.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4240,14 +3048,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ClienteUpdateManyArgs>(args: SelectSubset<T, ClienteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ClientUpdateManyArgs>(args: SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clientes and returns the data updated in the database.
-     * @param {ClienteUpdateManyAndReturnArgs} args - Arguments to update many Clientes.
+     * Update zero or more Clients and returns the data updated in the database.
+     * @param {ClientUpdateManyAndReturnArgs} args - Arguments to update many Clients.
      * @example
-     * // Update many Clientes
-     * const cliente = await prisma.cliente.updateManyAndReturn({
+     * // Update many Clients
+     * const client = await prisma.client.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4256,8 +3064,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Clientes and only return the `id`
-     * const clienteWithIdOnly = await prisma.cliente.updateManyAndReturn({
+     * // Update zero or more Clients and only return the `id`
+     * const clientWithIdOnly = await prisma.client.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -4270,56 +3078,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ClienteUpdateManyAndReturnArgs>(args: SelectSubset<T, ClienteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ClientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Cliente.
-     * @param {ClienteUpsertArgs} args - Arguments to update or create a Cliente.
+     * Create or update one Client.
+     * @param {ClientUpsertArgs} args - Arguments to update or create a Client.
      * @example
-     * // Update or create a Cliente
-     * const cliente = await prisma.cliente.upsert({
+     * // Update or create a Client
+     * const client = await prisma.client.upsert({
      *   create: {
-     *     // ... data to create a Cliente
+     *     // ... data to create a Client
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Cliente we want to update
+     *     // ... the filter for the Client we want to update
      *   }
      * })
      */
-    upsert<T extends ClienteUpsertArgs>(args: SelectSubset<T, ClienteUpsertArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ClientUpsertArgs>(args: SelectSubset<T, ClientUpsertArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Clientes.
+     * Count the number of Clients.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteCountArgs} args - Arguments to filter Clientes to count.
+     * @param {ClientCountArgs} args - Arguments to filter Clients to count.
      * @example
-     * // Count the number of Clientes
-     * const count = await prisma.cliente.count({
+     * // Count the number of Clients
+     * const count = await prisma.client.count({
      *   where: {
-     *     // ... the filter for the Clientes we want to count
+     *     // ... the filter for the Clients we want to count
      *   }
      * })
     **/
-    count<T extends ClienteCountArgs>(
-      args?: Subset<T, ClienteCountArgs>,
+    count<T extends ClientCountArgs>(
+      args?: Subset<T, ClientCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ClienteCountAggregateOutputType>
+          : GetScalarType<T['select'], ClientCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Cliente.
+     * Allows you to perform aggregations operations on a Client.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ClientAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4339,13 +3147,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ClienteAggregateArgs>(args: Subset<T, ClienteAggregateArgs>): Prisma.PrismaPromise<GetClienteAggregateType<T>>
+    aggregate<T extends ClientAggregateArgs>(args: Subset<T, ClientAggregateArgs>): Prisma.PrismaPromise<GetClientAggregateType<T>>
 
     /**
-     * Group by Cliente.
+     * Group by Client.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClienteGroupByArgs} args - Group by arguments.
+     * @param {ClientGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4360,14 +3168,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ClienteGroupByArgs,
+      T extends ClientGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ClienteGroupByArgs['orderBy'] }
-        : { orderBy?: ClienteGroupByArgs['orderBy'] },
+        ? { orderBy: ClientGroupByArgs['orderBy'] }
+        : { orderBy?: ClientGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4416,23 +3224,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ClienteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClienteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ClientGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClientGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Cliente model
+   * Fields of the Client model
    */
-  readonly fields: ClienteFieldRefs;
+  readonly fields: ClientFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Cliente.
+   * The delegate class that acts as a "Promise-like" for Client.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ClienteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    relatoriosDiarios<T extends Cliente$relatoriosDiariosArgs<ExtArgs> = {}>(args?: Subset<T, Cliente$relatoriosDiariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    relatoriosMensais<T extends Cliente$relatoriosMensaisArgs<ExtArgs> = {}>(args?: Subset<T, Cliente$relatoriosMensaisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyReports<T extends Client$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Client$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    monthlyReports<T extends Client$monthlyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Client$monthlyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4459,852 +3267,852 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Cliente model
+   * Fields of the Client model
    */
-  interface ClienteFieldRefs {
-    readonly id: FieldRef<"Cliente", 'Int'>
-    readonly nome: FieldRef<"Cliente", 'String'>
-    readonly CPF: FieldRef<"Cliente", 'String'>
-    readonly CNPJ: FieldRef<"Cliente", 'String'>
-    readonly endereco: FieldRef<"Cliente", 'String'>
-    readonly telefone: FieldRef<"Cliente", 'String'>
-    readonly codigoIdentificacao: FieldRef<"Cliente", 'String'>
+  interface ClientFieldRefs {
+    readonly id: FieldRef<"Client", 'Int'>
+    readonly name: FieldRef<"Client", 'String'>
+    readonly cpf: FieldRef<"Client", 'String'>
+    readonly cnpj: FieldRef<"Client", 'String'>
+    readonly address: FieldRef<"Client", 'String'>
+    readonly phone: FieldRef<"Client", 'String'>
+    readonly identificationCode: FieldRef<"Client", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Cliente findUnique
+   * Client findUnique
    */
-  export type ClienteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter, which Cliente to fetch.
+     * Filter, which Client to fetch.
      */
-    where: ClienteWhereUniqueInput
+    where: ClientWhereUniqueInput
   }
 
   /**
-   * Cliente findUniqueOrThrow
+   * Client findUniqueOrThrow
    */
-  export type ClienteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter, which Cliente to fetch.
+     * Filter, which Client to fetch.
      */
-    where: ClienteWhereUniqueInput
+    where: ClientWhereUniqueInput
   }
 
   /**
-   * Cliente findFirst
+   * Client findFirst
    */
-  export type ClienteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter, which Cliente to fetch.
+     * Filter, which Client to fetch.
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clientes to fetch.
+     * Determine the order of Clients to fetch.
      */
-    orderBy?: ClienteOrderByWithRelationInput | ClienteOrderByWithRelationInput[]
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clientes.
+     * Sets the position for searching for Clients.
      */
-    cursor?: ClienteWhereUniqueInput
+    cursor?: ClientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clientes from the position of the cursor.
+     * Take `±n` Clients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clientes.
+     * Skip the first `n` Clients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clientes.
+     * Filter by unique combinations of Clients.
      */
-    distinct?: ClienteScalarFieldEnum | ClienteScalarFieldEnum[]
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
   }
 
   /**
-   * Cliente findFirstOrThrow
+   * Client findFirstOrThrow
    */
-  export type ClienteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter, which Cliente to fetch.
+     * Filter, which Client to fetch.
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clientes to fetch.
+     * Determine the order of Clients to fetch.
      */
-    orderBy?: ClienteOrderByWithRelationInput | ClienteOrderByWithRelationInput[]
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clientes.
+     * Sets the position for searching for Clients.
      */
-    cursor?: ClienteWhereUniqueInput
+    cursor?: ClientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clientes from the position of the cursor.
+     * Take `±n` Clients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clientes.
+     * Skip the first `n` Clients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clientes.
+     * Filter by unique combinations of Clients.
      */
-    distinct?: ClienteScalarFieldEnum | ClienteScalarFieldEnum[]
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
   }
 
   /**
-   * Cliente findMany
+   * Client findMany
    */
-  export type ClienteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter, which Clientes to fetch.
+     * Filter, which Clients to fetch.
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clientes to fetch.
+     * Determine the order of Clients to fetch.
      */
-    orderBy?: ClienteOrderByWithRelationInput | ClienteOrderByWithRelationInput[]
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Clientes.
+     * Sets the position for listing Clients.
      */
-    cursor?: ClienteWhereUniqueInput
+    cursor?: ClientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clientes from the position of the cursor.
+     * Take `±n` Clients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clientes.
+     * Skip the first `n` Clients.
      */
     skip?: number
-    distinct?: ClienteScalarFieldEnum | ClienteScalarFieldEnum[]
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
   }
 
   /**
-   * Cliente create
+   * Client create
    */
-  export type ClienteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * The data needed to create a Cliente.
+     * The data needed to create a Client.
      */
-    data: XOR<ClienteCreateInput, ClienteUncheckedCreateInput>
+    data: XOR<ClientCreateInput, ClientUncheckedCreateInput>
   }
 
   /**
-   * Cliente createMany
+   * Client createMany
    */
-  export type ClienteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Clientes.
+     * The data used to create many Clients.
      */
-    data: ClienteCreateManyInput | ClienteCreateManyInput[]
+    data: ClientCreateManyInput | ClientCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Cliente createManyAndReturn
+   * Client createManyAndReturn
    */
-  export type ClienteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ClientSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
-     * The data used to create many Clientes.
+     * The data used to create many Clients.
      */
-    data: ClienteCreateManyInput | ClienteCreateManyInput[]
+    data: ClientCreateManyInput | ClientCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Cliente update
+   * Client update
    */
-  export type ClienteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * The data needed to update a Cliente.
+     * The data needed to update a Client.
      */
-    data: XOR<ClienteUpdateInput, ClienteUncheckedUpdateInput>
+    data: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
     /**
-     * Choose, which Cliente to update.
+     * Choose, which Client to update.
      */
-    where: ClienteWhereUniqueInput
+    where: ClientWhereUniqueInput
   }
 
   /**
-   * Cliente updateMany
+   * Client updateMany
    */
-  export type ClienteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Clientes.
+     * The data used to update Clients.
      */
-    data: XOR<ClienteUpdateManyMutationInput, ClienteUncheckedUpdateManyInput>
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
     /**
-     * Filter which Clientes to update
+     * Filter which Clients to update
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
-     * Limit how many Clientes to update.
+     * Limit how many Clients to update.
      */
     limit?: number
   }
 
   /**
-   * Cliente updateManyAndReturn
+   * Client updateManyAndReturn
    */
-  export type ClienteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ClientSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
-     * The data used to update Clientes.
+     * The data used to update Clients.
      */
-    data: XOR<ClienteUpdateManyMutationInput, ClienteUncheckedUpdateManyInput>
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
     /**
-     * Filter which Clientes to update
+     * Filter which Clients to update
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
-     * Limit how many Clientes to update.
+     * Limit how many Clients to update.
      */
     limit?: number
   }
 
   /**
-   * Cliente upsert
+   * Client upsert
    */
-  export type ClienteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * The filter to search for the Cliente to update in case it exists.
+     * The filter to search for the Client to update in case it exists.
      */
-    where: ClienteWhereUniqueInput
+    where: ClientWhereUniqueInput
     /**
-     * In case the Cliente found by the `where` argument doesn't exist, create a new Cliente with this data.
+     * In case the Client found by the `where` argument doesn't exist, create a new Client with this data.
      */
-    create: XOR<ClienteCreateInput, ClienteUncheckedCreateInput>
+    create: XOR<ClientCreateInput, ClientUncheckedCreateInput>
     /**
-     * In case the Cliente was found with the provided `where` argument, update it with this data.
+     * In case the Client was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ClienteUpdateInput, ClienteUncheckedUpdateInput>
+    update: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
   }
 
   /**
-   * Cliente delete
+   * Client delete
    */
-  export type ClienteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
     /**
-     * Filter which Cliente to delete.
+     * Filter which Client to delete.
      */
-    where: ClienteWhereUniqueInput
+    where: ClientWhereUniqueInput
   }
 
   /**
-   * Cliente deleteMany
+   * Client deleteMany
    */
-  export type ClienteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Clientes to delete
+     * Filter which Clients to delete
      */
-    where?: ClienteWhereInput
+    where?: ClientWhereInput
     /**
-     * Limit how many Clientes to delete.
+     * Limit how many Clients to delete.
      */
     limit?: number
   }
 
   /**
-   * Cliente.relatoriosDiarios
+   * Client.dailyReports
    */
-  export type Cliente$relatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Client$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoDiariaWhereInput
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    include?: DailyShipmentReportInclude<ExtArgs> | null
+    where?: DailyShipmentReportWhereInput
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
+    cursor?: DailyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Cliente.relatoriosMensais
+   * Client.monthlyReports
    */
-  export type Cliente$relatoriosMensaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Client$monthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoMensalWhereInput
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
+    where?: MonthlyShipmentReportWhereInput
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoMensalScalarFieldEnum | RelatorioExpedicaoMensalScalarFieldEnum[]
+    distinct?: MonthlyShipmentReportScalarFieldEnum | MonthlyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Cliente without action
+   * Client without action
    */
-  export type ClienteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ClientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Cliente
+     * Select specific fields to fetch from the Client
      */
-    select?: ClienteSelect<ExtArgs> | null
+    select?: ClientSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Cliente
+     * Omit specific fields from the Client
      */
-    omit?: ClienteOmit<ExtArgs> | null
+    omit?: ClientOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClienteInclude<ExtArgs> | null
+    include?: ClientInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Produto
+   * Model Product
    */
 
-  export type AggregateProduto = {
-    _count: ProdutoCountAggregateOutputType | null
-    _avg: ProdutoAvgAggregateOutputType | null
-    _sum: ProdutoSumAggregateOutputType | null
-    _min: ProdutoMinAggregateOutputType | null
-    _max: ProdutoMaxAggregateOutputType | null
+  export type AggregateProduct = {
+    _count: ProductCountAggregateOutputType | null
+    _avg: ProductAvgAggregateOutputType | null
+    _sum: ProductSumAggregateOutputType | null
+    _min: ProductMinAggregateOutputType | null
+    _max: ProductMaxAggregateOutputType | null
   }
 
-  export type ProdutoAvgAggregateOutputType = {
+  export type ProductAvgAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
+    quantity: Decimal | null
   }
 
-  export type ProdutoSumAggregateOutputType = {
+  export type ProductSumAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
+    quantity: Decimal | null
   }
 
-  export type ProdutoMinAggregateOutputType = {
+  export type ProductMinAggregateOutputType = {
     id: number | null
-    nome: string | null
-    undMedida: string | null
-    quantidade: Decimal | null
-    validade: Date | null
+    name: string | null
+    unit: string | null
+    quantity: Decimal | null
+    expiration: Date | null
   }
 
-  export type ProdutoMaxAggregateOutputType = {
+  export type ProductMaxAggregateOutputType = {
     id: number | null
-    nome: string | null
-    undMedida: string | null
-    quantidade: Decimal | null
-    validade: Date | null
+    name: string | null
+    unit: string | null
+    quantity: Decimal | null
+    expiration: Date | null
   }
 
-  export type ProdutoCountAggregateOutputType = {
+  export type ProductCountAggregateOutputType = {
     id: number
-    nome: number
-    undMedida: number
-    quantidade: number
-    validade: number
+    name: number
+    unit: number
+    quantity: number
+    expiration: number
     _all: number
   }
 
 
-  export type ProdutoAvgAggregateInputType = {
+  export type ProductAvgAggregateInputType = {
     id?: true
-    quantidade?: true
+    quantity?: true
   }
 
-  export type ProdutoSumAggregateInputType = {
+  export type ProductSumAggregateInputType = {
     id?: true
-    quantidade?: true
+    quantity?: true
   }
 
-  export type ProdutoMinAggregateInputType = {
+  export type ProductMinAggregateInputType = {
     id?: true
-    nome?: true
-    undMedida?: true
-    quantidade?: true
-    validade?: true
+    name?: true
+    unit?: true
+    quantity?: true
+    expiration?: true
   }
 
-  export type ProdutoMaxAggregateInputType = {
+  export type ProductMaxAggregateInputType = {
     id?: true
-    nome?: true
-    undMedida?: true
-    quantidade?: true
-    validade?: true
+    name?: true
+    unit?: true
+    quantity?: true
+    expiration?: true
   }
 
-  export type ProdutoCountAggregateInputType = {
+  export type ProductCountAggregateInputType = {
     id?: true
-    nome?: true
-    undMedida?: true
-    quantidade?: true
-    validade?: true
+    name?: true
+    unit?: true
+    quantity?: true
+    expiration?: true
     _all?: true
   }
 
-  export type ProdutoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Produto to aggregate.
+     * Filter which Product to aggregate.
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Produtos to fetch.
+     * Determine the order of Products to fetch.
      */
-    orderBy?: ProdutoOrderByWithRelationInput | ProdutoOrderByWithRelationInput[]
+    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ProdutoWhereUniqueInput
+    cursor?: ProductWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Produtos from the position of the cursor.
+     * Take `±n` Products from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Produtos.
+     * Skip the first `n` Products.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Produtos
+     * Count returned Products
     **/
-    _count?: true | ProdutoCountAggregateInputType
+    _count?: true | ProductCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ProdutoAvgAggregateInputType
+    _avg?: ProductAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ProdutoSumAggregateInputType
+    _sum?: ProductSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ProdutoMinAggregateInputType
+    _min?: ProductMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ProdutoMaxAggregateInputType
+    _max?: ProductMaxAggregateInputType
   }
 
-  export type GetProdutoAggregateType<T extends ProdutoAggregateArgs> = {
-        [P in keyof T & keyof AggregateProduto]: P extends '_count' | 'count'
+  export type GetProductAggregateType<T extends ProductAggregateArgs> = {
+        [P in keyof T & keyof AggregateProduct]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateProduto[P]>
-      : GetScalarType<T[P], AggregateProduto[P]>
+        : GetScalarType<T[P], AggregateProduct[P]>
+      : GetScalarType<T[P], AggregateProduct[P]>
   }
 
 
 
 
-  export type ProdutoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProdutoWhereInput
-    orderBy?: ProdutoOrderByWithAggregationInput | ProdutoOrderByWithAggregationInput[]
-    by: ProdutoScalarFieldEnum[] | ProdutoScalarFieldEnum
-    having?: ProdutoScalarWhereWithAggregatesInput
+  export type ProductGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductWhereInput
+    orderBy?: ProductOrderByWithAggregationInput | ProductOrderByWithAggregationInput[]
+    by: ProductScalarFieldEnum[] | ProductScalarFieldEnum
+    having?: ProductScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ProdutoCountAggregateInputType | true
-    _avg?: ProdutoAvgAggregateInputType
-    _sum?: ProdutoSumAggregateInputType
-    _min?: ProdutoMinAggregateInputType
-    _max?: ProdutoMaxAggregateInputType
+    _count?: ProductCountAggregateInputType | true
+    _avg?: ProductAvgAggregateInputType
+    _sum?: ProductSumAggregateInputType
+    _min?: ProductMinAggregateInputType
+    _max?: ProductMaxAggregateInputType
   }
 
-  export type ProdutoGroupByOutputType = {
+  export type ProductGroupByOutputType = {
     id: number
-    nome: string
-    undMedida: string
-    quantidade: Decimal
-    validade: Date
-    _count: ProdutoCountAggregateOutputType | null
-    _avg: ProdutoAvgAggregateOutputType | null
-    _sum: ProdutoSumAggregateOutputType | null
-    _min: ProdutoMinAggregateOutputType | null
-    _max: ProdutoMaxAggregateOutputType | null
+    name: string
+    unit: string
+    quantity: Decimal
+    expiration: Date
+    _count: ProductCountAggregateOutputType | null
+    _avg: ProductAvgAggregateOutputType | null
+    _sum: ProductSumAggregateOutputType | null
+    _min: ProductMinAggregateOutputType | null
+    _max: ProductMaxAggregateOutputType | null
   }
 
-  type GetProdutoGroupByPayload<T extends ProdutoGroupByArgs> = Prisma.PrismaPromise<
+  type GetProductGroupByPayload<T extends ProductGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ProdutoGroupByOutputType, T['by']> &
+      PickEnumerable<ProductGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ProdutoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ProductGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ProdutoGroupByOutputType[P]>
-            : GetScalarType<T[P], ProdutoGroupByOutputType[P]>
+              : GetScalarType<T[P], ProductGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ProdutoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    undMedida?: boolean
-    quantidade?: boolean
-    validade?: boolean
-    relatoriosDiarios?: boolean | Produto$relatoriosDiariosArgs<ExtArgs>
-    relatoriosMensais?: boolean | Produto$relatoriosMensaisArgs<ExtArgs>
-    _count?: boolean | ProdutoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["produto"]>
+    name?: boolean
+    unit?: boolean
+    quantity?: boolean
+    expiration?: boolean
+    dailyReports?: boolean | Product$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Product$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["product"]>
 
-  export type ProdutoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    undMedida?: boolean
-    quantidade?: boolean
-    validade?: boolean
-  }, ExtArgs["result"]["produto"]>
+    name?: boolean
+    unit?: boolean
+    quantity?: boolean
+    expiration?: boolean
+  }, ExtArgs["result"]["product"]>
 
-  export type ProdutoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nome?: boolean
-    undMedida?: boolean
-    quantidade?: boolean
-    validade?: boolean
-  }, ExtArgs["result"]["produto"]>
+    name?: boolean
+    unit?: boolean
+    quantity?: boolean
+    expiration?: boolean
+  }, ExtArgs["result"]["product"]>
 
-  export type ProdutoSelectScalar = {
+  export type ProductSelectScalar = {
     id?: boolean
-    nome?: boolean
-    undMedida?: boolean
-    quantidade?: boolean
-    validade?: boolean
+    name?: boolean
+    unit?: boolean
+    quantity?: boolean
+    expiration?: boolean
   }
 
-  export type ProdutoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "undMedida" | "quantidade" | "validade", ExtArgs["result"]["produto"]>
-  export type ProdutoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | Produto$relatoriosDiariosArgs<ExtArgs>
-    relatoriosMensais?: boolean | Produto$relatoriosMensaisArgs<ExtArgs>
-    _count?: boolean | ProdutoCountOutputTypeDefaultArgs<ExtArgs>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unit" | "quantity" | "expiration", ExtArgs["result"]["product"]>
+  export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | Product$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Product$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ProdutoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ProdutoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $ProdutoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Produto"
+  export type $ProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Product"
     objects: {
-      relatoriosDiarios: Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>[]
-      relatoriosMensais: Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>[]
+      dailyReports: Prisma.$DailyShipmentReportPayload<ExtArgs>[]
+      monthlyReports: Prisma.$MonthlyShipmentReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      nome: string
-      undMedida: string
-      quantidade: Prisma.Decimal
-      validade: Date
-    }, ExtArgs["result"]["produto"]>
+      name: string
+      unit: string
+      quantity: Prisma.Decimal
+      expiration: Date
+    }, ExtArgs["result"]["product"]>
     composites: {}
   }
 
-  type ProdutoGetPayload<S extends boolean | null | undefined | ProdutoDefaultArgs> = $Result.GetResult<Prisma.$ProdutoPayload, S>
+  type ProductGetPayload<S extends boolean | null | undefined | ProductDefaultArgs> = $Result.GetResult<Prisma.$ProductPayload, S>
 
-  type ProdutoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProdutoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProdutoCountAggregateInputType | true
+  type ProductCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductCountAggregateInputType | true
     }
 
-  export interface ProdutoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Produto'], meta: { name: 'Produto' } }
+  export interface ProductDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Product'], meta: { name: 'Product' } }
     /**
-     * Find zero or one Produto that matches the filter.
-     * @param {ProdutoFindUniqueArgs} args - Arguments to find a Produto
+     * Find zero or one Product that matches the filter.
+     * @param {ProductFindUniqueArgs} args - Arguments to find a Product
      * @example
-     * // Get one Produto
-     * const produto = await prisma.produto.findUnique({
+     * // Get one Product
+     * const product = await prisma.product.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ProdutoFindUniqueArgs>(args: SelectSubset<T, ProdutoFindUniqueArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ProductFindUniqueArgs>(args: SelectSubset<T, ProductFindUniqueArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Produto that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Product that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ProdutoFindUniqueOrThrowArgs} args - Arguments to find a Produto
+     * @param {ProductFindUniqueOrThrowArgs} args - Arguments to find a Product
      * @example
-     * // Get one Produto
-     * const produto = await prisma.produto.findUniqueOrThrow({
+     * // Get one Product
+     * const product = await prisma.product.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ProdutoFindUniqueOrThrowArgs>(args: SelectSubset<T, ProdutoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ProductFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Produto that matches the filter.
+     * Find the first Product that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoFindFirstArgs} args - Arguments to find a Produto
+     * @param {ProductFindFirstArgs} args - Arguments to find a Product
      * @example
-     * // Get one Produto
-     * const produto = await prisma.produto.findFirst({
+     * // Get one Product
+     * const product = await prisma.product.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ProdutoFindFirstArgs>(args?: SelectSubset<T, ProdutoFindFirstArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ProductFindFirstArgs>(args?: SelectSubset<T, ProductFindFirstArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Produto that matches the filter or
+     * Find the first Product that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoFindFirstOrThrowArgs} args - Arguments to find a Produto
+     * @param {ProductFindFirstOrThrowArgs} args - Arguments to find a Product
      * @example
-     * // Get one Produto
-     * const produto = await prisma.produto.findFirstOrThrow({
+     * // Get one Product
+     * const product = await prisma.product.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ProdutoFindFirstOrThrowArgs>(args?: SelectSubset<T, ProdutoFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ProductFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Produtos that matches the filter.
+     * Find zero or more Products that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ProductFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Produtos
-     * const produtos = await prisma.produto.findMany()
+     * // Get all Products
+     * const products = await prisma.product.findMany()
      * 
-     * // Get first 10 Produtos
-     * const produtos = await prisma.produto.findMany({ take: 10 })
+     * // Get first 10 Products
+     * const products = await prisma.product.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const produtoWithIdOnly = await prisma.produto.findMany({ select: { id: true } })
+     * const productWithIdOnly = await prisma.product.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ProdutoFindManyArgs>(args?: SelectSubset<T, ProdutoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ProductFindManyArgs>(args?: SelectSubset<T, ProductFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Produto.
-     * @param {ProdutoCreateArgs} args - Arguments to create a Produto.
+     * Create a Product.
+     * @param {ProductCreateArgs} args - Arguments to create a Product.
      * @example
-     * // Create one Produto
-     * const Produto = await prisma.produto.create({
+     * // Create one Product
+     * const Product = await prisma.product.create({
      *   data: {
-     *     // ... data to create a Produto
+     *     // ... data to create a Product
      *   }
      * })
      * 
      */
-    create<T extends ProdutoCreateArgs>(args: SelectSubset<T, ProdutoCreateArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ProductCreateArgs>(args: SelectSubset<T, ProductCreateArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Produtos.
-     * @param {ProdutoCreateManyArgs} args - Arguments to create many Produtos.
+     * Create many Products.
+     * @param {ProductCreateManyArgs} args - Arguments to create many Products.
      * @example
-     * // Create many Produtos
-     * const produto = await prisma.produto.createMany({
+     * // Create many Products
+     * const product = await prisma.product.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ProdutoCreateManyArgs>(args?: SelectSubset<T, ProdutoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ProductCreateManyArgs>(args?: SelectSubset<T, ProductCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Produtos and returns the data saved in the database.
-     * @param {ProdutoCreateManyAndReturnArgs} args - Arguments to create many Produtos.
+     * Create many Products and returns the data saved in the database.
+     * @param {ProductCreateManyAndReturnArgs} args - Arguments to create many Products.
      * @example
-     * // Create many Produtos
-     * const produto = await prisma.produto.createManyAndReturn({
+     * // Create many Products
+     * const product = await prisma.product.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Produtos and only return the `id`
-     * const produtoWithIdOnly = await prisma.produto.createManyAndReturn({
+     * // Create many Products and only return the `id`
+     * const productWithIdOnly = await prisma.product.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -5314,28 +4122,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ProdutoCreateManyAndReturnArgs>(args?: SelectSubset<T, ProdutoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ProductCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Produto.
-     * @param {ProdutoDeleteArgs} args - Arguments to delete one Produto.
+     * Delete a Product.
+     * @param {ProductDeleteArgs} args - Arguments to delete one Product.
      * @example
-     * // Delete one Produto
-     * const Produto = await prisma.produto.delete({
+     * // Delete one Product
+     * const Product = await prisma.product.delete({
      *   where: {
-     *     // ... filter to delete one Produto
+     *     // ... filter to delete one Product
      *   }
      * })
      * 
      */
-    delete<T extends ProdutoDeleteArgs>(args: SelectSubset<T, ProdutoDeleteArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ProductDeleteArgs>(args: SelectSubset<T, ProductDeleteArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Produto.
-     * @param {ProdutoUpdateArgs} args - Arguments to update one Produto.
+     * Update one Product.
+     * @param {ProductUpdateArgs} args - Arguments to update one Product.
      * @example
-     * // Update one Produto
-     * const produto = await prisma.produto.update({
+     * // Update one Product
+     * const product = await prisma.product.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5345,30 +4153,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ProdutoUpdateArgs>(args: SelectSubset<T, ProdutoUpdateArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ProductUpdateArgs>(args: SelectSubset<T, ProductUpdateArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Produtos.
-     * @param {ProdutoDeleteManyArgs} args - Arguments to filter Produtos to delete.
+     * Delete zero or more Products.
+     * @param {ProductDeleteManyArgs} args - Arguments to filter Products to delete.
      * @example
-     * // Delete a few Produtos
-     * const { count } = await prisma.produto.deleteMany({
+     * // Delete a few Products
+     * const { count } = await prisma.product.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ProdutoDeleteManyArgs>(args?: SelectSubset<T, ProdutoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ProductDeleteManyArgs>(args?: SelectSubset<T, ProductDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Produtos.
+     * Update zero or more Products.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ProductUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Produtos
-     * const produto = await prisma.produto.updateMany({
+     * // Update many Products
+     * const product = await prisma.product.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5378,14 +4186,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ProdutoUpdateManyArgs>(args: SelectSubset<T, ProdutoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ProductUpdateManyArgs>(args: SelectSubset<T, ProductUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Produtos and returns the data updated in the database.
-     * @param {ProdutoUpdateManyAndReturnArgs} args - Arguments to update many Produtos.
+     * Update zero or more Products and returns the data updated in the database.
+     * @param {ProductUpdateManyAndReturnArgs} args - Arguments to update many Products.
      * @example
-     * // Update many Produtos
-     * const produto = await prisma.produto.updateManyAndReturn({
+     * // Update many Products
+     * const product = await prisma.product.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5394,8 +4202,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Produtos and only return the `id`
-     * const produtoWithIdOnly = await prisma.produto.updateManyAndReturn({
+     * // Update zero or more Products and only return the `id`
+     * const productWithIdOnly = await prisma.product.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5408,56 +4216,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ProdutoUpdateManyAndReturnArgs>(args: SelectSubset<T, ProdutoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ProductUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Produto.
-     * @param {ProdutoUpsertArgs} args - Arguments to update or create a Produto.
+     * Create or update one Product.
+     * @param {ProductUpsertArgs} args - Arguments to update or create a Product.
      * @example
-     * // Update or create a Produto
-     * const produto = await prisma.produto.upsert({
+     * // Update or create a Product
+     * const product = await prisma.product.upsert({
      *   create: {
-     *     // ... data to create a Produto
+     *     // ... data to create a Product
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Produto we want to update
+     *     // ... the filter for the Product we want to update
      *   }
      * })
      */
-    upsert<T extends ProdutoUpsertArgs>(args: SelectSubset<T, ProdutoUpsertArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ProductUpsertArgs>(args: SelectSubset<T, ProductUpsertArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Produtos.
+     * Count the number of Products.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoCountArgs} args - Arguments to filter Produtos to count.
+     * @param {ProductCountArgs} args - Arguments to filter Products to count.
      * @example
-     * // Count the number of Produtos
-     * const count = await prisma.produto.count({
+     * // Count the number of Products
+     * const count = await prisma.product.count({
      *   where: {
-     *     // ... the filter for the Produtos we want to count
+     *     // ... the filter for the Products we want to count
      *   }
      * })
     **/
-    count<T extends ProdutoCountArgs>(
-      args?: Subset<T, ProdutoCountArgs>,
+    count<T extends ProductCountArgs>(
+      args?: Subset<T, ProductCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ProdutoCountAggregateOutputType>
+          : GetScalarType<T['select'], ProductCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Produto.
+     * Allows you to perform aggregations operations on a Product.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ProductAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5477,13 +4285,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ProdutoAggregateArgs>(args: Subset<T, ProdutoAggregateArgs>): Prisma.PrismaPromise<GetProdutoAggregateType<T>>
+    aggregate<T extends ProductAggregateArgs>(args: Subset<T, ProductAggregateArgs>): Prisma.PrismaPromise<GetProductAggregateType<T>>
 
     /**
-     * Group by Produto.
+     * Group by Product.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProdutoGroupByArgs} args - Group by arguments.
+     * @param {ProductGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5498,14 +4306,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ProdutoGroupByArgs,
+      T extends ProductGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProdutoGroupByArgs['orderBy'] }
-        : { orderBy?: ProdutoGroupByArgs['orderBy'] },
+        ? { orderBy: ProductGroupByArgs['orderBy'] }
+        : { orderBy?: ProductGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5554,23 +4362,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ProdutoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProdutoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ProductGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Produto model
+   * Fields of the Product model
    */
-  readonly fields: ProdutoFieldRefs;
+  readonly fields: ProductFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Produto.
+   * The delegate class that acts as a "Promise-like" for Product.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProdutoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    relatoriosDiarios<T extends Produto$relatoriosDiariosArgs<ExtArgs> = {}>(args?: Subset<T, Produto$relatoriosDiariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    relatoriosMensais<T extends Produto$relatoriosMensaisArgs<ExtArgs> = {}>(args?: Subset<T, Produto$relatoriosMensaisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyReports<T extends Product$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Product$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    monthlyReports<T extends Product$monthlyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Product$monthlyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5597,843 +4405,843 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Produto model
+   * Fields of the Product model
    */
-  interface ProdutoFieldRefs {
-    readonly id: FieldRef<"Produto", 'Int'>
-    readonly nome: FieldRef<"Produto", 'String'>
-    readonly undMedida: FieldRef<"Produto", 'String'>
-    readonly quantidade: FieldRef<"Produto", 'Decimal'>
-    readonly validade: FieldRef<"Produto", 'DateTime'>
+  interface ProductFieldRefs {
+    readonly id: FieldRef<"Product", 'Int'>
+    readonly name: FieldRef<"Product", 'String'>
+    readonly unit: FieldRef<"Product", 'String'>
+    readonly quantity: FieldRef<"Product", 'Decimal'>
+    readonly expiration: FieldRef<"Product", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Produto findUnique
+   * Product findUnique
    */
-  export type ProdutoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter, which Produto to fetch.
+     * Filter, which Product to fetch.
      */
-    where: ProdutoWhereUniqueInput
+    where: ProductWhereUniqueInput
   }
 
   /**
-   * Produto findUniqueOrThrow
+   * Product findUniqueOrThrow
    */
-  export type ProdutoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter, which Produto to fetch.
+     * Filter, which Product to fetch.
      */
-    where: ProdutoWhereUniqueInput
+    where: ProductWhereUniqueInput
   }
 
   /**
-   * Produto findFirst
+   * Product findFirst
    */
-  export type ProdutoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter, which Produto to fetch.
+     * Filter, which Product to fetch.
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Produtos to fetch.
+     * Determine the order of Products to fetch.
      */
-    orderBy?: ProdutoOrderByWithRelationInput | ProdutoOrderByWithRelationInput[]
+    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Produtos.
+     * Sets the position for searching for Products.
      */
-    cursor?: ProdutoWhereUniqueInput
+    cursor?: ProductWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Produtos from the position of the cursor.
+     * Take `±n` Products from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Produtos.
+     * Skip the first `n` Products.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Produtos.
+     * Filter by unique combinations of Products.
      */
-    distinct?: ProdutoScalarFieldEnum | ProdutoScalarFieldEnum[]
+    distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
   }
 
   /**
-   * Produto findFirstOrThrow
+   * Product findFirstOrThrow
    */
-  export type ProdutoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter, which Produto to fetch.
+     * Filter, which Product to fetch.
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Produtos to fetch.
+     * Determine the order of Products to fetch.
      */
-    orderBy?: ProdutoOrderByWithRelationInput | ProdutoOrderByWithRelationInput[]
+    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Produtos.
+     * Sets the position for searching for Products.
      */
-    cursor?: ProdutoWhereUniqueInput
+    cursor?: ProductWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Produtos from the position of the cursor.
+     * Take `±n` Products from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Produtos.
+     * Skip the first `n` Products.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Produtos.
+     * Filter by unique combinations of Products.
      */
-    distinct?: ProdutoScalarFieldEnum | ProdutoScalarFieldEnum[]
+    distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
   }
 
   /**
-   * Produto findMany
+   * Product findMany
    */
-  export type ProdutoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter, which Produtos to fetch.
+     * Filter, which Products to fetch.
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Produtos to fetch.
+     * Determine the order of Products to fetch.
      */
-    orderBy?: ProdutoOrderByWithRelationInput | ProdutoOrderByWithRelationInput[]
+    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Produtos.
+     * Sets the position for listing Products.
      */
-    cursor?: ProdutoWhereUniqueInput
+    cursor?: ProductWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Produtos from the position of the cursor.
+     * Take `±n` Products from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Produtos.
+     * Skip the first `n` Products.
      */
     skip?: number
-    distinct?: ProdutoScalarFieldEnum | ProdutoScalarFieldEnum[]
+    distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
   }
 
   /**
-   * Produto create
+   * Product create
    */
-  export type ProdutoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * The data needed to create a Produto.
+     * The data needed to create a Product.
      */
-    data: XOR<ProdutoCreateInput, ProdutoUncheckedCreateInput>
+    data: XOR<ProductCreateInput, ProductUncheckedCreateInput>
   }
 
   /**
-   * Produto createMany
+   * Product createMany
    */
-  export type ProdutoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Produtos.
+     * The data used to create many Products.
      */
-    data: ProdutoCreateManyInput | ProdutoCreateManyInput[]
+    data: ProductCreateManyInput | ProductCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Produto createManyAndReturn
+   * Product createManyAndReturn
    */
-  export type ProdutoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ProductSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
-     * The data used to create many Produtos.
+     * The data used to create many Products.
      */
-    data: ProdutoCreateManyInput | ProdutoCreateManyInput[]
+    data: ProductCreateManyInput | ProductCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Produto update
+   * Product update
    */
-  export type ProdutoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * The data needed to update a Produto.
+     * The data needed to update a Product.
      */
-    data: XOR<ProdutoUpdateInput, ProdutoUncheckedUpdateInput>
+    data: XOR<ProductUpdateInput, ProductUncheckedUpdateInput>
     /**
-     * Choose, which Produto to update.
+     * Choose, which Product to update.
      */
-    where: ProdutoWhereUniqueInput
+    where: ProductWhereUniqueInput
   }
 
   /**
-   * Produto updateMany
+   * Product updateMany
    */
-  export type ProdutoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Produtos.
+     * The data used to update Products.
      */
-    data: XOR<ProdutoUpdateManyMutationInput, ProdutoUncheckedUpdateManyInput>
+    data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyInput>
     /**
-     * Filter which Produtos to update
+     * Filter which Products to update
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
-     * Limit how many Produtos to update.
+     * Limit how many Products to update.
      */
     limit?: number
   }
 
   /**
-   * Produto updateManyAndReturn
+   * Product updateManyAndReturn
    */
-  export type ProdutoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ProductSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
-     * The data used to update Produtos.
+     * The data used to update Products.
      */
-    data: XOR<ProdutoUpdateManyMutationInput, ProdutoUncheckedUpdateManyInput>
+    data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyInput>
     /**
-     * Filter which Produtos to update
+     * Filter which Products to update
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
-     * Limit how many Produtos to update.
+     * Limit how many Products to update.
      */
     limit?: number
   }
 
   /**
-   * Produto upsert
+   * Product upsert
    */
-  export type ProdutoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * The filter to search for the Produto to update in case it exists.
+     * The filter to search for the Product to update in case it exists.
      */
-    where: ProdutoWhereUniqueInput
+    where: ProductWhereUniqueInput
     /**
-     * In case the Produto found by the `where` argument doesn't exist, create a new Produto with this data.
+     * In case the Product found by the `where` argument doesn't exist, create a new Product with this data.
      */
-    create: XOR<ProdutoCreateInput, ProdutoUncheckedCreateInput>
+    create: XOR<ProductCreateInput, ProductUncheckedCreateInput>
     /**
-     * In case the Produto was found with the provided `where` argument, update it with this data.
+     * In case the Product was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ProdutoUpdateInput, ProdutoUncheckedUpdateInput>
+    update: XOR<ProductUpdateInput, ProductUncheckedUpdateInput>
   }
 
   /**
-   * Produto delete
+   * Product delete
    */
-  export type ProdutoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
     /**
-     * Filter which Produto to delete.
+     * Filter which Product to delete.
      */
-    where: ProdutoWhereUniqueInput
+    where: ProductWhereUniqueInput
   }
 
   /**
-   * Produto deleteMany
+   * Product deleteMany
    */
-  export type ProdutoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Produtos to delete
+     * Filter which Products to delete
      */
-    where?: ProdutoWhereInput
+    where?: ProductWhereInput
     /**
-     * Limit how many Produtos to delete.
+     * Limit how many Products to delete.
      */
     limit?: number
   }
 
   /**
-   * Produto.relatoriosDiarios
+   * Product.dailyReports
    */
-  export type Produto$relatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoDiariaWhereInput
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    include?: DailyShipmentReportInclude<ExtArgs> | null
+    where?: DailyShipmentReportWhereInput
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
+    cursor?: DailyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Produto.relatoriosMensais
+   * Product.monthlyReports
    */
-  export type Produto$relatoriosMensaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$monthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoMensalWhereInput
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
+    where?: MonthlyShipmentReportWhereInput
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoMensalScalarFieldEnum | RelatorioExpedicaoMensalScalarFieldEnum[]
+    distinct?: MonthlyShipmentReportScalarFieldEnum | MonthlyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Produto without action
+   * Product without action
    */
-  export type ProdutoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Produto
+     * Select specific fields to fetch from the Product
      */
-    select?: ProdutoSelect<ExtArgs> | null
+    select?: ProductSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Produto
+     * Omit specific fields from the Product
      */
-    omit?: ProdutoOmit<ExtArgs> | null
+    omit?: ProductOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProdutoInclude<ExtArgs> | null
+    include?: ProductInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Veiculo
+   * Model Vehicle
    */
 
-  export type AggregateVeiculo = {
-    _count: VeiculoCountAggregateOutputType | null
-    _avg: VeiculoAvgAggregateOutputType | null
-    _sum: VeiculoSumAggregateOutputType | null
-    _min: VeiculoMinAggregateOutputType | null
-    _max: VeiculoMaxAggregateOutputType | null
+  export type AggregateVehicle = {
+    _count: VehicleCountAggregateOutputType | null
+    _avg: VehicleAvgAggregateOutputType | null
+    _sum: VehicleSumAggregateOutputType | null
+    _min: VehicleMinAggregateOutputType | null
+    _max: VehicleMaxAggregateOutputType | null
   }
 
-  export type VeiculoAvgAggregateOutputType = {
+  export type VehicleAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type VeiculoSumAggregateOutputType = {
+  export type VehicleSumAggregateOutputType = {
     id: number | null
   }
 
-  export type VeiculoMinAggregateOutputType = {
+  export type VehicleMinAggregateOutputType = {
     id: number | null
-    modelo: string | null
-    placa: string | null
-    categoria: string | null
-    marca: string | null
+    model: string | null
+    plate: string | null
+    category: string | null
+    brand: string | null
   }
 
-  export type VeiculoMaxAggregateOutputType = {
+  export type VehicleMaxAggregateOutputType = {
     id: number | null
-    modelo: string | null
-    placa: string | null
-    categoria: string | null
-    marca: string | null
+    model: string | null
+    plate: string | null
+    category: string | null
+    brand: string | null
   }
 
-  export type VeiculoCountAggregateOutputType = {
+  export type VehicleCountAggregateOutputType = {
     id: number
-    modelo: number
-    placa: number
-    categoria: number
-    marca: number
+    model: number
+    plate: number
+    category: number
+    brand: number
     _all: number
   }
 
 
-  export type VeiculoAvgAggregateInputType = {
+  export type VehicleAvgAggregateInputType = {
     id?: true
   }
 
-  export type VeiculoSumAggregateInputType = {
+  export type VehicleSumAggregateInputType = {
     id?: true
   }
 
-  export type VeiculoMinAggregateInputType = {
+  export type VehicleMinAggregateInputType = {
     id?: true
-    modelo?: true
-    placa?: true
-    categoria?: true
-    marca?: true
+    model?: true
+    plate?: true
+    category?: true
+    brand?: true
   }
 
-  export type VeiculoMaxAggregateInputType = {
+  export type VehicleMaxAggregateInputType = {
     id?: true
-    modelo?: true
-    placa?: true
-    categoria?: true
-    marca?: true
+    model?: true
+    plate?: true
+    category?: true
+    brand?: true
   }
 
-  export type VeiculoCountAggregateInputType = {
+  export type VehicleCountAggregateInputType = {
     id?: true
-    modelo?: true
-    placa?: true
-    categoria?: true
-    marca?: true
+    model?: true
+    plate?: true
+    category?: true
+    brand?: true
     _all?: true
   }
 
-  export type VeiculoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Veiculo to aggregate.
+     * Filter which Vehicle to aggregate.
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Veiculos to fetch.
+     * Determine the order of Vehicles to fetch.
      */
-    orderBy?: VeiculoOrderByWithRelationInput | VeiculoOrderByWithRelationInput[]
+    orderBy?: VehicleOrderByWithRelationInput | VehicleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: VeiculoWhereUniqueInput
+    cursor?: VehicleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Veiculos from the position of the cursor.
+     * Take `±n` Vehicles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Veiculos.
+     * Skip the first `n` Vehicles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Veiculos
+     * Count returned Vehicles
     **/
-    _count?: true | VeiculoCountAggregateInputType
+    _count?: true | VehicleCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: VeiculoAvgAggregateInputType
+    _avg?: VehicleAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: VeiculoSumAggregateInputType
+    _sum?: VehicleSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: VeiculoMinAggregateInputType
+    _min?: VehicleMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: VeiculoMaxAggregateInputType
+    _max?: VehicleMaxAggregateInputType
   }
 
-  export type GetVeiculoAggregateType<T extends VeiculoAggregateArgs> = {
-        [P in keyof T & keyof AggregateVeiculo]: P extends '_count' | 'count'
+  export type GetVehicleAggregateType<T extends VehicleAggregateArgs> = {
+        [P in keyof T & keyof AggregateVehicle]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateVeiculo[P]>
-      : GetScalarType<T[P], AggregateVeiculo[P]>
+        : GetScalarType<T[P], AggregateVehicle[P]>
+      : GetScalarType<T[P], AggregateVehicle[P]>
   }
 
 
 
 
-  export type VeiculoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VeiculoWhereInput
-    orderBy?: VeiculoOrderByWithAggregationInput | VeiculoOrderByWithAggregationInput[]
-    by: VeiculoScalarFieldEnum[] | VeiculoScalarFieldEnum
-    having?: VeiculoScalarWhereWithAggregatesInput
+  export type VehicleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VehicleWhereInput
+    orderBy?: VehicleOrderByWithAggregationInput | VehicleOrderByWithAggregationInput[]
+    by: VehicleScalarFieldEnum[] | VehicleScalarFieldEnum
+    having?: VehicleScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: VeiculoCountAggregateInputType | true
-    _avg?: VeiculoAvgAggregateInputType
-    _sum?: VeiculoSumAggregateInputType
-    _min?: VeiculoMinAggregateInputType
-    _max?: VeiculoMaxAggregateInputType
+    _count?: VehicleCountAggregateInputType | true
+    _avg?: VehicleAvgAggregateInputType
+    _sum?: VehicleSumAggregateInputType
+    _min?: VehicleMinAggregateInputType
+    _max?: VehicleMaxAggregateInputType
   }
 
-  export type VeiculoGroupByOutputType = {
+  export type VehicleGroupByOutputType = {
     id: number
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
-    _count: VeiculoCountAggregateOutputType | null
-    _avg: VeiculoAvgAggregateOutputType | null
-    _sum: VeiculoSumAggregateOutputType | null
-    _min: VeiculoMinAggregateOutputType | null
-    _max: VeiculoMaxAggregateOutputType | null
+    model: string
+    plate: string
+    category: string
+    brand: string
+    _count: VehicleCountAggregateOutputType | null
+    _avg: VehicleAvgAggregateOutputType | null
+    _sum: VehicleSumAggregateOutputType | null
+    _min: VehicleMinAggregateOutputType | null
+    _max: VehicleMaxAggregateOutputType | null
   }
 
-  type GetVeiculoGroupByPayload<T extends VeiculoGroupByArgs> = Prisma.PrismaPromise<
+  type GetVehicleGroupByPayload<T extends VehicleGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<VeiculoGroupByOutputType, T['by']> &
+      PickEnumerable<VehicleGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof VeiculoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof VehicleGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], VeiculoGroupByOutputType[P]>
-            : GetScalarType<T[P], VeiculoGroupByOutputType[P]>
+              : GetScalarType<T[P], VehicleGroupByOutputType[P]>
+            : GetScalarType<T[P], VehicleGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type VeiculoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type VehicleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    modelo?: boolean
-    placa?: boolean
-    categoria?: boolean
-    marca?: boolean
-    relatoriosDiarios?: boolean | Veiculo$relatoriosDiariosArgs<ExtArgs>
-    _count?: boolean | VeiculoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["veiculo"]>
+    model?: boolean
+    plate?: boolean
+    category?: boolean
+    brand?: boolean
+    dailyReports?: boolean | Vehicle$dailyReportsArgs<ExtArgs>
+    _count?: boolean | VehicleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vehicle"]>
 
-  export type VeiculoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type VehicleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    modelo?: boolean
-    placa?: boolean
-    categoria?: boolean
-    marca?: boolean
-  }, ExtArgs["result"]["veiculo"]>
+    model?: boolean
+    plate?: boolean
+    category?: boolean
+    brand?: boolean
+  }, ExtArgs["result"]["vehicle"]>
 
-  export type VeiculoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type VehicleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    modelo?: boolean
-    placa?: boolean
-    categoria?: boolean
-    marca?: boolean
-  }, ExtArgs["result"]["veiculo"]>
+    model?: boolean
+    plate?: boolean
+    category?: boolean
+    brand?: boolean
+  }, ExtArgs["result"]["vehicle"]>
 
-  export type VeiculoSelectScalar = {
+  export type VehicleSelectScalar = {
     id?: boolean
-    modelo?: boolean
-    placa?: boolean
-    categoria?: boolean
-    marca?: boolean
+    model?: boolean
+    plate?: boolean
+    category?: boolean
+    brand?: boolean
   }
 
-  export type VeiculoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "modelo" | "placa" | "categoria" | "marca", ExtArgs["result"]["veiculo"]>
-  export type VeiculoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    relatoriosDiarios?: boolean | Veiculo$relatoriosDiariosArgs<ExtArgs>
-    _count?: boolean | VeiculoCountOutputTypeDefaultArgs<ExtArgs>
+  export type VehicleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "model" | "plate" | "category" | "brand", ExtArgs["result"]["vehicle"]>
+  export type VehicleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | Vehicle$dailyReportsArgs<ExtArgs>
+    _count?: boolean | VehicleCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VeiculoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VeiculoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VehicleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VehicleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $VeiculoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Veiculo"
+  export type $VehiclePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vehicle"
     objects: {
-      relatoriosDiarios: Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>[]
+      dailyReports: Prisma.$DailyShipmentReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      modelo: string
-      placa: string
-      categoria: string
-      marca: string
-    }, ExtArgs["result"]["veiculo"]>
+      model: string
+      plate: string
+      category: string
+      brand: string
+    }, ExtArgs["result"]["vehicle"]>
     composites: {}
   }
 
-  type VeiculoGetPayload<S extends boolean | null | undefined | VeiculoDefaultArgs> = $Result.GetResult<Prisma.$VeiculoPayload, S>
+  type VehicleGetPayload<S extends boolean | null | undefined | VehicleDefaultArgs> = $Result.GetResult<Prisma.$VehiclePayload, S>
 
-  type VeiculoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<VeiculoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: VeiculoCountAggregateInputType | true
+  type VehicleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VehicleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VehicleCountAggregateInputType | true
     }
 
-  export interface VeiculoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Veiculo'], meta: { name: 'Veiculo' } }
+  export interface VehicleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vehicle'], meta: { name: 'Vehicle' } }
     /**
-     * Find zero or one Veiculo that matches the filter.
-     * @param {VeiculoFindUniqueArgs} args - Arguments to find a Veiculo
+     * Find zero or one Vehicle that matches the filter.
+     * @param {VehicleFindUniqueArgs} args - Arguments to find a Vehicle
      * @example
-     * // Get one Veiculo
-     * const veiculo = await prisma.veiculo.findUnique({
+     * // Get one Vehicle
+     * const vehicle = await prisma.vehicle.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends VeiculoFindUniqueArgs>(args: SelectSubset<T, VeiculoFindUniqueArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends VehicleFindUniqueArgs>(args: SelectSubset<T, VehicleFindUniqueArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Veiculo that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Vehicle that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {VeiculoFindUniqueOrThrowArgs} args - Arguments to find a Veiculo
+     * @param {VehicleFindUniqueOrThrowArgs} args - Arguments to find a Vehicle
      * @example
-     * // Get one Veiculo
-     * const veiculo = await prisma.veiculo.findUniqueOrThrow({
+     * // Get one Vehicle
+     * const vehicle = await prisma.vehicle.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends VeiculoFindUniqueOrThrowArgs>(args: SelectSubset<T, VeiculoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends VehicleFindUniqueOrThrowArgs>(args: SelectSubset<T, VehicleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Veiculo that matches the filter.
+     * Find the first Vehicle that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoFindFirstArgs} args - Arguments to find a Veiculo
+     * @param {VehicleFindFirstArgs} args - Arguments to find a Vehicle
      * @example
-     * // Get one Veiculo
-     * const veiculo = await prisma.veiculo.findFirst({
+     * // Get one Vehicle
+     * const vehicle = await prisma.vehicle.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends VeiculoFindFirstArgs>(args?: SelectSubset<T, VeiculoFindFirstArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends VehicleFindFirstArgs>(args?: SelectSubset<T, VehicleFindFirstArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Veiculo that matches the filter or
+     * Find the first Vehicle that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoFindFirstOrThrowArgs} args - Arguments to find a Veiculo
+     * @param {VehicleFindFirstOrThrowArgs} args - Arguments to find a Vehicle
      * @example
-     * // Get one Veiculo
-     * const veiculo = await prisma.veiculo.findFirstOrThrow({
+     * // Get one Vehicle
+     * const vehicle = await prisma.vehicle.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends VeiculoFindFirstOrThrowArgs>(args?: SelectSubset<T, VeiculoFindFirstOrThrowArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends VehicleFindFirstOrThrowArgs>(args?: SelectSubset<T, VehicleFindFirstOrThrowArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Veiculos that matches the filter.
+     * Find zero or more Vehicles that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {VehicleFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Veiculos
-     * const veiculos = await prisma.veiculo.findMany()
+     * // Get all Vehicles
+     * const vehicles = await prisma.vehicle.findMany()
      * 
-     * // Get first 10 Veiculos
-     * const veiculos = await prisma.veiculo.findMany({ take: 10 })
+     * // Get first 10 Vehicles
+     * const vehicles = await prisma.vehicle.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const veiculoWithIdOnly = await prisma.veiculo.findMany({ select: { id: true } })
+     * const vehicleWithIdOnly = await prisma.vehicle.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends VeiculoFindManyArgs>(args?: SelectSubset<T, VeiculoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends VehicleFindManyArgs>(args?: SelectSubset<T, VehicleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Veiculo.
-     * @param {VeiculoCreateArgs} args - Arguments to create a Veiculo.
+     * Create a Vehicle.
+     * @param {VehicleCreateArgs} args - Arguments to create a Vehicle.
      * @example
-     * // Create one Veiculo
-     * const Veiculo = await prisma.veiculo.create({
+     * // Create one Vehicle
+     * const Vehicle = await prisma.vehicle.create({
      *   data: {
-     *     // ... data to create a Veiculo
+     *     // ... data to create a Vehicle
      *   }
      * })
      * 
      */
-    create<T extends VeiculoCreateArgs>(args: SelectSubset<T, VeiculoCreateArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends VehicleCreateArgs>(args: SelectSubset<T, VehicleCreateArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Veiculos.
-     * @param {VeiculoCreateManyArgs} args - Arguments to create many Veiculos.
+     * Create many Vehicles.
+     * @param {VehicleCreateManyArgs} args - Arguments to create many Vehicles.
      * @example
-     * // Create many Veiculos
-     * const veiculo = await prisma.veiculo.createMany({
+     * // Create many Vehicles
+     * const vehicle = await prisma.vehicle.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends VeiculoCreateManyArgs>(args?: SelectSubset<T, VeiculoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends VehicleCreateManyArgs>(args?: SelectSubset<T, VehicleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Veiculos and returns the data saved in the database.
-     * @param {VeiculoCreateManyAndReturnArgs} args - Arguments to create many Veiculos.
+     * Create many Vehicles and returns the data saved in the database.
+     * @param {VehicleCreateManyAndReturnArgs} args - Arguments to create many Vehicles.
      * @example
-     * // Create many Veiculos
-     * const veiculo = await prisma.veiculo.createManyAndReturn({
+     * // Create many Vehicles
+     * const vehicle = await prisma.vehicle.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Veiculos and only return the `id`
-     * const veiculoWithIdOnly = await prisma.veiculo.createManyAndReturn({
+     * // Create many Vehicles and only return the `id`
+     * const vehicleWithIdOnly = await prisma.vehicle.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -6443,28 +5251,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends VeiculoCreateManyAndReturnArgs>(args?: SelectSubset<T, VeiculoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends VehicleCreateManyAndReturnArgs>(args?: SelectSubset<T, VehicleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Veiculo.
-     * @param {VeiculoDeleteArgs} args - Arguments to delete one Veiculo.
+     * Delete a Vehicle.
+     * @param {VehicleDeleteArgs} args - Arguments to delete one Vehicle.
      * @example
-     * // Delete one Veiculo
-     * const Veiculo = await prisma.veiculo.delete({
+     * // Delete one Vehicle
+     * const Vehicle = await prisma.vehicle.delete({
      *   where: {
-     *     // ... filter to delete one Veiculo
+     *     // ... filter to delete one Vehicle
      *   }
      * })
      * 
      */
-    delete<T extends VeiculoDeleteArgs>(args: SelectSubset<T, VeiculoDeleteArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends VehicleDeleteArgs>(args: SelectSubset<T, VehicleDeleteArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Veiculo.
-     * @param {VeiculoUpdateArgs} args - Arguments to update one Veiculo.
+     * Update one Vehicle.
+     * @param {VehicleUpdateArgs} args - Arguments to update one Vehicle.
      * @example
-     * // Update one Veiculo
-     * const veiculo = await prisma.veiculo.update({
+     * // Update one Vehicle
+     * const vehicle = await prisma.vehicle.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6474,30 +5282,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends VeiculoUpdateArgs>(args: SelectSubset<T, VeiculoUpdateArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends VehicleUpdateArgs>(args: SelectSubset<T, VehicleUpdateArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Veiculos.
-     * @param {VeiculoDeleteManyArgs} args - Arguments to filter Veiculos to delete.
+     * Delete zero or more Vehicles.
+     * @param {VehicleDeleteManyArgs} args - Arguments to filter Vehicles to delete.
      * @example
-     * // Delete a few Veiculos
-     * const { count } = await prisma.veiculo.deleteMany({
+     * // Delete a few Vehicles
+     * const { count } = await prisma.vehicle.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends VeiculoDeleteManyArgs>(args?: SelectSubset<T, VeiculoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends VehicleDeleteManyArgs>(args?: SelectSubset<T, VehicleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Veiculos.
+     * Update zero or more Vehicles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {VehicleUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Veiculos
-     * const veiculo = await prisma.veiculo.updateMany({
+     * // Update many Vehicles
+     * const vehicle = await prisma.vehicle.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6507,14 +5315,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends VeiculoUpdateManyArgs>(args: SelectSubset<T, VeiculoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends VehicleUpdateManyArgs>(args: SelectSubset<T, VehicleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Veiculos and returns the data updated in the database.
-     * @param {VeiculoUpdateManyAndReturnArgs} args - Arguments to update many Veiculos.
+     * Update zero or more Vehicles and returns the data updated in the database.
+     * @param {VehicleUpdateManyAndReturnArgs} args - Arguments to update many Vehicles.
      * @example
-     * // Update many Veiculos
-     * const veiculo = await prisma.veiculo.updateManyAndReturn({
+     * // Update many Vehicles
+     * const vehicle = await prisma.vehicle.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6523,8 +5331,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Veiculos and only return the `id`
-     * const veiculoWithIdOnly = await prisma.veiculo.updateManyAndReturn({
+     * // Update zero or more Vehicles and only return the `id`
+     * const vehicleWithIdOnly = await prisma.vehicle.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -6537,56 +5345,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends VeiculoUpdateManyAndReturnArgs>(args: SelectSubset<T, VeiculoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends VehicleUpdateManyAndReturnArgs>(args: SelectSubset<T, VehicleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Veiculo.
-     * @param {VeiculoUpsertArgs} args - Arguments to update or create a Veiculo.
+     * Create or update one Vehicle.
+     * @param {VehicleUpsertArgs} args - Arguments to update or create a Vehicle.
      * @example
-     * // Update or create a Veiculo
-     * const veiculo = await prisma.veiculo.upsert({
+     * // Update or create a Vehicle
+     * const vehicle = await prisma.vehicle.upsert({
      *   create: {
-     *     // ... data to create a Veiculo
+     *     // ... data to create a Vehicle
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Veiculo we want to update
+     *     // ... the filter for the Vehicle we want to update
      *   }
      * })
      */
-    upsert<T extends VeiculoUpsertArgs>(args: SelectSubset<T, VeiculoUpsertArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends VehicleUpsertArgs>(args: SelectSubset<T, VehicleUpsertArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Veiculos.
+     * Count the number of Vehicles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoCountArgs} args - Arguments to filter Veiculos to count.
+     * @param {VehicleCountArgs} args - Arguments to filter Vehicles to count.
      * @example
-     * // Count the number of Veiculos
-     * const count = await prisma.veiculo.count({
+     * // Count the number of Vehicles
+     * const count = await prisma.vehicle.count({
      *   where: {
-     *     // ... the filter for the Veiculos we want to count
+     *     // ... the filter for the Vehicles we want to count
      *   }
      * })
     **/
-    count<T extends VeiculoCountArgs>(
-      args?: Subset<T, VeiculoCountArgs>,
+    count<T extends VehicleCountArgs>(
+      args?: Subset<T, VehicleCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], VeiculoCountAggregateOutputType>
+          : GetScalarType<T['select'], VehicleCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Veiculo.
+     * Allows you to perform aggregations operations on a Vehicle.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {VehicleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -6606,13 +5414,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends VeiculoAggregateArgs>(args: Subset<T, VeiculoAggregateArgs>): Prisma.PrismaPromise<GetVeiculoAggregateType<T>>
+    aggregate<T extends VehicleAggregateArgs>(args: Subset<T, VehicleAggregateArgs>): Prisma.PrismaPromise<GetVehicleAggregateType<T>>
 
     /**
-     * Group by Veiculo.
+     * Group by Vehicle.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VeiculoGroupByArgs} args - Group by arguments.
+     * @param {VehicleGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -6627,14 +5435,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends VeiculoGroupByArgs,
+      T extends VehicleGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: VeiculoGroupByArgs['orderBy'] }
-        : { orderBy?: VeiculoGroupByArgs['orderBy'] },
+        ? { orderBy: VehicleGroupByArgs['orderBy'] }
+        : { orderBy?: VehicleGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -6683,22 +5491,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, VeiculoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVeiculoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, VehicleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVehicleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Veiculo model
+   * Fields of the Vehicle model
    */
-  readonly fields: VeiculoFieldRefs;
+  readonly fields: VehicleFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Veiculo.
+   * The delegate class that acts as a "Promise-like" for Vehicle.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__VeiculoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    relatoriosDiarios<T extends Veiculo$relatoriosDiariosArgs<ExtArgs> = {}>(args?: Subset<T, Veiculo$relatoriosDiariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyReports<T extends Vehicle$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Vehicle$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6725,956 +5533,956 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Veiculo model
+   * Fields of the Vehicle model
    */
-  interface VeiculoFieldRefs {
-    readonly id: FieldRef<"Veiculo", 'Int'>
-    readonly modelo: FieldRef<"Veiculo", 'String'>
-    readonly placa: FieldRef<"Veiculo", 'String'>
-    readonly categoria: FieldRef<"Veiculo", 'String'>
-    readonly marca: FieldRef<"Veiculo", 'String'>
+  interface VehicleFieldRefs {
+    readonly id: FieldRef<"Vehicle", 'Int'>
+    readonly model: FieldRef<"Vehicle", 'String'>
+    readonly plate: FieldRef<"Vehicle", 'String'>
+    readonly category: FieldRef<"Vehicle", 'String'>
+    readonly brand: FieldRef<"Vehicle", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Veiculo findUnique
+   * Vehicle findUnique
    */
-  export type VeiculoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter, which Veiculo to fetch.
+     * Filter, which Vehicle to fetch.
      */
-    where: VeiculoWhereUniqueInput
+    where: VehicleWhereUniqueInput
   }
 
   /**
-   * Veiculo findUniqueOrThrow
+   * Vehicle findUniqueOrThrow
    */
-  export type VeiculoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter, which Veiculo to fetch.
+     * Filter, which Vehicle to fetch.
      */
-    where: VeiculoWhereUniqueInput
+    where: VehicleWhereUniqueInput
   }
 
   /**
-   * Veiculo findFirst
+   * Vehicle findFirst
    */
-  export type VeiculoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter, which Veiculo to fetch.
+     * Filter, which Vehicle to fetch.
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Veiculos to fetch.
+     * Determine the order of Vehicles to fetch.
      */
-    orderBy?: VeiculoOrderByWithRelationInput | VeiculoOrderByWithRelationInput[]
+    orderBy?: VehicleOrderByWithRelationInput | VehicleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Veiculos.
+     * Sets the position for searching for Vehicles.
      */
-    cursor?: VeiculoWhereUniqueInput
+    cursor?: VehicleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Veiculos from the position of the cursor.
+     * Take `±n` Vehicles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Veiculos.
+     * Skip the first `n` Vehicles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Veiculos.
+     * Filter by unique combinations of Vehicles.
      */
-    distinct?: VeiculoScalarFieldEnum | VeiculoScalarFieldEnum[]
+    distinct?: VehicleScalarFieldEnum | VehicleScalarFieldEnum[]
   }
 
   /**
-   * Veiculo findFirstOrThrow
+   * Vehicle findFirstOrThrow
    */
-  export type VeiculoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter, which Veiculo to fetch.
+     * Filter, which Vehicle to fetch.
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Veiculos to fetch.
+     * Determine the order of Vehicles to fetch.
      */
-    orderBy?: VeiculoOrderByWithRelationInput | VeiculoOrderByWithRelationInput[]
+    orderBy?: VehicleOrderByWithRelationInput | VehicleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Veiculos.
+     * Sets the position for searching for Vehicles.
      */
-    cursor?: VeiculoWhereUniqueInput
+    cursor?: VehicleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Veiculos from the position of the cursor.
+     * Take `±n` Vehicles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Veiculos.
+     * Skip the first `n` Vehicles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Veiculos.
+     * Filter by unique combinations of Vehicles.
      */
-    distinct?: VeiculoScalarFieldEnum | VeiculoScalarFieldEnum[]
+    distinct?: VehicleScalarFieldEnum | VehicleScalarFieldEnum[]
   }
 
   /**
-   * Veiculo findMany
+   * Vehicle findMany
    */
-  export type VeiculoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter, which Veiculos to fetch.
+     * Filter, which Vehicles to fetch.
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Veiculos to fetch.
+     * Determine the order of Vehicles to fetch.
      */
-    orderBy?: VeiculoOrderByWithRelationInput | VeiculoOrderByWithRelationInput[]
+    orderBy?: VehicleOrderByWithRelationInput | VehicleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Veiculos.
+     * Sets the position for listing Vehicles.
      */
-    cursor?: VeiculoWhereUniqueInput
+    cursor?: VehicleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Veiculos from the position of the cursor.
+     * Take `±n` Vehicles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Veiculos.
+     * Skip the first `n` Vehicles.
      */
     skip?: number
-    distinct?: VeiculoScalarFieldEnum | VeiculoScalarFieldEnum[]
+    distinct?: VehicleScalarFieldEnum | VehicleScalarFieldEnum[]
   }
 
   /**
-   * Veiculo create
+   * Vehicle create
    */
-  export type VeiculoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * The data needed to create a Veiculo.
+     * The data needed to create a Vehicle.
      */
-    data: XOR<VeiculoCreateInput, VeiculoUncheckedCreateInput>
+    data: XOR<VehicleCreateInput, VehicleUncheckedCreateInput>
   }
 
   /**
-   * Veiculo createMany
+   * Vehicle createMany
    */
-  export type VeiculoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Veiculos.
+     * The data used to create many Vehicles.
      */
-    data: VeiculoCreateManyInput | VeiculoCreateManyInput[]
+    data: VehicleCreateManyInput | VehicleCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Veiculo createManyAndReturn
+   * Vehicle createManyAndReturn
    */
-  export type VeiculoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: VehicleSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
-     * The data used to create many Veiculos.
+     * The data used to create many Vehicles.
      */
-    data: VeiculoCreateManyInput | VeiculoCreateManyInput[]
+    data: VehicleCreateManyInput | VehicleCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Veiculo update
+   * Vehicle update
    */
-  export type VeiculoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * The data needed to update a Veiculo.
+     * The data needed to update a Vehicle.
      */
-    data: XOR<VeiculoUpdateInput, VeiculoUncheckedUpdateInput>
+    data: XOR<VehicleUpdateInput, VehicleUncheckedUpdateInput>
     /**
-     * Choose, which Veiculo to update.
+     * Choose, which Vehicle to update.
      */
-    where: VeiculoWhereUniqueInput
+    where: VehicleWhereUniqueInput
   }
 
   /**
-   * Veiculo updateMany
+   * Vehicle updateMany
    */
-  export type VeiculoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Veiculos.
+     * The data used to update Vehicles.
      */
-    data: XOR<VeiculoUpdateManyMutationInput, VeiculoUncheckedUpdateManyInput>
+    data: XOR<VehicleUpdateManyMutationInput, VehicleUncheckedUpdateManyInput>
     /**
-     * Filter which Veiculos to update
+     * Filter which Vehicles to update
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
-     * Limit how many Veiculos to update.
+     * Limit how many Vehicles to update.
      */
     limit?: number
   }
 
   /**
-   * Veiculo updateManyAndReturn
+   * Vehicle updateManyAndReturn
    */
-  export type VeiculoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: VehicleSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
-     * The data used to update Veiculos.
+     * The data used to update Vehicles.
      */
-    data: XOR<VeiculoUpdateManyMutationInput, VeiculoUncheckedUpdateManyInput>
+    data: XOR<VehicleUpdateManyMutationInput, VehicleUncheckedUpdateManyInput>
     /**
-     * Filter which Veiculos to update
+     * Filter which Vehicles to update
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
-     * Limit how many Veiculos to update.
+     * Limit how many Vehicles to update.
      */
     limit?: number
   }
 
   /**
-   * Veiculo upsert
+   * Vehicle upsert
    */
-  export type VeiculoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * The filter to search for the Veiculo to update in case it exists.
+     * The filter to search for the Vehicle to update in case it exists.
      */
-    where: VeiculoWhereUniqueInput
+    where: VehicleWhereUniqueInput
     /**
-     * In case the Veiculo found by the `where` argument doesn't exist, create a new Veiculo with this data.
+     * In case the Vehicle found by the `where` argument doesn't exist, create a new Vehicle with this data.
      */
-    create: XOR<VeiculoCreateInput, VeiculoUncheckedCreateInput>
+    create: XOR<VehicleCreateInput, VehicleUncheckedCreateInput>
     /**
-     * In case the Veiculo was found with the provided `where` argument, update it with this data.
+     * In case the Vehicle was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<VeiculoUpdateInput, VeiculoUncheckedUpdateInput>
+    update: XOR<VehicleUpdateInput, VehicleUncheckedUpdateInput>
   }
 
   /**
-   * Veiculo delete
+   * Vehicle delete
    */
-  export type VeiculoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
     /**
-     * Filter which Veiculo to delete.
+     * Filter which Vehicle to delete.
      */
-    where: VeiculoWhereUniqueInput
+    where: VehicleWhereUniqueInput
   }
 
   /**
-   * Veiculo deleteMany
+   * Vehicle deleteMany
    */
-  export type VeiculoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Veiculos to delete
+     * Filter which Vehicles to delete
      */
-    where?: VeiculoWhereInput
+    where?: VehicleWhereInput
     /**
-     * Limit how many Veiculos to delete.
+     * Limit how many Vehicles to delete.
      */
     limit?: number
   }
 
   /**
-   * Veiculo.relatoriosDiarios
+   * Vehicle.dailyReports
    */
-  export type Veiculo$relatoriosDiariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Vehicle$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
-    where?: RelatorioExpedicaoDiariaWhereInput
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    include?: DailyShipmentReportInclude<ExtArgs> | null
+    where?: DailyShipmentReportWhereInput
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
+    cursor?: DailyShipmentReportWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * Veiculo without action
+   * Vehicle without action
    */
-  export type VeiculoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type VehicleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Veiculo
+     * Select specific fields to fetch from the Vehicle
      */
-    select?: VeiculoSelect<ExtArgs> | null
+    select?: VehicleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Veiculo
+     * Omit specific fields from the Vehicle
      */
-    omit?: VeiculoOmit<ExtArgs> | null
+    omit?: VehicleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VeiculoInclude<ExtArgs> | null
+    include?: VehicleInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model RelatorioExpedicaoDiaria
+   * Model DailyShipmentReport
    */
 
-  export type AggregateRelatorioExpedicaoDiaria = {
-    _count: RelatorioExpedicaoDiariaCountAggregateOutputType | null
-    _avg: RelatorioExpedicaoDiariaAvgAggregateOutputType | null
-    _sum: RelatorioExpedicaoDiariaSumAggregateOutputType | null
-    _min: RelatorioExpedicaoDiariaMinAggregateOutputType | null
-    _max: RelatorioExpedicaoDiariaMaxAggregateOutputType | null
+  export type AggregateDailyShipmentReport = {
+    _count: DailyShipmentReportCountAggregateOutputType | null
+    _avg: DailyShipmentReportAvgAggregateOutputType | null
+    _sum: DailyShipmentReportSumAggregateOutputType | null
+    _min: DailyShipmentReportMinAggregateOutputType | null
+    _max: DailyShipmentReportMaxAggregateOutputType | null
   }
 
-  export type RelatorioExpedicaoDiariaAvgAggregateOutputType = {
+  export type DailyShipmentReportAvgAggregateOutputType = {
     id: number | null
-    quantidade: number | null
-    notaFiscal: number | null
-    temperatura: Decimal | null
-    usuarioId: number | null
-    veiculoId: number | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: number | null
+    invoiceNumber: number | null
+    temperature: Decimal | null
+    userId: number | null
+    vehicleId: number | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoDiariaSumAggregateOutputType = {
+  export type DailyShipmentReportSumAggregateOutputType = {
     id: number | null
-    quantidade: number | null
-    notaFiscal: number | null
-    temperatura: Decimal | null
-    usuarioId: number | null
-    veiculoId: number | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: number | null
+    invoiceNumber: number | null
+    temperature: Decimal | null
+    userId: number | null
+    vehicleId: number | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoDiariaMinAggregateOutputType = {
+  export type DailyShipmentReportMinAggregateOutputType = {
     id: number | null
-    quantidade: number | null
-    notaFiscal: number | null
-    dataProducao: Date | null
-    destino: string | null
-    temperatura: Decimal | null
-    condicaoSanitaria: boolean | null
-    entregador: string | null
-    usuarioId: number | null
-    veiculoId: number | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: number | null
+    invoiceNumber: number | null
+    productionDate: Date | null
+    destination: string | null
+    temperature: Decimal | null
+    sanitaryCondition: boolean | null
+    deliverer: string | null
+    userId: number | null
+    vehicleId: number | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoDiariaMaxAggregateOutputType = {
+  export type DailyShipmentReportMaxAggregateOutputType = {
     id: number | null
-    quantidade: number | null
-    notaFiscal: number | null
-    dataProducao: Date | null
-    destino: string | null
-    temperatura: Decimal | null
-    condicaoSanitaria: boolean | null
-    entregador: string | null
-    usuarioId: number | null
-    veiculoId: number | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: number | null
+    invoiceNumber: number | null
+    productionDate: Date | null
+    destination: string | null
+    temperature: Decimal | null
+    sanitaryCondition: boolean | null
+    deliverer: string | null
+    userId: number | null
+    vehicleId: number | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoDiariaCountAggregateOutputType = {
+  export type DailyShipmentReportCountAggregateOutputType = {
     id: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: number
-    destino: number
-    temperatura: number
-    condicaoSanitaria: number
-    entregador: number
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
-    clienteId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: number
+    destination: number
+    temperature: number
+    sanitaryCondition: number
+    deliverer: number
+    userId: number
+    vehicleId: number
+    productId: number
+    clientId: number
     _all: number
   }
 
 
-  export type RelatorioExpedicaoDiariaAvgAggregateInputType = {
+  export type DailyShipmentReportAvgAggregateInputType = {
     id?: true
-    quantidade?: true
-    notaFiscal?: true
-    temperatura?: true
-    usuarioId?: true
-    veiculoId?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    invoiceNumber?: true
+    temperature?: true
+    userId?: true
+    vehicleId?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoDiariaSumAggregateInputType = {
+  export type DailyShipmentReportSumAggregateInputType = {
     id?: true
-    quantidade?: true
-    notaFiscal?: true
-    temperatura?: true
-    usuarioId?: true
-    veiculoId?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    invoiceNumber?: true
+    temperature?: true
+    userId?: true
+    vehicleId?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoDiariaMinAggregateInputType = {
+  export type DailyShipmentReportMinAggregateInputType = {
     id?: true
-    quantidade?: true
-    notaFiscal?: true
-    dataProducao?: true
-    destino?: true
-    temperatura?: true
-    condicaoSanitaria?: true
-    entregador?: true
-    usuarioId?: true
-    veiculoId?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    invoiceNumber?: true
+    productionDate?: true
+    destination?: true
+    temperature?: true
+    sanitaryCondition?: true
+    deliverer?: true
+    userId?: true
+    vehicleId?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoDiariaMaxAggregateInputType = {
+  export type DailyShipmentReportMaxAggregateInputType = {
     id?: true
-    quantidade?: true
-    notaFiscal?: true
-    dataProducao?: true
-    destino?: true
-    temperatura?: true
-    condicaoSanitaria?: true
-    entregador?: true
-    usuarioId?: true
-    veiculoId?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    invoiceNumber?: true
+    productionDate?: true
+    destination?: true
+    temperature?: true
+    sanitaryCondition?: true
+    deliverer?: true
+    userId?: true
+    vehicleId?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoDiariaCountAggregateInputType = {
+  export type DailyShipmentReportCountAggregateInputType = {
     id?: true
-    quantidade?: true
-    notaFiscal?: true
-    dataProducao?: true
-    destino?: true
-    temperatura?: true
-    condicaoSanitaria?: true
-    entregador?: true
-    usuarioId?: true
-    veiculoId?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    invoiceNumber?: true
+    productionDate?: true
+    destination?: true
+    temperature?: true
+    sanitaryCondition?: true
+    deliverer?: true
+    userId?: true
+    vehicleId?: true
+    productId?: true
+    clientId?: true
     _all?: true
   }
 
-  export type RelatorioExpedicaoDiariaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RelatorioExpedicaoDiaria to aggregate.
+     * Filter which DailyShipmentReport to aggregate.
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoDiarias to fetch.
+     * Determine the order of DailyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    cursor?: DailyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoDiarias from the position of the cursor.
+     * Take `±n` DailyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoDiarias.
+     * Skip the first `n` DailyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned RelatorioExpedicaoDiarias
+     * Count returned DailyShipmentReports
     **/
-    _count?: true | RelatorioExpedicaoDiariaCountAggregateInputType
+    _count?: true | DailyShipmentReportCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: RelatorioExpedicaoDiariaAvgAggregateInputType
+    _avg?: DailyShipmentReportAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: RelatorioExpedicaoDiariaSumAggregateInputType
+    _sum?: DailyShipmentReportSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RelatorioExpedicaoDiariaMinAggregateInputType
+    _min?: DailyShipmentReportMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RelatorioExpedicaoDiariaMaxAggregateInputType
+    _max?: DailyShipmentReportMaxAggregateInputType
   }
 
-  export type GetRelatorioExpedicaoDiariaAggregateType<T extends RelatorioExpedicaoDiariaAggregateArgs> = {
-        [P in keyof T & keyof AggregateRelatorioExpedicaoDiaria]: P extends '_count' | 'count'
+  export type GetDailyShipmentReportAggregateType<T extends DailyShipmentReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateDailyShipmentReport]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRelatorioExpedicaoDiaria[P]>
-      : GetScalarType<T[P], AggregateRelatorioExpedicaoDiaria[P]>
+        : GetScalarType<T[P], AggregateDailyShipmentReport[P]>
+      : GetScalarType<T[P], AggregateDailyShipmentReport[P]>
   }
 
 
 
 
-  export type RelatorioExpedicaoDiariaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoDiariaWhereInput
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithAggregationInput | RelatorioExpedicaoDiariaOrderByWithAggregationInput[]
-    by: RelatorioExpedicaoDiariaScalarFieldEnum[] | RelatorioExpedicaoDiariaScalarFieldEnum
-    having?: RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput
+  export type DailyShipmentReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyShipmentReportWhereInput
+    orderBy?: DailyShipmentReportOrderByWithAggregationInput | DailyShipmentReportOrderByWithAggregationInput[]
+    by: DailyShipmentReportScalarFieldEnum[] | DailyShipmentReportScalarFieldEnum
+    having?: DailyShipmentReportScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RelatorioExpedicaoDiariaCountAggregateInputType | true
-    _avg?: RelatorioExpedicaoDiariaAvgAggregateInputType
-    _sum?: RelatorioExpedicaoDiariaSumAggregateInputType
-    _min?: RelatorioExpedicaoDiariaMinAggregateInputType
-    _max?: RelatorioExpedicaoDiariaMaxAggregateInputType
+    _count?: DailyShipmentReportCountAggregateInputType | true
+    _avg?: DailyShipmentReportAvgAggregateInputType
+    _sum?: DailyShipmentReportSumAggregateInputType
+    _min?: DailyShipmentReportMinAggregateInputType
+    _max?: DailyShipmentReportMaxAggregateInputType
   }
 
-  export type RelatorioExpedicaoDiariaGroupByOutputType = {
+  export type DailyShipmentReportGroupByOutputType = {
     id: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date
-    destino: string
-    temperatura: Decimal
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
-    clienteId: number
-    _count: RelatorioExpedicaoDiariaCountAggregateOutputType | null
-    _avg: RelatorioExpedicaoDiariaAvgAggregateOutputType | null
-    _sum: RelatorioExpedicaoDiariaSumAggregateOutputType | null
-    _min: RelatorioExpedicaoDiariaMinAggregateOutputType | null
-    _max: RelatorioExpedicaoDiariaMaxAggregateOutputType | null
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date
+    destination: string
+    temperature: Decimal
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    productId: number
+    clientId: number
+    _count: DailyShipmentReportCountAggregateOutputType | null
+    _avg: DailyShipmentReportAvgAggregateOutputType | null
+    _sum: DailyShipmentReportSumAggregateOutputType | null
+    _min: DailyShipmentReportMinAggregateOutputType | null
+    _max: DailyShipmentReportMaxAggregateOutputType | null
   }
 
-  type GetRelatorioExpedicaoDiariaGroupByPayload<T extends RelatorioExpedicaoDiariaGroupByArgs> = Prisma.PrismaPromise<
+  type GetDailyShipmentReportGroupByPayload<T extends DailyShipmentReportGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<RelatorioExpedicaoDiariaGroupByOutputType, T['by']> &
+      PickEnumerable<DailyShipmentReportGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RelatorioExpedicaoDiariaGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof DailyShipmentReportGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RelatorioExpedicaoDiariaGroupByOutputType[P]>
-            : GetScalarType<T[P], RelatorioExpedicaoDiariaGroupByOutputType[P]>
+              : GetScalarType<T[P], DailyShipmentReportGroupByOutputType[P]>
+            : GetScalarType<T[P], DailyShipmentReportGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RelatorioExpedicaoDiariaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DailyShipmentReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    notaFiscal?: boolean
-    dataProducao?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    condicaoSanitaria?: boolean
-    entregador?: boolean
-    usuarioId?: boolean
-    veiculoId?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoDiaria"]>
+    quantity?: boolean
+    invoiceNumber?: boolean
+    productionDate?: boolean
+    destination?: boolean
+    temperature?: boolean
+    sanitaryCondition?: boolean
+    deliverer?: boolean
+    userId?: boolean
+    vehicleId?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyShipmentReport"]>
 
-  export type RelatorioExpedicaoDiariaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DailyShipmentReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    notaFiscal?: boolean
-    dataProducao?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    condicaoSanitaria?: boolean
-    entregador?: boolean
-    usuarioId?: boolean
-    veiculoId?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoDiaria"]>
+    quantity?: boolean
+    invoiceNumber?: boolean
+    productionDate?: boolean
+    destination?: boolean
+    temperature?: boolean
+    sanitaryCondition?: boolean
+    deliverer?: boolean
+    userId?: boolean
+    vehicleId?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyShipmentReport"]>
 
-  export type RelatorioExpedicaoDiariaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DailyShipmentReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    notaFiscal?: boolean
-    dataProducao?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    condicaoSanitaria?: boolean
-    entregador?: boolean
-    usuarioId?: boolean
-    veiculoId?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoDiaria"]>
+    quantity?: boolean
+    invoiceNumber?: boolean
+    productionDate?: boolean
+    destination?: boolean
+    temperature?: boolean
+    sanitaryCondition?: boolean
+    deliverer?: boolean
+    userId?: boolean
+    vehicleId?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyShipmentReport"]>
 
-  export type RelatorioExpedicaoDiariaSelectScalar = {
+  export type DailyShipmentReportSelectScalar = {
     id?: boolean
-    quantidade?: boolean
-    notaFiscal?: boolean
-    dataProducao?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    condicaoSanitaria?: boolean
-    entregador?: boolean
-    usuarioId?: boolean
-    veiculoId?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
+    quantity?: boolean
+    invoiceNumber?: boolean
+    productionDate?: boolean
+    destination?: boolean
+    temperature?: boolean
+    sanitaryCondition?: boolean
+    deliverer?: boolean
+    userId?: boolean
+    vehicleId?: boolean
+    productId?: boolean
+    clientId?: boolean
   }
 
-  export type RelatorioExpedicaoDiariaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantidade" | "notaFiscal" | "dataProducao" | "destino" | "temperatura" | "condicaoSanitaria" | "entregador" | "usuarioId" | "veiculoId" | "produtoId" | "clienteId", ExtArgs["result"]["relatorioExpedicaoDiaria"]>
-  export type RelatorioExpedicaoDiariaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type DailyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "invoiceNumber" | "productionDate" | "destination" | "temperature" | "sanitaryCondition" | "deliverer" | "userId" | "vehicleId" | "productId" | "clientId", ExtArgs["result"]["dailyShipmentReport"]>
+  export type DailyShipmentReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
   }
-  export type RelatorioExpedicaoDiariaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type DailyShipmentReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
   }
-  export type RelatorioExpedicaoDiariaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
-    veiculo?: boolean | VeiculoDefaultArgs<ExtArgs>
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type DailyShipmentReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    users?: boolean | UsersDefaultArgs<ExtArgs>
+    vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
   }
 
-  export type $RelatorioExpedicaoDiariaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RelatorioExpedicaoDiaria"
+  export type $DailyShipmentReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DailyShipmentReport"
     objects: {
-      usuario: Prisma.$UsuarioPayload<ExtArgs>
-      veiculo: Prisma.$VeiculoPayload<ExtArgs>
-      produto: Prisma.$ProdutoPayload<ExtArgs>
-      cliente: Prisma.$ClientePayload<ExtArgs>
+      client: Prisma.$ClientPayload<ExtArgs>
+      product: Prisma.$ProductPayload<ExtArgs>
+      users: Prisma.$UsersPayload<ExtArgs>
+      vehicle: Prisma.$VehiclePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      quantidade: number
-      notaFiscal: number
-      dataProducao: Date
-      destino: string
-      temperatura: Prisma.Decimal
-      condicaoSanitaria: boolean
-      entregador: string
-      usuarioId: number
-      veiculoId: number
-      produtoId: number
-      clienteId: number
-    }, ExtArgs["result"]["relatorioExpedicaoDiaria"]>
+      quantity: number
+      invoiceNumber: number
+      productionDate: Date
+      destination: string
+      temperature: Prisma.Decimal
+      sanitaryCondition: boolean
+      deliverer: string
+      userId: number
+      vehicleId: number
+      productId: number
+      clientId: number
+    }, ExtArgs["result"]["dailyShipmentReport"]>
     composites: {}
   }
 
-  type RelatorioExpedicaoDiariaGetPayload<S extends boolean | null | undefined | RelatorioExpedicaoDiariaDefaultArgs> = $Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload, S>
+  type DailyShipmentReportGetPayload<S extends boolean | null | undefined | DailyShipmentReportDefaultArgs> = $Result.GetResult<Prisma.$DailyShipmentReportPayload, S>
 
-  type RelatorioExpedicaoDiariaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RelatorioExpedicaoDiariaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RelatorioExpedicaoDiariaCountAggregateInputType | true
+  type DailyShipmentReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DailyShipmentReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DailyShipmentReportCountAggregateInputType | true
     }
 
-  export interface RelatorioExpedicaoDiariaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RelatorioExpedicaoDiaria'], meta: { name: 'RelatorioExpedicaoDiaria' } }
+  export interface DailyShipmentReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DailyShipmentReport'], meta: { name: 'DailyShipmentReport' } }
     /**
-     * Find zero or one RelatorioExpedicaoDiaria that matches the filter.
-     * @param {RelatorioExpedicaoDiariaFindUniqueArgs} args - Arguments to find a RelatorioExpedicaoDiaria
+     * Find zero or one DailyShipmentReport that matches the filter.
+     * @param {DailyShipmentReportFindUniqueArgs} args - Arguments to find a DailyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.findUnique({
+     * // Get one DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends RelatorioExpedicaoDiariaFindUniqueArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaFindUniqueArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends DailyShipmentReportFindUniqueArgs>(args: SelectSubset<T, DailyShipmentReportFindUniqueArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one RelatorioExpedicaoDiaria that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DailyShipmentReport that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {RelatorioExpedicaoDiariaFindUniqueOrThrowArgs} args - Arguments to find a RelatorioExpedicaoDiaria
+     * @param {DailyShipmentReportFindUniqueOrThrowArgs} args - Arguments to find a DailyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.findUniqueOrThrow({
+     * // Get one DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends RelatorioExpedicaoDiariaFindUniqueOrThrowArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends DailyShipmentReportFindUniqueOrThrowArgs>(args: SelectSubset<T, DailyShipmentReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RelatorioExpedicaoDiaria that matches the filter.
+     * Find the first DailyShipmentReport that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaFindFirstArgs} args - Arguments to find a RelatorioExpedicaoDiaria
+     * @param {DailyShipmentReportFindFirstArgs} args - Arguments to find a DailyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.findFirst({
+     * // Get one DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends RelatorioExpedicaoDiariaFindFirstArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaFindFirstArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends DailyShipmentReportFindFirstArgs>(args?: SelectSubset<T, DailyShipmentReportFindFirstArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RelatorioExpedicaoDiaria that matches the filter or
+     * Find the first DailyShipmentReport that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaFindFirstOrThrowArgs} args - Arguments to find a RelatorioExpedicaoDiaria
+     * @param {DailyShipmentReportFindFirstOrThrowArgs} args - Arguments to find a DailyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.findFirstOrThrow({
+     * // Get one DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends RelatorioExpedicaoDiariaFindFirstOrThrowArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaFindFirstOrThrowArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends DailyShipmentReportFindFirstOrThrowArgs>(args?: SelectSubset<T, DailyShipmentReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more RelatorioExpedicaoDiarias that matches the filter.
+     * Find zero or more DailyShipmentReports that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {DailyShipmentReportFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiarias = await prisma.relatorioExpedicaoDiaria.findMany()
+     * // Get all DailyShipmentReports
+     * const dailyShipmentReports = await prisma.dailyShipmentReport.findMany()
      * 
-     * // Get first 10 RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiarias = await prisma.relatorioExpedicaoDiaria.findMany({ take: 10 })
+     * // Get first 10 DailyShipmentReports
+     * const dailyShipmentReports = await prisma.dailyShipmentReport.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const relatorioExpedicaoDiariaWithIdOnly = await prisma.relatorioExpedicaoDiaria.findMany({ select: { id: true } })
+     * const dailyShipmentReportWithIdOnly = await prisma.dailyShipmentReport.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends RelatorioExpedicaoDiariaFindManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends DailyShipmentReportFindManyArgs>(args?: SelectSubset<T, DailyShipmentReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a RelatorioExpedicaoDiaria.
-     * @param {RelatorioExpedicaoDiariaCreateArgs} args - Arguments to create a RelatorioExpedicaoDiaria.
+     * Create a DailyShipmentReport.
+     * @param {DailyShipmentReportCreateArgs} args - Arguments to create a DailyShipmentReport.
      * @example
-     * // Create one RelatorioExpedicaoDiaria
-     * const RelatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.create({
+     * // Create one DailyShipmentReport
+     * const DailyShipmentReport = await prisma.dailyShipmentReport.create({
      *   data: {
-     *     // ... data to create a RelatorioExpedicaoDiaria
+     *     // ... data to create a DailyShipmentReport
      *   }
      * })
      * 
      */
-    create<T extends RelatorioExpedicaoDiariaCreateArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaCreateArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends DailyShipmentReportCreateArgs>(args: SelectSubset<T, DailyShipmentReportCreateArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many RelatorioExpedicaoDiarias.
-     * @param {RelatorioExpedicaoDiariaCreateManyArgs} args - Arguments to create many RelatorioExpedicaoDiarias.
+     * Create many DailyShipmentReports.
+     * @param {DailyShipmentReportCreateManyArgs} args - Arguments to create many DailyShipmentReports.
      * @example
-     * // Create many RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.createMany({
+     * // Create many DailyShipmentReports
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends RelatorioExpedicaoDiariaCreateManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends DailyShipmentReportCreateManyArgs>(args?: SelectSubset<T, DailyShipmentReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many RelatorioExpedicaoDiarias and returns the data saved in the database.
-     * @param {RelatorioExpedicaoDiariaCreateManyAndReturnArgs} args - Arguments to create many RelatorioExpedicaoDiarias.
+     * Create many DailyShipmentReports and returns the data saved in the database.
+     * @param {DailyShipmentReportCreateManyAndReturnArgs} args - Arguments to create many DailyShipmentReports.
      * @example
-     * // Create many RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.createManyAndReturn({
+     * // Create many DailyShipmentReports
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many RelatorioExpedicaoDiarias and only return the `id`
-     * const relatorioExpedicaoDiariaWithIdOnly = await prisma.relatorioExpedicaoDiaria.createManyAndReturn({
+     * // Create many DailyShipmentReports and only return the `id`
+     * const dailyShipmentReportWithIdOnly = await prisma.dailyShipmentReport.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7684,28 +6492,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends RelatorioExpedicaoDiariaCreateManyAndReturnArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends DailyShipmentReportCreateManyAndReturnArgs>(args?: SelectSubset<T, DailyShipmentReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a RelatorioExpedicaoDiaria.
-     * @param {RelatorioExpedicaoDiariaDeleteArgs} args - Arguments to delete one RelatorioExpedicaoDiaria.
+     * Delete a DailyShipmentReport.
+     * @param {DailyShipmentReportDeleteArgs} args - Arguments to delete one DailyShipmentReport.
      * @example
-     * // Delete one RelatorioExpedicaoDiaria
-     * const RelatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.delete({
+     * // Delete one DailyShipmentReport
+     * const DailyShipmentReport = await prisma.dailyShipmentReport.delete({
      *   where: {
-     *     // ... filter to delete one RelatorioExpedicaoDiaria
+     *     // ... filter to delete one DailyShipmentReport
      *   }
      * })
      * 
      */
-    delete<T extends RelatorioExpedicaoDiariaDeleteArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaDeleteArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends DailyShipmentReportDeleteArgs>(args: SelectSubset<T, DailyShipmentReportDeleteArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one RelatorioExpedicaoDiaria.
-     * @param {RelatorioExpedicaoDiariaUpdateArgs} args - Arguments to update one RelatorioExpedicaoDiaria.
+     * Update one DailyShipmentReport.
+     * @param {DailyShipmentReportUpdateArgs} args - Arguments to update one DailyShipmentReport.
      * @example
-     * // Update one RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.update({
+     * // Update one DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7715,30 +6523,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends RelatorioExpedicaoDiariaUpdateArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaUpdateArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends DailyShipmentReportUpdateArgs>(args: SelectSubset<T, DailyShipmentReportUpdateArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more RelatorioExpedicaoDiarias.
-     * @param {RelatorioExpedicaoDiariaDeleteManyArgs} args - Arguments to filter RelatorioExpedicaoDiarias to delete.
+     * Delete zero or more DailyShipmentReports.
+     * @param {DailyShipmentReportDeleteManyArgs} args - Arguments to filter DailyShipmentReports to delete.
      * @example
-     * // Delete a few RelatorioExpedicaoDiarias
-     * const { count } = await prisma.relatorioExpedicaoDiaria.deleteMany({
+     * // Delete a few DailyShipmentReports
+     * const { count } = await prisma.dailyShipmentReport.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends RelatorioExpedicaoDiariaDeleteManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoDiariaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends DailyShipmentReportDeleteManyArgs>(args?: SelectSubset<T, DailyShipmentReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RelatorioExpedicaoDiarias.
+     * Update zero or more DailyShipmentReports.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {DailyShipmentReportUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.updateMany({
+     * // Update many DailyShipmentReports
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7748,14 +6556,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends RelatorioExpedicaoDiariaUpdateManyArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends DailyShipmentReportUpdateManyArgs>(args: SelectSubset<T, DailyShipmentReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RelatorioExpedicaoDiarias and returns the data updated in the database.
-     * @param {RelatorioExpedicaoDiariaUpdateManyAndReturnArgs} args - Arguments to update many RelatorioExpedicaoDiarias.
+     * Update zero or more DailyShipmentReports and returns the data updated in the database.
+     * @param {DailyShipmentReportUpdateManyAndReturnArgs} args - Arguments to update many DailyShipmentReports.
      * @example
-     * // Update many RelatorioExpedicaoDiarias
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.updateManyAndReturn({
+     * // Update many DailyShipmentReports
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7764,8 +6572,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more RelatorioExpedicaoDiarias and only return the `id`
-     * const relatorioExpedicaoDiariaWithIdOnly = await prisma.relatorioExpedicaoDiaria.updateManyAndReturn({
+     * // Update zero or more DailyShipmentReports and only return the `id`
+     * const dailyShipmentReportWithIdOnly = await prisma.dailyShipmentReport.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -7778,56 +6586,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends RelatorioExpedicaoDiariaUpdateManyAndReturnArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends DailyShipmentReportUpdateManyAndReturnArgs>(args: SelectSubset<T, DailyShipmentReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one RelatorioExpedicaoDiaria.
-     * @param {RelatorioExpedicaoDiariaUpsertArgs} args - Arguments to update or create a RelatorioExpedicaoDiaria.
+     * Create or update one DailyShipmentReport.
+     * @param {DailyShipmentReportUpsertArgs} args - Arguments to update or create a DailyShipmentReport.
      * @example
-     * // Update or create a RelatorioExpedicaoDiaria
-     * const relatorioExpedicaoDiaria = await prisma.relatorioExpedicaoDiaria.upsert({
+     * // Update or create a DailyShipmentReport
+     * const dailyShipmentReport = await prisma.dailyShipmentReport.upsert({
      *   create: {
-     *     // ... data to create a RelatorioExpedicaoDiaria
+     *     // ... data to create a DailyShipmentReport
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the RelatorioExpedicaoDiaria we want to update
+     *     // ... the filter for the DailyShipmentReport we want to update
      *   }
      * })
      */
-    upsert<T extends RelatorioExpedicaoDiariaUpsertArgs>(args: SelectSubset<T, RelatorioExpedicaoDiariaUpsertArgs<ExtArgs>>): Prisma__RelatorioExpedicaoDiariaClient<$Result.GetResult<Prisma.$RelatorioExpedicaoDiariaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends DailyShipmentReportUpsertArgs>(args: SelectSubset<T, DailyShipmentReportUpsertArgs<ExtArgs>>): Prisma__DailyShipmentReportClient<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of RelatorioExpedicaoDiarias.
+     * Count the number of DailyShipmentReports.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaCountArgs} args - Arguments to filter RelatorioExpedicaoDiarias to count.
+     * @param {DailyShipmentReportCountArgs} args - Arguments to filter DailyShipmentReports to count.
      * @example
-     * // Count the number of RelatorioExpedicaoDiarias
-     * const count = await prisma.relatorioExpedicaoDiaria.count({
+     * // Count the number of DailyShipmentReports
+     * const count = await prisma.dailyShipmentReport.count({
      *   where: {
-     *     // ... the filter for the RelatorioExpedicaoDiarias we want to count
+     *     // ... the filter for the DailyShipmentReports we want to count
      *   }
      * })
     **/
-    count<T extends RelatorioExpedicaoDiariaCountArgs>(
-      args?: Subset<T, RelatorioExpedicaoDiariaCountArgs>,
+    count<T extends DailyShipmentReportCountArgs>(
+      args?: Subset<T, DailyShipmentReportCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RelatorioExpedicaoDiariaCountAggregateOutputType>
+          : GetScalarType<T['select'], DailyShipmentReportCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a RelatorioExpedicaoDiaria.
+     * Allows you to perform aggregations operations on a DailyShipmentReport.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {DailyShipmentReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -7847,13 +6655,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RelatorioExpedicaoDiariaAggregateArgs>(args: Subset<T, RelatorioExpedicaoDiariaAggregateArgs>): Prisma.PrismaPromise<GetRelatorioExpedicaoDiariaAggregateType<T>>
+    aggregate<T extends DailyShipmentReportAggregateArgs>(args: Subset<T, DailyShipmentReportAggregateArgs>): Prisma.PrismaPromise<GetDailyShipmentReportAggregateType<T>>
 
     /**
-     * Group by RelatorioExpedicaoDiaria.
+     * Group by DailyShipmentReport.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoDiariaGroupByArgs} args - Group by arguments.
+     * @param {DailyShipmentReportGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -7868,14 +6676,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RelatorioExpedicaoDiariaGroupByArgs,
+      T extends DailyShipmentReportGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RelatorioExpedicaoDiariaGroupByArgs['orderBy'] }
-        : { orderBy?: RelatorioExpedicaoDiariaGroupByArgs['orderBy'] },
+        ? { orderBy: DailyShipmentReportGroupByArgs['orderBy'] }
+        : { orderBy?: DailyShipmentReportGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -7924,25 +6732,25 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RelatorioExpedicaoDiariaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRelatorioExpedicaoDiariaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, DailyShipmentReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyShipmentReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the RelatorioExpedicaoDiaria model
+   * Fields of the DailyShipmentReport model
    */
-  readonly fields: RelatorioExpedicaoDiariaFieldRefs;
+  readonly fields: DailyShipmentReportFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for RelatorioExpedicaoDiaria.
+   * The delegate class that acts as a "Promise-like" for DailyShipmentReport.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__RelatorioExpedicaoDiariaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__DailyShipmentReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    veiculo<T extends VeiculoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VeiculoDefaultArgs<ExtArgs>>): Prisma__VeiculoClient<$Result.GetResult<Prisma.$VeiculoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    produto<T extends ProdutoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProdutoDefaultArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    cliente<T extends ClienteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClienteDefaultArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    users<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    vehicle<T extends VehicleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehicleDefaultArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7969,885 +6777,885 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the RelatorioExpedicaoDiaria model
+   * Fields of the DailyShipmentReport model
    */
-  interface RelatorioExpedicaoDiariaFieldRefs {
-    readonly id: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly quantidade: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly notaFiscal: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly dataProducao: FieldRef<"RelatorioExpedicaoDiaria", 'DateTime'>
-    readonly destino: FieldRef<"RelatorioExpedicaoDiaria", 'String'>
-    readonly temperatura: FieldRef<"RelatorioExpedicaoDiaria", 'Decimal'>
-    readonly condicaoSanitaria: FieldRef<"RelatorioExpedicaoDiaria", 'Boolean'>
-    readonly entregador: FieldRef<"RelatorioExpedicaoDiaria", 'String'>
-    readonly usuarioId: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly veiculoId: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly produtoId: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
-    readonly clienteId: FieldRef<"RelatorioExpedicaoDiaria", 'Int'>
+  interface DailyShipmentReportFieldRefs {
+    readonly id: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly quantity: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly invoiceNumber: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly productionDate: FieldRef<"DailyShipmentReport", 'DateTime'>
+    readonly destination: FieldRef<"DailyShipmentReport", 'String'>
+    readonly temperature: FieldRef<"DailyShipmentReport", 'Decimal'>
+    readonly sanitaryCondition: FieldRef<"DailyShipmentReport", 'Boolean'>
+    readonly deliverer: FieldRef<"DailyShipmentReport", 'String'>
+    readonly userId: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly vehicleId: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly productId: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly clientId: FieldRef<"DailyShipmentReport", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * RelatorioExpedicaoDiaria findUnique
+   * DailyShipmentReport findUnique
    */
-  export type RelatorioExpedicaoDiariaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoDiaria to fetch.
+     * Filter, which DailyShipmentReport to fetch.
      */
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
+    where: DailyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoDiaria findUniqueOrThrow
+   * DailyShipmentReport findUniqueOrThrow
    */
-  export type RelatorioExpedicaoDiariaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoDiaria to fetch.
+     * Filter, which DailyShipmentReport to fetch.
      */
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
+    where: DailyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoDiaria findFirst
+   * DailyShipmentReport findFirst
    */
-  export type RelatorioExpedicaoDiariaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoDiaria to fetch.
+     * Filter, which DailyShipmentReport to fetch.
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoDiarias to fetch.
+     * Determine the order of DailyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RelatorioExpedicaoDiarias.
+     * Sets the position for searching for DailyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    cursor?: DailyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoDiarias from the position of the cursor.
+     * Take `±n` DailyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoDiarias.
+     * Skip the first `n` DailyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RelatorioExpedicaoDiarias.
+     * Filter by unique combinations of DailyShipmentReports.
      */
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoDiaria findFirstOrThrow
+   * DailyShipmentReport findFirstOrThrow
    */
-  export type RelatorioExpedicaoDiariaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoDiaria to fetch.
+     * Filter, which DailyShipmentReport to fetch.
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoDiarias to fetch.
+     * Determine the order of DailyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RelatorioExpedicaoDiarias.
+     * Sets the position for searching for DailyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    cursor?: DailyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoDiarias from the position of the cursor.
+     * Take `±n` DailyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoDiarias.
+     * Skip the first `n` DailyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RelatorioExpedicaoDiarias.
+     * Filter by unique combinations of DailyShipmentReports.
      */
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoDiaria findMany
+   * DailyShipmentReport findMany
    */
-  export type RelatorioExpedicaoDiariaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoDiarias to fetch.
+     * Filter, which DailyShipmentReports to fetch.
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoDiarias to fetch.
+     * Determine the order of DailyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoDiariaOrderByWithRelationInput | RelatorioExpedicaoDiariaOrderByWithRelationInput[]
+    orderBy?: DailyShipmentReportOrderByWithRelationInput | DailyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing RelatorioExpedicaoDiarias.
+     * Sets the position for listing DailyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoDiariaWhereUniqueInput
+    cursor?: DailyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoDiarias from the position of the cursor.
+     * Take `±n` DailyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoDiarias.
+     * Skip the first `n` DailyShipmentReports.
      */
     skip?: number
-    distinct?: RelatorioExpedicaoDiariaScalarFieldEnum | RelatorioExpedicaoDiariaScalarFieldEnum[]
+    distinct?: DailyShipmentReportScalarFieldEnum | DailyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoDiaria create
+   * DailyShipmentReport create
    */
-  export type RelatorioExpedicaoDiariaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * The data needed to create a RelatorioExpedicaoDiaria.
+     * The data needed to create a DailyShipmentReport.
      */
-    data: XOR<RelatorioExpedicaoDiariaCreateInput, RelatorioExpedicaoDiariaUncheckedCreateInput>
+    data: XOR<DailyShipmentReportCreateInput, DailyShipmentReportUncheckedCreateInput>
   }
 
   /**
-   * RelatorioExpedicaoDiaria createMany
+   * DailyShipmentReport createMany
    */
-  export type RelatorioExpedicaoDiariaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many RelatorioExpedicaoDiarias.
+     * The data used to create many DailyShipmentReports.
      */
-    data: RelatorioExpedicaoDiariaCreateManyInput | RelatorioExpedicaoDiariaCreateManyInput[]
+    data: DailyShipmentReportCreateManyInput | DailyShipmentReportCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * RelatorioExpedicaoDiaria createManyAndReturn
+   * DailyShipmentReport createManyAndReturn
    */
-  export type RelatorioExpedicaoDiariaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelectCreateManyAndReturn<ExtArgs> | null
+    select?: DailyShipmentReportSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
-     * The data used to create many RelatorioExpedicaoDiarias.
+     * The data used to create many DailyShipmentReports.
      */
-    data: RelatorioExpedicaoDiariaCreateManyInput | RelatorioExpedicaoDiariaCreateManyInput[]
+    data: DailyShipmentReportCreateManyInput | DailyShipmentReportCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: DailyShipmentReportIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RelatorioExpedicaoDiaria update
+   * DailyShipmentReport update
    */
-  export type RelatorioExpedicaoDiariaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * The data needed to update a RelatorioExpedicaoDiaria.
+     * The data needed to update a DailyShipmentReport.
      */
-    data: XOR<RelatorioExpedicaoDiariaUpdateInput, RelatorioExpedicaoDiariaUncheckedUpdateInput>
+    data: XOR<DailyShipmentReportUpdateInput, DailyShipmentReportUncheckedUpdateInput>
     /**
-     * Choose, which RelatorioExpedicaoDiaria to update.
+     * Choose, which DailyShipmentReport to update.
      */
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
+    where: DailyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoDiaria updateMany
+   * DailyShipmentReport updateMany
    */
-  export type RelatorioExpedicaoDiariaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update RelatorioExpedicaoDiarias.
+     * The data used to update DailyShipmentReports.
      */
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyInput>
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyInput>
     /**
-     * Filter which RelatorioExpedicaoDiarias to update
+     * Filter which DailyShipmentReports to update
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoDiarias to update.
+     * Limit how many DailyShipmentReports to update.
      */
     limit?: number
   }
 
   /**
-   * RelatorioExpedicaoDiaria updateManyAndReturn
+   * DailyShipmentReport updateManyAndReturn
    */
-  export type RelatorioExpedicaoDiariaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: DailyShipmentReportSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
-     * The data used to update RelatorioExpedicaoDiarias.
+     * The data used to update DailyShipmentReports.
      */
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyInput>
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyInput>
     /**
-     * Filter which RelatorioExpedicaoDiarias to update
+     * Filter which DailyShipmentReports to update
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoDiarias to update.
+     * Limit how many DailyShipmentReports to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: DailyShipmentReportIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RelatorioExpedicaoDiaria upsert
+   * DailyShipmentReport upsert
    */
-  export type RelatorioExpedicaoDiariaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * The filter to search for the RelatorioExpedicaoDiaria to update in case it exists.
+     * The filter to search for the DailyShipmentReport to update in case it exists.
      */
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
+    where: DailyShipmentReportWhereUniqueInput
     /**
-     * In case the RelatorioExpedicaoDiaria found by the `where` argument doesn't exist, create a new RelatorioExpedicaoDiaria with this data.
+     * In case the DailyShipmentReport found by the `where` argument doesn't exist, create a new DailyShipmentReport with this data.
      */
-    create: XOR<RelatorioExpedicaoDiariaCreateInput, RelatorioExpedicaoDiariaUncheckedCreateInput>
+    create: XOR<DailyShipmentReportCreateInput, DailyShipmentReportUncheckedCreateInput>
     /**
-     * In case the RelatorioExpedicaoDiaria was found with the provided `where` argument, update it with this data.
+     * In case the DailyShipmentReport was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<RelatorioExpedicaoDiariaUpdateInput, RelatorioExpedicaoDiariaUncheckedUpdateInput>
+    update: XOR<DailyShipmentReportUpdateInput, DailyShipmentReportUncheckedUpdateInput>
   }
 
   /**
-   * RelatorioExpedicaoDiaria delete
+   * DailyShipmentReport delete
    */
-  export type RelatorioExpedicaoDiariaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter which RelatorioExpedicaoDiaria to delete.
+     * Filter which DailyShipmentReport to delete.
      */
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
+    where: DailyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoDiaria deleteMany
+   * DailyShipmentReport deleteMany
    */
-  export type RelatorioExpedicaoDiariaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RelatorioExpedicaoDiarias to delete
+     * Filter which DailyShipmentReports to delete
      */
-    where?: RelatorioExpedicaoDiariaWhereInput
+    where?: DailyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoDiarias to delete.
+     * Limit how many DailyShipmentReports to delete.
      */
     limit?: number
   }
 
   /**
-   * RelatorioExpedicaoDiaria without action
+   * DailyShipmentReport without action
    */
-  export type RelatorioExpedicaoDiariaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DailyShipmentReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoDiaria
+     * Select specific fields to fetch from the DailyShipmentReport
      */
-    select?: RelatorioExpedicaoDiariaSelect<ExtArgs> | null
+    select?: DailyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoDiaria
+     * Omit specific fields from the DailyShipmentReport
      */
-    omit?: RelatorioExpedicaoDiariaOmit<ExtArgs> | null
+    omit?: DailyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoDiariaInclude<ExtArgs> | null
+    include?: DailyShipmentReportInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model RelatorioExpedicaoMensal
+   * Model MonthlyShipmentReport
    */
 
-  export type AggregateRelatorioExpedicaoMensal = {
-    _count: RelatorioExpedicaoMensalCountAggregateOutputType | null
-    _avg: RelatorioExpedicaoMensalAvgAggregateOutputType | null
-    _sum: RelatorioExpedicaoMensalSumAggregateOutputType | null
-    _min: RelatorioExpedicaoMensalMinAggregateOutputType | null
-    _max: RelatorioExpedicaoMensalMaxAggregateOutputType | null
+  export type AggregateMonthlyShipmentReport = {
+    _count: MonthlyShipmentReportCountAggregateOutputType | null
+    _avg: MonthlyShipmentReportAvgAggregateOutputType | null
+    _sum: MonthlyShipmentReportSumAggregateOutputType | null
+    _min: MonthlyShipmentReportMinAggregateOutputType | null
+    _max: MonthlyShipmentReportMaxAggregateOutputType | null
   }
 
-  export type RelatorioExpedicaoMensalAvgAggregateOutputType = {
+  export type MonthlyShipmentReportAvgAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
-    temperatura: Decimal | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: Decimal | null
+    temperature: Decimal | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoMensalSumAggregateOutputType = {
+  export type MonthlyShipmentReportSumAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
-    temperatura: Decimal | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: Decimal | null
+    temperature: Decimal | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoMensalMinAggregateOutputType = {
+  export type MonthlyShipmentReportMinAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
-    destino: string | null
-    temperatura: Decimal | null
-    entregador: string | null
-    dataProducao: Date | null
-    dataExpedicao: Date | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: Decimal | null
+    destination: string | null
+    temperature: Decimal | null
+    deliverer: string | null
+    productionDate: Date | null
+    shipmentDate: Date | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoMensalMaxAggregateOutputType = {
+  export type MonthlyShipmentReportMaxAggregateOutputType = {
     id: number | null
-    quantidade: Decimal | null
-    destino: string | null
-    temperatura: Decimal | null
-    entregador: string | null
-    dataProducao: Date | null
-    dataExpedicao: Date | null
-    produtoId: number | null
-    clienteId: number | null
+    quantity: Decimal | null
+    destination: string | null
+    temperature: Decimal | null
+    deliverer: string | null
+    productionDate: Date | null
+    shipmentDate: Date | null
+    productId: number | null
+    clientId: number | null
   }
 
-  export type RelatorioExpedicaoMensalCountAggregateOutputType = {
+  export type MonthlyShipmentReportCountAggregateOutputType = {
     id: number
-    quantidade: number
-    destino: number
-    temperatura: number
-    entregador: number
-    dataProducao: number
-    dataExpedicao: number
-    produtoId: number
-    clienteId: number
+    quantity: number
+    destination: number
+    temperature: number
+    deliverer: number
+    productionDate: number
+    shipmentDate: number
+    productId: number
+    clientId: number
     _all: number
   }
 
 
-  export type RelatorioExpedicaoMensalAvgAggregateInputType = {
+  export type MonthlyShipmentReportAvgAggregateInputType = {
     id?: true
-    quantidade?: true
-    temperatura?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    temperature?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoMensalSumAggregateInputType = {
+  export type MonthlyShipmentReportSumAggregateInputType = {
     id?: true
-    quantidade?: true
-    temperatura?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    temperature?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoMensalMinAggregateInputType = {
+  export type MonthlyShipmentReportMinAggregateInputType = {
     id?: true
-    quantidade?: true
-    destino?: true
-    temperatura?: true
-    entregador?: true
-    dataProducao?: true
-    dataExpedicao?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    destination?: true
+    temperature?: true
+    deliverer?: true
+    productionDate?: true
+    shipmentDate?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoMensalMaxAggregateInputType = {
+  export type MonthlyShipmentReportMaxAggregateInputType = {
     id?: true
-    quantidade?: true
-    destino?: true
-    temperatura?: true
-    entregador?: true
-    dataProducao?: true
-    dataExpedicao?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    destination?: true
+    temperature?: true
+    deliverer?: true
+    productionDate?: true
+    shipmentDate?: true
+    productId?: true
+    clientId?: true
   }
 
-  export type RelatorioExpedicaoMensalCountAggregateInputType = {
+  export type MonthlyShipmentReportCountAggregateInputType = {
     id?: true
-    quantidade?: true
-    destino?: true
-    temperatura?: true
-    entregador?: true
-    dataProducao?: true
-    dataExpedicao?: true
-    produtoId?: true
-    clienteId?: true
+    quantity?: true
+    destination?: true
+    temperature?: true
+    deliverer?: true
+    productionDate?: true
+    shipmentDate?: true
+    productId?: true
+    clientId?: true
     _all?: true
   }
 
-  export type RelatorioExpedicaoMensalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RelatorioExpedicaoMensal to aggregate.
+     * Filter which MonthlyShipmentReport to aggregate.
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoMensals to fetch.
+     * Determine the order of MonthlyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoMensals from the position of the cursor.
+     * Take `±n` MonthlyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoMensals.
+     * Skip the first `n` MonthlyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned RelatorioExpedicaoMensals
+     * Count returned MonthlyShipmentReports
     **/
-    _count?: true | RelatorioExpedicaoMensalCountAggregateInputType
+    _count?: true | MonthlyShipmentReportCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: RelatorioExpedicaoMensalAvgAggregateInputType
+    _avg?: MonthlyShipmentReportAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: RelatorioExpedicaoMensalSumAggregateInputType
+    _sum?: MonthlyShipmentReportSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RelatorioExpedicaoMensalMinAggregateInputType
+    _min?: MonthlyShipmentReportMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RelatorioExpedicaoMensalMaxAggregateInputType
+    _max?: MonthlyShipmentReportMaxAggregateInputType
   }
 
-  export type GetRelatorioExpedicaoMensalAggregateType<T extends RelatorioExpedicaoMensalAggregateArgs> = {
-        [P in keyof T & keyof AggregateRelatorioExpedicaoMensal]: P extends '_count' | 'count'
+  export type GetMonthlyShipmentReportAggregateType<T extends MonthlyShipmentReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateMonthlyShipmentReport]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRelatorioExpedicaoMensal[P]>
-      : GetScalarType<T[P], AggregateRelatorioExpedicaoMensal[P]>
+        : GetScalarType<T[P], AggregateMonthlyShipmentReport[P]>
+      : GetScalarType<T[P], AggregateMonthlyShipmentReport[P]>
   }
 
 
 
 
-  export type RelatorioExpedicaoMensalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RelatorioExpedicaoMensalWhereInput
-    orderBy?: RelatorioExpedicaoMensalOrderByWithAggregationInput | RelatorioExpedicaoMensalOrderByWithAggregationInput[]
-    by: RelatorioExpedicaoMensalScalarFieldEnum[] | RelatorioExpedicaoMensalScalarFieldEnum
-    having?: RelatorioExpedicaoMensalScalarWhereWithAggregatesInput
+  export type MonthlyShipmentReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MonthlyShipmentReportWhereInput
+    orderBy?: MonthlyShipmentReportOrderByWithAggregationInput | MonthlyShipmentReportOrderByWithAggregationInput[]
+    by: MonthlyShipmentReportScalarFieldEnum[] | MonthlyShipmentReportScalarFieldEnum
+    having?: MonthlyShipmentReportScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RelatorioExpedicaoMensalCountAggregateInputType | true
-    _avg?: RelatorioExpedicaoMensalAvgAggregateInputType
-    _sum?: RelatorioExpedicaoMensalSumAggregateInputType
-    _min?: RelatorioExpedicaoMensalMinAggregateInputType
-    _max?: RelatorioExpedicaoMensalMaxAggregateInputType
+    _count?: MonthlyShipmentReportCountAggregateInputType | true
+    _avg?: MonthlyShipmentReportAvgAggregateInputType
+    _sum?: MonthlyShipmentReportSumAggregateInputType
+    _min?: MonthlyShipmentReportMinAggregateInputType
+    _max?: MonthlyShipmentReportMaxAggregateInputType
   }
 
-  export type RelatorioExpedicaoMensalGroupByOutputType = {
+  export type MonthlyShipmentReportGroupByOutputType = {
     id: number
-    quantidade: Decimal
-    destino: string
-    temperatura: Decimal
-    entregador: string
-    dataProducao: Date
-    dataExpedicao: Date
-    produtoId: number
-    clienteId: number
-    _count: RelatorioExpedicaoMensalCountAggregateOutputType | null
-    _avg: RelatorioExpedicaoMensalAvgAggregateOutputType | null
-    _sum: RelatorioExpedicaoMensalSumAggregateOutputType | null
-    _min: RelatorioExpedicaoMensalMinAggregateOutputType | null
-    _max: RelatorioExpedicaoMensalMaxAggregateOutputType | null
+    quantity: Decimal
+    destination: string
+    temperature: Decimal
+    deliverer: string
+    productionDate: Date
+    shipmentDate: Date
+    productId: number
+    clientId: number
+    _count: MonthlyShipmentReportCountAggregateOutputType | null
+    _avg: MonthlyShipmentReportAvgAggregateOutputType | null
+    _sum: MonthlyShipmentReportSumAggregateOutputType | null
+    _min: MonthlyShipmentReportMinAggregateOutputType | null
+    _max: MonthlyShipmentReportMaxAggregateOutputType | null
   }
 
-  type GetRelatorioExpedicaoMensalGroupByPayload<T extends RelatorioExpedicaoMensalGroupByArgs> = Prisma.PrismaPromise<
+  type GetMonthlyShipmentReportGroupByPayload<T extends MonthlyShipmentReportGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<RelatorioExpedicaoMensalGroupByOutputType, T['by']> &
+      PickEnumerable<MonthlyShipmentReportGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RelatorioExpedicaoMensalGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof MonthlyShipmentReportGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RelatorioExpedicaoMensalGroupByOutputType[P]>
-            : GetScalarType<T[P], RelatorioExpedicaoMensalGroupByOutputType[P]>
+              : GetScalarType<T[P], MonthlyShipmentReportGroupByOutputType[P]>
+            : GetScalarType<T[P], MonthlyShipmentReportGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RelatorioExpedicaoMensalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MonthlyShipmentReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    entregador?: boolean
-    dataProducao?: boolean
-    dataExpedicao?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoMensal"]>
+    quantity?: boolean
+    destination?: boolean
+    temperature?: boolean
+    deliverer?: boolean
+    productionDate?: boolean
+    shipmentDate?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["monthlyShipmentReport"]>
 
-  export type RelatorioExpedicaoMensalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MonthlyShipmentReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    entregador?: boolean
-    dataProducao?: boolean
-    dataExpedicao?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoMensal"]>
+    quantity?: boolean
+    destination?: boolean
+    temperature?: boolean
+    deliverer?: boolean
+    productionDate?: boolean
+    shipmentDate?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["monthlyShipmentReport"]>
 
-  export type RelatorioExpedicaoMensalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type MonthlyShipmentReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    quantidade?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    entregador?: boolean
-    dataProducao?: boolean
-    dataExpedicao?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["relatorioExpedicaoMensal"]>
+    quantity?: boolean
+    destination?: boolean
+    temperature?: boolean
+    deliverer?: boolean
+    productionDate?: boolean
+    shipmentDate?: boolean
+    productId?: boolean
+    clientId?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["monthlyShipmentReport"]>
 
-  export type RelatorioExpedicaoMensalSelectScalar = {
+  export type MonthlyShipmentReportSelectScalar = {
     id?: boolean
-    quantidade?: boolean
-    destino?: boolean
-    temperatura?: boolean
-    entregador?: boolean
-    dataProducao?: boolean
-    dataExpedicao?: boolean
-    produtoId?: boolean
-    clienteId?: boolean
+    quantity?: boolean
+    destination?: boolean
+    temperature?: boolean
+    deliverer?: boolean
+    productionDate?: boolean
+    shipmentDate?: boolean
+    productId?: boolean
+    clientId?: boolean
   }
 
-  export type RelatorioExpedicaoMensalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantidade" | "destino" | "temperatura" | "entregador" | "dataProducao" | "dataExpedicao" | "produtoId" | "clienteId", ExtArgs["result"]["relatorioExpedicaoMensal"]>
-  export type RelatorioExpedicaoMensalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type MonthlyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "destination" | "temperature" | "deliverer" | "productionDate" | "shipmentDate" | "productId" | "clientId", ExtArgs["result"]["monthlyShipmentReport"]>
+  export type MonthlyShipmentReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type RelatorioExpedicaoMensalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type MonthlyShipmentReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type RelatorioExpedicaoMensalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    produto?: boolean | ProdutoDefaultArgs<ExtArgs>
-    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+  export type MonthlyShipmentReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+    product?: boolean | ProductDefaultArgs<ExtArgs>
   }
 
-  export type $RelatorioExpedicaoMensalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RelatorioExpedicaoMensal"
+  export type $MonthlyShipmentReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MonthlyShipmentReport"
     objects: {
-      produto: Prisma.$ProdutoPayload<ExtArgs>
-      cliente: Prisma.$ClientePayload<ExtArgs>
+      client: Prisma.$ClientPayload<ExtArgs>
+      product: Prisma.$ProductPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      quantidade: Prisma.Decimal
-      destino: string
-      temperatura: Prisma.Decimal
-      entregador: string
-      dataProducao: Date
-      dataExpedicao: Date
-      produtoId: number
-      clienteId: number
-    }, ExtArgs["result"]["relatorioExpedicaoMensal"]>
+      quantity: Prisma.Decimal
+      destination: string
+      temperature: Prisma.Decimal
+      deliverer: string
+      productionDate: Date
+      shipmentDate: Date
+      productId: number
+      clientId: number
+    }, ExtArgs["result"]["monthlyShipmentReport"]>
     composites: {}
   }
 
-  type RelatorioExpedicaoMensalGetPayload<S extends boolean | null | undefined | RelatorioExpedicaoMensalDefaultArgs> = $Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload, S>
+  type MonthlyShipmentReportGetPayload<S extends boolean | null | undefined | MonthlyShipmentReportDefaultArgs> = $Result.GetResult<Prisma.$MonthlyShipmentReportPayload, S>
 
-  type RelatorioExpedicaoMensalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RelatorioExpedicaoMensalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RelatorioExpedicaoMensalCountAggregateInputType | true
+  type MonthlyShipmentReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MonthlyShipmentReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MonthlyShipmentReportCountAggregateInputType | true
     }
 
-  export interface RelatorioExpedicaoMensalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RelatorioExpedicaoMensal'], meta: { name: 'RelatorioExpedicaoMensal' } }
+  export interface MonthlyShipmentReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MonthlyShipmentReport'], meta: { name: 'MonthlyShipmentReport' } }
     /**
-     * Find zero or one RelatorioExpedicaoMensal that matches the filter.
-     * @param {RelatorioExpedicaoMensalFindUniqueArgs} args - Arguments to find a RelatorioExpedicaoMensal
+     * Find zero or one MonthlyShipmentReport that matches the filter.
+     * @param {MonthlyShipmentReportFindUniqueArgs} args - Arguments to find a MonthlyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.findUnique({
+     * // Get one MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends RelatorioExpedicaoMensalFindUniqueArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalFindUniqueArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends MonthlyShipmentReportFindUniqueArgs>(args: SelectSubset<T, MonthlyShipmentReportFindUniqueArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one RelatorioExpedicaoMensal that matches the filter or throw an error with `error.code='P2025'`
+     * Find one MonthlyShipmentReport that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {RelatorioExpedicaoMensalFindUniqueOrThrowArgs} args - Arguments to find a RelatorioExpedicaoMensal
+     * @param {MonthlyShipmentReportFindUniqueOrThrowArgs} args - Arguments to find a MonthlyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.findUniqueOrThrow({
+     * // Get one MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends RelatorioExpedicaoMensalFindUniqueOrThrowArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends MonthlyShipmentReportFindUniqueOrThrowArgs>(args: SelectSubset<T, MonthlyShipmentReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RelatorioExpedicaoMensal that matches the filter.
+     * Find the first MonthlyShipmentReport that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalFindFirstArgs} args - Arguments to find a RelatorioExpedicaoMensal
+     * @param {MonthlyShipmentReportFindFirstArgs} args - Arguments to find a MonthlyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.findFirst({
+     * // Get one MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends RelatorioExpedicaoMensalFindFirstArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalFindFirstArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends MonthlyShipmentReportFindFirstArgs>(args?: SelectSubset<T, MonthlyShipmentReportFindFirstArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RelatorioExpedicaoMensal that matches the filter or
+     * Find the first MonthlyShipmentReport that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalFindFirstOrThrowArgs} args - Arguments to find a RelatorioExpedicaoMensal
+     * @param {MonthlyShipmentReportFindFirstOrThrowArgs} args - Arguments to find a MonthlyShipmentReport
      * @example
-     * // Get one RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.findFirstOrThrow({
+     * // Get one MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends RelatorioExpedicaoMensalFindFirstOrThrowArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalFindFirstOrThrowArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends MonthlyShipmentReportFindFirstOrThrowArgs>(args?: SelectSubset<T, MonthlyShipmentReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more RelatorioExpedicaoMensals that matches the filter.
+     * Find zero or more MonthlyShipmentReports that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {MonthlyShipmentReportFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensals = await prisma.relatorioExpedicaoMensal.findMany()
+     * // Get all MonthlyShipmentReports
+     * const monthlyShipmentReports = await prisma.monthlyShipmentReport.findMany()
      * 
-     * // Get first 10 RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensals = await prisma.relatorioExpedicaoMensal.findMany({ take: 10 })
+     * // Get first 10 MonthlyShipmentReports
+     * const monthlyShipmentReports = await prisma.monthlyShipmentReport.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const relatorioExpedicaoMensalWithIdOnly = await prisma.relatorioExpedicaoMensal.findMany({ select: { id: true } })
+     * const monthlyShipmentReportWithIdOnly = await prisma.monthlyShipmentReport.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends RelatorioExpedicaoMensalFindManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends MonthlyShipmentReportFindManyArgs>(args?: SelectSubset<T, MonthlyShipmentReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a RelatorioExpedicaoMensal.
-     * @param {RelatorioExpedicaoMensalCreateArgs} args - Arguments to create a RelatorioExpedicaoMensal.
+     * Create a MonthlyShipmentReport.
+     * @param {MonthlyShipmentReportCreateArgs} args - Arguments to create a MonthlyShipmentReport.
      * @example
-     * // Create one RelatorioExpedicaoMensal
-     * const RelatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.create({
+     * // Create one MonthlyShipmentReport
+     * const MonthlyShipmentReport = await prisma.monthlyShipmentReport.create({
      *   data: {
-     *     // ... data to create a RelatorioExpedicaoMensal
+     *     // ... data to create a MonthlyShipmentReport
      *   }
      * })
      * 
      */
-    create<T extends RelatorioExpedicaoMensalCreateArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalCreateArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends MonthlyShipmentReportCreateArgs>(args: SelectSubset<T, MonthlyShipmentReportCreateArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many RelatorioExpedicaoMensals.
-     * @param {RelatorioExpedicaoMensalCreateManyArgs} args - Arguments to create many RelatorioExpedicaoMensals.
+     * Create many MonthlyShipmentReports.
+     * @param {MonthlyShipmentReportCreateManyArgs} args - Arguments to create many MonthlyShipmentReports.
      * @example
-     * // Create many RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.createMany({
+     * // Create many MonthlyShipmentReports
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends RelatorioExpedicaoMensalCreateManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends MonthlyShipmentReportCreateManyArgs>(args?: SelectSubset<T, MonthlyShipmentReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many RelatorioExpedicaoMensals and returns the data saved in the database.
-     * @param {RelatorioExpedicaoMensalCreateManyAndReturnArgs} args - Arguments to create many RelatorioExpedicaoMensals.
+     * Create many MonthlyShipmentReports and returns the data saved in the database.
+     * @param {MonthlyShipmentReportCreateManyAndReturnArgs} args - Arguments to create many MonthlyShipmentReports.
      * @example
-     * // Create many RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.createManyAndReturn({
+     * // Create many MonthlyShipmentReports
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many RelatorioExpedicaoMensals and only return the `id`
-     * const relatorioExpedicaoMensalWithIdOnly = await prisma.relatorioExpedicaoMensal.createManyAndReturn({
+     * // Create many MonthlyShipmentReports and only return the `id`
+     * const monthlyShipmentReportWithIdOnly = await prisma.monthlyShipmentReport.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -8857,28 +7665,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends RelatorioExpedicaoMensalCreateManyAndReturnArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends MonthlyShipmentReportCreateManyAndReturnArgs>(args?: SelectSubset<T, MonthlyShipmentReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a RelatorioExpedicaoMensal.
-     * @param {RelatorioExpedicaoMensalDeleteArgs} args - Arguments to delete one RelatorioExpedicaoMensal.
+     * Delete a MonthlyShipmentReport.
+     * @param {MonthlyShipmentReportDeleteArgs} args - Arguments to delete one MonthlyShipmentReport.
      * @example
-     * // Delete one RelatorioExpedicaoMensal
-     * const RelatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.delete({
+     * // Delete one MonthlyShipmentReport
+     * const MonthlyShipmentReport = await prisma.monthlyShipmentReport.delete({
      *   where: {
-     *     // ... filter to delete one RelatorioExpedicaoMensal
+     *     // ... filter to delete one MonthlyShipmentReport
      *   }
      * })
      * 
      */
-    delete<T extends RelatorioExpedicaoMensalDeleteArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalDeleteArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends MonthlyShipmentReportDeleteArgs>(args: SelectSubset<T, MonthlyShipmentReportDeleteArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one RelatorioExpedicaoMensal.
-     * @param {RelatorioExpedicaoMensalUpdateArgs} args - Arguments to update one RelatorioExpedicaoMensal.
+     * Update one MonthlyShipmentReport.
+     * @param {MonthlyShipmentReportUpdateArgs} args - Arguments to update one MonthlyShipmentReport.
      * @example
-     * // Update one RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.update({
+     * // Update one MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8888,30 +7696,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends RelatorioExpedicaoMensalUpdateArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalUpdateArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends MonthlyShipmentReportUpdateArgs>(args: SelectSubset<T, MonthlyShipmentReportUpdateArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more RelatorioExpedicaoMensals.
-     * @param {RelatorioExpedicaoMensalDeleteManyArgs} args - Arguments to filter RelatorioExpedicaoMensals to delete.
+     * Delete zero or more MonthlyShipmentReports.
+     * @param {MonthlyShipmentReportDeleteManyArgs} args - Arguments to filter MonthlyShipmentReports to delete.
      * @example
-     * // Delete a few RelatorioExpedicaoMensals
-     * const { count } = await prisma.relatorioExpedicaoMensal.deleteMany({
+     * // Delete a few MonthlyShipmentReports
+     * const { count } = await prisma.monthlyShipmentReport.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends RelatorioExpedicaoMensalDeleteManyArgs>(args?: SelectSubset<T, RelatorioExpedicaoMensalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends MonthlyShipmentReportDeleteManyArgs>(args?: SelectSubset<T, MonthlyShipmentReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RelatorioExpedicaoMensals.
+     * Update zero or more MonthlyShipmentReports.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {MonthlyShipmentReportUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.updateMany({
+     * // Update many MonthlyShipmentReports
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8921,14 +7729,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends RelatorioExpedicaoMensalUpdateManyArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends MonthlyShipmentReportUpdateManyArgs>(args: SelectSubset<T, MonthlyShipmentReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RelatorioExpedicaoMensals and returns the data updated in the database.
-     * @param {RelatorioExpedicaoMensalUpdateManyAndReturnArgs} args - Arguments to update many RelatorioExpedicaoMensals.
+     * Update zero or more MonthlyShipmentReports and returns the data updated in the database.
+     * @param {MonthlyShipmentReportUpdateManyAndReturnArgs} args - Arguments to update many MonthlyShipmentReports.
      * @example
-     * // Update many RelatorioExpedicaoMensals
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.updateManyAndReturn({
+     * // Update many MonthlyShipmentReports
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8937,8 +7745,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more RelatorioExpedicaoMensals and only return the `id`
-     * const relatorioExpedicaoMensalWithIdOnly = await prisma.relatorioExpedicaoMensal.updateManyAndReturn({
+     * // Update zero or more MonthlyShipmentReports and only return the `id`
+     * const monthlyShipmentReportWithIdOnly = await prisma.monthlyShipmentReport.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -8951,56 +7759,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends RelatorioExpedicaoMensalUpdateManyAndReturnArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends MonthlyShipmentReportUpdateManyAndReturnArgs>(args: SelectSubset<T, MonthlyShipmentReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one RelatorioExpedicaoMensal.
-     * @param {RelatorioExpedicaoMensalUpsertArgs} args - Arguments to update or create a RelatorioExpedicaoMensal.
+     * Create or update one MonthlyShipmentReport.
+     * @param {MonthlyShipmentReportUpsertArgs} args - Arguments to update or create a MonthlyShipmentReport.
      * @example
-     * // Update or create a RelatorioExpedicaoMensal
-     * const relatorioExpedicaoMensal = await prisma.relatorioExpedicaoMensal.upsert({
+     * // Update or create a MonthlyShipmentReport
+     * const monthlyShipmentReport = await prisma.monthlyShipmentReport.upsert({
      *   create: {
-     *     // ... data to create a RelatorioExpedicaoMensal
+     *     // ... data to create a MonthlyShipmentReport
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the RelatorioExpedicaoMensal we want to update
+     *     // ... the filter for the MonthlyShipmentReport we want to update
      *   }
      * })
      */
-    upsert<T extends RelatorioExpedicaoMensalUpsertArgs>(args: SelectSubset<T, RelatorioExpedicaoMensalUpsertArgs<ExtArgs>>): Prisma__RelatorioExpedicaoMensalClient<$Result.GetResult<Prisma.$RelatorioExpedicaoMensalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends MonthlyShipmentReportUpsertArgs>(args: SelectSubset<T, MonthlyShipmentReportUpsertArgs<ExtArgs>>): Prisma__MonthlyShipmentReportClient<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of RelatorioExpedicaoMensals.
+     * Count the number of MonthlyShipmentReports.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalCountArgs} args - Arguments to filter RelatorioExpedicaoMensals to count.
+     * @param {MonthlyShipmentReportCountArgs} args - Arguments to filter MonthlyShipmentReports to count.
      * @example
-     * // Count the number of RelatorioExpedicaoMensals
-     * const count = await prisma.relatorioExpedicaoMensal.count({
+     * // Count the number of MonthlyShipmentReports
+     * const count = await prisma.monthlyShipmentReport.count({
      *   where: {
-     *     // ... the filter for the RelatorioExpedicaoMensals we want to count
+     *     // ... the filter for the MonthlyShipmentReports we want to count
      *   }
      * })
     **/
-    count<T extends RelatorioExpedicaoMensalCountArgs>(
-      args?: Subset<T, RelatorioExpedicaoMensalCountArgs>,
+    count<T extends MonthlyShipmentReportCountArgs>(
+      args?: Subset<T, MonthlyShipmentReportCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RelatorioExpedicaoMensalCountAggregateOutputType>
+          : GetScalarType<T['select'], MonthlyShipmentReportCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a RelatorioExpedicaoMensal.
+     * Allows you to perform aggregations operations on a MonthlyShipmentReport.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {MonthlyShipmentReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -9020,13 +7828,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RelatorioExpedicaoMensalAggregateArgs>(args: Subset<T, RelatorioExpedicaoMensalAggregateArgs>): Prisma.PrismaPromise<GetRelatorioExpedicaoMensalAggregateType<T>>
+    aggregate<T extends MonthlyShipmentReportAggregateArgs>(args: Subset<T, MonthlyShipmentReportAggregateArgs>): Prisma.PrismaPromise<GetMonthlyShipmentReportAggregateType<T>>
 
     /**
-     * Group by RelatorioExpedicaoMensal.
+     * Group by MonthlyShipmentReport.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RelatorioExpedicaoMensalGroupByArgs} args - Group by arguments.
+     * @param {MonthlyShipmentReportGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -9041,14 +7849,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RelatorioExpedicaoMensalGroupByArgs,
+      T extends MonthlyShipmentReportGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RelatorioExpedicaoMensalGroupByArgs['orderBy'] }
-        : { orderBy?: RelatorioExpedicaoMensalGroupByArgs['orderBy'] },
+        ? { orderBy: MonthlyShipmentReportGroupByArgs['orderBy'] }
+        : { orderBy?: MonthlyShipmentReportGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -9097,23 +7905,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RelatorioExpedicaoMensalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRelatorioExpedicaoMensalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, MonthlyShipmentReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMonthlyShipmentReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the RelatorioExpedicaoMensal model
+   * Fields of the MonthlyShipmentReport model
    */
-  readonly fields: RelatorioExpedicaoMensalFieldRefs;
+  readonly fields: MonthlyShipmentReportFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for RelatorioExpedicaoMensal.
+   * The delegate class that acts as a "Promise-like" for MonthlyShipmentReport.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__RelatorioExpedicaoMensalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__MonthlyShipmentReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    produto<T extends ProdutoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProdutoDefaultArgs<ExtArgs>>): Prisma__ProdutoClient<$Result.GetResult<Prisma.$ProdutoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    cliente<T extends ClienteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClienteDefaultArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9140,429 +7948,429 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the RelatorioExpedicaoMensal model
+   * Fields of the MonthlyShipmentReport model
    */
-  interface RelatorioExpedicaoMensalFieldRefs {
-    readonly id: FieldRef<"RelatorioExpedicaoMensal", 'Int'>
-    readonly quantidade: FieldRef<"RelatorioExpedicaoMensal", 'Decimal'>
-    readonly destino: FieldRef<"RelatorioExpedicaoMensal", 'String'>
-    readonly temperatura: FieldRef<"RelatorioExpedicaoMensal", 'Decimal'>
-    readonly entregador: FieldRef<"RelatorioExpedicaoMensal", 'String'>
-    readonly dataProducao: FieldRef<"RelatorioExpedicaoMensal", 'DateTime'>
-    readonly dataExpedicao: FieldRef<"RelatorioExpedicaoMensal", 'DateTime'>
-    readonly produtoId: FieldRef<"RelatorioExpedicaoMensal", 'Int'>
-    readonly clienteId: FieldRef<"RelatorioExpedicaoMensal", 'Int'>
+  interface MonthlyShipmentReportFieldRefs {
+    readonly id: FieldRef<"MonthlyShipmentReport", 'Int'>
+    readonly quantity: FieldRef<"MonthlyShipmentReport", 'Decimal'>
+    readonly destination: FieldRef<"MonthlyShipmentReport", 'String'>
+    readonly temperature: FieldRef<"MonthlyShipmentReport", 'Decimal'>
+    readonly deliverer: FieldRef<"MonthlyShipmentReport", 'String'>
+    readonly productionDate: FieldRef<"MonthlyShipmentReport", 'DateTime'>
+    readonly shipmentDate: FieldRef<"MonthlyShipmentReport", 'DateTime'>
+    readonly productId: FieldRef<"MonthlyShipmentReport", 'Int'>
+    readonly clientId: FieldRef<"MonthlyShipmentReport", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * RelatorioExpedicaoMensal findUnique
+   * MonthlyShipmentReport findUnique
    */
-  export type RelatorioExpedicaoMensalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoMensal to fetch.
+     * Filter, which MonthlyShipmentReport to fetch.
      */
-    where: RelatorioExpedicaoMensalWhereUniqueInput
+    where: MonthlyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoMensal findUniqueOrThrow
+   * MonthlyShipmentReport findUniqueOrThrow
    */
-  export type RelatorioExpedicaoMensalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoMensal to fetch.
+     * Filter, which MonthlyShipmentReport to fetch.
      */
-    where: RelatorioExpedicaoMensalWhereUniqueInput
+    where: MonthlyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoMensal findFirst
+   * MonthlyShipmentReport findFirst
    */
-  export type RelatorioExpedicaoMensalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoMensal to fetch.
+     * Filter, which MonthlyShipmentReport to fetch.
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoMensals to fetch.
+     * Determine the order of MonthlyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RelatorioExpedicaoMensals.
+     * Sets the position for searching for MonthlyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoMensals from the position of the cursor.
+     * Take `±n` MonthlyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoMensals.
+     * Skip the first `n` MonthlyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RelatorioExpedicaoMensals.
+     * Filter by unique combinations of MonthlyShipmentReports.
      */
-    distinct?: RelatorioExpedicaoMensalScalarFieldEnum | RelatorioExpedicaoMensalScalarFieldEnum[]
+    distinct?: MonthlyShipmentReportScalarFieldEnum | MonthlyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoMensal findFirstOrThrow
+   * MonthlyShipmentReport findFirstOrThrow
    */
-  export type RelatorioExpedicaoMensalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoMensal to fetch.
+     * Filter, which MonthlyShipmentReport to fetch.
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoMensals to fetch.
+     * Determine the order of MonthlyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RelatorioExpedicaoMensals.
+     * Sets the position for searching for MonthlyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoMensals from the position of the cursor.
+     * Take `±n` MonthlyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoMensals.
+     * Skip the first `n` MonthlyShipmentReports.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RelatorioExpedicaoMensals.
+     * Filter by unique combinations of MonthlyShipmentReports.
      */
-    distinct?: RelatorioExpedicaoMensalScalarFieldEnum | RelatorioExpedicaoMensalScalarFieldEnum[]
+    distinct?: MonthlyShipmentReportScalarFieldEnum | MonthlyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoMensal findMany
+   * MonthlyShipmentReport findMany
    */
-  export type RelatorioExpedicaoMensalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter, which RelatorioExpedicaoMensals to fetch.
+     * Filter, which MonthlyShipmentReports to fetch.
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RelatorioExpedicaoMensals to fetch.
+     * Determine the order of MonthlyShipmentReports to fetch.
      */
-    orderBy?: RelatorioExpedicaoMensalOrderByWithRelationInput | RelatorioExpedicaoMensalOrderByWithRelationInput[]
+    orderBy?: MonthlyShipmentReportOrderByWithRelationInput | MonthlyShipmentReportOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing RelatorioExpedicaoMensals.
+     * Sets the position for listing MonthlyShipmentReports.
      */
-    cursor?: RelatorioExpedicaoMensalWhereUniqueInput
+    cursor?: MonthlyShipmentReportWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RelatorioExpedicaoMensals from the position of the cursor.
+     * Take `±n` MonthlyShipmentReports from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RelatorioExpedicaoMensals.
+     * Skip the first `n` MonthlyShipmentReports.
      */
     skip?: number
-    distinct?: RelatorioExpedicaoMensalScalarFieldEnum | RelatorioExpedicaoMensalScalarFieldEnum[]
+    distinct?: MonthlyShipmentReportScalarFieldEnum | MonthlyShipmentReportScalarFieldEnum[]
   }
 
   /**
-   * RelatorioExpedicaoMensal create
+   * MonthlyShipmentReport create
    */
-  export type RelatorioExpedicaoMensalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * The data needed to create a RelatorioExpedicaoMensal.
+     * The data needed to create a MonthlyShipmentReport.
      */
-    data: XOR<RelatorioExpedicaoMensalCreateInput, RelatorioExpedicaoMensalUncheckedCreateInput>
+    data: XOR<MonthlyShipmentReportCreateInput, MonthlyShipmentReportUncheckedCreateInput>
   }
 
   /**
-   * RelatorioExpedicaoMensal createMany
+   * MonthlyShipmentReport createMany
    */
-  export type RelatorioExpedicaoMensalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many RelatorioExpedicaoMensals.
+     * The data used to create many MonthlyShipmentReports.
      */
-    data: RelatorioExpedicaoMensalCreateManyInput | RelatorioExpedicaoMensalCreateManyInput[]
+    data: MonthlyShipmentReportCreateManyInput | MonthlyShipmentReportCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * RelatorioExpedicaoMensal createManyAndReturn
+   * MonthlyShipmentReport createManyAndReturn
    */
-  export type RelatorioExpedicaoMensalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelectCreateManyAndReturn<ExtArgs> | null
+    select?: MonthlyShipmentReportSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
-     * The data used to create many RelatorioExpedicaoMensals.
+     * The data used to create many MonthlyShipmentReports.
      */
-    data: RelatorioExpedicaoMensalCreateManyInput | RelatorioExpedicaoMensalCreateManyInput[]
+    data: MonthlyShipmentReportCreateManyInput | MonthlyShipmentReportCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: MonthlyShipmentReportIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RelatorioExpedicaoMensal update
+   * MonthlyShipmentReport update
    */
-  export type RelatorioExpedicaoMensalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * The data needed to update a RelatorioExpedicaoMensal.
+     * The data needed to update a MonthlyShipmentReport.
      */
-    data: XOR<RelatorioExpedicaoMensalUpdateInput, RelatorioExpedicaoMensalUncheckedUpdateInput>
+    data: XOR<MonthlyShipmentReportUpdateInput, MonthlyShipmentReportUncheckedUpdateInput>
     /**
-     * Choose, which RelatorioExpedicaoMensal to update.
+     * Choose, which MonthlyShipmentReport to update.
      */
-    where: RelatorioExpedicaoMensalWhereUniqueInput
+    where: MonthlyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoMensal updateMany
+   * MonthlyShipmentReport updateMany
    */
-  export type RelatorioExpedicaoMensalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update RelatorioExpedicaoMensals.
+     * The data used to update MonthlyShipmentReports.
      */
-    data: XOR<RelatorioExpedicaoMensalUpdateManyMutationInput, RelatorioExpedicaoMensalUncheckedUpdateManyInput>
+    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyInput>
     /**
-     * Filter which RelatorioExpedicaoMensals to update
+     * Filter which MonthlyShipmentReports to update
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoMensals to update.
+     * Limit how many MonthlyShipmentReports to update.
      */
     limit?: number
   }
 
   /**
-   * RelatorioExpedicaoMensal updateManyAndReturn
+   * MonthlyShipmentReport updateManyAndReturn
    */
-  export type RelatorioExpedicaoMensalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: MonthlyShipmentReportSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
-     * The data used to update RelatorioExpedicaoMensals.
+     * The data used to update MonthlyShipmentReports.
      */
-    data: XOR<RelatorioExpedicaoMensalUpdateManyMutationInput, RelatorioExpedicaoMensalUncheckedUpdateManyInput>
+    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyInput>
     /**
-     * Filter which RelatorioExpedicaoMensals to update
+     * Filter which MonthlyShipmentReports to update
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoMensals to update.
+     * Limit how many MonthlyShipmentReports to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: MonthlyShipmentReportIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RelatorioExpedicaoMensal upsert
+   * MonthlyShipmentReport upsert
    */
-  export type RelatorioExpedicaoMensalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * The filter to search for the RelatorioExpedicaoMensal to update in case it exists.
+     * The filter to search for the MonthlyShipmentReport to update in case it exists.
      */
-    where: RelatorioExpedicaoMensalWhereUniqueInput
+    where: MonthlyShipmentReportWhereUniqueInput
     /**
-     * In case the RelatorioExpedicaoMensal found by the `where` argument doesn't exist, create a new RelatorioExpedicaoMensal with this data.
+     * In case the MonthlyShipmentReport found by the `where` argument doesn't exist, create a new MonthlyShipmentReport with this data.
      */
-    create: XOR<RelatorioExpedicaoMensalCreateInput, RelatorioExpedicaoMensalUncheckedCreateInput>
+    create: XOR<MonthlyShipmentReportCreateInput, MonthlyShipmentReportUncheckedCreateInput>
     /**
-     * In case the RelatorioExpedicaoMensal was found with the provided `where` argument, update it with this data.
+     * In case the MonthlyShipmentReport was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<RelatorioExpedicaoMensalUpdateInput, RelatorioExpedicaoMensalUncheckedUpdateInput>
+    update: XOR<MonthlyShipmentReportUpdateInput, MonthlyShipmentReportUncheckedUpdateInput>
   }
 
   /**
-   * RelatorioExpedicaoMensal delete
+   * MonthlyShipmentReport delete
    */
-  export type RelatorioExpedicaoMensalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
     /**
-     * Filter which RelatorioExpedicaoMensal to delete.
+     * Filter which MonthlyShipmentReport to delete.
      */
-    where: RelatorioExpedicaoMensalWhereUniqueInput
+    where: MonthlyShipmentReportWhereUniqueInput
   }
 
   /**
-   * RelatorioExpedicaoMensal deleteMany
+   * MonthlyShipmentReport deleteMany
    */
-  export type RelatorioExpedicaoMensalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RelatorioExpedicaoMensals to delete
+     * Filter which MonthlyShipmentReports to delete
      */
-    where?: RelatorioExpedicaoMensalWhereInput
+    where?: MonthlyShipmentReportWhereInput
     /**
-     * Limit how many RelatorioExpedicaoMensals to delete.
+     * Limit how many MonthlyShipmentReports to delete.
      */
     limit?: number
   }
 
   /**
-   * RelatorioExpedicaoMensal without action
+   * MonthlyShipmentReport without action
    */
-  export type RelatorioExpedicaoMensalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MonthlyShipmentReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RelatorioExpedicaoMensal
+     * Select specific fields to fetch from the MonthlyShipmentReport
      */
-    select?: RelatorioExpedicaoMensalSelect<ExtArgs> | null
+    select?: MonthlyShipmentReportSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RelatorioExpedicaoMensal
+     * Omit specific fields from the MonthlyShipmentReport
      */
-    omit?: RelatorioExpedicaoMensalOmit<ExtArgs> | null
+    omit?: MonthlyShipmentReportOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RelatorioExpedicaoMensalInclude<ExtArgs> | null
+    include?: MonthlyShipmentReportInclude<ExtArgs> | null
   }
 
 
@@ -9580,91 +8388,83 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const CargoScalarFieldEnum: {
+  export const UsersScalarFieldEnum: {
     id: 'id',
-    cargo: 'cargo'
-  };
-
-  export type CargoScalarFieldEnum = (typeof CargoScalarFieldEnum)[keyof typeof CargoScalarFieldEnum]
-
-
-  export const UsuarioScalarFieldEnum: {
-    id: 'id',
-    nome: 'nome',
+    name: 'name',
     username: 'username',
-    senha: 'senha',
-    cargoId: 'cargoId'
+    password: 'password',
+    role: 'role'
   };
 
-  export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+  export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-  export const ClienteScalarFieldEnum: {
+  export const ClientScalarFieldEnum: {
     id: 'id',
-    nome: 'nome',
-    CPF: 'CPF',
-    CNPJ: 'CNPJ',
-    endereco: 'endereco',
-    telefone: 'telefone',
-    codigoIdentificacao: 'codigoIdentificacao'
+    name: 'name',
+    cpf: 'cpf',
+    cnpj: 'cnpj',
+    address: 'address',
+    phone: 'phone',
+    identificationCode: 'identificationCode'
   };
 
-  export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeof ClienteScalarFieldEnum]
+  export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
 
 
-  export const ProdutoScalarFieldEnum: {
+  export const ProductScalarFieldEnum: {
     id: 'id',
-    nome: 'nome',
-    undMedida: 'undMedida',
-    quantidade: 'quantidade',
-    validade: 'validade'
+    name: 'name',
+    unit: 'unit',
+    quantity: 'quantity',
+    expiration: 'expiration'
   };
 
-  export type ProdutoScalarFieldEnum = (typeof ProdutoScalarFieldEnum)[keyof typeof ProdutoScalarFieldEnum]
+  export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
-  export const VeiculoScalarFieldEnum: {
+  export const VehicleScalarFieldEnum: {
     id: 'id',
-    modelo: 'modelo',
-    placa: 'placa',
-    categoria: 'categoria',
-    marca: 'marca'
+    model: 'model',
+    plate: 'plate',
+    category: 'category',
+    brand: 'brand'
   };
 
-  export type VeiculoScalarFieldEnum = (typeof VeiculoScalarFieldEnum)[keyof typeof VeiculoScalarFieldEnum]
+  export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]
 
 
-  export const RelatorioExpedicaoDiariaScalarFieldEnum: {
+  export const DailyShipmentReportScalarFieldEnum: {
     id: 'id',
-    quantidade: 'quantidade',
-    notaFiscal: 'notaFiscal',
-    dataProducao: 'dataProducao',
-    destino: 'destino',
-    temperatura: 'temperatura',
-    condicaoSanitaria: 'condicaoSanitaria',
-    entregador: 'entregador',
-    usuarioId: 'usuarioId',
-    veiculoId: 'veiculoId',
-    produtoId: 'produtoId',
-    clienteId: 'clienteId'
+    quantity: 'quantity',
+    invoiceNumber: 'invoiceNumber',
+    productionDate: 'productionDate',
+    destination: 'destination',
+    temperature: 'temperature',
+    sanitaryCondition: 'sanitaryCondition',
+    deliverer: 'deliverer',
+    userId: 'userId',
+    vehicleId: 'vehicleId',
+    productId: 'productId',
+    clientId: 'clientId'
   };
 
-  export type RelatorioExpedicaoDiariaScalarFieldEnum = (typeof RelatorioExpedicaoDiariaScalarFieldEnum)[keyof typeof RelatorioExpedicaoDiariaScalarFieldEnum]
+  export type DailyShipmentReportScalarFieldEnum = (typeof DailyShipmentReportScalarFieldEnum)[keyof typeof DailyShipmentReportScalarFieldEnum]
 
 
-  export const RelatorioExpedicaoMensalScalarFieldEnum: {
+  export const MonthlyShipmentReportScalarFieldEnum: {
     id: 'id',
-    quantidade: 'quantidade',
-    destino: 'destino',
-    temperatura: 'temperatura',
-    entregador: 'entregador',
-    dataProducao: 'dataProducao',
-    dataExpedicao: 'dataExpedicao',
-    produtoId: 'produtoId',
-    clienteId: 'clienteId'
+    quantity: 'quantity',
+    destination: 'destination',
+    temperature: 'temperature',
+    deliverer: 'deliverer',
+    productionDate: 'productionDate',
+    shipmentDate: 'shipmentDate',
+    productId: 'productId',
+    clientId: 'clientId'
   };
 
-  export type RelatorioExpedicaoMensalScalarFieldEnum = (typeof RelatorioExpedicaoMensalScalarFieldEnum)[keyof typeof RelatorioExpedicaoMensalScalarFieldEnum]
+  export type MonthlyShipmentReportScalarFieldEnum = (typeof MonthlyShipmentReportScalarFieldEnum)[keyof typeof MonthlyShipmentReportScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9713,6 +8513,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'role'
+   */
+  export type EnumroleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'role'>
+    
+
+
+  /**
+   * Reference to a field of type 'role[]'
+   */
+  export type ListEnumroleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'role[]'>
     
 
 
@@ -9768,936 +8582,856 @@ export namespace Prisma {
    */
 
 
-  export type CargoWhereInput = {
-    AND?: CargoWhereInput | CargoWhereInput[]
-    OR?: CargoWhereInput[]
-    NOT?: CargoWhereInput | CargoWhereInput[]
-    id?: IntFilter<"Cargo"> | number
-    cargo?: StringFilter<"Cargo"> | string
-    usuarios?: UsuarioListRelationFilter
+  export type UsersWhereInput = {
+    AND?: UsersWhereInput | UsersWhereInput[]
+    OR?: UsersWhereInput[]
+    NOT?: UsersWhereInput | UsersWhereInput[]
+    id?: IntFilter<"Users"> | number
+    name?: StringFilter<"Users"> | string
+    username?: StringFilter<"Users"> | string
+    password?: StringFilter<"Users"> | string
+    role?: EnumroleFilter<"Users"> | $Enums.role
+    dailyReports?: DailyShipmentReportListRelationFilter
   }
 
-  export type CargoOrderByWithRelationInput = {
+  export type UsersOrderByWithRelationInput = {
     id?: SortOrder
-    cargo?: SortOrder
-    usuarios?: UsuarioOrderByRelationAggregateInput
-  }
-
-  export type CargoWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: CargoWhereInput | CargoWhereInput[]
-    OR?: CargoWhereInput[]
-    NOT?: CargoWhereInput | CargoWhereInput[]
-    cargo?: StringFilter<"Cargo"> | string
-    usuarios?: UsuarioListRelationFilter
-  }, "id">
-
-  export type CargoOrderByWithAggregationInput = {
-    id?: SortOrder
-    cargo?: SortOrder
-    _count?: CargoCountOrderByAggregateInput
-    _avg?: CargoAvgOrderByAggregateInput
-    _max?: CargoMaxOrderByAggregateInput
-    _min?: CargoMinOrderByAggregateInput
-    _sum?: CargoSumOrderByAggregateInput
-  }
-
-  export type CargoScalarWhereWithAggregatesInput = {
-    AND?: CargoScalarWhereWithAggregatesInput | CargoScalarWhereWithAggregatesInput[]
-    OR?: CargoScalarWhereWithAggregatesInput[]
-    NOT?: CargoScalarWhereWithAggregatesInput | CargoScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Cargo"> | number
-    cargo?: StringWithAggregatesFilter<"Cargo"> | string
-  }
-
-  export type UsuarioWhereInput = {
-    AND?: UsuarioWhereInput | UsuarioWhereInput[]
-    OR?: UsuarioWhereInput[]
-    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
-    id?: IntFilter<"Usuario"> | number
-    nome?: StringFilter<"Usuario"> | string
-    username?: StringFilter<"Usuario"> | string
-    senha?: StringFilter<"Usuario"> | string
-    cargoId?: IntFilter<"Usuario"> | number
-    cargo?: XOR<CargoScalarRelationFilter, CargoWhereInput>
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
-  }
-
-  export type UsuarioOrderByWithRelationInput = {
-    id?: SortOrder
-    nome?: SortOrder
+    name?: SortOrder
     username?: SortOrder
-    senha?: SortOrder
-    cargoId?: SortOrder
-    cargo?: CargoOrderByWithRelationInput
-    relatoriosDiarios?: RelatorioExpedicaoDiariaOrderByRelationAggregateInput
+    password?: SortOrder
+    role?: SortOrder
+    dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
   }
 
-  export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
+  export type UsersWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: UsuarioWhereInput | UsuarioWhereInput[]
-    OR?: UsuarioWhereInput[]
-    NOT?: UsuarioWhereInput | UsuarioWhereInput[]
-    nome?: StringFilter<"Usuario"> | string
-    username?: StringFilter<"Usuario"> | string
-    senha?: StringFilter<"Usuario"> | string
-    cargoId?: IntFilter<"Usuario"> | number
-    cargo?: XOR<CargoScalarRelationFilter, CargoWhereInput>
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
+    AND?: UsersWhereInput | UsersWhereInput[]
+    OR?: UsersWhereInput[]
+    NOT?: UsersWhereInput | UsersWhereInput[]
+    name?: StringFilter<"Users"> | string
+    username?: StringFilter<"Users"> | string
+    password?: StringFilter<"Users"> | string
+    role?: EnumroleFilter<"Users"> | $Enums.role
+    dailyReports?: DailyShipmentReportListRelationFilter
   }, "id">
 
-  export type UsuarioOrderByWithAggregationInput = {
+  export type UsersOrderByWithAggregationInput = {
     id?: SortOrder
-    nome?: SortOrder
+    name?: SortOrder
     username?: SortOrder
-    senha?: SortOrder
-    cargoId?: SortOrder
-    _count?: UsuarioCountOrderByAggregateInput
-    _avg?: UsuarioAvgOrderByAggregateInput
-    _max?: UsuarioMaxOrderByAggregateInput
-    _min?: UsuarioMinOrderByAggregateInput
-    _sum?: UsuarioSumOrderByAggregateInput
+    password?: SortOrder
+    role?: SortOrder
+    _count?: UsersCountOrderByAggregateInput
+    _avg?: UsersAvgOrderByAggregateInput
+    _max?: UsersMaxOrderByAggregateInput
+    _min?: UsersMinOrderByAggregateInput
+    _sum?: UsersSumOrderByAggregateInput
   }
 
-  export type UsuarioScalarWhereWithAggregatesInput = {
-    AND?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
-    OR?: UsuarioScalarWhereWithAggregatesInput[]
-    NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Usuario"> | number
-    nome?: StringWithAggregatesFilter<"Usuario"> | string
-    username?: StringWithAggregatesFilter<"Usuario"> | string
-    senha?: StringWithAggregatesFilter<"Usuario"> | string
-    cargoId?: IntWithAggregatesFilter<"Usuario"> | number
+  export type UsersScalarWhereWithAggregatesInput = {
+    AND?: UsersScalarWhereWithAggregatesInput | UsersScalarWhereWithAggregatesInput[]
+    OR?: UsersScalarWhereWithAggregatesInput[]
+    NOT?: UsersScalarWhereWithAggregatesInput | UsersScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Users"> | number
+    name?: StringWithAggregatesFilter<"Users"> | string
+    username?: StringWithAggregatesFilter<"Users"> | string
+    password?: StringWithAggregatesFilter<"Users"> | string
+    role?: EnumroleWithAggregatesFilter<"Users"> | $Enums.role
   }
 
-  export type ClienteWhereInput = {
-    AND?: ClienteWhereInput | ClienteWhereInput[]
-    OR?: ClienteWhereInput[]
-    NOT?: ClienteWhereInput | ClienteWhereInput[]
-    id?: IntFilter<"Cliente"> | number
-    nome?: StringFilter<"Cliente"> | string
-    CPF?: StringFilter<"Cliente"> | string
-    CNPJ?: StringFilter<"Cliente"> | string
-    endereco?: StringFilter<"Cliente"> | string
-    telefone?: StringFilter<"Cliente"> | string
-    codigoIdentificacao?: StringFilter<"Cliente"> | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
-    relatoriosMensais?: RelatorioExpedicaoMensalListRelationFilter
+  export type ClientWhereInput = {
+    AND?: ClientWhereInput | ClientWhereInput[]
+    OR?: ClientWhereInput[]
+    NOT?: ClientWhereInput | ClientWhereInput[]
+    id?: IntFilter<"Client"> | number
+    name?: StringFilter<"Client"> | string
+    cpf?: StringFilter<"Client"> | string
+    cnpj?: StringFilter<"Client"> | string
+    address?: StringFilter<"Client"> | string
+    phone?: StringFilter<"Client"> | string
+    identificationCode?: StringFilter<"Client"> | string
+    dailyReports?: DailyShipmentReportListRelationFilter
+    monthlyReports?: MonthlyShipmentReportListRelationFilter
   }
 
-  export type ClienteOrderByWithRelationInput = {
+  export type ClientOrderByWithRelationInput = {
     id?: SortOrder
-    nome?: SortOrder
-    CPF?: SortOrder
-    CNPJ?: SortOrder
-    endereco?: SortOrder
-    telefone?: SortOrder
-    codigoIdentificacao?: SortOrder
-    relatoriosDiarios?: RelatorioExpedicaoDiariaOrderByRelationAggregateInput
-    relatoriosMensais?: RelatorioExpedicaoMensalOrderByRelationAggregateInput
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
+    dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
+    monthlyReports?: MonthlyShipmentReportOrderByRelationAggregateInput
   }
 
-  export type ClienteWhereUniqueInput = Prisma.AtLeast<{
+  export type ClientWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: ClienteWhereInput | ClienteWhereInput[]
-    OR?: ClienteWhereInput[]
-    NOT?: ClienteWhereInput | ClienteWhereInput[]
-    nome?: StringFilter<"Cliente"> | string
-    CPF?: StringFilter<"Cliente"> | string
-    CNPJ?: StringFilter<"Cliente"> | string
-    endereco?: StringFilter<"Cliente"> | string
-    telefone?: StringFilter<"Cliente"> | string
-    codigoIdentificacao?: StringFilter<"Cliente"> | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
-    relatoriosMensais?: RelatorioExpedicaoMensalListRelationFilter
+    AND?: ClientWhereInput | ClientWhereInput[]
+    OR?: ClientWhereInput[]
+    NOT?: ClientWhereInput | ClientWhereInput[]
+    name?: StringFilter<"Client"> | string
+    cpf?: StringFilter<"Client"> | string
+    cnpj?: StringFilter<"Client"> | string
+    address?: StringFilter<"Client"> | string
+    phone?: StringFilter<"Client"> | string
+    identificationCode?: StringFilter<"Client"> | string
+    dailyReports?: DailyShipmentReportListRelationFilter
+    monthlyReports?: MonthlyShipmentReportListRelationFilter
   }, "id">
 
-  export type ClienteOrderByWithAggregationInput = {
+  export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
-    nome?: SortOrder
-    CPF?: SortOrder
-    CNPJ?: SortOrder
-    endereco?: SortOrder
-    telefone?: SortOrder
-    codigoIdentificacao?: SortOrder
-    _count?: ClienteCountOrderByAggregateInput
-    _avg?: ClienteAvgOrderByAggregateInput
-    _max?: ClienteMaxOrderByAggregateInput
-    _min?: ClienteMinOrderByAggregateInput
-    _sum?: ClienteSumOrderByAggregateInput
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
+    _count?: ClientCountOrderByAggregateInput
+    _avg?: ClientAvgOrderByAggregateInput
+    _max?: ClientMaxOrderByAggregateInput
+    _min?: ClientMinOrderByAggregateInput
+    _sum?: ClientSumOrderByAggregateInput
   }
 
-  export type ClienteScalarWhereWithAggregatesInput = {
-    AND?: ClienteScalarWhereWithAggregatesInput | ClienteScalarWhereWithAggregatesInput[]
-    OR?: ClienteScalarWhereWithAggregatesInput[]
-    NOT?: ClienteScalarWhereWithAggregatesInput | ClienteScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Cliente"> | number
-    nome?: StringWithAggregatesFilter<"Cliente"> | string
-    CPF?: StringWithAggregatesFilter<"Cliente"> | string
-    CNPJ?: StringWithAggregatesFilter<"Cliente"> | string
-    endereco?: StringWithAggregatesFilter<"Cliente"> | string
-    telefone?: StringWithAggregatesFilter<"Cliente"> | string
-    codigoIdentificacao?: StringWithAggregatesFilter<"Cliente"> | string
+  export type ClientScalarWhereWithAggregatesInput = {
+    AND?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
+    OR?: ClientScalarWhereWithAggregatesInput[]
+    NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Client"> | number
+    name?: StringWithAggregatesFilter<"Client"> | string
+    cpf?: StringWithAggregatesFilter<"Client"> | string
+    cnpj?: StringWithAggregatesFilter<"Client"> | string
+    address?: StringWithAggregatesFilter<"Client"> | string
+    phone?: StringWithAggregatesFilter<"Client"> | string
+    identificationCode?: StringWithAggregatesFilter<"Client"> | string
   }
 
-  export type ProdutoWhereInput = {
-    AND?: ProdutoWhereInput | ProdutoWhereInput[]
-    OR?: ProdutoWhereInput[]
-    NOT?: ProdutoWhereInput | ProdutoWhereInput[]
-    id?: IntFilter<"Produto"> | number
-    nome?: StringFilter<"Produto"> | string
-    undMedida?: StringFilter<"Produto"> | string
-    quantidade?: DecimalFilter<"Produto"> | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFilter<"Produto"> | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
-    relatoriosMensais?: RelatorioExpedicaoMensalListRelationFilter
+  export type ProductWhereInput = {
+    AND?: ProductWhereInput | ProductWhereInput[]
+    OR?: ProductWhereInput[]
+    NOT?: ProductWhereInput | ProductWhereInput[]
+    id?: IntFilter<"Product"> | number
+    name?: StringFilter<"Product"> | string
+    unit?: StringFilter<"Product"> | string
+    quantity?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFilter<"Product"> | Date | string
+    dailyReports?: DailyShipmentReportListRelationFilter
+    monthlyReports?: MonthlyShipmentReportListRelationFilter
   }
 
-  export type ProdutoOrderByWithRelationInput = {
+  export type ProductOrderByWithRelationInput = {
     id?: SortOrder
-    nome?: SortOrder
-    undMedida?: SortOrder
-    quantidade?: SortOrder
-    validade?: SortOrder
-    relatoriosDiarios?: RelatorioExpedicaoDiariaOrderByRelationAggregateInput
-    relatoriosMensais?: RelatorioExpedicaoMensalOrderByRelationAggregateInput
+    name?: SortOrder
+    unit?: SortOrder
+    quantity?: SortOrder
+    expiration?: SortOrder
+    dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
+    monthlyReports?: MonthlyShipmentReportOrderByRelationAggregateInput
   }
 
-  export type ProdutoWhereUniqueInput = Prisma.AtLeast<{
+  export type ProductWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: ProdutoWhereInput | ProdutoWhereInput[]
-    OR?: ProdutoWhereInput[]
-    NOT?: ProdutoWhereInput | ProdutoWhereInput[]
-    nome?: StringFilter<"Produto"> | string
-    undMedida?: StringFilter<"Produto"> | string
-    quantidade?: DecimalFilter<"Produto"> | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFilter<"Produto"> | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
-    relatoriosMensais?: RelatorioExpedicaoMensalListRelationFilter
+    AND?: ProductWhereInput | ProductWhereInput[]
+    OR?: ProductWhereInput[]
+    NOT?: ProductWhereInput | ProductWhereInput[]
+    name?: StringFilter<"Product"> | string
+    unit?: StringFilter<"Product"> | string
+    quantity?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFilter<"Product"> | Date | string
+    dailyReports?: DailyShipmentReportListRelationFilter
+    monthlyReports?: MonthlyShipmentReportListRelationFilter
   }, "id">
 
-  export type ProdutoOrderByWithAggregationInput = {
+  export type ProductOrderByWithAggregationInput = {
     id?: SortOrder
-    nome?: SortOrder
-    undMedida?: SortOrder
-    quantidade?: SortOrder
-    validade?: SortOrder
-    _count?: ProdutoCountOrderByAggregateInput
-    _avg?: ProdutoAvgOrderByAggregateInput
-    _max?: ProdutoMaxOrderByAggregateInput
-    _min?: ProdutoMinOrderByAggregateInput
-    _sum?: ProdutoSumOrderByAggregateInput
+    name?: SortOrder
+    unit?: SortOrder
+    quantity?: SortOrder
+    expiration?: SortOrder
+    _count?: ProductCountOrderByAggregateInput
+    _avg?: ProductAvgOrderByAggregateInput
+    _max?: ProductMaxOrderByAggregateInput
+    _min?: ProductMinOrderByAggregateInput
+    _sum?: ProductSumOrderByAggregateInput
   }
 
-  export type ProdutoScalarWhereWithAggregatesInput = {
-    AND?: ProdutoScalarWhereWithAggregatesInput | ProdutoScalarWhereWithAggregatesInput[]
-    OR?: ProdutoScalarWhereWithAggregatesInput[]
-    NOT?: ProdutoScalarWhereWithAggregatesInput | ProdutoScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Produto"> | number
-    nome?: StringWithAggregatesFilter<"Produto"> | string
-    undMedida?: StringWithAggregatesFilter<"Produto"> | string
-    quantidade?: DecimalWithAggregatesFilter<"Produto"> | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeWithAggregatesFilter<"Produto"> | Date | string
+  export type ProductScalarWhereWithAggregatesInput = {
+    AND?: ProductScalarWhereWithAggregatesInput | ProductScalarWhereWithAggregatesInput[]
+    OR?: ProductScalarWhereWithAggregatesInput[]
+    NOT?: ProductScalarWhereWithAggregatesInput | ProductScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Product"> | number
+    name?: StringWithAggregatesFilter<"Product"> | string
+    unit?: StringWithAggregatesFilter<"Product"> | string
+    quantity?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeWithAggregatesFilter<"Product"> | Date | string
   }
 
-  export type VeiculoWhereInput = {
-    AND?: VeiculoWhereInput | VeiculoWhereInput[]
-    OR?: VeiculoWhereInput[]
-    NOT?: VeiculoWhereInput | VeiculoWhereInput[]
-    id?: IntFilter<"Veiculo"> | number
-    modelo?: StringFilter<"Veiculo"> | string
-    placa?: StringFilter<"Veiculo"> | string
-    categoria?: StringFilter<"Veiculo"> | string
-    marca?: StringFilter<"Veiculo"> | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
+  export type VehicleWhereInput = {
+    AND?: VehicleWhereInput | VehicleWhereInput[]
+    OR?: VehicleWhereInput[]
+    NOT?: VehicleWhereInput | VehicleWhereInput[]
+    id?: IntFilter<"Vehicle"> | number
+    model?: StringFilter<"Vehicle"> | string
+    plate?: StringFilter<"Vehicle"> | string
+    category?: StringFilter<"Vehicle"> | string
+    brand?: StringFilter<"Vehicle"> | string
+    dailyReports?: DailyShipmentReportListRelationFilter
   }
 
-  export type VeiculoOrderByWithRelationInput = {
+  export type VehicleOrderByWithRelationInput = {
     id?: SortOrder
-    modelo?: SortOrder
-    placa?: SortOrder
-    categoria?: SortOrder
-    marca?: SortOrder
-    relatoriosDiarios?: RelatorioExpedicaoDiariaOrderByRelationAggregateInput
+    model?: SortOrder
+    plate?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
+    dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
   }
 
-  export type VeiculoWhereUniqueInput = Prisma.AtLeast<{
+  export type VehicleWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: VeiculoWhereInput | VeiculoWhereInput[]
-    OR?: VeiculoWhereInput[]
-    NOT?: VeiculoWhereInput | VeiculoWhereInput[]
-    modelo?: StringFilter<"Veiculo"> | string
-    placa?: StringFilter<"Veiculo"> | string
-    categoria?: StringFilter<"Veiculo"> | string
-    marca?: StringFilter<"Veiculo"> | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaListRelationFilter
+    AND?: VehicleWhereInput | VehicleWhereInput[]
+    OR?: VehicleWhereInput[]
+    NOT?: VehicleWhereInput | VehicleWhereInput[]
+    model?: StringFilter<"Vehicle"> | string
+    plate?: StringFilter<"Vehicle"> | string
+    category?: StringFilter<"Vehicle"> | string
+    brand?: StringFilter<"Vehicle"> | string
+    dailyReports?: DailyShipmentReportListRelationFilter
   }, "id">
 
-  export type VeiculoOrderByWithAggregationInput = {
+  export type VehicleOrderByWithAggregationInput = {
     id?: SortOrder
-    modelo?: SortOrder
-    placa?: SortOrder
-    categoria?: SortOrder
-    marca?: SortOrder
-    _count?: VeiculoCountOrderByAggregateInput
-    _avg?: VeiculoAvgOrderByAggregateInput
-    _max?: VeiculoMaxOrderByAggregateInput
-    _min?: VeiculoMinOrderByAggregateInput
-    _sum?: VeiculoSumOrderByAggregateInput
+    model?: SortOrder
+    plate?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
+    _count?: VehicleCountOrderByAggregateInput
+    _avg?: VehicleAvgOrderByAggregateInput
+    _max?: VehicleMaxOrderByAggregateInput
+    _min?: VehicleMinOrderByAggregateInput
+    _sum?: VehicleSumOrderByAggregateInput
   }
 
-  export type VeiculoScalarWhereWithAggregatesInput = {
-    AND?: VeiculoScalarWhereWithAggregatesInput | VeiculoScalarWhereWithAggregatesInput[]
-    OR?: VeiculoScalarWhereWithAggregatesInput[]
-    NOT?: VeiculoScalarWhereWithAggregatesInput | VeiculoScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Veiculo"> | number
-    modelo?: StringWithAggregatesFilter<"Veiculo"> | string
-    placa?: StringWithAggregatesFilter<"Veiculo"> | string
-    categoria?: StringWithAggregatesFilter<"Veiculo"> | string
-    marca?: StringWithAggregatesFilter<"Veiculo"> | string
+  export type VehicleScalarWhereWithAggregatesInput = {
+    AND?: VehicleScalarWhereWithAggregatesInput | VehicleScalarWhereWithAggregatesInput[]
+    OR?: VehicleScalarWhereWithAggregatesInput[]
+    NOT?: VehicleScalarWhereWithAggregatesInput | VehicleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Vehicle"> | number
+    model?: StringWithAggregatesFilter<"Vehicle"> | string
+    plate?: StringWithAggregatesFilter<"Vehicle"> | string
+    category?: StringWithAggregatesFilter<"Vehicle"> | string
+    brand?: StringWithAggregatesFilter<"Vehicle"> | string
   }
 
-  export type RelatorioExpedicaoDiariaWhereInput = {
-    AND?: RelatorioExpedicaoDiariaWhereInput | RelatorioExpedicaoDiariaWhereInput[]
-    OR?: RelatorioExpedicaoDiariaWhereInput[]
-    NOT?: RelatorioExpedicaoDiariaWhereInput | RelatorioExpedicaoDiariaWhereInput[]
-    id?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    quantidade?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    notaFiscal?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoDiaria"> | Date | string
-    destino?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoDiaria"> | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFilter<"RelatorioExpedicaoDiaria"> | boolean
-    entregador?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    usuarioId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    veiculoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    produtoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
-    veiculo?: XOR<VeiculoScalarRelationFilter, VeiculoWhereInput>
-    produto?: XOR<ProdutoScalarRelationFilter, ProdutoWhereInput>
-    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+  export type DailyShipmentReportWhereInput = {
+    AND?: DailyShipmentReportWhereInput | DailyShipmentReportWhereInput[]
+    OR?: DailyShipmentReportWhereInput[]
+    NOT?: DailyShipmentReportWhereInput | DailyShipmentReportWhereInput[]
+    id?: IntFilter<"DailyShipmentReport"> | number
+    quantity?: IntFilter<"DailyShipmentReport"> | number
+    invoiceNumber?: IntFilter<"DailyShipmentReport"> | number
+    productionDate?: DateTimeFilter<"DailyShipmentReport"> | Date | string
+    destination?: StringFilter<"DailyShipmentReport"> | string
+    temperature?: DecimalFilter<"DailyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFilter<"DailyShipmentReport"> | boolean
+    deliverer?: StringFilter<"DailyShipmentReport"> | string
+    userId?: IntFilter<"DailyShipmentReport"> | number
+    vehicleId?: IntFilter<"DailyShipmentReport"> | number
+    productId?: IntFilter<"DailyShipmentReport"> | number
+    clientId?: IntFilter<"DailyShipmentReport"> | number
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    users?: XOR<UsersScalarRelationFilter, UsersWhereInput>
+    vehicle?: XOR<VehicleScalarRelationFilter, VehicleWhereInput>
   }
 
-  export type RelatorioExpedicaoDiariaOrderByWithRelationInput = {
+  export type DailyShipmentReportOrderByWithRelationInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    dataProducao?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    condicaoSanitaria?: SortOrder
-    entregador?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
-    usuario?: UsuarioOrderByWithRelationInput
-    veiculo?: VeiculoOrderByWithRelationInput
-    produto?: ProdutoOrderByWithRelationInput
-    cliente?: ClienteOrderByWithRelationInput
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    productionDate?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    sanitaryCondition?: SortOrder
+    deliverer?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
+    client?: ClientOrderByWithRelationInput
+    product?: ProductOrderByWithRelationInput
+    users?: UsersOrderByWithRelationInput
+    vehicle?: VehicleOrderByWithRelationInput
   }
 
-  export type RelatorioExpedicaoDiariaWhereUniqueInput = Prisma.AtLeast<{
+  export type DailyShipmentReportWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: RelatorioExpedicaoDiariaWhereInput | RelatorioExpedicaoDiariaWhereInput[]
-    OR?: RelatorioExpedicaoDiariaWhereInput[]
-    NOT?: RelatorioExpedicaoDiariaWhereInput | RelatorioExpedicaoDiariaWhereInput[]
-    quantidade?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    notaFiscal?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoDiaria"> | Date | string
-    destino?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoDiaria"> | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFilter<"RelatorioExpedicaoDiaria"> | boolean
-    entregador?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    usuarioId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    veiculoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    produtoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
-    veiculo?: XOR<VeiculoScalarRelationFilter, VeiculoWhereInput>
-    produto?: XOR<ProdutoScalarRelationFilter, ProdutoWhereInput>
-    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+    AND?: DailyShipmentReportWhereInput | DailyShipmentReportWhereInput[]
+    OR?: DailyShipmentReportWhereInput[]
+    NOT?: DailyShipmentReportWhereInput | DailyShipmentReportWhereInput[]
+    quantity?: IntFilter<"DailyShipmentReport"> | number
+    invoiceNumber?: IntFilter<"DailyShipmentReport"> | number
+    productionDate?: DateTimeFilter<"DailyShipmentReport"> | Date | string
+    destination?: StringFilter<"DailyShipmentReport"> | string
+    temperature?: DecimalFilter<"DailyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFilter<"DailyShipmentReport"> | boolean
+    deliverer?: StringFilter<"DailyShipmentReport"> | string
+    userId?: IntFilter<"DailyShipmentReport"> | number
+    vehicleId?: IntFilter<"DailyShipmentReport"> | number
+    productId?: IntFilter<"DailyShipmentReport"> | number
+    clientId?: IntFilter<"DailyShipmentReport"> | number
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    users?: XOR<UsersScalarRelationFilter, UsersWhereInput>
+    vehicle?: XOR<VehicleScalarRelationFilter, VehicleWhereInput>
   }, "id">
 
-  export type RelatorioExpedicaoDiariaOrderByWithAggregationInput = {
+  export type DailyShipmentReportOrderByWithAggregationInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    dataProducao?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    condicaoSanitaria?: SortOrder
-    entregador?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
-    _count?: RelatorioExpedicaoDiariaCountOrderByAggregateInput
-    _avg?: RelatorioExpedicaoDiariaAvgOrderByAggregateInput
-    _max?: RelatorioExpedicaoDiariaMaxOrderByAggregateInput
-    _min?: RelatorioExpedicaoDiariaMinOrderByAggregateInput
-    _sum?: RelatorioExpedicaoDiariaSumOrderByAggregateInput
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    productionDate?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    sanitaryCondition?: SortOrder
+    deliverer?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
+    _count?: DailyShipmentReportCountOrderByAggregateInput
+    _avg?: DailyShipmentReportAvgOrderByAggregateInput
+    _max?: DailyShipmentReportMaxOrderByAggregateInput
+    _min?: DailyShipmentReportMinOrderByAggregateInput
+    _sum?: DailyShipmentReportSumOrderByAggregateInput
   }
 
-  export type RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput = {
-    AND?: RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput | RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput[]
-    OR?: RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput[]
-    NOT?: RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput | RelatorioExpedicaoDiariaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    quantidade?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    notaFiscal?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    dataProducao?: DateTimeWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | Date | string
-    destino?: StringWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | string
-    temperatura?: DecimalWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | boolean
-    entregador?: StringWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | string
-    usuarioId?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    veiculoId?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    produtoId?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
-    clienteId?: IntWithAggregatesFilter<"RelatorioExpedicaoDiaria"> | number
+  export type DailyShipmentReportScalarWhereWithAggregatesInput = {
+    AND?: DailyShipmentReportScalarWhereWithAggregatesInput | DailyShipmentReportScalarWhereWithAggregatesInput[]
+    OR?: DailyShipmentReportScalarWhereWithAggregatesInput[]
+    NOT?: DailyShipmentReportScalarWhereWithAggregatesInput | DailyShipmentReportScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    quantity?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    invoiceNumber?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    productionDate?: DateTimeWithAggregatesFilter<"DailyShipmentReport"> | Date | string
+    destination?: StringWithAggregatesFilter<"DailyShipmentReport"> | string
+    temperature?: DecimalWithAggregatesFilter<"DailyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolWithAggregatesFilter<"DailyShipmentReport"> | boolean
+    deliverer?: StringWithAggregatesFilter<"DailyShipmentReport"> | string
+    userId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    vehicleId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    productId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    clientId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
   }
 
-  export type RelatorioExpedicaoMensalWhereInput = {
-    AND?: RelatorioExpedicaoMensalWhereInput | RelatorioExpedicaoMensalWhereInput[]
-    OR?: RelatorioExpedicaoMensalWhereInput[]
-    NOT?: RelatorioExpedicaoMensalWhereInput | RelatorioExpedicaoMensalWhereInput[]
-    id?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    quantidade?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    destino?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    entregador?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    dataExpedicao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    produtoId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    produto?: XOR<ProdutoScalarRelationFilter, ProdutoWhereInput>
-    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+  export type MonthlyShipmentReportWhereInput = {
+    AND?: MonthlyShipmentReportWhereInput | MonthlyShipmentReportWhereInput[]
+    OR?: MonthlyShipmentReportWhereInput[]
+    NOT?: MonthlyShipmentReportWhereInput | MonthlyShipmentReportWhereInput[]
+    id?: IntFilter<"MonthlyShipmentReport"> | number
+    quantity?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    destination?: StringFilter<"MonthlyShipmentReport"> | string
+    temperature?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFilter<"MonthlyShipmentReport"> | string
+    productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    productId?: IntFilter<"MonthlyShipmentReport"> | number
+    clientId?: IntFilter<"MonthlyShipmentReport"> | number
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
 
-  export type RelatorioExpedicaoMensalOrderByWithRelationInput = {
+  export type MonthlyShipmentReportOrderByWithRelationInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    entregador?: SortOrder
-    dataProducao?: SortOrder
-    dataExpedicao?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
-    produto?: ProdutoOrderByWithRelationInput
-    cliente?: ClienteOrderByWithRelationInput
+    quantity?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    deliverer?: SortOrder
+    productionDate?: SortOrder
+    shipmentDate?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
+    client?: ClientOrderByWithRelationInput
+    product?: ProductOrderByWithRelationInput
   }
 
-  export type RelatorioExpedicaoMensalWhereUniqueInput = Prisma.AtLeast<{
+  export type MonthlyShipmentReportWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: RelatorioExpedicaoMensalWhereInput | RelatorioExpedicaoMensalWhereInput[]
-    OR?: RelatorioExpedicaoMensalWhereInput[]
-    NOT?: RelatorioExpedicaoMensalWhereInput | RelatorioExpedicaoMensalWhereInput[]
-    quantidade?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    destino?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    entregador?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    dataExpedicao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    produtoId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    produto?: XOR<ProdutoScalarRelationFilter, ProdutoWhereInput>
-    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+    AND?: MonthlyShipmentReportWhereInput | MonthlyShipmentReportWhereInput[]
+    OR?: MonthlyShipmentReportWhereInput[]
+    NOT?: MonthlyShipmentReportWhereInput | MonthlyShipmentReportWhereInput[]
+    quantity?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    destination?: StringFilter<"MonthlyShipmentReport"> | string
+    temperature?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFilter<"MonthlyShipmentReport"> | string
+    productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    productId?: IntFilter<"MonthlyShipmentReport"> | number
+    clientId?: IntFilter<"MonthlyShipmentReport"> | number
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "id">
 
-  export type RelatorioExpedicaoMensalOrderByWithAggregationInput = {
+  export type MonthlyShipmentReportOrderByWithAggregationInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    entregador?: SortOrder
-    dataProducao?: SortOrder
-    dataExpedicao?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
-    _count?: RelatorioExpedicaoMensalCountOrderByAggregateInput
-    _avg?: RelatorioExpedicaoMensalAvgOrderByAggregateInput
-    _max?: RelatorioExpedicaoMensalMaxOrderByAggregateInput
-    _min?: RelatorioExpedicaoMensalMinOrderByAggregateInput
-    _sum?: RelatorioExpedicaoMensalSumOrderByAggregateInput
+    quantity?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    deliverer?: SortOrder
+    productionDate?: SortOrder
+    shipmentDate?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
+    _count?: MonthlyShipmentReportCountOrderByAggregateInput
+    _avg?: MonthlyShipmentReportAvgOrderByAggregateInput
+    _max?: MonthlyShipmentReportMaxOrderByAggregateInput
+    _min?: MonthlyShipmentReportMinOrderByAggregateInput
+    _sum?: MonthlyShipmentReportSumOrderByAggregateInput
   }
 
-  export type RelatorioExpedicaoMensalScalarWhereWithAggregatesInput = {
-    AND?: RelatorioExpedicaoMensalScalarWhereWithAggregatesInput | RelatorioExpedicaoMensalScalarWhereWithAggregatesInput[]
-    OR?: RelatorioExpedicaoMensalScalarWhereWithAggregatesInput[]
-    NOT?: RelatorioExpedicaoMensalScalarWhereWithAggregatesInput | RelatorioExpedicaoMensalScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"RelatorioExpedicaoMensal"> | number
-    quantidade?: DecimalWithAggregatesFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    destino?: StringWithAggregatesFilter<"RelatorioExpedicaoMensal"> | string
-    temperatura?: DecimalWithAggregatesFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    entregador?: StringWithAggregatesFilter<"RelatorioExpedicaoMensal"> | string
-    dataProducao?: DateTimeWithAggregatesFilter<"RelatorioExpedicaoMensal"> | Date | string
-    dataExpedicao?: DateTimeWithAggregatesFilter<"RelatorioExpedicaoMensal"> | Date | string
-    produtoId?: IntWithAggregatesFilter<"RelatorioExpedicaoMensal"> | number
-    clienteId?: IntWithAggregatesFilter<"RelatorioExpedicaoMensal"> | number
+  export type MonthlyShipmentReportScalarWhereWithAggregatesInput = {
+    AND?: MonthlyShipmentReportScalarWhereWithAggregatesInput | MonthlyShipmentReportScalarWhereWithAggregatesInput[]
+    OR?: MonthlyShipmentReportScalarWhereWithAggregatesInput[]
+    NOT?: MonthlyShipmentReportScalarWhereWithAggregatesInput | MonthlyShipmentReportScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
+    quantity?: DecimalWithAggregatesFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    destination?: StringWithAggregatesFilter<"MonthlyShipmentReport"> | string
+    temperature?: DecimalWithAggregatesFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    deliverer?: StringWithAggregatesFilter<"MonthlyShipmentReport"> | string
+    productionDate?: DateTimeWithAggregatesFilter<"MonthlyShipmentReport"> | Date | string
+    shipmentDate?: DateTimeWithAggregatesFilter<"MonthlyShipmentReport"> | Date | string
+    productId?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
+    clientId?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
   }
 
-  export type CargoCreateInput = {
-    cargo: string
-    usuarios?: UsuarioCreateNestedManyWithoutCargoInput
-  }
-
-  export type CargoUncheckedCreateInput = {
-    id?: number
-    cargo: string
-    usuarios?: UsuarioUncheckedCreateNestedManyWithoutCargoInput
-  }
-
-  export type CargoUpdateInput = {
-    cargo?: StringFieldUpdateOperationsInput | string
-    usuarios?: UsuarioUpdateManyWithoutCargoNestedInput
-  }
-
-  export type CargoUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    cargo?: StringFieldUpdateOperationsInput | string
-    usuarios?: UsuarioUncheckedUpdateManyWithoutCargoNestedInput
-  }
-
-  export type CargoCreateManyInput = {
-    id?: number
-    cargo: string
-  }
-
-  export type CargoUpdateManyMutationInput = {
-    cargo?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CargoUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    cargo?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type UsuarioCreateInput = {
-    nome: string
+  export type UsersCreateInput = {
+    name: string
     username: string
-    senha: string
-    cargo: CargoCreateNestedOneWithoutUsuariosInput
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutUsuarioInput
+    password: string
+    role?: $Enums.role
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutUsersInput
   }
 
-  export type UsuarioUncheckedCreateInput = {
+  export type UsersUncheckedCreateInput = {
     id?: number
-    nome: string
+    name: string
     username: string
-    senha: string
-    cargoId: number
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutUsuarioInput
+    password: string
+    role?: $Enums.role
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutUsersInput
   }
 
-  export type UsuarioUpdateInput = {
-    nome?: StringFieldUpdateOperationsInput | string
+  export type UsersUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    cargo?: CargoUpdateOneRequiredWithoutUsuariosNestedInput
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutUsuarioNestedInput
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
+    dailyReports?: DailyShipmentReportUpdateManyWithoutUsersNestedInput
   }
 
-  export type UsuarioUncheckedUpdateInput = {
+  export type UsersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    cargoId?: IntFieldUpdateOperationsInput | number
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutUsuarioNestedInput
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutUsersNestedInput
   }
 
-  export type UsuarioCreateManyInput = {
+  export type UsersCreateManyInput = {
     id?: number
-    nome: string
+    name: string
     username: string
-    senha: string
-    cargoId: number
+    password: string
+    role?: $Enums.role
   }
 
-  export type UsuarioUpdateManyMutationInput = {
-    nome?: StringFieldUpdateOperationsInput | string
+  export type UsersUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
-  export type UsuarioUncheckedUpdateManyInput = {
+  export type UsersUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    cargoId?: IntFieldUpdateOperationsInput | number
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
-  export type ClienteCreateInput = {
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutClienteInput
-    relatoriosMensais?: RelatorioExpedicaoMensalCreateNestedManyWithoutClienteInput
+  export type ClientCreateInput = {
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutClientInput
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutClientInput
   }
 
-  export type ClienteUncheckedCreateInput = {
+  export type ClientUncheckedCreateInput = {
     id?: number
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutClienteInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutClienteInput
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput
   }
 
-  export type ClienteUpdateInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutClienteNestedInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUpdateManyWithoutClienteNestedInput
+  export type ClientUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUpdateManyWithoutClientNestedInput
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutClientNestedInput
   }
 
-  export type ClienteUncheckedUpdateInput = {
+  export type ClientUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutClienteNestedInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedUpdateManyWithoutClienteNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
   }
 
-  export type ClienteCreateManyInput = {
+  export type ClientCreateManyInput = {
     id?: number
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
   }
 
-  export type ClienteUpdateManyMutationInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
+  export type ClientUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ClienteUncheckedUpdateManyInput = {
+  export type ClientUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ProdutoCreateInput = {
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutProdutoInput
-    relatoriosMensais?: RelatorioExpedicaoMensalCreateNestedManyWithoutProdutoInput
+  export type ProductCreateInput = {
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutProductInput
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutProductInput
   }
 
-  export type ProdutoUncheckedCreateInput = {
+  export type ProductUncheckedCreateInput = {
     id?: number
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutProdutoInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutProdutoInput
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutProductInput
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutProductInput
   }
 
-  export type ProdutoUpdateInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutProdutoNestedInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUpdateManyWithoutProdutoNestedInput
+  export type ProductUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    dailyReports?: DailyShipmentReportUpdateManyWithoutProductNestedInput
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
-  export type ProdutoUncheckedUpdateInput = {
+  export type ProductUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutProdutoNestedInput
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedUpdateManyWithoutProdutoNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type ProdutoCreateManyInput = {
+  export type ProductCreateManyInput = {
     id?: number
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
   }
 
-  export type ProdutoUpdateManyMutationInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ProductUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProdutoUncheckedUpdateManyInput = {
+  export type ProductUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type VeiculoCreateInput = {
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutVeiculoInput
+  export type VehicleCreateInput = {
+    model: string
+    plate: string
+    category: string
+    brand: string
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutVehicleInput
   }
 
-  export type VeiculoUncheckedCreateInput = {
+  export type VehicleUncheckedCreateInput = {
     id?: number
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutVeiculoInput
+    model: string
+    plate: string
+    category: string
+    brand: string
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutVehicleInput
   }
 
-  export type VeiculoUpdateInput = {
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutVeiculoNestedInput
+  export type VehicleUpdateInput = {
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUpdateManyWithoutVehicleNestedInput
   }
 
-  export type VeiculoUncheckedUpdateInput = {
+  export type VehicleUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutVeiculoNestedInput
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutVehicleNestedInput
   }
 
-  export type VeiculoCreateManyInput = {
+  export type VehicleCreateManyInput = {
     id?: number
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
+    model: string
+    plate: string
+    category: string
+    brand: string
   }
 
-  export type VeiculoUpdateManyMutationInput = {
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
+  export type VehicleUpdateManyMutationInput = {
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
   }
 
-  export type VeiculoUncheckedUpdateManyInput = {
+  export type VehicleUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
   }
 
-  export type RelatorioExpedicaoDiariaCreateInput = {
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuario: UsuarioCreateNestedOneWithoutRelatoriosDiariosInput
-    veiculo: VeiculoCreateNestedOneWithoutRelatoriosDiariosInput
-    produto: ProdutoCreateNestedOneWithoutRelatoriosDiariosInput
-    cliente: ClienteCreateNestedOneWithoutRelatoriosDiariosInput
+  export type DailyShipmentReportCreateInput = {
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    client: ClientCreateNestedOneWithoutDailyReportsInput
+    product: ProductCreateNestedOneWithoutDailyReportsInput
+    users: UsersCreateNestedOneWithoutDailyReportsInput
+    vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateInput = {
+  export type DailyShipmentReportUncheckedCreateInput = {
     id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
-    clienteId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    productId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoDiariaUpdateInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuario?: UsuarioUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    veiculo?: VeiculoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
+  export type DailyShipmentReportUpdateInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
+    users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
+    vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateInput = {
+  export type DailyShipmentReportUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type RelatorioExpedicaoDiariaCreateManyInput = {
+  export type DailyShipmentReportCreateManyInput = {
     id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
-    clienteId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    productId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyMutationInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
+  export type DailyShipmentReportUpdateManyMutationInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyInput = {
+  export type DailyShipmentReportUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type RelatorioExpedicaoMensalCreateInput = {
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produto: ProdutoCreateNestedOneWithoutRelatoriosMensaisInput
-    cliente: ClienteCreateNestedOneWithoutRelatoriosMensaisInput
+  export type MonthlyShipmentReportCreateInput = {
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    client: ClientCreateNestedOneWithoutMonthlyReportsInput
+    product: ProductCreateNestedOneWithoutMonthlyReportsInput
   }
 
-  export type RelatorioExpedicaoMensalUncheckedCreateInput = {
+  export type MonthlyShipmentReportUncheckedCreateInput = {
     id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produtoId: number
-    clienteId: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    productId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoMensalUpdateInput = {
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosMensaisNestedInput
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosMensaisNestedInput
+  export type MonthlyShipmentReportUpdateInput = {
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput
+    product?: ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput
   }
 
-  export type RelatorioExpedicaoMensalUncheckedUpdateInput = {
+  export type MonthlyShipmentReportUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type RelatorioExpedicaoMensalCreateManyInput = {
+  export type MonthlyShipmentReportCreateManyInput = {
     id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produtoId: number
-    clienteId: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    productId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoMensalUpdateManyMutationInput = {
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type MonthlyShipmentReportUpdateManyMutationInput = {
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RelatorioExpedicaoMensalUncheckedUpdateManyInput = {
+  export type MonthlyShipmentReportUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -10726,36 +9460,52 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type UsuarioListRelationFilter = {
-    every?: UsuarioWhereInput
-    some?: UsuarioWhereInput
-    none?: UsuarioWhereInput
+  export type EnumroleFilter<$PrismaModel = never> = {
+    equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
+    in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    not?: NestedEnumroleFilter<$PrismaModel> | $Enums.role
   }
 
-  export type UsuarioOrderByRelationAggregateInput = {
+  export type DailyShipmentReportListRelationFilter = {
+    every?: DailyShipmentReportWhereInput
+    some?: DailyShipmentReportWhereInput
+    none?: DailyShipmentReportWhereInput
+  }
+
+  export type DailyShipmentReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CargoCountOrderByAggregateInput = {
+  export type UsersCountOrderByAggregateInput = {
     id?: SortOrder
-    cargo?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
   }
 
-  export type CargoAvgOrderByAggregateInput = {
+  export type UsersAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type CargoMaxOrderByAggregateInput = {
+  export type UsersMaxOrderByAggregateInput = {
     id?: SortOrder
-    cargo?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
   }
 
-  export type CargoMinOrderByAggregateInput = {
+  export type UsersMinOrderByAggregateInput = {
     id?: SortOrder
-    cargo?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
   }
 
-  export type CargoSumOrderByAggregateInput = {
+  export type UsersSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -10793,100 +9543,61 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type CargoScalarRelationFilter = {
-    is?: CargoWhereInput
-    isNot?: CargoWhereInput
+  export type EnumroleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
+    in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    not?: NestedEnumroleWithAggregatesFilter<$PrismaModel> | $Enums.role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumroleFilter<$PrismaModel>
+    _max?: NestedEnumroleFilter<$PrismaModel>
   }
 
-  export type RelatorioExpedicaoDiariaListRelationFilter = {
-    every?: RelatorioExpedicaoDiariaWhereInput
-    some?: RelatorioExpedicaoDiariaWhereInput
-    none?: RelatorioExpedicaoDiariaWhereInput
+  export type MonthlyShipmentReportListRelationFilter = {
+    every?: MonthlyShipmentReportWhereInput
+    some?: MonthlyShipmentReportWhereInput
+    none?: MonthlyShipmentReportWhereInput
   }
 
-  export type RelatorioExpedicaoDiariaOrderByRelationAggregateInput = {
+  export type MonthlyShipmentReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type UsuarioCountOrderByAggregateInput = {
+  export type ClientCountOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    username?: SortOrder
-    senha?: SortOrder
-    cargoId?: SortOrder
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
   }
 
-  export type UsuarioAvgOrderByAggregateInput = {
-    id?: SortOrder
-    cargoId?: SortOrder
-  }
-
-  export type UsuarioMaxOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    username?: SortOrder
-    senha?: SortOrder
-    cargoId?: SortOrder
-  }
-
-  export type UsuarioMinOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    username?: SortOrder
-    senha?: SortOrder
-    cargoId?: SortOrder
-  }
-
-  export type UsuarioSumOrderByAggregateInput = {
-    id?: SortOrder
-    cargoId?: SortOrder
-  }
-
-  export type RelatorioExpedicaoMensalListRelationFilter = {
-    every?: RelatorioExpedicaoMensalWhereInput
-    some?: RelatorioExpedicaoMensalWhereInput
-    none?: RelatorioExpedicaoMensalWhereInput
-  }
-
-  export type RelatorioExpedicaoMensalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ClienteCountOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    CPF?: SortOrder
-    CNPJ?: SortOrder
-    endereco?: SortOrder
-    telefone?: SortOrder
-    codigoIdentificacao?: SortOrder
-  }
-
-  export type ClienteAvgOrderByAggregateInput = {
+  export type ClientAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type ClienteMaxOrderByAggregateInput = {
+  export type ClientMaxOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    CPF?: SortOrder
-    CNPJ?: SortOrder
-    endereco?: SortOrder
-    telefone?: SortOrder
-    codigoIdentificacao?: SortOrder
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
   }
 
-  export type ClienteMinOrderByAggregateInput = {
+  export type ClientMinOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    CPF?: SortOrder
-    CNPJ?: SortOrder
-    endereco?: SortOrder
-    telefone?: SortOrder
-    codigoIdentificacao?: SortOrder
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
   }
 
-  export type ClienteSumOrderByAggregateInput = {
+  export type ClientSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -10912,38 +9623,38 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type ProdutoCountOrderByAggregateInput = {
+  export type ProductCountOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    undMedida?: SortOrder
-    quantidade?: SortOrder
-    validade?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    quantity?: SortOrder
+    expiration?: SortOrder
   }
 
-  export type ProdutoAvgOrderByAggregateInput = {
+  export type ProductAvgOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
+    quantity?: SortOrder
   }
 
-  export type ProdutoMaxOrderByAggregateInput = {
+  export type ProductMaxOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    undMedida?: SortOrder
-    quantidade?: SortOrder
-    validade?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    quantity?: SortOrder
+    expiration?: SortOrder
   }
 
-  export type ProdutoMinOrderByAggregateInput = {
+  export type ProductMinOrderByAggregateInput = {
     id?: SortOrder
-    nome?: SortOrder
-    undMedida?: SortOrder
-    quantidade?: SortOrder
-    validade?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    quantity?: SortOrder
+    expiration?: SortOrder
   }
 
-  export type ProdutoSumOrderByAggregateInput = {
+  export type ProductSumOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
+    quantity?: SortOrder
   }
 
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -10976,35 +9687,35 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type VeiculoCountOrderByAggregateInput = {
+  export type VehicleCountOrderByAggregateInput = {
     id?: SortOrder
-    modelo?: SortOrder
-    placa?: SortOrder
-    categoria?: SortOrder
-    marca?: SortOrder
+    model?: SortOrder
+    plate?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
   }
 
-  export type VeiculoAvgOrderByAggregateInput = {
+  export type VehicleAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type VeiculoMaxOrderByAggregateInput = {
+  export type VehicleMaxOrderByAggregateInput = {
     id?: SortOrder
-    modelo?: SortOrder
-    placa?: SortOrder
-    categoria?: SortOrder
-    marca?: SortOrder
+    model?: SortOrder
+    plate?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
   }
 
-  export type VeiculoMinOrderByAggregateInput = {
+  export type VehicleMinOrderByAggregateInput = {
     id?: SortOrder
-    modelo?: SortOrder
-    placa?: SortOrder
-    categoria?: SortOrder
-    marca?: SortOrder
+    model?: SortOrder
+    plate?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
   }
 
-  export type VeiculoSumOrderByAggregateInput = {
+  export type VehicleSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -11013,91 +9724,91 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type UsuarioScalarRelationFilter = {
-    is?: UsuarioWhereInput
-    isNot?: UsuarioWhereInput
+  export type ClientScalarRelationFilter = {
+    is?: ClientWhereInput
+    isNot?: ClientWhereInput
   }
 
-  export type VeiculoScalarRelationFilter = {
-    is?: VeiculoWhereInput
-    isNot?: VeiculoWhereInput
+  export type ProductScalarRelationFilter = {
+    is?: ProductWhereInput
+    isNot?: ProductWhereInput
   }
 
-  export type ProdutoScalarRelationFilter = {
-    is?: ProdutoWhereInput
-    isNot?: ProdutoWhereInput
+  export type UsersScalarRelationFilter = {
+    is?: UsersWhereInput
+    isNot?: UsersWhereInput
   }
 
-  export type ClienteScalarRelationFilter = {
-    is?: ClienteWhereInput
-    isNot?: ClienteWhereInput
+  export type VehicleScalarRelationFilter = {
+    is?: VehicleWhereInput
+    isNot?: VehicleWhereInput
   }
 
-  export type RelatorioExpedicaoDiariaCountOrderByAggregateInput = {
+  export type DailyShipmentReportCountOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    dataProducao?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    condicaoSanitaria?: SortOrder
-    entregador?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    productionDate?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    sanitaryCondition?: SortOrder
+    deliverer?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoDiariaAvgOrderByAggregateInput = {
+  export type DailyShipmentReportAvgOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    temperatura?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    temperature?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoDiariaMaxOrderByAggregateInput = {
+  export type DailyShipmentReportMaxOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    dataProducao?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    condicaoSanitaria?: SortOrder
-    entregador?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    productionDate?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    sanitaryCondition?: SortOrder
+    deliverer?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoDiariaMinOrderByAggregateInput = {
+  export type DailyShipmentReportMinOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    dataProducao?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    condicaoSanitaria?: SortOrder
-    entregador?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    productionDate?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    sanitaryCondition?: SortOrder
+    deliverer?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoDiariaSumOrderByAggregateInput = {
+  export type DailyShipmentReportSumOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    notaFiscal?: SortOrder
-    temperatura?: SortOrder
-    usuarioId?: SortOrder
-    veiculoId?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    invoiceNumber?: SortOrder
+    temperature?: SortOrder
+    userId?: SortOrder
+    vehicleId?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -11108,88 +9819,92 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type RelatorioExpedicaoMensalCountOrderByAggregateInput = {
+  export type MonthlyShipmentReportCountOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    entregador?: SortOrder
-    dataProducao?: SortOrder
-    dataExpedicao?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    deliverer?: SortOrder
+    productionDate?: SortOrder
+    shipmentDate?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoMensalAvgOrderByAggregateInput = {
+  export type MonthlyShipmentReportAvgOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    temperatura?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    temperature?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoMensalMaxOrderByAggregateInput = {
+  export type MonthlyShipmentReportMaxOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    entregador?: SortOrder
-    dataProducao?: SortOrder
-    dataExpedicao?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    deliverer?: SortOrder
+    productionDate?: SortOrder
+    shipmentDate?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoMensalMinOrderByAggregateInput = {
+  export type MonthlyShipmentReportMinOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    destino?: SortOrder
-    temperatura?: SortOrder
-    entregador?: SortOrder
-    dataProducao?: SortOrder
-    dataExpedicao?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    destination?: SortOrder
+    temperature?: SortOrder
+    deliverer?: SortOrder
+    productionDate?: SortOrder
+    shipmentDate?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type RelatorioExpedicaoMensalSumOrderByAggregateInput = {
+  export type MonthlyShipmentReportSumOrderByAggregateInput = {
     id?: SortOrder
-    quantidade?: SortOrder
-    temperatura?: SortOrder
-    produtoId?: SortOrder
-    clienteId?: SortOrder
+    quantity?: SortOrder
+    temperature?: SortOrder
+    productId?: SortOrder
+    clientId?: SortOrder
   }
 
-  export type UsuarioCreateNestedManyWithoutCargoInput = {
-    create?: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput> | UsuarioCreateWithoutCargoInput[] | UsuarioUncheckedCreateWithoutCargoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutCargoInput | UsuarioCreateOrConnectWithoutCargoInput[]
-    createMany?: UsuarioCreateManyCargoInputEnvelope
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  export type DailyShipmentReportCreateNestedManyWithoutUsersInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput> | DailyShipmentReportCreateWithoutUsersInput[] | DailyShipmentReportUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutUsersInput | DailyShipmentReportCreateOrConnectWithoutUsersInput[]
+    createMany?: DailyShipmentReportCreateManyUsersInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type UsuarioUncheckedCreateNestedManyWithoutCargoInput = {
-    create?: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput> | UsuarioCreateWithoutCargoInput[] | UsuarioUncheckedCreateWithoutCargoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutCargoInput | UsuarioCreateOrConnectWithoutCargoInput[]
-    createMany?: UsuarioCreateManyCargoInputEnvelope
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  export type DailyShipmentReportUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput> | DailyShipmentReportCreateWithoutUsersInput[] | DailyShipmentReportUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutUsersInput | DailyShipmentReportCreateOrConnectWithoutUsersInput[]
+    createMany?: DailyShipmentReportCreateManyUsersInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type UsuarioUpdateManyWithoutCargoNestedInput = {
-    create?: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput> | UsuarioCreateWithoutCargoInput[] | UsuarioUncheckedCreateWithoutCargoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutCargoInput | UsuarioCreateOrConnectWithoutCargoInput[]
-    upsert?: UsuarioUpsertWithWhereUniqueWithoutCargoInput | UsuarioUpsertWithWhereUniqueWithoutCargoInput[]
-    createMany?: UsuarioCreateManyCargoInputEnvelope
-    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    update?: UsuarioUpdateWithWhereUniqueWithoutCargoInput | UsuarioUpdateWithWhereUniqueWithoutCargoInput[]
-    updateMany?: UsuarioUpdateManyWithWhereWithoutCargoInput | UsuarioUpdateManyWithWhereWithoutCargoInput[]
-    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+  export type EnumroleFieldUpdateOperationsInput = {
+    set?: $Enums.role
+  }
+
+  export type DailyShipmentReportUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput> | DailyShipmentReportCreateWithoutUsersInput[] | DailyShipmentReportUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutUsersInput | DailyShipmentReportCreateOrConnectWithoutUsersInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutUsersInput | DailyShipmentReportUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: DailyShipmentReportCreateManyUsersInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutUsersInput | DailyShipmentReportUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutUsersInput | DailyShipmentReportUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -11200,186 +9915,130 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UsuarioUncheckedUpdateManyWithoutCargoNestedInput = {
-    create?: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput> | UsuarioCreateWithoutCargoInput[] | UsuarioUncheckedCreateWithoutCargoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutCargoInput | UsuarioCreateOrConnectWithoutCargoInput[]
-    upsert?: UsuarioUpsertWithWhereUniqueWithoutCargoInput | UsuarioUpsertWithWhereUniqueWithoutCargoInput[]
-    createMany?: UsuarioCreateManyCargoInputEnvelope
-    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    update?: UsuarioUpdateWithWhereUniqueWithoutCargoInput | UsuarioUpdateWithWhereUniqueWithoutCargoInput[]
-    updateMany?: UsuarioUpdateManyWithWhereWithoutCargoInput | UsuarioUpdateManyWithWhereWithoutCargoInput[]
-    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+  export type DailyShipmentReportUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput> | DailyShipmentReportCreateWithoutUsersInput[] | DailyShipmentReportUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutUsersInput | DailyShipmentReportCreateOrConnectWithoutUsersInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutUsersInput | DailyShipmentReportUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: DailyShipmentReportCreateManyUsersInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutUsersInput | DailyShipmentReportUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutUsersInput | DailyShipmentReportUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type CargoCreateNestedOneWithoutUsuariosInput = {
-    create?: XOR<CargoCreateWithoutUsuariosInput, CargoUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: CargoCreateOrConnectWithoutUsuariosInput
-    connect?: CargoWhereUniqueInput
+  export type DailyShipmentReportCreateNestedManyWithoutClientInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
+    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput> | RelatorioExpedicaoDiariaCreateWithoutUsuarioInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyUsuarioInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type MonthlyShipmentReportCreateNestedManyWithoutClientInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
+    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput> | RelatorioExpedicaoDiariaCreateWithoutUsuarioInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyUsuarioInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
+    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type CargoUpdateOneRequiredWithoutUsuariosNestedInput = {
-    create?: XOR<CargoCreateWithoutUsuariosInput, CargoUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: CargoCreateOrConnectWithoutUsuariosInput
-    upsert?: CargoUpsertWithoutUsuariosInput
-    connect?: CargoWhereUniqueInput
-    update?: XOR<XOR<CargoUpdateToOneWithWhereWithoutUsuariosInput, CargoUpdateWithoutUsuariosInput>, CargoUncheckedUpdateWithoutUsuariosInput>
+  export type MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
+    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput> | RelatorioExpedicaoDiariaCreateWithoutUsuarioInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutUsuarioInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyUsuarioInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutUsuarioInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutUsuarioInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUpdateManyWithoutClientNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput | DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput | DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutClientInput | DailyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput> | RelatorioExpedicaoDiariaCreateWithoutUsuarioInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutUsuarioInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyUsuarioInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutUsuarioInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutUsuarioInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type MonthlyShipmentReportUpdateManyWithoutClientNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+    set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput | MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaCreateNestedManyWithoutClienteInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoDiariaCreateWithoutClienteInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyClienteInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput | DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput | DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutClientInput | DailyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoMensalCreateNestedManyWithoutClienteInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoMensalCreateWithoutClienteInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput | RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyClienteInputEnvelope
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+    set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput | MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutClienteInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoDiariaCreateWithoutClienteInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyClienteInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type DailyShipmentReportCreateNestedManyWithoutProductInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput> | DailyShipmentReportCreateWithoutProductInput[] | DailyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutProductInput | DailyShipmentReportCreateOrConnectWithoutProductInput[]
+    createMany?: DailyShipmentReportCreateManyProductInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutClienteInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoMensalCreateWithoutClienteInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput | RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyClienteInputEnvelope
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
+  export type MonthlyShipmentReportCreateNestedManyWithoutProductInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput> | MonthlyShipmentReportCreateWithoutProductInput[] | MonthlyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutProductInput | MonthlyShipmentReportCreateOrConnectWithoutProductInput[]
+    createMany?: MonthlyShipmentReportCreateManyProductInputEnvelope
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyWithoutClienteNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoDiariaCreateWithoutClienteInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyClienteInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutClienteInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutClienteInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutClienteInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput> | DailyShipmentReportCreateWithoutProductInput[] | DailyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutProductInput | DailyShipmentReportCreateOrConnectWithoutProductInput[]
+    createMany?: DailyShipmentReportCreateManyProductInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoMensalUpdateManyWithoutClienteNestedInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoMensalCreateWithoutClienteInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput | RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput[]
-    upsert?: RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyClienteInputEnvelope
-    set?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    delete?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    update?: RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutClienteInput[]
-    updateMany?: RelatorioExpedicaoMensalUpdateManyWithWhereWithoutClienteInput | RelatorioExpedicaoMensalUpdateManyWithWhereWithoutClienteInput[]
-    deleteMany?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutClienteNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoDiariaCreateWithoutClienteInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyClienteInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutClienteInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutClienteInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutClienteInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedUpdateManyWithoutClienteNestedInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput> | RelatorioExpedicaoMensalCreateWithoutClienteInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput | RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput[]
-    upsert?: RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutClienteInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyClienteInputEnvelope
-    set?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    delete?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    update?: RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutClienteInput | RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutClienteInput[]
-    updateMany?: RelatorioExpedicaoMensalUpdateManyWithWhereWithoutClienteInput | RelatorioExpedicaoMensalUpdateManyWithWhereWithoutClienteInput[]
-    deleteMany?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
-  }
-
-  export type RelatorioExpedicaoDiariaCreateNestedManyWithoutProdutoInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoDiariaCreateWithoutProdutoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyProdutoInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-  }
-
-  export type RelatorioExpedicaoMensalCreateNestedManyWithoutProdutoInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoMensalCreateWithoutProdutoInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyProdutoInputEnvelope
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutProdutoInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoDiariaCreateWithoutProdutoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyProdutoInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutProdutoInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoMensalCreateWithoutProdutoInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyProdutoInputEnvelope
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
+  export type MonthlyShipmentReportUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput> | MonthlyShipmentReportCreateWithoutProductInput[] | MonthlyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutProductInput | MonthlyShipmentReportCreateOrConnectWithoutProductInput[]
+    createMany?: MonthlyShipmentReportCreateManyProductInputEnvelope
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
   export type DecimalFieldUpdateOperationsInput = {
@@ -11394,190 +10053,190 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyWithoutProdutoNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoDiariaCreateWithoutProdutoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyProdutoInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutProdutoInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutProdutoInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutProdutoInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUpdateManyWithoutProductNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput> | DailyShipmentReportCreateWithoutProductInput[] | DailyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutProductInput | DailyShipmentReportCreateOrConnectWithoutProductInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutProductInput | DailyShipmentReportUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: DailyShipmentReportCreateManyProductInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutProductInput | DailyShipmentReportUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutProductInput | DailyShipmentReportUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoMensalUpdateManyWithoutProdutoNestedInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoMensalCreateWithoutProdutoInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput[]
-    upsert?: RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyProdutoInputEnvelope
-    set?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    delete?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    update?: RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutProdutoInput[]
-    updateMany?: RelatorioExpedicaoMensalUpdateManyWithWhereWithoutProdutoInput | RelatorioExpedicaoMensalUpdateManyWithWhereWithoutProdutoInput[]
-    deleteMany?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
+  export type MonthlyShipmentReportUpdateManyWithoutProductNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput> | MonthlyShipmentReportCreateWithoutProductInput[] | MonthlyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutProductInput | MonthlyShipmentReportCreateOrConnectWithoutProductInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutProductInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: MonthlyShipmentReportCreateManyProductInputEnvelope
+    set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutProductInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutProductInput | MonthlyShipmentReportUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutProdutoNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoDiariaCreateWithoutProdutoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyProdutoInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutProdutoInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutProdutoInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutProdutoInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput> | DailyShipmentReportCreateWithoutProductInput[] | DailyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutProductInput | DailyShipmentReportCreateOrConnectWithoutProductInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutProductInput | DailyShipmentReportUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: DailyShipmentReportCreateManyProductInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutProductInput | DailyShipmentReportUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutProductInput | DailyShipmentReportUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoMensalUncheckedUpdateManyWithoutProdutoNestedInput = {
-    create?: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput> | RelatorioExpedicaoMensalCreateWithoutProdutoInput[] | RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput[]
-    connectOrCreate?: RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput | RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput[]
-    upsert?: RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutProdutoInput[]
-    createMany?: RelatorioExpedicaoMensalCreateManyProdutoInputEnvelope
-    set?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    delete?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    connect?: RelatorioExpedicaoMensalWhereUniqueInput | RelatorioExpedicaoMensalWhereUniqueInput[]
-    update?: RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutProdutoInput | RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutProdutoInput[]
-    updateMany?: RelatorioExpedicaoMensalUpdateManyWithWhereWithoutProdutoInput | RelatorioExpedicaoMensalUpdateManyWithWhereWithoutProdutoInput[]
-    deleteMany?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput> | MonthlyShipmentReportCreateWithoutProductInput[] | MonthlyShipmentReportUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutProductInput | MonthlyShipmentReportCreateOrConnectWithoutProductInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutProductInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: MonthlyShipmentReportCreateManyProductInputEnvelope
+    set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutProductInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutProductInput | MonthlyShipmentReportUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaCreateNestedManyWithoutVeiculoInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput> | RelatorioExpedicaoDiariaCreateWithoutVeiculoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyVeiculoInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type DailyShipmentReportCreateNestedManyWithoutVehicleInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput> | DailyShipmentReportCreateWithoutVehicleInput[] | DailyShipmentReportUncheckedCreateWithoutVehicleInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutVehicleInput | DailyShipmentReportCreateOrConnectWithoutVehicleInput[]
+    createMany?: DailyShipmentReportCreateManyVehicleInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutVeiculoInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput> | RelatorioExpedicaoDiariaCreateWithoutVeiculoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyVeiculoInputEnvelope
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
+  export type DailyShipmentReportUncheckedCreateNestedManyWithoutVehicleInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput> | DailyShipmentReportCreateWithoutVehicleInput[] | DailyShipmentReportUncheckedCreateWithoutVehicleInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutVehicleInput | DailyShipmentReportCreateOrConnectWithoutVehicleInput[]
+    createMany?: DailyShipmentReportCreateManyVehicleInputEnvelope
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyWithoutVeiculoNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput> | RelatorioExpedicaoDiariaCreateWithoutVeiculoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutVeiculoInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutVeiculoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyVeiculoInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutVeiculoInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutVeiculoInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutVeiculoInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutVeiculoInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUpdateManyWithoutVehicleNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput> | DailyShipmentReportCreateWithoutVehicleInput[] | DailyShipmentReportUncheckedCreateWithoutVehicleInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutVehicleInput | DailyShipmentReportCreateOrConnectWithoutVehicleInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutVehicleInput | DailyShipmentReportUpsertWithWhereUniqueWithoutVehicleInput[]
+    createMany?: DailyShipmentReportCreateManyVehicleInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutVehicleInput | DailyShipmentReportUpdateWithWhereUniqueWithoutVehicleInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutVehicleInput | DailyShipmentReportUpdateManyWithWhereWithoutVehicleInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutVeiculoNestedInput = {
-    create?: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput> | RelatorioExpedicaoDiariaCreateWithoutVeiculoInput[] | RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput[]
-    connectOrCreate?: RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput | RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput[]
-    upsert?: RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutVeiculoInput | RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutVeiculoInput[]
-    createMany?: RelatorioExpedicaoDiariaCreateManyVeiculoInputEnvelope
-    set?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    disconnect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    delete?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    connect?: RelatorioExpedicaoDiariaWhereUniqueInput | RelatorioExpedicaoDiariaWhereUniqueInput[]
-    update?: RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutVeiculoInput | RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutVeiculoInput[]
-    updateMany?: RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutVeiculoInput | RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutVeiculoInput[]
-    deleteMany?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
+  export type DailyShipmentReportUncheckedUpdateManyWithoutVehicleNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput> | DailyShipmentReportCreateWithoutVehicleInput[] | DailyShipmentReportUncheckedCreateWithoutVehicleInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutVehicleInput | DailyShipmentReportCreateOrConnectWithoutVehicleInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutVehicleInput | DailyShipmentReportUpsertWithWhereUniqueWithoutVehicleInput[]
+    createMany?: DailyShipmentReportCreateManyVehicleInputEnvelope
+    set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutVehicleInput | DailyShipmentReportUpdateWithWhereUniqueWithoutVehicleInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutVehicleInput | DailyShipmentReportUpdateManyWithWhereWithoutVehicleInput[]
+    deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type UsuarioCreateNestedOneWithoutRelatoriosDiariosInput = {
-    create?: XOR<UsuarioCreateWithoutRelatoriosDiariosInput, UsuarioUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: UsuarioCreateOrConnectWithoutRelatoriosDiariosInput
-    connect?: UsuarioWhereUniqueInput
+  export type ClientCreateNestedOneWithoutDailyReportsInput = {
+    create?: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutDailyReportsInput
+    connect?: ClientWhereUniqueInput
   }
 
-  export type VeiculoCreateNestedOneWithoutRelatoriosDiariosInput = {
-    create?: XOR<VeiculoCreateWithoutRelatoriosDiariosInput, VeiculoUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: VeiculoCreateOrConnectWithoutRelatoriosDiariosInput
-    connect?: VeiculoWhereUniqueInput
+  export type ProductCreateNestedOneWithoutDailyReportsInput = {
+    create?: XOR<ProductCreateWithoutDailyReportsInput, ProductUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutDailyReportsInput
+    connect?: ProductWhereUniqueInput
   }
 
-  export type ProdutoCreateNestedOneWithoutRelatoriosDiariosInput = {
-    create?: XOR<ProdutoCreateWithoutRelatoriosDiariosInput, ProdutoUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: ProdutoCreateOrConnectWithoutRelatoriosDiariosInput
-    connect?: ProdutoWhereUniqueInput
+  export type UsersCreateNestedOneWithoutDailyReportsInput = {
+    create?: XOR<UsersCreateWithoutDailyReportsInput, UsersUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutDailyReportsInput
+    connect?: UsersWhereUniqueInput
   }
 
-  export type ClienteCreateNestedOneWithoutRelatoriosDiariosInput = {
-    create?: XOR<ClienteCreateWithoutRelatoriosDiariosInput, ClienteUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: ClienteCreateOrConnectWithoutRelatoriosDiariosInput
-    connect?: ClienteWhereUniqueInput
+  export type VehicleCreateNestedOneWithoutDailyReportsInput = {
+    create?: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: VehicleCreateOrConnectWithoutDailyReportsInput
+    connect?: VehicleWhereUniqueInput
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
 
-  export type UsuarioUpdateOneRequiredWithoutRelatoriosDiariosNestedInput = {
-    create?: XOR<UsuarioCreateWithoutRelatoriosDiariosInput, UsuarioUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: UsuarioCreateOrConnectWithoutRelatoriosDiariosInput
-    upsert?: UsuarioUpsertWithoutRelatoriosDiariosInput
-    connect?: UsuarioWhereUniqueInput
-    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutRelatoriosDiariosInput, UsuarioUpdateWithoutRelatoriosDiariosInput>, UsuarioUncheckedUpdateWithoutRelatoriosDiariosInput>
+  export type ClientUpdateOneRequiredWithoutDailyReportsNestedInput = {
+    create?: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutDailyReportsInput
+    upsert?: ClientUpsertWithoutDailyReportsInput
+    connect?: ClientWhereUniqueInput
+    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutDailyReportsInput, ClientUpdateWithoutDailyReportsInput>, ClientUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type VeiculoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput = {
-    create?: XOR<VeiculoCreateWithoutRelatoriosDiariosInput, VeiculoUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: VeiculoCreateOrConnectWithoutRelatoriosDiariosInput
-    upsert?: VeiculoUpsertWithoutRelatoriosDiariosInput
-    connect?: VeiculoWhereUniqueInput
-    update?: XOR<XOR<VeiculoUpdateToOneWithWhereWithoutRelatoriosDiariosInput, VeiculoUpdateWithoutRelatoriosDiariosInput>, VeiculoUncheckedUpdateWithoutRelatoriosDiariosInput>
+  export type ProductUpdateOneRequiredWithoutDailyReportsNestedInput = {
+    create?: XOR<ProductCreateWithoutDailyReportsInput, ProductUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutDailyReportsInput
+    upsert?: ProductUpsertWithoutDailyReportsInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutDailyReportsInput, ProductUpdateWithoutDailyReportsInput>, ProductUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type ProdutoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput = {
-    create?: XOR<ProdutoCreateWithoutRelatoriosDiariosInput, ProdutoUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: ProdutoCreateOrConnectWithoutRelatoriosDiariosInput
-    upsert?: ProdutoUpsertWithoutRelatoriosDiariosInput
-    connect?: ProdutoWhereUniqueInput
-    update?: XOR<XOR<ProdutoUpdateToOneWithWhereWithoutRelatoriosDiariosInput, ProdutoUpdateWithoutRelatoriosDiariosInput>, ProdutoUncheckedUpdateWithoutRelatoriosDiariosInput>
+  export type UsersUpdateOneRequiredWithoutDailyReportsNestedInput = {
+    create?: XOR<UsersCreateWithoutDailyReportsInput, UsersUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutDailyReportsInput
+    upsert?: UsersUpsertWithoutDailyReportsInput
+    connect?: UsersWhereUniqueInput
+    update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutDailyReportsInput, UsersUpdateWithoutDailyReportsInput>, UsersUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type ClienteUpdateOneRequiredWithoutRelatoriosDiariosNestedInput = {
-    create?: XOR<ClienteCreateWithoutRelatoriosDiariosInput, ClienteUncheckedCreateWithoutRelatoriosDiariosInput>
-    connectOrCreate?: ClienteCreateOrConnectWithoutRelatoriosDiariosInput
-    upsert?: ClienteUpsertWithoutRelatoriosDiariosInput
-    connect?: ClienteWhereUniqueInput
-    update?: XOR<XOR<ClienteUpdateToOneWithWhereWithoutRelatoriosDiariosInput, ClienteUpdateWithoutRelatoriosDiariosInput>, ClienteUncheckedUpdateWithoutRelatoriosDiariosInput>
+  export type VehicleUpdateOneRequiredWithoutDailyReportsNestedInput = {
+    create?: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: VehicleCreateOrConnectWithoutDailyReportsInput
+    upsert?: VehicleUpsertWithoutDailyReportsInput
+    connect?: VehicleWhereUniqueInput
+    update?: XOR<XOR<VehicleUpdateToOneWithWhereWithoutDailyReportsInput, VehicleUpdateWithoutDailyReportsInput>, VehicleUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type ProdutoCreateNestedOneWithoutRelatoriosMensaisInput = {
-    create?: XOR<ProdutoCreateWithoutRelatoriosMensaisInput, ProdutoUncheckedCreateWithoutRelatoriosMensaisInput>
-    connectOrCreate?: ProdutoCreateOrConnectWithoutRelatoriosMensaisInput
-    connect?: ProdutoWhereUniqueInput
+  export type ClientCreateNestedOneWithoutMonthlyReportsInput = {
+    create?: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutMonthlyReportsInput
+    connect?: ClientWhereUniqueInput
   }
 
-  export type ClienteCreateNestedOneWithoutRelatoriosMensaisInput = {
-    create?: XOR<ClienteCreateWithoutRelatoriosMensaisInput, ClienteUncheckedCreateWithoutRelatoriosMensaisInput>
-    connectOrCreate?: ClienteCreateOrConnectWithoutRelatoriosMensaisInput
-    connect?: ClienteWhereUniqueInput
+  export type ProductCreateNestedOneWithoutMonthlyReportsInput = {
+    create?: XOR<ProductCreateWithoutMonthlyReportsInput, ProductUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutMonthlyReportsInput
+    connect?: ProductWhereUniqueInput
   }
 
-  export type ProdutoUpdateOneRequiredWithoutRelatoriosMensaisNestedInput = {
-    create?: XOR<ProdutoCreateWithoutRelatoriosMensaisInput, ProdutoUncheckedCreateWithoutRelatoriosMensaisInput>
-    connectOrCreate?: ProdutoCreateOrConnectWithoutRelatoriosMensaisInput
-    upsert?: ProdutoUpsertWithoutRelatoriosMensaisInput
-    connect?: ProdutoWhereUniqueInput
-    update?: XOR<XOR<ProdutoUpdateToOneWithWhereWithoutRelatoriosMensaisInput, ProdutoUpdateWithoutRelatoriosMensaisInput>, ProdutoUncheckedUpdateWithoutRelatoriosMensaisInput>
+  export type ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
+    create?: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutMonthlyReportsInput
+    upsert?: ClientUpsertWithoutMonthlyReportsInput
+    connect?: ClientWhereUniqueInput
+    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutMonthlyReportsInput, ClientUpdateWithoutMonthlyReportsInput>, ClientUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
-  export type ClienteUpdateOneRequiredWithoutRelatoriosMensaisNestedInput = {
-    create?: XOR<ClienteCreateWithoutRelatoriosMensaisInput, ClienteUncheckedCreateWithoutRelatoriosMensaisInput>
-    connectOrCreate?: ClienteCreateOrConnectWithoutRelatoriosMensaisInput
-    upsert?: ClienteUpsertWithoutRelatoriosMensaisInput
-    connect?: ClienteWhereUniqueInput
-    update?: XOR<XOR<ClienteUpdateToOneWithWhereWithoutRelatoriosMensaisInput, ClienteUpdateWithoutRelatoriosMensaisInput>, ClienteUncheckedUpdateWithoutRelatoriosMensaisInput>
+  export type ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
+    create?: XOR<ProductCreateWithoutMonthlyReportsInput, ProductUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutMonthlyReportsInput
+    upsert?: ProductUpsertWithoutMonthlyReportsInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutMonthlyReportsInput, ProductUpdateWithoutMonthlyReportsInput>, ProductUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -11603,6 +10262,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumroleFilter<$PrismaModel = never> = {
+    equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
+    in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    not?: NestedEnumroleFilter<$PrismaModel> | $Enums.role
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -11647,6 +10313,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumroleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
+    in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
+    not?: NestedEnumroleWithAggregatesFilter<$PrismaModel> | $Enums.role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumroleFilter<$PrismaModel>
+    _max?: NestedEnumroleFilter<$PrismaModel>
   }
 
   export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -11714,1072 +10390,957 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type UsuarioCreateWithoutCargoInput = {
-    nome: string
+  export type DailyShipmentReportCreateWithoutUsersInput = {
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    client: ClientCreateNestedOneWithoutDailyReportsInput
+    product: ProductCreateNestedOneWithoutDailyReportsInput
+    vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
+  }
+
+  export type DailyShipmentReportUncheckedCreateWithoutUsersInput = {
+    id?: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    vehicleId: number
+    productId: number
+    clientId: number
+  }
+
+  export type DailyShipmentReportCreateOrConnectWithoutUsersInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    create: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput>
+  }
+
+  export type DailyShipmentReportCreateManyUsersInputEnvelope = {
+    data: DailyShipmentReportCreateManyUsersInput | DailyShipmentReportCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyShipmentReportUpsertWithWhereUniqueWithoutUsersInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    update: XOR<DailyShipmentReportUpdateWithoutUsersInput, DailyShipmentReportUncheckedUpdateWithoutUsersInput>
+    create: XOR<DailyShipmentReportCreateWithoutUsersInput, DailyShipmentReportUncheckedCreateWithoutUsersInput>
+  }
+
+  export type DailyShipmentReportUpdateWithWhereUniqueWithoutUsersInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    data: XOR<DailyShipmentReportUpdateWithoutUsersInput, DailyShipmentReportUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type DailyShipmentReportUpdateManyWithWhereWithoutUsersInput = {
+    where: DailyShipmentReportScalarWhereInput
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type DailyShipmentReportScalarWhereInput = {
+    AND?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
+    OR?: DailyShipmentReportScalarWhereInput[]
+    NOT?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
+    id?: IntFilter<"DailyShipmentReport"> | number
+    quantity?: IntFilter<"DailyShipmentReport"> | number
+    invoiceNumber?: IntFilter<"DailyShipmentReport"> | number
+    productionDate?: DateTimeFilter<"DailyShipmentReport"> | Date | string
+    destination?: StringFilter<"DailyShipmentReport"> | string
+    temperature?: DecimalFilter<"DailyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFilter<"DailyShipmentReport"> | boolean
+    deliverer?: StringFilter<"DailyShipmentReport"> | string
+    userId?: IntFilter<"DailyShipmentReport"> | number
+    vehicleId?: IntFilter<"DailyShipmentReport"> | number
+    productId?: IntFilter<"DailyShipmentReport"> | number
+    clientId?: IntFilter<"DailyShipmentReport"> | number
+  }
+
+  export type DailyShipmentReportCreateWithoutClientInput = {
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    product: ProductCreateNestedOneWithoutDailyReportsInput
+    users: UsersCreateNestedOneWithoutDailyReportsInput
+    vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
+  }
+
+  export type DailyShipmentReportUncheckedCreateWithoutClientInput = {
+    id?: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    productId: number
+  }
+
+  export type DailyShipmentReportCreateOrConnectWithoutClientInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    create: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput>
+  }
+
+  export type DailyShipmentReportCreateManyClientInputEnvelope = {
+    data: DailyShipmentReportCreateManyClientInput | DailyShipmentReportCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MonthlyShipmentReportCreateWithoutClientInput = {
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    product: ProductCreateNestedOneWithoutMonthlyReportsInput
+  }
+
+  export type MonthlyShipmentReportUncheckedCreateWithoutClientInput = {
+    id?: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    productId: number
+  }
+
+  export type MonthlyShipmentReportCreateOrConnectWithoutClientInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    create: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput>
+  }
+
+  export type MonthlyShipmentReportCreateManyClientInputEnvelope = {
+    data: MonthlyShipmentReportCreateManyClientInput | MonthlyShipmentReportCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    update: XOR<DailyShipmentReportUpdateWithoutClientInput, DailyShipmentReportUncheckedUpdateWithoutClientInput>
+    create: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput>
+  }
+
+  export type DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    data: XOR<DailyShipmentReportUpdateWithoutClientInput, DailyShipmentReportUncheckedUpdateWithoutClientInput>
+  }
+
+  export type DailyShipmentReportUpdateManyWithWhereWithoutClientInput = {
+    where: DailyShipmentReportScalarWhereInput
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    update: XOR<MonthlyShipmentReportUpdateWithoutClientInput, MonthlyShipmentReportUncheckedUpdateWithoutClientInput>
+    create: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput>
+  }
+
+  export type MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    data: XOR<MonthlyShipmentReportUpdateWithoutClientInput, MonthlyShipmentReportUncheckedUpdateWithoutClientInput>
+  }
+
+  export type MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput = {
+    where: MonthlyShipmentReportScalarWhereInput
+    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type MonthlyShipmentReportScalarWhereInput = {
+    AND?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
+    OR?: MonthlyShipmentReportScalarWhereInput[]
+    NOT?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
+    id?: IntFilter<"MonthlyShipmentReport"> | number
+    quantity?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    destination?: StringFilter<"MonthlyShipmentReport"> | string
+    temperature?: DecimalFilter<"MonthlyShipmentReport"> | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFilter<"MonthlyShipmentReport"> | string
+    productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
+    productId?: IntFilter<"MonthlyShipmentReport"> | number
+    clientId?: IntFilter<"MonthlyShipmentReport"> | number
+  }
+
+  export type DailyShipmentReportCreateWithoutProductInput = {
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    client: ClientCreateNestedOneWithoutDailyReportsInput
+    users: UsersCreateNestedOneWithoutDailyReportsInput
+    vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
+  }
+
+  export type DailyShipmentReportUncheckedCreateWithoutProductInput = {
+    id?: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    clientId: number
+  }
+
+  export type DailyShipmentReportCreateOrConnectWithoutProductInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    create: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput>
+  }
+
+  export type DailyShipmentReportCreateManyProductInputEnvelope = {
+    data: DailyShipmentReportCreateManyProductInput | DailyShipmentReportCreateManyProductInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MonthlyShipmentReportCreateWithoutProductInput = {
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    client: ClientCreateNestedOneWithoutMonthlyReportsInput
+  }
+
+  export type MonthlyShipmentReportUncheckedCreateWithoutProductInput = {
+    id?: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    clientId: number
+  }
+
+  export type MonthlyShipmentReportCreateOrConnectWithoutProductInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    create: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput>
+  }
+
+  export type MonthlyShipmentReportCreateManyProductInputEnvelope = {
+    data: MonthlyShipmentReportCreateManyProductInput | MonthlyShipmentReportCreateManyProductInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyShipmentReportUpsertWithWhereUniqueWithoutProductInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    update: XOR<DailyShipmentReportUpdateWithoutProductInput, DailyShipmentReportUncheckedUpdateWithoutProductInput>
+    create: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput>
+  }
+
+  export type DailyShipmentReportUpdateWithWhereUniqueWithoutProductInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    data: XOR<DailyShipmentReportUpdateWithoutProductInput, DailyShipmentReportUncheckedUpdateWithoutProductInput>
+  }
+
+  export type DailyShipmentReportUpdateManyWithWhereWithoutProductInput = {
+    where: DailyShipmentReportScalarWhereInput
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type MonthlyShipmentReportUpsertWithWhereUniqueWithoutProductInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    update: XOR<MonthlyShipmentReportUpdateWithoutProductInput, MonthlyShipmentReportUncheckedUpdateWithoutProductInput>
+    create: XOR<MonthlyShipmentReportCreateWithoutProductInput, MonthlyShipmentReportUncheckedCreateWithoutProductInput>
+  }
+
+  export type MonthlyShipmentReportUpdateWithWhereUniqueWithoutProductInput = {
+    where: MonthlyShipmentReportWhereUniqueInput
+    data: XOR<MonthlyShipmentReportUpdateWithoutProductInput, MonthlyShipmentReportUncheckedUpdateWithoutProductInput>
+  }
+
+  export type MonthlyShipmentReportUpdateManyWithWhereWithoutProductInput = {
+    where: MonthlyShipmentReportScalarWhereInput
+    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type DailyShipmentReportCreateWithoutVehicleInput = {
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    client: ClientCreateNestedOneWithoutDailyReportsInput
+    product: ProductCreateNestedOneWithoutDailyReportsInput
+    users: UsersCreateNestedOneWithoutDailyReportsInput
+  }
+
+  export type DailyShipmentReportUncheckedCreateWithoutVehicleInput = {
+    id?: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    productId: number
+    clientId: number
+  }
+
+  export type DailyShipmentReportCreateOrConnectWithoutVehicleInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    create: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput>
+  }
+
+  export type DailyShipmentReportCreateManyVehicleInputEnvelope = {
+    data: DailyShipmentReportCreateManyVehicleInput | DailyShipmentReportCreateManyVehicleInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyShipmentReportUpsertWithWhereUniqueWithoutVehicleInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    update: XOR<DailyShipmentReportUpdateWithoutVehicleInput, DailyShipmentReportUncheckedUpdateWithoutVehicleInput>
+    create: XOR<DailyShipmentReportCreateWithoutVehicleInput, DailyShipmentReportUncheckedCreateWithoutVehicleInput>
+  }
+
+  export type DailyShipmentReportUpdateWithWhereUniqueWithoutVehicleInput = {
+    where: DailyShipmentReportWhereUniqueInput
+    data: XOR<DailyShipmentReportUpdateWithoutVehicleInput, DailyShipmentReportUncheckedUpdateWithoutVehicleInput>
+  }
+
+  export type DailyShipmentReportUpdateManyWithWhereWithoutVehicleInput = {
+    where: DailyShipmentReportScalarWhereInput
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutVehicleInput>
+  }
+
+  export type ClientCreateWithoutDailyReportsInput = {
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutClientInput
+  }
+
+  export type ClientUncheckedCreateWithoutDailyReportsInput = {
+    id?: number
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type ClientCreateOrConnectWithoutDailyReportsInput = {
+    where: ClientWhereUniqueInput
+    create: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
+  }
+
+  export type ProductCreateWithoutDailyReportsInput = {
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductUncheckedCreateWithoutDailyReportsInput = {
+    id?: number
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductCreateOrConnectWithoutDailyReportsInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutDailyReportsInput, ProductUncheckedCreateWithoutDailyReportsInput>
+  }
+
+  export type UsersCreateWithoutDailyReportsInput = {
+    name: string
     username: string
-    senha: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutUsuarioInput
+    password: string
+    role?: $Enums.role
   }
 
-  export type UsuarioUncheckedCreateWithoutCargoInput = {
+  export type UsersUncheckedCreateWithoutDailyReportsInput = {
     id?: number
-    nome: string
+    name: string
     username: string
-    senha: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutUsuarioInput
+    password: string
+    role?: $Enums.role
   }
 
-  export type UsuarioCreateOrConnectWithoutCargoInput = {
-    where: UsuarioWhereUniqueInput
-    create: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput>
+  export type UsersCreateOrConnectWithoutDailyReportsInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutDailyReportsInput, UsersUncheckedCreateWithoutDailyReportsInput>
   }
 
-  export type UsuarioCreateManyCargoInputEnvelope = {
-    data: UsuarioCreateManyCargoInput | UsuarioCreateManyCargoInput[]
-    skipDuplicates?: boolean
+  export type VehicleCreateWithoutDailyReportsInput = {
+    model: string
+    plate: string
+    category: string
+    brand: string
   }
 
-  export type UsuarioUpsertWithWhereUniqueWithoutCargoInput = {
-    where: UsuarioWhereUniqueInput
-    update: XOR<UsuarioUpdateWithoutCargoInput, UsuarioUncheckedUpdateWithoutCargoInput>
-    create: XOR<UsuarioCreateWithoutCargoInput, UsuarioUncheckedCreateWithoutCargoInput>
-  }
-
-  export type UsuarioUpdateWithWhereUniqueWithoutCargoInput = {
-    where: UsuarioWhereUniqueInput
-    data: XOR<UsuarioUpdateWithoutCargoInput, UsuarioUncheckedUpdateWithoutCargoInput>
-  }
-
-  export type UsuarioUpdateManyWithWhereWithoutCargoInput = {
-    where: UsuarioScalarWhereInput
-    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutCargoInput>
-  }
-
-  export type UsuarioScalarWhereInput = {
-    AND?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
-    OR?: UsuarioScalarWhereInput[]
-    NOT?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
-    id?: IntFilter<"Usuario"> | number
-    nome?: StringFilter<"Usuario"> | string
-    username?: StringFilter<"Usuario"> | string
-    senha?: StringFilter<"Usuario"> | string
-    cargoId?: IntFilter<"Usuario"> | number
-  }
-
-  export type CargoCreateWithoutUsuariosInput = {
-    cargo: string
-  }
-
-  export type CargoUncheckedCreateWithoutUsuariosInput = {
+  export type VehicleUncheckedCreateWithoutDailyReportsInput = {
     id?: number
-    cargo: string
+    model: string
+    plate: string
+    category: string
+    brand: string
   }
 
-  export type CargoCreateOrConnectWithoutUsuariosInput = {
-    where: CargoWhereUniqueInput
-    create: XOR<CargoCreateWithoutUsuariosInput, CargoUncheckedCreateWithoutUsuariosInput>
+  export type VehicleCreateOrConnectWithoutDailyReportsInput = {
+    where: VehicleWhereUniqueInput
+    create: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
   }
 
-  export type RelatorioExpedicaoDiariaCreateWithoutUsuarioInput = {
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    veiculo: VeiculoCreateNestedOneWithoutRelatoriosDiariosInput
-    produto: ProdutoCreateNestedOneWithoutRelatoriosDiariosInput
-    cliente: ClienteCreateNestedOneWithoutRelatoriosDiariosInput
+  export type ClientUpsertWithoutDailyReportsInput = {
+    update: XOR<ClientUpdateWithoutDailyReportsInput, ClientUncheckedUpdateWithoutDailyReportsInput>
+    create: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
+    where?: ClientWhereInput
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput = {
-    id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    veiculoId: number
-    produtoId: number
-    clienteId: number
+  export type ClientUpdateToOneWithWhereWithoutDailyReportsInput = {
+    where?: ClientWhereInput
+    data: XOR<ClientUpdateWithoutDailyReportsInput, ClientUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type RelatorioExpedicaoDiariaCreateOrConnectWithoutUsuarioInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput>
+  export type ClientUpdateWithoutDailyReportsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutClientNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaCreateManyUsuarioInputEnvelope = {
-    data: RelatorioExpedicaoDiariaCreateManyUsuarioInput | RelatorioExpedicaoDiariaCreateManyUsuarioInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CargoUpsertWithoutUsuariosInput = {
-    update: XOR<CargoUpdateWithoutUsuariosInput, CargoUncheckedUpdateWithoutUsuariosInput>
-    create: XOR<CargoCreateWithoutUsuariosInput, CargoUncheckedCreateWithoutUsuariosInput>
-    where?: CargoWhereInput
-  }
-
-  export type CargoUpdateToOneWithWhereWithoutUsuariosInput = {
-    where?: CargoWhereInput
-    data: XOR<CargoUpdateWithoutUsuariosInput, CargoUncheckedUpdateWithoutUsuariosInput>
-  }
-
-  export type CargoUpdateWithoutUsuariosInput = {
-    cargo?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CargoUncheckedUpdateWithoutUsuariosInput = {
+  export type ClientUncheckedUpdateWithoutDailyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    cargo?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutUsuarioInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    update: XOR<RelatorioExpedicaoDiariaUpdateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutUsuarioInput>
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutUsuarioInput>
+  export type ProductUpsertWithoutDailyReportsInput = {
+    update: XOR<ProductUpdateWithoutDailyReportsInput, ProductUncheckedUpdateWithoutDailyReportsInput>
+    create: XOR<ProductCreateWithoutDailyReportsInput, ProductUncheckedCreateWithoutDailyReportsInput>
+    where?: ProductWhereInput
   }
 
-  export type RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutUsuarioInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateWithoutUsuarioInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutUsuarioInput>
+  export type ProductUpdateToOneWithWhereWithoutDailyReportsInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutDailyReportsInput, ProductUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutUsuarioInput = {
-    where: RelatorioExpedicaoDiariaScalarWhereInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutUsuarioInput>
+  export type ProductUpdateWithoutDailyReportsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaScalarWhereInput = {
-    AND?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
-    OR?: RelatorioExpedicaoDiariaScalarWhereInput[]
-    NOT?: RelatorioExpedicaoDiariaScalarWhereInput | RelatorioExpedicaoDiariaScalarWhereInput[]
-    id?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    quantidade?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    notaFiscal?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoDiaria"> | Date | string
-    destino?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoDiaria"> | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFilter<"RelatorioExpedicaoDiaria"> | boolean
-    entregador?: StringFilter<"RelatorioExpedicaoDiaria"> | string
-    usuarioId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    veiculoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    produtoId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoDiaria"> | number
+  export type ProductUncheckedUpdateWithoutDailyReportsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaCreateWithoutClienteInput = {
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuario: UsuarioCreateNestedOneWithoutRelatoriosDiariosInput
-    veiculo: VeiculoCreateNestedOneWithoutRelatoriosDiariosInput
-    produto: ProdutoCreateNestedOneWithoutRelatoriosDiariosInput
+  export type UsersUpsertWithoutDailyReportsInput = {
+    update: XOR<UsersUpdateWithoutDailyReportsInput, UsersUncheckedUpdateWithoutDailyReportsInput>
+    create: XOR<UsersCreateWithoutDailyReportsInput, UsersUncheckedCreateWithoutDailyReportsInput>
+    where?: UsersWhereInput
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput = {
-    id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
+  export type UsersUpdateToOneWithWhereWithoutDailyReportsInput = {
+    where?: UsersWhereInput
+    data: XOR<UsersUpdateWithoutDailyReportsInput, UsersUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type RelatorioExpedicaoDiariaCreateOrConnectWithoutClienteInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyClienteInputEnvelope = {
-    data: RelatorioExpedicaoDiariaCreateManyClienteInput | RelatorioExpedicaoDiariaCreateManyClienteInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RelatorioExpedicaoMensalCreateWithoutClienteInput = {
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produto: ProdutoCreateNestedOneWithoutRelatoriosMensaisInput
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput = {
-    id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produtoId: number
-  }
-
-  export type RelatorioExpedicaoMensalCreateOrConnectWithoutClienteInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    create: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoMensalCreateManyClienteInputEnvelope = {
-    data: RelatorioExpedicaoMensalCreateManyClienteInput | RelatorioExpedicaoMensalCreateManyClienteInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutClienteInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    update: XOR<RelatorioExpedicaoDiariaUpdateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutClienteInput>
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutClienteInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateWithoutClienteInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutClienteInput = {
-    where: RelatorioExpedicaoDiariaScalarWhereInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutClienteInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    update: XOR<RelatorioExpedicaoMensalUpdateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedUpdateWithoutClienteInput>
-    create: XOR<RelatorioExpedicaoMensalCreateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedCreateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutClienteInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    data: XOR<RelatorioExpedicaoMensalUpdateWithoutClienteInput, RelatorioExpedicaoMensalUncheckedUpdateWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpdateManyWithWhereWithoutClienteInput = {
-    where: RelatorioExpedicaoMensalScalarWhereInput
-    data: XOR<RelatorioExpedicaoMensalUpdateManyMutationInput, RelatorioExpedicaoMensalUncheckedUpdateManyWithoutClienteInput>
-  }
-
-  export type RelatorioExpedicaoMensalScalarWhereInput = {
-    AND?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
-    OR?: RelatorioExpedicaoMensalScalarWhereInput[]
-    NOT?: RelatorioExpedicaoMensalScalarWhereInput | RelatorioExpedicaoMensalScalarWhereInput[]
-    id?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    quantidade?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    destino?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    temperatura?: DecimalFilter<"RelatorioExpedicaoMensal"> | Decimal | DecimalJsLike | number | string
-    entregador?: StringFilter<"RelatorioExpedicaoMensal"> | string
-    dataProducao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    dataExpedicao?: DateTimeFilter<"RelatorioExpedicaoMensal"> | Date | string
-    produtoId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-    clienteId?: IntFilter<"RelatorioExpedicaoMensal"> | number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateWithoutProdutoInput = {
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuario: UsuarioCreateNestedOneWithoutRelatoriosDiariosInput
-    veiculo: VeiculoCreateNestedOneWithoutRelatoriosDiariosInput
-    cliente: ClienteCreateNestedOneWithoutRelatoriosDiariosInput
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput = {
-    id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    clienteId: number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateOrConnectWithoutProdutoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyProdutoInputEnvelope = {
-    data: RelatorioExpedicaoDiariaCreateManyProdutoInput | RelatorioExpedicaoDiariaCreateManyProdutoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RelatorioExpedicaoMensalCreateWithoutProdutoInput = {
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    cliente: ClienteCreateNestedOneWithoutRelatoriosMensaisInput
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput = {
-    id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    clienteId: number
-  }
-
-  export type RelatorioExpedicaoMensalCreateOrConnectWithoutProdutoInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    create: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoMensalCreateManyProdutoInputEnvelope = {
-    data: RelatorioExpedicaoMensalCreateManyProdutoInput | RelatorioExpedicaoMensalCreateManyProdutoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutProdutoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    update: XOR<RelatorioExpedicaoDiariaUpdateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutProdutoInput>
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutProdutoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateWithoutProdutoInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutProdutoInput = {
-    where: RelatorioExpedicaoDiariaScalarWhereInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpsertWithWhereUniqueWithoutProdutoInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    update: XOR<RelatorioExpedicaoMensalUpdateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedUpdateWithoutProdutoInput>
-    create: XOR<RelatorioExpedicaoMensalCreateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedCreateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpdateWithWhereUniqueWithoutProdutoInput = {
-    where: RelatorioExpedicaoMensalWhereUniqueInput
-    data: XOR<RelatorioExpedicaoMensalUpdateWithoutProdutoInput, RelatorioExpedicaoMensalUncheckedUpdateWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoMensalUpdateManyWithWhereWithoutProdutoInput = {
-    where: RelatorioExpedicaoMensalScalarWhereInput
-    data: XOR<RelatorioExpedicaoMensalUpdateManyMutationInput, RelatorioExpedicaoMensalUncheckedUpdateManyWithoutProdutoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaCreateWithoutVeiculoInput = {
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuario: UsuarioCreateNestedOneWithoutRelatoriosDiariosInput
-    produto: ProdutoCreateNestedOneWithoutRelatoriosDiariosInput
-    cliente: ClienteCreateNestedOneWithoutRelatoriosDiariosInput
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput = {
-    id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    produtoId: number
-    clienteId: number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateOrConnectWithoutVeiculoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyVeiculoInputEnvelope = {
-    data: RelatorioExpedicaoDiariaCreateManyVeiculoInput | RelatorioExpedicaoDiariaCreateManyVeiculoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RelatorioExpedicaoDiariaUpsertWithWhereUniqueWithoutVeiculoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    update: XOR<RelatorioExpedicaoDiariaUpdateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutVeiculoInput>
-    create: XOR<RelatorioExpedicaoDiariaCreateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedCreateWithoutVeiculoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateWithWhereUniqueWithoutVeiculoInput = {
-    where: RelatorioExpedicaoDiariaWhereUniqueInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateWithoutVeiculoInput, RelatorioExpedicaoDiariaUncheckedUpdateWithoutVeiculoInput>
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateManyWithWhereWithoutVeiculoInput = {
-    where: RelatorioExpedicaoDiariaScalarWhereInput
-    data: XOR<RelatorioExpedicaoDiariaUpdateManyMutationInput, RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutVeiculoInput>
-  }
-
-  export type UsuarioCreateWithoutRelatoriosDiariosInput = {
-    nome: string
-    username: string
-    senha: string
-    cargo: CargoCreateNestedOneWithoutUsuariosInput
-  }
-
-  export type UsuarioUncheckedCreateWithoutRelatoriosDiariosInput = {
-    id?: number
-    nome: string
-    username: string
-    senha: string
-    cargoId: number
-  }
-
-  export type UsuarioCreateOrConnectWithoutRelatoriosDiariosInput = {
-    where: UsuarioWhereUniqueInput
-    create: XOR<UsuarioCreateWithoutRelatoriosDiariosInput, UsuarioUncheckedCreateWithoutRelatoriosDiariosInput>
-  }
-
-  export type VeiculoCreateWithoutRelatoriosDiariosInput = {
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
-  }
-
-  export type VeiculoUncheckedCreateWithoutRelatoriosDiariosInput = {
-    id?: number
-    modelo: string
-    placa: string
-    categoria: string
-    marca: string
-  }
-
-  export type VeiculoCreateOrConnectWithoutRelatoriosDiariosInput = {
-    where: VeiculoWhereUniqueInput
-    create: XOR<VeiculoCreateWithoutRelatoriosDiariosInput, VeiculoUncheckedCreateWithoutRelatoriosDiariosInput>
-  }
-
-  export type ProdutoCreateWithoutRelatoriosDiariosInput = {
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosMensais?: RelatorioExpedicaoMensalCreateNestedManyWithoutProdutoInput
-  }
-
-  export type ProdutoUncheckedCreateWithoutRelatoriosDiariosInput = {
-    id?: number
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutProdutoInput
-  }
-
-  export type ProdutoCreateOrConnectWithoutRelatoriosDiariosInput = {
-    where: ProdutoWhereUniqueInput
-    create: XOR<ProdutoCreateWithoutRelatoriosDiariosInput, ProdutoUncheckedCreateWithoutRelatoriosDiariosInput>
-  }
-
-  export type ClienteCreateWithoutRelatoriosDiariosInput = {
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosMensais?: RelatorioExpedicaoMensalCreateNestedManyWithoutClienteInput
-  }
-
-  export type ClienteUncheckedCreateWithoutRelatoriosDiariosInput = {
-    id?: number
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedCreateNestedManyWithoutClienteInput
-  }
-
-  export type ClienteCreateOrConnectWithoutRelatoriosDiariosInput = {
-    where: ClienteWhereUniqueInput
-    create: XOR<ClienteCreateWithoutRelatoriosDiariosInput, ClienteUncheckedCreateWithoutRelatoriosDiariosInput>
-  }
-
-  export type UsuarioUpsertWithoutRelatoriosDiariosInput = {
-    update: XOR<UsuarioUpdateWithoutRelatoriosDiariosInput, UsuarioUncheckedUpdateWithoutRelatoriosDiariosInput>
-    create: XOR<UsuarioCreateWithoutRelatoriosDiariosInput, UsuarioUncheckedCreateWithoutRelatoriosDiariosInput>
-    where?: UsuarioWhereInput
-  }
-
-  export type UsuarioUpdateToOneWithWhereWithoutRelatoriosDiariosInput = {
-    where?: UsuarioWhereInput
-    data: XOR<UsuarioUpdateWithoutRelatoriosDiariosInput, UsuarioUncheckedUpdateWithoutRelatoriosDiariosInput>
-  }
-
-  export type UsuarioUpdateWithoutRelatoriosDiariosInput = {
-    nome?: StringFieldUpdateOperationsInput | string
+  export type UsersUpdateWithoutDailyReportsInput = {
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    cargo?: CargoUpdateOneRequiredWithoutUsuariosNestedInput
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
-  export type UsuarioUncheckedUpdateWithoutRelatoriosDiariosInput = {
+  export type UsersUncheckedUpdateWithoutDailyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    cargoId?: IntFieldUpdateOperationsInput | number
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
-  export type VeiculoUpsertWithoutRelatoriosDiariosInput = {
-    update: XOR<VeiculoUpdateWithoutRelatoriosDiariosInput, VeiculoUncheckedUpdateWithoutRelatoriosDiariosInput>
-    create: XOR<VeiculoCreateWithoutRelatoriosDiariosInput, VeiculoUncheckedCreateWithoutRelatoriosDiariosInput>
-    where?: VeiculoWhereInput
+  export type VehicleUpsertWithoutDailyReportsInput = {
+    update: XOR<VehicleUpdateWithoutDailyReportsInput, VehicleUncheckedUpdateWithoutDailyReportsInput>
+    create: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
+    where?: VehicleWhereInput
   }
 
-  export type VeiculoUpdateToOneWithWhereWithoutRelatoriosDiariosInput = {
-    where?: VeiculoWhereInput
-    data: XOR<VeiculoUpdateWithoutRelatoriosDiariosInput, VeiculoUncheckedUpdateWithoutRelatoriosDiariosInput>
+  export type VehicleUpdateToOneWithWhereWithoutDailyReportsInput = {
+    where?: VehicleWhereInput
+    data: XOR<VehicleUpdateWithoutDailyReportsInput, VehicleUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type VeiculoUpdateWithoutRelatoriosDiariosInput = {
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
+  export type VehicleUpdateWithoutDailyReportsInput = {
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
   }
 
-  export type VeiculoUncheckedUpdateWithoutRelatoriosDiariosInput = {
+  export type VehicleUncheckedUpdateWithoutDailyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    modelo?: StringFieldUpdateOperationsInput | string
-    placa?: StringFieldUpdateOperationsInput | string
-    categoria?: StringFieldUpdateOperationsInput | string
-    marca?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    plate?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ProdutoUpsertWithoutRelatoriosDiariosInput = {
-    update: XOR<ProdutoUpdateWithoutRelatoriosDiariosInput, ProdutoUncheckedUpdateWithoutRelatoriosDiariosInput>
-    create: XOR<ProdutoCreateWithoutRelatoriosDiariosInput, ProdutoUncheckedCreateWithoutRelatoriosDiariosInput>
-    where?: ProdutoWhereInput
+  export type ClientCreateWithoutMonthlyReportsInput = {
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutClientInput
   }
 
-  export type ProdutoUpdateToOneWithWhereWithoutRelatoriosDiariosInput = {
-    where?: ProdutoWhereInput
-    data: XOR<ProdutoUpdateWithoutRelatoriosDiariosInput, ProdutoUncheckedUpdateWithoutRelatoriosDiariosInput>
-  }
-
-  export type ProdutoUpdateWithoutRelatoriosDiariosInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosMensais?: RelatorioExpedicaoMensalUpdateManyWithoutProdutoNestedInput
-  }
-
-  export type ProdutoUncheckedUpdateWithoutRelatoriosDiariosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedUpdateManyWithoutProdutoNestedInput
-  }
-
-  export type ClienteUpsertWithoutRelatoriosDiariosInput = {
-    update: XOR<ClienteUpdateWithoutRelatoriosDiariosInput, ClienteUncheckedUpdateWithoutRelatoriosDiariosInput>
-    create: XOR<ClienteCreateWithoutRelatoriosDiariosInput, ClienteUncheckedCreateWithoutRelatoriosDiariosInput>
-    where?: ClienteWhereInput
-  }
-
-  export type ClienteUpdateToOneWithWhereWithoutRelatoriosDiariosInput = {
-    where?: ClienteWhereInput
-    data: XOR<ClienteUpdateWithoutRelatoriosDiariosInput, ClienteUncheckedUpdateWithoutRelatoriosDiariosInput>
-  }
-
-  export type ClienteUpdateWithoutRelatoriosDiariosInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosMensais?: RelatorioExpedicaoMensalUpdateManyWithoutClienteNestedInput
-  }
-
-  export type ClienteUncheckedUpdateWithoutRelatoriosDiariosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosMensais?: RelatorioExpedicaoMensalUncheckedUpdateManyWithoutClienteNestedInput
-  }
-
-  export type ProdutoCreateWithoutRelatoriosMensaisInput = {
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutProdutoInput
-  }
-
-  export type ProdutoUncheckedCreateWithoutRelatoriosMensaisInput = {
+  export type ClientUncheckedCreateWithoutMonthlyReportsInput = {
     id?: number
-    nome: string
-    undMedida: string
-    quantidade: Decimal | DecimalJsLike | number | string
-    validade: Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutProdutoInput
+    name: string
+    cpf: string
+    cnpj: string
+    address: string
+    phone: string
+    identificationCode: string
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput
   }
 
-  export type ProdutoCreateOrConnectWithoutRelatoriosMensaisInput = {
-    where: ProdutoWhereUniqueInput
-    create: XOR<ProdutoCreateWithoutRelatoriosMensaisInput, ProdutoUncheckedCreateWithoutRelatoriosMensaisInput>
+  export type ClientCreateOrConnectWithoutMonthlyReportsInput = {
+    where: ClientWhereUniqueInput
+    create: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
   }
 
-  export type ClienteCreateWithoutRelatoriosMensaisInput = {
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaCreateNestedManyWithoutClienteInput
+  export type ProductCreateWithoutMonthlyReportsInput = {
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutProductInput
   }
 
-  export type ClienteUncheckedCreateWithoutRelatoriosMensaisInput = {
+  export type ProductUncheckedCreateWithoutMonthlyReportsInput = {
     id?: number
-    nome: string
-    CPF: string
-    CNPJ: string
-    endereco: string
-    telefone: string
-    codigoIdentificacao: string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedCreateNestedManyWithoutClienteInput
+    name: string
+    unit: string
+    quantity: Decimal | DecimalJsLike | number | string
+    expiration: Date | string
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutProductInput
   }
 
-  export type ClienteCreateOrConnectWithoutRelatoriosMensaisInput = {
-    where: ClienteWhereUniqueInput
-    create: XOR<ClienteCreateWithoutRelatoriosMensaisInput, ClienteUncheckedCreateWithoutRelatoriosMensaisInput>
+  export type ProductCreateOrConnectWithoutMonthlyReportsInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutMonthlyReportsInput, ProductUncheckedCreateWithoutMonthlyReportsInput>
   }
 
-  export type ProdutoUpsertWithoutRelatoriosMensaisInput = {
-    update: XOR<ProdutoUpdateWithoutRelatoriosMensaisInput, ProdutoUncheckedUpdateWithoutRelatoriosMensaisInput>
-    create: XOR<ProdutoCreateWithoutRelatoriosMensaisInput, ProdutoUncheckedCreateWithoutRelatoriosMensaisInput>
-    where?: ProdutoWhereInput
+  export type ClientUpsertWithoutMonthlyReportsInput = {
+    update: XOR<ClientUpdateWithoutMonthlyReportsInput, ClientUncheckedUpdateWithoutMonthlyReportsInput>
+    create: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
+    where?: ClientWhereInput
   }
 
-  export type ProdutoUpdateToOneWithWhereWithoutRelatoriosMensaisInput = {
-    where?: ProdutoWhereInput
-    data: XOR<ProdutoUpdateWithoutRelatoriosMensaisInput, ProdutoUncheckedUpdateWithoutRelatoriosMensaisInput>
+  export type ClientUpdateToOneWithWhereWithoutMonthlyReportsInput = {
+    where?: ClientWhereInput
+    data: XOR<ClientUpdateWithoutMonthlyReportsInput, ClientUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
-  export type ProdutoUpdateWithoutRelatoriosMensaisInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutProdutoNestedInput
+  export type ClientUpdateWithoutMonthlyReportsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUpdateManyWithoutClientNestedInput
   }
 
-  export type ProdutoUncheckedUpdateWithoutRelatoriosMensaisInput = {
+  export type ClientUncheckedUpdateWithoutMonthlyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    undMedida?: StringFieldUpdateOperationsInput | string
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    validade?: DateTimeFieldUpdateOperationsInput | Date | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutProdutoNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    identificationCode?: StringFieldUpdateOperationsInput | string
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
   }
 
-  export type ClienteUpsertWithoutRelatoriosMensaisInput = {
-    update: XOR<ClienteUpdateWithoutRelatoriosMensaisInput, ClienteUncheckedUpdateWithoutRelatoriosMensaisInput>
-    create: XOR<ClienteCreateWithoutRelatoriosMensaisInput, ClienteUncheckedCreateWithoutRelatoriosMensaisInput>
-    where?: ClienteWhereInput
+  export type ProductUpsertWithoutMonthlyReportsInput = {
+    update: XOR<ProductUpdateWithoutMonthlyReportsInput, ProductUncheckedUpdateWithoutMonthlyReportsInput>
+    create: XOR<ProductCreateWithoutMonthlyReportsInput, ProductUncheckedCreateWithoutMonthlyReportsInput>
+    where?: ProductWhereInput
   }
 
-  export type ClienteUpdateToOneWithWhereWithoutRelatoriosMensaisInput = {
-    where?: ClienteWhereInput
-    data: XOR<ClienteUpdateWithoutRelatoriosMensaisInput, ClienteUncheckedUpdateWithoutRelatoriosMensaisInput>
+  export type ProductUpdateToOneWithWhereWithoutMonthlyReportsInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutMonthlyReportsInput, ProductUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
-  export type ClienteUpdateWithoutRelatoriosMensaisInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutClienteNestedInput
+  export type ProductUpdateWithoutMonthlyReportsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    dailyReports?: DailyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
-  export type ClienteUncheckedUpdateWithoutRelatoriosMensaisInput = {
+  export type ProductUncheckedUpdateWithoutMonthlyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    CPF?: StringFieldUpdateOperationsInput | string
-    CNPJ?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    telefone?: StringFieldUpdateOperationsInput | string
-    codigoIdentificacao?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutClienteNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: StringFieldUpdateOperationsInput | string
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type UsuarioCreateManyCargoInput = {
+  export type DailyShipmentReportCreateManyUsersInput = {
     id?: number
-    nome: string
-    username: string
-    senha: string
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    vehicleId: number
+    productId: number
+    clientId: number
   }
 
-  export type UsuarioUpdateWithoutCargoInput = {
-    nome?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUpdateManyWithoutUsuarioNestedInput
+  export type DailyShipmentReportUpdateWithoutUsersInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
+    vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
   }
 
-  export type UsuarioUncheckedUpdateWithoutCargoInput = {
+  export type DailyShipmentReportUncheckedUpdateWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    relatoriosDiarios?: RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutUsuarioNestedInput
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UsuarioUncheckedUpdateManyWithoutCargoInput = {
+  export type DailyShipmentReportUncheckedUpdateManyWithoutUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nome?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type RelatorioExpedicaoDiariaCreateManyUsuarioInput = {
+  export type DailyShipmentReportCreateManyClientInput = {
     id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    veiculoId: number
-    produtoId: number
-    clienteId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    productId: number
   }
 
-  export type RelatorioExpedicaoDiariaUpdateWithoutUsuarioInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    veiculo?: VeiculoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyClienteInput = {
+  export type MonthlyShipmentReportCreateManyClientInput = {
     id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    produtoId: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    productId: number
   }
 
-  export type RelatorioExpedicaoMensalCreateManyClienteInput = {
+  export type DailyShipmentReportUpdateWithoutClientInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
+    users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
+    vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
+  }
+
+  export type DailyShipmentReportUncheckedUpdateWithoutClientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyShipmentReportUncheckedUpdateManyWithoutClientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MonthlyShipmentReportUpdateWithoutClientInput = {
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput
+  }
+
+  export type MonthlyShipmentReportUncheckedUpdateWithoutClientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutClientInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyShipmentReportCreateManyProductInput = {
     id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    produtoId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    vehicleId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoDiariaUpdateWithoutClienteInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuario?: UsuarioUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    veiculo?: VeiculoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateWithoutClienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutClienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoMensalUpdateWithoutClienteInput = {
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosMensaisNestedInput
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedUpdateWithoutClienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produtoId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedUpdateManyWithoutClienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    produtoId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyProdutoInput = {
+  export type MonthlyShipmentReportCreateManyProductInput = {
     id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    veiculoId: number
-    clienteId: number
+    quantity: Decimal | DecimalJsLike | number | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    deliverer: string
+    productionDate: Date | string
+    shipmentDate: Date | string
+    clientId: number
   }
 
-  export type RelatorioExpedicaoMensalCreateManyProdutoInput = {
+  export type DailyShipmentReportUpdateWithoutProductInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
+    vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
+  }
+
+  export type DailyShipmentReportUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyShipmentReportUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    vehicleId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MonthlyShipmentReportUpdateWithoutProductInput = {
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput
+  }
+
+  export type MonthlyShipmentReportUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    deliverer?: StringFieldUpdateOperationsInput | string
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyShipmentReportCreateManyVehicleInput = {
     id?: number
-    quantidade: Decimal | DecimalJsLike | number | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    entregador: string
-    dataProducao: Date | string
-    dataExpedicao: Date | string
-    clienteId: number
+    quantity: number
+    invoiceNumber: number
+    productionDate: Date | string
+    destination: string
+    temperature: Decimal | DecimalJsLike | number | string
+    sanitaryCondition: boolean
+    deliverer: string
+    userId: number
+    productId: number
+    clientId: number
   }
 
-  export type RelatorioExpedicaoDiariaUpdateWithoutProdutoInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuario?: UsuarioUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    veiculo?: VeiculoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
+  export type DailyShipmentReportUpdateWithoutVehicleInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
+    users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateWithoutProdutoInput = {
+  export type DailyShipmentReportUncheckedUpdateWithoutVehicleInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutProdutoInput = {
+  export type DailyShipmentReportUncheckedUpdateManyWithoutVehicleInput = {
     id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    veiculoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoMensalUpdateWithoutProdutoInput = {
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosMensaisNestedInput
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedUpdateWithoutProdutoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoMensalUncheckedUpdateManyWithoutProdutoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    entregador?: StringFieldUpdateOperationsInput | string
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    dataExpedicao?: DateTimeFieldUpdateOperationsInput | Date | string
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaCreateManyVeiculoInput = {
-    id?: number
-    quantidade: number
-    notaFiscal: number
-    dataProducao: Date | string
-    destino: string
-    temperatura: Decimal | DecimalJsLike | number | string
-    condicaoSanitaria: boolean
-    entregador: string
-    usuarioId: number
-    produtoId: number
-    clienteId: number
-  }
-
-  export type RelatorioExpedicaoDiariaUpdateWithoutVeiculoInput = {
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuario?: UsuarioUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    produto?: ProdutoUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-    cliente?: ClienteUpdateOneRequiredWithoutRelatoriosDiariosNestedInput
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateWithoutVeiculoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RelatorioExpedicaoDiariaUncheckedUpdateManyWithoutVeiculoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quantidade?: IntFieldUpdateOperationsInput | number
-    notaFiscal?: IntFieldUpdateOperationsInput | number
-    dataProducao?: DateTimeFieldUpdateOperationsInput | Date | string
-    destino?: StringFieldUpdateOperationsInput | string
-    temperatura?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    condicaoSanitaria?: BoolFieldUpdateOperationsInput | boolean
-    entregador?: StringFieldUpdateOperationsInput | string
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    produtoId?: IntFieldUpdateOperationsInput | number
-    clienteId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    invoiceNumber?: IntFieldUpdateOperationsInput | number
+    productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: StringFieldUpdateOperationsInput | string
+    temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
+    deliverer?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    clientId?: IntFieldUpdateOperationsInput | number
   }
 
 
