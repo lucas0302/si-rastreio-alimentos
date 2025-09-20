@@ -28,7 +28,7 @@ export class VehicleController {
   }
 
   @Delete(':id')
-  remove(id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.vehicleService.remove(id);
   }
 }
