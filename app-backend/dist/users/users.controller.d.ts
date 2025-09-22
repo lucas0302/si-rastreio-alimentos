@@ -9,10 +9,10 @@ export declare class UsersController {
     }>;
     findUsers(paginationDto: PaginationDto): Promise<{
         data: [{
-            id: number;
             name: string;
             username: string;
             role: import("generated/prisma").$Enums.role;
+            id: number;
         }[]];
         limit: number;
         offset: number;

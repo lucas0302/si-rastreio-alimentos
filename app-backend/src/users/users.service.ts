@@ -2,28 +2,34 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
+import { HashingServiceProtocol } from "src/auth/hash/hashing.service";
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly hashingService: HashingServiceProtocol,
+  ) { }
 
   // Create user
   async create(createUserDto: CreateUserDto) {
 
     try {
 
+      const passwordHash = await this.hashingService.hash(createUserDto.password)
+
       await this.prisma.users.create({
         data: {
           name: createUserDto.name,
           username: createUserDto.username,
-          password: createUserDto.password,
+          password: passwordHash,
           role: createUserDto.role
         }
       });
 
       return { message: "Usuario Registrado com sucesso!" };
     } catch (err) {
-
+      console.log(err)
       throw new HttpException('Erro ao cadastrar usuario.', HttpStatus.BAD_REQUEST);
     }
   }

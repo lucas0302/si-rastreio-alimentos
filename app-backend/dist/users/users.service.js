@@ -12,24 +12,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const hashing_service_1 = require("../auth/hash/hashing.service");
 let UsersService = class UsersService {
     prisma;
-    constructor(prisma) {
+    hashingService;
+    constructor(prisma, hashingService) {
         this.prisma = prisma;
+        this.hashingService = hashingService;
     }
     async create(createUserDto) {
         try {
+            const passwordHash = await this.hashingService.hash(createUserDto.password);
             await this.prisma.users.create({
                 data: {
                     name: createUserDto.name,
                     username: createUserDto.username,
-                    password: createUserDto.password,
+                    password: passwordHash,
                     role: createUserDto.role
                 }
             });
             return { message: "Usuario Registrado com sucesso!" };
         }
         catch (err) {
+            console.log(err);
             throw new common_1.HttpException('Erro ao cadastrar usuario.', common_1.HttpStatus.BAD_REQUEST);
         }
     }
@@ -85,6 +90,7 @@ let UsersService = class UsersService {
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        hashing_service_1.HashingServiceProtocol])
 ], UsersService);
 //# sourceMappingURL=users.service.js.map
