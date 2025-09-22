@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/lucas/OneDrive/%C3%81rea%20de%20Trabalho/projeto4/si-rastreio-alimentos/app-frontend/src/app/home/page.tsx"],"sourcesContent":["import React from 'react';\r\nimport { Header } from '@/components/header/Header';\r\nimport { Footer } from '@/components/footer/Footer';\r\nimport { Sidebar } from '../../components/sidebar/Sidebar';\r\n\r\nexport default function Home() {\r\n  return (\r\n    <>\r\n      {/* <Header /> */}\r\n      <Sidebar />\r\n\r\n      {/* <Footer /> */}\r\n    </>\r\n  );\r\n}"],"names":[],"mappings":";;;;;;;;;;;;AAKe,SAAS;IACtB,qBACE;kBAEE,cAAA,8OAAC;;;;;;AAKP","debugId":null}}]
-}

@@ -2,13 +2,14 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
-import { HashingServiceProtocol } from "src/auth/hash/hashing.service";
+import { BcryptService } from "src/auth/hash/bcrypt.service";
+
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly hashingService: HashingServiceProtocol,
+    private readonly bcryptService: BcryptService,
   ) { }
 
   // Create user
@@ -16,7 +17,7 @@ export class UsersService {
 
     try {
 
-      const passwordHash = await this.hashingService.hash(createUserDto.password)
+      const passwordHash = await this.bcryptService.hash(createUserDto.password)
 
       await this.prisma.users.create({
         data: {
