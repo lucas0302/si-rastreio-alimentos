@@ -9,18 +9,19 @@ datasource db {
 }
 
 model Users {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(100)
-  username String @db.VarChar(100)
-  password String @db.VarChar(255)
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(100)
+  username String  @db.VarChar(100)
+  password String  @db.VarChar(255)
+  active   Boolean @default(true)
 
-  role         role                  @default(manager)
+  role         role                  @default(user)
   dailyReports DailyShipmentReport[]
 
   @@map("users")
 }
 
-model Client {
+model Customers {
   id                 Int                     @id @default(autoincrement())
   name               String                  @db.VarChar(100)
   cpf                String                  @db.VarChar(11)
@@ -31,7 +32,7 @@ model Client {
   dailyReports       DailyShipmentReport[]
   monthlyReports     MonthlyShipmentReport[]
 
-  @@map("client")
+  @@map("customers")
 }
 
 model Product {
@@ -62,20 +63,20 @@ model DailyShipmentReport {
   quantity          Int
   invoiceNumber     Int
   productionDate    DateTime
-  destination       String   @db.VarChar(50)
+  destination       String   @db.VarChar(60)
   temperature       Decimal
   sanitaryCondition Boolean
   deliverer         String   @db.VarChar(100)
 
-  userId    Int
-  vehicleId Int
-  productId Int
-  clientId  Int
+  userId      Int
+  vehicleId   Int
+  productId   Int
+  customersId Int
 
-  client  Client  @relation(fields: [clientId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
-  users   Users   @relation(fields: [userId], references: [id])
-  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+  customers Customers @relation(fields: [customersId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
+  users     Users     @relation(fields: [userId], references: [id])
+  vehicle   Vehicle   @relation(fields: [vehicleId], references: [id])
 
   @@map("daily_shipment_report")
 }
@@ -89,16 +90,16 @@ model MonthlyShipmentReport {
   productionDate DateTime
   shipmentDate   DateTime
 
-  productId Int
-  clientId  Int
+  productId   Int
+  customersId Int
 
-  client  Client  @relation(fields: [clientId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  customers Customers @relation(fields: [customersId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
 
   @@map("monthly_shipment_report")
 }
 
 enum role {
   admin
-  manager
+  user
 }

@@ -1,15 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Console } from 'console';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
 
 // Buscar os dados de um user (check)
 // cadastrar um user (check)
 //deletar um user 
 // atualizar um user
-
+@UseGuards(AuthTokenGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }

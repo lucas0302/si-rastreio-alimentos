@@ -125,10 +125,11 @@ exports.Prisma.UsersScalarFieldEnum = {
   name: 'name',
   username: 'username',
   password: 'password',
+  active: 'active',
   role: 'role'
 };
 
-exports.Prisma.ClientScalarFieldEnum = {
+exports.Prisma.CustomersScalarFieldEnum = {
   id: 'id',
   name: 'name',
   cpf: 'cpf',
@@ -166,7 +167,7 @@ exports.Prisma.DailyShipmentReportScalarFieldEnum = {
   userId: 'userId',
   vehicleId: 'vehicleId',
   productId: 'productId',
-  clientId: 'clientId'
+  customersId: 'customersId'
 };
 
 exports.Prisma.MonthlyShipmentReportScalarFieldEnum = {
@@ -178,7 +179,7 @@ exports.Prisma.MonthlyShipmentReportScalarFieldEnum = {
   productionDate: 'productionDate',
   shipmentDate: 'shipmentDate',
   productId: 'productId',
-  clientId: 'clientId'
+  customersId: 'customersId'
 };
 
 exports.Prisma.SortOrder = {
@@ -192,12 +193,12 @@ exports.Prisma.QueryMode = {
 };
 exports.role = exports.$Enums.role = {
   admin: 'admin',
-  manager: 'manager'
+  user: 'user'
 };
 
 exports.Prisma.ModelName = {
   Users: 'Users',
-  Client: 'Client',
+  Customers: 'Customers',
   Product: 'Product',
   Vehicle: 'Vehicle',
   DailyShipmentReport: 'DailyShipmentReport',

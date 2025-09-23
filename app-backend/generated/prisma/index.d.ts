@@ -19,10 +19,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Users = $Result.DefaultSelection<Prisma.$UsersPayload>
 /**
- * Model Client
+ * Model Customers
  * 
  */
-export type Client = $Result.DefaultSelection<Prisma.$ClientPayload>
+export type Customers = $Result.DefaultSelection<Prisma.$CustomersPayload>
 /**
  * Model Product
  * 
@@ -50,7 +50,7 @@ export type MonthlyShipmentReport = $Result.DefaultSelection<Prisma.$MonthlyShip
 export namespace $Enums {
   export const role: {
   admin: 'admin',
-  manager: 'manager'
+  user: 'user'
 };
 
 export type role = (typeof role)[keyof typeof role]
@@ -190,14 +190,14 @@ export class PrismaClient<
   get users(): Prisma.UsersDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.client`: Exposes CRUD operations for the **Client** model.
+   * `prisma.customers`: Exposes CRUD operations for the **Customers** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Clients
-    * const clients = await prisma.client.findMany()
+    * // Fetch zero or more Customers
+    * const customers = await prisma.customers.findMany()
     * ```
     */
-  get client(): Prisma.ClientDelegate<ExtArgs, ClientOptions>;
+  get customers(): Prisma.CustomersDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.product`: Exposes CRUD operations for the **Product** model.
@@ -679,7 +679,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Users: 'Users',
-    Client: 'Client',
+    Customers: 'Customers',
     Product: 'Product',
     Vehicle: 'Vehicle',
     DailyShipmentReport: 'DailyShipmentReport',
@@ -702,7 +702,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "client" | "product" | "vehicle" | "dailyShipmentReport" | "monthlyShipmentReport"
+      modelProps: "users" | "customers" | "product" | "vehicle" | "dailyShipmentReport" | "monthlyShipmentReport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -780,77 +780,77 @@ export namespace Prisma {
           }
         }
       }
-      Client: {
-        payload: Prisma.$ClientPayload<ExtArgs>
-        fields: Prisma.ClientFieldRefs
+      Customers: {
+        payload: Prisma.$CustomersPayload<ExtArgs>
+        fields: Prisma.CustomersFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ClientFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
+            args: Prisma.CustomersFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           findFirst: {
-            args: Prisma.ClientFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
+            args: Prisma.CustomersFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           findMany: {
-            args: Prisma.ClientFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+            args: Prisma.CustomersFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>[]
           }
           create: {
-            args: Prisma.ClientCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           createMany: {
-            args: Prisma.ClientCreateManyArgs<ExtArgs>
+            args: Prisma.CustomersCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ClientCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+            args: Prisma.CustomersCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>[]
           }
           delete: {
-            args: Prisma.ClientDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           update: {
-            args: Prisma.ClientUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           deleteMany: {
-            args: Prisma.ClientDeleteManyArgs<ExtArgs>
+            args: Prisma.CustomersDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ClientUpdateManyArgs<ExtArgs>
+            args: Prisma.CustomersUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ClientUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+            args: Prisma.CustomersUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>[]
           }
           upsert: {
-            args: Prisma.ClientUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+            args: Prisma.CustomersUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomersPayload>
           }
           aggregate: {
-            args: Prisma.ClientAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateClient>
+            args: Prisma.CustomersAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomers>
           }
           groupBy: {
-            args: Prisma.ClientGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ClientGroupByOutputType>[]
+            args: Prisma.CustomersGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomersGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ClientCountArgs<ExtArgs>
-            result: $Utils.Optional<ClientCountAggregateOutputType> | number
+            args: Prisma.CustomersCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomersCountAggregateOutputType> | number
           }
         }
       }
@@ -1243,7 +1243,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     users?: UsersOmit
-    client?: ClientOmit
+    customers?: CustomersOmit
     product?: ProductOmit
     vehicle?: VehicleOmit
     dailyShipmentReport?: DailyShipmentReportOmit
@@ -1355,41 +1355,41 @@ export namespace Prisma {
 
 
   /**
-   * Count Type ClientCountOutputType
+   * Count Type CustomersCountOutputType
    */
 
-  export type ClientCountOutputType = {
+  export type CustomersCountOutputType = {
     dailyReports: number
     monthlyReports: number
   }
 
-  export type ClientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    dailyReports?: boolean | ClientCountOutputTypeCountDailyReportsArgs
-    monthlyReports?: boolean | ClientCountOutputTypeCountMonthlyReportsArgs
+  export type CustomersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | CustomersCountOutputTypeCountDailyReportsArgs
+    monthlyReports?: boolean | CustomersCountOutputTypeCountMonthlyReportsArgs
   }
 
   // Custom InputTypes
   /**
-   * ClientCountOutputType without action
+   * CustomersCountOutputType without action
    */
-  export type ClientCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ClientCountOutputType
+     * Select specific fields to fetch from the CustomersCountOutputType
      */
-    select?: ClientCountOutputTypeSelect<ExtArgs> | null
+    select?: CustomersCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * ClientCountOutputType without action
+   * CustomersCountOutputType without action
    */
-  export type ClientCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCountOutputTypeCountDailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DailyShipmentReportWhereInput
   }
 
   /**
-   * ClientCountOutputType without action
+   * CustomersCountOutputType without action
    */
-  export type ClientCountOutputTypeCountMonthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCountOutputTypeCountMonthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MonthlyShipmentReportWhereInput
   }
 
@@ -1494,6 +1494,7 @@ export namespace Prisma {
     name: string | null
     username: string | null
     password: string | null
+    active: boolean | null
     role: $Enums.role | null
   }
 
@@ -1502,6 +1503,7 @@ export namespace Prisma {
     name: string | null
     username: string | null
     password: string | null
+    active: boolean | null
     role: $Enums.role | null
   }
 
@@ -1510,6 +1512,7 @@ export namespace Prisma {
     name: number
     username: number
     password: number
+    active: number
     role: number
     _all: number
   }
@@ -1528,6 +1531,7 @@ export namespace Prisma {
     name?: true
     username?: true
     password?: true
+    active?: true
     role?: true
   }
 
@@ -1536,6 +1540,7 @@ export namespace Prisma {
     name?: true
     username?: true
     password?: true
+    active?: true
     role?: true
   }
 
@@ -1544,6 +1549,7 @@ export namespace Prisma {
     name?: true
     username?: true
     password?: true
+    active?: true
     role?: true
     _all?: true
   }
@@ -1639,6 +1645,7 @@ export namespace Prisma {
     name: string
     username: string
     password: string
+    active: boolean
     role: $Enums.role
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -1666,6 +1673,7 @@ export namespace Prisma {
     name?: boolean
     username?: boolean
     password?: boolean
+    active?: boolean
     role?: boolean
     dailyReports?: boolean | Users$dailyReportsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -1676,6 +1684,7 @@ export namespace Prisma {
     name?: boolean
     username?: boolean
     password?: boolean
+    active?: boolean
     role?: boolean
   }, ExtArgs["result"]["users"]>
 
@@ -1684,6 +1693,7 @@ export namespace Prisma {
     name?: boolean
     username?: boolean
     password?: boolean
+    active?: boolean
     role?: boolean
   }, ExtArgs["result"]["users"]>
 
@@ -1692,10 +1702,11 @@ export namespace Prisma {
     name?: boolean
     username?: boolean
     password?: boolean
+    active?: boolean
     role?: boolean
   }
 
-  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "password" | "role", ExtArgs["result"]["users"]>
+  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "password" | "active" | "role", ExtArgs["result"]["users"]>
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dailyReports?: boolean | Users$dailyReportsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -1713,6 +1724,7 @@ export namespace Prisma {
       name: string
       username: string
       password: string
+      active: boolean
       role: $Enums.role
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -2142,6 +2154,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Users", 'String'>
     readonly username: FieldRef<"Users", 'String'>
     readonly password: FieldRef<"Users", 'String'>
+    readonly active: FieldRef<"Users", 'Boolean'>
     readonly role: FieldRef<"Users", 'role'>
   }
     
@@ -2574,36 +2587,26 @@ export namespace Prisma {
 
 
   /**
-   * Model Client
+   * Model Customers
    */
 
-  export type AggregateClient = {
-    _count: ClientCountAggregateOutputType | null
-    _avg: ClientAvgAggregateOutputType | null
-    _sum: ClientSumAggregateOutputType | null
-    _min: ClientMinAggregateOutputType | null
-    _max: ClientMaxAggregateOutputType | null
+  export type AggregateCustomers = {
+    _count: CustomersCountAggregateOutputType | null
+    _avg: CustomersAvgAggregateOutputType | null
+    _sum: CustomersSumAggregateOutputType | null
+    _min: CustomersMinAggregateOutputType | null
+    _max: CustomersMaxAggregateOutputType | null
   }
 
-  export type ClientAvgAggregateOutputType = {
+  export type CustomersAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type ClientSumAggregateOutputType = {
+  export type CustomersSumAggregateOutputType = {
     id: number | null
   }
 
-  export type ClientMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    cpf: string | null
-    cnpj: string | null
-    address: string | null
-    phone: string | null
-    identificationCode: string | null
-  }
-
-  export type ClientMaxAggregateOutputType = {
+  export type CustomersMinAggregateOutputType = {
     id: number | null
     name: string | null
     cpf: string | null
@@ -2613,7 +2616,17 @@ export namespace Prisma {
     identificationCode: string | null
   }
 
-  export type ClientCountAggregateOutputType = {
+  export type CustomersMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    cpf: string | null
+    cnpj: string | null
+    address: string | null
+    phone: string | null
+    identificationCode: string | null
+  }
+
+  export type CustomersCountAggregateOutputType = {
     id: number
     name: number
     cpf: number
@@ -2625,25 +2638,15 @@ export namespace Prisma {
   }
 
 
-  export type ClientAvgAggregateInputType = {
+  export type CustomersAvgAggregateInputType = {
     id?: true
   }
 
-  export type ClientSumAggregateInputType = {
+  export type CustomersSumAggregateInputType = {
     id?: true
   }
 
-  export type ClientMinAggregateInputType = {
-    id?: true
-    name?: true
-    cpf?: true
-    cnpj?: true
-    address?: true
-    phone?: true
-    identificationCode?: true
-  }
-
-  export type ClientMaxAggregateInputType = {
+  export type CustomersMinAggregateInputType = {
     id?: true
     name?: true
     cpf?: true
@@ -2653,7 +2656,17 @@ export namespace Prisma {
     identificationCode?: true
   }
 
-  export type ClientCountAggregateInputType = {
+  export type CustomersMaxAggregateInputType = {
+    id?: true
+    name?: true
+    cpf?: true
+    cnpj?: true
+    address?: true
+    phone?: true
+    identificationCode?: true
+  }
+
+  export type CustomersCountAggregateInputType = {
     id?: true
     name?: true
     cpf?: true
@@ -2664,93 +2677,93 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ClientAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Client to aggregate.
+     * Filter which Customers to aggregate.
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: CustomersOrderByWithRelationInput | CustomersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: CustomersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Clients
+     * Count returned Customers
     **/
-    _count?: true | ClientCountAggregateInputType
+    _count?: true | CustomersCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ClientAvgAggregateInputType
+    _avg?: CustomersAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ClientSumAggregateInputType
+    _sum?: CustomersSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ClientMinAggregateInputType
+    _min?: CustomersMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ClientMaxAggregateInputType
+    _max?: CustomersMaxAggregateInputType
   }
 
-  export type GetClientAggregateType<T extends ClientAggregateArgs> = {
-        [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count'
+  export type GetCustomersAggregateType<T extends CustomersAggregateArgs> = {
+        [P in keyof T & keyof AggregateCustomers]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateClient[P]>
-      : GetScalarType<T[P], AggregateClient[P]>
+        : GetScalarType<T[P], AggregateCustomers[P]>
+      : GetScalarType<T[P], AggregateCustomers[P]>
   }
 
 
 
 
-  export type ClientGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ClientWhereInput
-    orderBy?: ClientOrderByWithAggregationInput | ClientOrderByWithAggregationInput[]
-    by: ClientScalarFieldEnum[] | ClientScalarFieldEnum
-    having?: ClientScalarWhereWithAggregatesInput
+  export type CustomersGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomersWhereInput
+    orderBy?: CustomersOrderByWithAggregationInput | CustomersOrderByWithAggregationInput[]
+    by: CustomersScalarFieldEnum[] | CustomersScalarFieldEnum
+    having?: CustomersScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ClientCountAggregateInputType | true
-    _avg?: ClientAvgAggregateInputType
-    _sum?: ClientSumAggregateInputType
-    _min?: ClientMinAggregateInputType
-    _max?: ClientMaxAggregateInputType
+    _count?: CustomersCountAggregateInputType | true
+    _avg?: CustomersAvgAggregateInputType
+    _sum?: CustomersSumAggregateInputType
+    _min?: CustomersMinAggregateInputType
+    _max?: CustomersMaxAggregateInputType
   }
 
-  export type ClientGroupByOutputType = {
+  export type CustomersGroupByOutputType = {
     id: number
     name: string
     cpf: string
@@ -2758,28 +2771,28 @@ export namespace Prisma {
     address: string
     phone: string
     identificationCode: string
-    _count: ClientCountAggregateOutputType | null
-    _avg: ClientAvgAggregateOutputType | null
-    _sum: ClientSumAggregateOutputType | null
-    _min: ClientMinAggregateOutputType | null
-    _max: ClientMaxAggregateOutputType | null
+    _count: CustomersCountAggregateOutputType | null
+    _avg: CustomersAvgAggregateOutputType | null
+    _sum: CustomersSumAggregateOutputType | null
+    _min: CustomersMinAggregateOutputType | null
+    _max: CustomersMaxAggregateOutputType | null
   }
 
-  type GetClientGroupByPayload<T extends ClientGroupByArgs> = Prisma.PrismaPromise<
+  type GetCustomersGroupByPayload<T extends CustomersGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ClientGroupByOutputType, T['by']> &
+      PickEnumerable<CustomersGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ClientGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CustomersGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ClientGroupByOutputType[P]>
-            : GetScalarType<T[P], ClientGroupByOutputType[P]>
+              : GetScalarType<T[P], CustomersGroupByOutputType[P]>
+            : GetScalarType<T[P], CustomersGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ClientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     cpf?: boolean
@@ -2787,12 +2800,12 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
-    dailyReports?: boolean | Client$dailyReportsArgs<ExtArgs>
-    monthlyReports?: boolean | Client$monthlyReportsArgs<ExtArgs>
-    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["client"]>
+    dailyReports?: boolean | Customers$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Customers$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | CustomersCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customers"]>
 
-  export type ClientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     cpf?: boolean
@@ -2800,9 +2813,9 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
-  }, ExtArgs["result"]["client"]>
+  }, ExtArgs["result"]["customers"]>
 
-  export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     cpf?: boolean
@@ -2810,9 +2823,9 @@ export namespace Prisma {
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
-  }, ExtArgs["result"]["client"]>
+  }, ExtArgs["result"]["customers"]>
 
-  export type ClientSelectScalar = {
+  export type CustomersSelectScalar = {
     id?: boolean
     name?: boolean
     cpf?: boolean
@@ -2822,17 +2835,17 @@ export namespace Prisma {
     identificationCode?: boolean
   }
 
-  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cpf" | "cnpj" | "address" | "phone" | "identificationCode", ExtArgs["result"]["client"]>
-  export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    dailyReports?: boolean | Client$dailyReportsArgs<ExtArgs>
-    monthlyReports?: boolean | Client$monthlyReportsArgs<ExtArgs>
-    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
+  export type CustomersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cpf" | "cnpj" | "address" | "phone" | "identificationCode", ExtArgs["result"]["customers"]>
+  export type CustomersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dailyReports?: boolean | Customers$dailyReportsArgs<ExtArgs>
+    monthlyReports?: boolean | Customers$monthlyReportsArgs<ExtArgs>
+    _count?: boolean | CustomersCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CustomersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CustomersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Client"
+  export type $CustomersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Customers"
     objects: {
       dailyReports: Prisma.$DailyShipmentReportPayload<ExtArgs>[]
       monthlyReports: Prisma.$MonthlyShipmentReportPayload<ExtArgs>[]
@@ -2845,136 +2858,136 @@ export namespace Prisma {
       address: string
       phone: string
       identificationCode: string
-    }, ExtArgs["result"]["client"]>
+    }, ExtArgs["result"]["customers"]>
     composites: {}
   }
 
-  type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> = $Result.GetResult<Prisma.$ClientPayload, S>
+  type CustomersGetPayload<S extends boolean | null | undefined | CustomersDefaultArgs> = $Result.GetResult<Prisma.$CustomersPayload, S>
 
-  type ClientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ClientCountAggregateInputType | true
+  type CustomersCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CustomersFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CustomersCountAggregateInputType | true
     }
 
-  export interface ClientDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Client'], meta: { name: 'Client' } }
+  export interface CustomersDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Customers'], meta: { name: 'Customers' } }
     /**
-     * Find zero or one Client that matches the filter.
-     * @param {ClientFindUniqueArgs} args - Arguments to find a Client
+     * Find zero or one Customers that matches the filter.
+     * @param {CustomersFindUniqueArgs} args - Arguments to find a Customers
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findUnique({
+     * // Get one Customers
+     * const customers = await prisma.customers.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ClientFindUniqueArgs>(args: SelectSubset<T, ClientFindUniqueArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends CustomersFindUniqueArgs>(args: SelectSubset<T, CustomersFindUniqueArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Client that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Customers that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ClientFindUniqueOrThrowArgs} args - Arguments to find a Client
+     * @param {CustomersFindUniqueOrThrowArgs} args - Arguments to find a Customers
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findUniqueOrThrow({
+     * // Get one Customers
+     * const customers = await prisma.customers.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ClientFindUniqueOrThrowArgs>(args: SelectSubset<T, ClientFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends CustomersFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomersFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Client that matches the filter.
+     * Find the first Customers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindFirstArgs} args - Arguments to find a Client
+     * @param {CustomersFindFirstArgs} args - Arguments to find a Customers
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findFirst({
+     * // Get one Customers
+     * const customers = await prisma.customers.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ClientFindFirstArgs>(args?: SelectSubset<T, ClientFindFirstArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends CustomersFindFirstArgs>(args?: SelectSubset<T, CustomersFindFirstArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Client that matches the filter or
+     * Find the first Customers that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindFirstOrThrowArgs} args - Arguments to find a Client
+     * @param {CustomersFindFirstOrThrowArgs} args - Arguments to find a Customers
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findFirstOrThrow({
+     * // Get one Customers
+     * const customers = await prisma.customers.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ClientFindFirstOrThrowArgs>(args?: SelectSubset<T, ClientFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends CustomersFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomersFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Clients that matches the filter.
+     * Find zero or more Customers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CustomersFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Clients
-     * const clients = await prisma.client.findMany()
+     * // Get all Customers
+     * const customers = await prisma.customers.findMany()
      * 
-     * // Get first 10 Clients
-     * const clients = await prisma.client.findMany({ take: 10 })
+     * // Get first 10 Customers
+     * const customers = await prisma.customers.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const clientWithIdOnly = await prisma.client.findMany({ select: { id: true } })
+     * const customersWithIdOnly = await prisma.customers.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ClientFindManyArgs>(args?: SelectSubset<T, ClientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends CustomersFindManyArgs>(args?: SelectSubset<T, CustomersFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Client.
-     * @param {ClientCreateArgs} args - Arguments to create a Client.
+     * Create a Customers.
+     * @param {CustomersCreateArgs} args - Arguments to create a Customers.
      * @example
-     * // Create one Client
-     * const Client = await prisma.client.create({
+     * // Create one Customers
+     * const Customers = await prisma.customers.create({
      *   data: {
-     *     // ... data to create a Client
+     *     // ... data to create a Customers
      *   }
      * })
      * 
      */
-    create<T extends ClientCreateArgs>(args: SelectSubset<T, ClientCreateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends CustomersCreateArgs>(args: SelectSubset<T, CustomersCreateArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Clients.
-     * @param {ClientCreateManyArgs} args - Arguments to create many Clients.
+     * Create many Customers.
+     * @param {CustomersCreateManyArgs} args - Arguments to create many Customers.
      * @example
-     * // Create many Clients
-     * const client = await prisma.client.createMany({
+     * // Create many Customers
+     * const customers = await prisma.customers.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ClientCreateManyArgs>(args?: SelectSubset<T, ClientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CustomersCreateManyArgs>(args?: SelectSubset<T, CustomersCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Clients and returns the data saved in the database.
-     * @param {ClientCreateManyAndReturnArgs} args - Arguments to create many Clients.
+     * Create many Customers and returns the data saved in the database.
+     * @param {CustomersCreateManyAndReturnArgs} args - Arguments to create many Customers.
      * @example
-     * // Create many Clients
-     * const client = await prisma.client.createManyAndReturn({
+     * // Create many Customers
+     * const customers = await prisma.customers.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Clients and only return the `id`
-     * const clientWithIdOnly = await prisma.client.createManyAndReturn({
+     * // Create many Customers and only return the `id`
+     * const customersWithIdOnly = await prisma.customers.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2984,28 +2997,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ClientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends CustomersCreateManyAndReturnArgs>(args?: SelectSubset<T, CustomersCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Client.
-     * @param {ClientDeleteArgs} args - Arguments to delete one Client.
+     * Delete a Customers.
+     * @param {CustomersDeleteArgs} args - Arguments to delete one Customers.
      * @example
-     * // Delete one Client
-     * const Client = await prisma.client.delete({
+     * // Delete one Customers
+     * const Customers = await prisma.customers.delete({
      *   where: {
-     *     // ... filter to delete one Client
+     *     // ... filter to delete one Customers
      *   }
      * })
      * 
      */
-    delete<T extends ClientDeleteArgs>(args: SelectSubset<T, ClientDeleteArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends CustomersDeleteArgs>(args: SelectSubset<T, CustomersDeleteArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Client.
-     * @param {ClientUpdateArgs} args - Arguments to update one Client.
+     * Update one Customers.
+     * @param {CustomersUpdateArgs} args - Arguments to update one Customers.
      * @example
-     * // Update one Client
-     * const client = await prisma.client.update({
+     * // Update one Customers
+     * const customers = await prisma.customers.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3015,30 +3028,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ClientUpdateArgs>(args: SelectSubset<T, ClientUpdateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends CustomersUpdateArgs>(args: SelectSubset<T, CustomersUpdateArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Clients.
-     * @param {ClientDeleteManyArgs} args - Arguments to filter Clients to delete.
+     * Delete zero or more Customers.
+     * @param {CustomersDeleteManyArgs} args - Arguments to filter Customers to delete.
      * @example
-     * // Delete a few Clients
-     * const { count } = await prisma.client.deleteMany({
+     * // Delete a few Customers
+     * const { count } = await prisma.customers.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ClientDeleteManyArgs>(args?: SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CustomersDeleteManyArgs>(args?: SelectSubset<T, CustomersDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clients.
+     * Update zero or more Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CustomersUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Clients
-     * const client = await prisma.client.updateMany({
+     * // Update many Customers
+     * const customers = await prisma.customers.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3048,14 +3061,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ClientUpdateManyArgs>(args: SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CustomersUpdateManyArgs>(args: SelectSubset<T, CustomersUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clients and returns the data updated in the database.
-     * @param {ClientUpdateManyAndReturnArgs} args - Arguments to update many Clients.
+     * Update zero or more Customers and returns the data updated in the database.
+     * @param {CustomersUpdateManyAndReturnArgs} args - Arguments to update many Customers.
      * @example
-     * // Update many Clients
-     * const client = await prisma.client.updateManyAndReturn({
+     * // Update many Customers
+     * const customers = await prisma.customers.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3064,8 +3077,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Clients and only return the `id`
-     * const clientWithIdOnly = await prisma.client.updateManyAndReturn({
+     * // Update zero or more Customers and only return the `id`
+     * const customersWithIdOnly = await prisma.customers.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3078,56 +3091,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ClientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends CustomersUpdateManyAndReturnArgs>(args: SelectSubset<T, CustomersUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Client.
-     * @param {ClientUpsertArgs} args - Arguments to update or create a Client.
+     * Create or update one Customers.
+     * @param {CustomersUpsertArgs} args - Arguments to update or create a Customers.
      * @example
-     * // Update or create a Client
-     * const client = await prisma.client.upsert({
+     * // Update or create a Customers
+     * const customers = await prisma.customers.upsert({
      *   create: {
-     *     // ... data to create a Client
+     *     // ... data to create a Customers
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Client we want to update
+     *     // ... the filter for the Customers we want to update
      *   }
      * })
      */
-    upsert<T extends ClientUpsertArgs>(args: SelectSubset<T, ClientUpsertArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends CustomersUpsertArgs>(args: SelectSubset<T, CustomersUpsertArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Clients.
+     * Count the number of Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientCountArgs} args - Arguments to filter Clients to count.
+     * @param {CustomersCountArgs} args - Arguments to filter Customers to count.
      * @example
-     * // Count the number of Clients
-     * const count = await prisma.client.count({
+     * // Count the number of Customers
+     * const count = await prisma.customers.count({
      *   where: {
-     *     // ... the filter for the Clients we want to count
+     *     // ... the filter for the Customers we want to count
      *   }
      * })
     **/
-    count<T extends ClientCountArgs>(
-      args?: Subset<T, ClientCountArgs>,
+    count<T extends CustomersCountArgs>(
+      args?: Subset<T, CustomersCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ClientCountAggregateOutputType>
+          : GetScalarType<T['select'], CustomersCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Client.
+     * Allows you to perform aggregations operations on a Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CustomersAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3147,13 +3160,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ClientAggregateArgs>(args: Subset<T, ClientAggregateArgs>): Prisma.PrismaPromise<GetClientAggregateType<T>>
+    aggregate<T extends CustomersAggregateArgs>(args: Subset<T, CustomersAggregateArgs>): Prisma.PrismaPromise<GetCustomersAggregateType<T>>
 
     /**
-     * Group by Client.
+     * Group by Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientGroupByArgs} args - Group by arguments.
+     * @param {CustomersGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3168,14 +3181,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ClientGroupByArgs,
+      T extends CustomersGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ClientGroupByArgs['orderBy'] }
-        : { orderBy?: ClientGroupByArgs['orderBy'] },
+        ? { orderBy: CustomersGroupByArgs['orderBy'] }
+        : { orderBy?: CustomersGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3224,23 +3237,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ClientGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClientGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CustomersGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCustomersGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Client model
+   * Fields of the Customers model
    */
-  readonly fields: ClientFieldRefs;
+  readonly fields: CustomersFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Client.
+   * The delegate class that acts as a "Promise-like" for Customers.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CustomersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dailyReports<T extends Client$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Client$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    monthlyReports<T extends Client$monthlyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Client$monthlyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyReports<T extends Customers$dailyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Customers$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    monthlyReports<T extends Customers$monthlyReportsArgs<ExtArgs> = {}>(args?: Subset<T, Customers$monthlyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonthlyShipmentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3267,407 +3280,407 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Client model
+   * Fields of the Customers model
    */
-  interface ClientFieldRefs {
-    readonly id: FieldRef<"Client", 'Int'>
-    readonly name: FieldRef<"Client", 'String'>
-    readonly cpf: FieldRef<"Client", 'String'>
-    readonly cnpj: FieldRef<"Client", 'String'>
-    readonly address: FieldRef<"Client", 'String'>
-    readonly phone: FieldRef<"Client", 'String'>
-    readonly identificationCode: FieldRef<"Client", 'String'>
+  interface CustomersFieldRefs {
+    readonly id: FieldRef<"Customers", 'Int'>
+    readonly name: FieldRef<"Customers", 'String'>
+    readonly cpf: FieldRef<"Customers", 'String'>
+    readonly cnpj: FieldRef<"Customers", 'String'>
+    readonly address: FieldRef<"Customers", 'String'>
+    readonly phone: FieldRef<"Customers", 'String'>
+    readonly identificationCode: FieldRef<"Customers", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Client findUnique
+   * Customers findUnique
    */
-  export type ClientFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which Customers to fetch.
      */
-    where: ClientWhereUniqueInput
+    where: CustomersWhereUniqueInput
   }
 
   /**
-   * Client findUniqueOrThrow
+   * Customers findUniqueOrThrow
    */
-  export type ClientFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which Customers to fetch.
      */
-    where: ClientWhereUniqueInput
+    where: CustomersWhereUniqueInput
   }
 
   /**
-   * Client findFirst
+   * Customers findFirst
    */
-  export type ClientFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which Customers to fetch.
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: CustomersOrderByWithRelationInput | CustomersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clients.
+     * Sets the position for searching for Customers.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: CustomersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clients.
+     * Filter by unique combinations of Customers.
      */
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: CustomersScalarFieldEnum | CustomersScalarFieldEnum[]
   }
 
   /**
-   * Client findFirstOrThrow
+   * Customers findFirstOrThrow
    */
-  export type ClientFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which Customers to fetch.
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: CustomersOrderByWithRelationInput | CustomersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clients.
+     * Sets the position for searching for Customers.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: CustomersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clients.
+     * Filter by unique combinations of Customers.
      */
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: CustomersScalarFieldEnum | CustomersScalarFieldEnum[]
   }
 
   /**
-   * Client findMany
+   * Customers findMany
    */
-  export type ClientFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter, which Clients to fetch.
+     * Filter, which Customers to fetch.
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: CustomersOrderByWithRelationInput | CustomersOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Clients.
+     * Sets the position for listing Customers.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: CustomersWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Customers.
      */
     skip?: number
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: CustomersScalarFieldEnum | CustomersScalarFieldEnum[]
   }
 
   /**
-   * Client create
+   * Customers create
    */
-  export type ClientCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * The data needed to create a Client.
+     * The data needed to create a Customers.
      */
-    data: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+    data: XOR<CustomersCreateInput, CustomersUncheckedCreateInput>
   }
 
   /**
-   * Client createMany
+   * Customers createMany
    */
-  export type ClientCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Clients.
+     * The data used to create many Customers.
      */
-    data: ClientCreateManyInput | ClientCreateManyInput[]
+    data: CustomersCreateManyInput | CustomersCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Client createManyAndReturn
+   * Customers createManyAndReturn
    */
-  export type ClientCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelectCreateManyAndReturn<ExtArgs> | null
+    select?: CustomersSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
-     * The data used to create many Clients.
+     * The data used to create many Customers.
      */
-    data: ClientCreateManyInput | ClientCreateManyInput[]
+    data: CustomersCreateManyInput | CustomersCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Client update
+   * Customers update
    */
-  export type ClientUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * The data needed to update a Client.
+     * The data needed to update a Customers.
      */
-    data: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+    data: XOR<CustomersUpdateInput, CustomersUncheckedUpdateInput>
     /**
-     * Choose, which Client to update.
+     * Choose, which Customers to update.
      */
-    where: ClientWhereUniqueInput
+    where: CustomersWhereUniqueInput
   }
 
   /**
-   * Client updateMany
+   * Customers updateMany
    */
-  export type ClientUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Clients.
+     * The data used to update Customers.
      */
-    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    data: XOR<CustomersUpdateManyMutationInput, CustomersUncheckedUpdateManyInput>
     /**
-     * Filter which Clients to update
+     * Filter which Customers to update
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
-     * Limit how many Clients to update.
+     * Limit how many Customers to update.
      */
     limit?: number
   }
 
   /**
-   * Client updateManyAndReturn
+   * Customers updateManyAndReturn
    */
-  export type ClientUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: CustomersSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
-     * The data used to update Clients.
+     * The data used to update Customers.
      */
-    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    data: XOR<CustomersUpdateManyMutationInput, CustomersUncheckedUpdateManyInput>
     /**
-     * Filter which Clients to update
+     * Filter which Customers to update
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
-     * Limit how many Clients to update.
+     * Limit how many Customers to update.
      */
     limit?: number
   }
 
   /**
-   * Client upsert
+   * Customers upsert
    */
-  export type ClientUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * The filter to search for the Client to update in case it exists.
+     * The filter to search for the Customers to update in case it exists.
      */
-    where: ClientWhereUniqueInput
+    where: CustomersWhereUniqueInput
     /**
-     * In case the Client found by the `where` argument doesn't exist, create a new Client with this data.
+     * In case the Customers found by the `where` argument doesn't exist, create a new Customers with this data.
      */
-    create: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+    create: XOR<CustomersCreateInput, CustomersUncheckedCreateInput>
     /**
-     * In case the Client was found with the provided `where` argument, update it with this data.
+     * In case the Customers was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+    update: XOR<CustomersUpdateInput, CustomersUncheckedUpdateInput>
   }
 
   /**
-   * Client delete
+   * Customers delete
    */
-  export type ClientDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
     /**
-     * Filter which Client to delete.
+     * Filter which Customers to delete.
      */
-    where: ClientWhereUniqueInput
+    where: CustomersWhereUniqueInput
   }
 
   /**
-   * Client deleteMany
+   * Customers deleteMany
    */
-  export type ClientDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Clients to delete
+     * Filter which Customers to delete
      */
-    where?: ClientWhereInput
+    where?: CustomersWhereInput
     /**
-     * Limit how many Clients to delete.
+     * Limit how many Customers to delete.
      */
     limit?: number
   }
 
   /**
-   * Client.dailyReports
+   * Customers.dailyReports
    */
-  export type Client$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Customers$dailyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the DailyShipmentReport
      */
@@ -3689,9 +3702,9 @@ export namespace Prisma {
   }
 
   /**
-   * Client.monthlyReports
+   * Customers.monthlyReports
    */
-  export type Client$monthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Customers$monthlyReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the MonthlyShipmentReport
      */
@@ -3713,21 +3726,21 @@ export namespace Prisma {
   }
 
   /**
-   * Client without action
+   * Customers without action
    */
-  export type ClientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Customers
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: CustomersSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Customers
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: CustomersOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: CustomersInclude<ExtArgs> | null
   }
 
 
@@ -5991,7 +6004,7 @@ export namespace Prisma {
     userId: number | null
     vehicleId: number | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type DailyShipmentReportSumAggregateOutputType = {
@@ -6002,7 +6015,7 @@ export namespace Prisma {
     userId: number | null
     vehicleId: number | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type DailyShipmentReportMinAggregateOutputType = {
@@ -6017,7 +6030,7 @@ export namespace Prisma {
     userId: number | null
     vehicleId: number | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type DailyShipmentReportMaxAggregateOutputType = {
@@ -6032,7 +6045,7 @@ export namespace Prisma {
     userId: number | null
     vehicleId: number | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type DailyShipmentReportCountAggregateOutputType = {
@@ -6047,7 +6060,7 @@ export namespace Prisma {
     userId: number
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
     _all: number
   }
 
@@ -6060,7 +6073,7 @@ export namespace Prisma {
     userId?: true
     vehicleId?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type DailyShipmentReportSumAggregateInputType = {
@@ -6071,7 +6084,7 @@ export namespace Prisma {
     userId?: true
     vehicleId?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type DailyShipmentReportMinAggregateInputType = {
@@ -6086,7 +6099,7 @@ export namespace Prisma {
     userId?: true
     vehicleId?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type DailyShipmentReportMaxAggregateInputType = {
@@ -6101,7 +6114,7 @@ export namespace Prisma {
     userId?: true
     vehicleId?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type DailyShipmentReportCountAggregateInputType = {
@@ -6116,7 +6129,7 @@ export namespace Prisma {
     userId?: true
     vehicleId?: true
     productId?: true
-    clientId?: true
+    customersId?: true
     _all?: true
   }
 
@@ -6218,7 +6231,7 @@ export namespace Prisma {
     userId: number
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
     _count: DailyShipmentReportCountAggregateOutputType | null
     _avg: DailyShipmentReportAvgAggregateOutputType | null
     _sum: DailyShipmentReportSumAggregateOutputType | null
@@ -6252,8 +6265,8 @@ export namespace Prisma {
     userId?: boolean
     vehicleId?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
@@ -6271,8 +6284,8 @@ export namespace Prisma {
     userId?: boolean
     vehicleId?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
@@ -6290,8 +6303,8 @@ export namespace Prisma {
     userId?: boolean
     vehicleId?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
@@ -6309,24 +6322,24 @@ export namespace Prisma {
     userId?: boolean
     vehicleId?: boolean
     productId?: boolean
-    clientId?: boolean
+    customersId?: boolean
   }
 
-  export type DailyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "invoiceNumber" | "productionDate" | "destination" | "temperature" | "sanitaryCondition" | "deliverer" | "userId" | "vehicleId" | "productId" | "clientId", ExtArgs["result"]["dailyShipmentReport"]>
+  export type DailyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "invoiceNumber" | "productionDate" | "destination" | "temperature" | "sanitaryCondition" | "deliverer" | "userId" | "vehicleId" | "productId" | "customersId", ExtArgs["result"]["dailyShipmentReport"]>
   export type DailyShipmentReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
   }
   export type DailyShipmentReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
   }
   export type DailyShipmentReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     users?: boolean | UsersDefaultArgs<ExtArgs>
     vehicle?: boolean | VehicleDefaultArgs<ExtArgs>
@@ -6335,7 +6348,7 @@ export namespace Prisma {
   export type $DailyShipmentReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DailyShipmentReport"
     objects: {
-      client: Prisma.$ClientPayload<ExtArgs>
+      customers: Prisma.$CustomersPayload<ExtArgs>
       product: Prisma.$ProductPayload<ExtArgs>
       users: Prisma.$UsersPayload<ExtArgs>
       vehicle: Prisma.$VehiclePayload<ExtArgs>
@@ -6352,7 +6365,7 @@ export namespace Prisma {
       userId: number
       vehicleId: number
       productId: number
-      clientId: number
+      customersId: number
     }, ExtArgs["result"]["dailyShipmentReport"]>
     composites: {}
   }
@@ -6747,7 +6760,7 @@ export namespace Prisma {
    */
   export interface Prisma__DailyShipmentReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    customers<T extends CustomersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomersDefaultArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     users<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     vehicle<T extends VehicleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VehicleDefaultArgs<ExtArgs>>): Prisma__VehicleClient<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -6791,7 +6804,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"DailyShipmentReport", 'Int'>
     readonly vehicleId: FieldRef<"DailyShipmentReport", 'Int'>
     readonly productId: FieldRef<"DailyShipmentReport", 'Int'>
-    readonly clientId: FieldRef<"DailyShipmentReport", 'Int'>
+    readonly customersId: FieldRef<"DailyShipmentReport", 'Int'>
   }
     
 
@@ -7223,7 +7236,7 @@ export namespace Prisma {
     quantity: Decimal | null
     temperature: Decimal | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type MonthlyShipmentReportSumAggregateOutputType = {
@@ -7231,7 +7244,7 @@ export namespace Prisma {
     quantity: Decimal | null
     temperature: Decimal | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type MonthlyShipmentReportMinAggregateOutputType = {
@@ -7243,7 +7256,7 @@ export namespace Prisma {
     productionDate: Date | null
     shipmentDate: Date | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type MonthlyShipmentReportMaxAggregateOutputType = {
@@ -7255,7 +7268,7 @@ export namespace Prisma {
     productionDate: Date | null
     shipmentDate: Date | null
     productId: number | null
-    clientId: number | null
+    customersId: number | null
   }
 
   export type MonthlyShipmentReportCountAggregateOutputType = {
@@ -7267,7 +7280,7 @@ export namespace Prisma {
     productionDate: number
     shipmentDate: number
     productId: number
-    clientId: number
+    customersId: number
     _all: number
   }
 
@@ -7277,7 +7290,7 @@ export namespace Prisma {
     quantity?: true
     temperature?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type MonthlyShipmentReportSumAggregateInputType = {
@@ -7285,7 +7298,7 @@ export namespace Prisma {
     quantity?: true
     temperature?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type MonthlyShipmentReportMinAggregateInputType = {
@@ -7297,7 +7310,7 @@ export namespace Prisma {
     productionDate?: true
     shipmentDate?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type MonthlyShipmentReportMaxAggregateInputType = {
@@ -7309,7 +7322,7 @@ export namespace Prisma {
     productionDate?: true
     shipmentDate?: true
     productId?: true
-    clientId?: true
+    customersId?: true
   }
 
   export type MonthlyShipmentReportCountAggregateInputType = {
@@ -7321,7 +7334,7 @@ export namespace Prisma {
     productionDate?: true
     shipmentDate?: true
     productId?: true
-    clientId?: true
+    customersId?: true
     _all?: true
   }
 
@@ -7420,7 +7433,7 @@ export namespace Prisma {
     productionDate: Date
     shipmentDate: Date
     productId: number
-    clientId: number
+    customersId: number
     _count: MonthlyShipmentReportCountAggregateOutputType | null
     _avg: MonthlyShipmentReportAvgAggregateOutputType | null
     _sum: MonthlyShipmentReportSumAggregateOutputType | null
@@ -7451,8 +7464,8 @@ export namespace Prisma {
     productionDate?: boolean
     shipmentDate?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["monthlyShipmentReport"]>
 
@@ -7465,8 +7478,8 @@ export namespace Prisma {
     productionDate?: boolean
     shipmentDate?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["monthlyShipmentReport"]>
 
@@ -7479,8 +7492,8 @@ export namespace Prisma {
     productionDate?: boolean
     shipmentDate?: boolean
     productId?: boolean
-    clientId?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customersId?: boolean
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["monthlyShipmentReport"]>
 
@@ -7493,27 +7506,27 @@ export namespace Prisma {
     productionDate?: boolean
     shipmentDate?: boolean
     productId?: boolean
-    clientId?: boolean
+    customersId?: boolean
   }
 
-  export type MonthlyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "destination" | "temperature" | "deliverer" | "productionDate" | "shipmentDate" | "productId" | "clientId", ExtArgs["result"]["monthlyShipmentReport"]>
+  export type MonthlyShipmentReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "destination" | "temperature" | "deliverer" | "productionDate" | "shipmentDate" | "productId" | "customersId", ExtArgs["result"]["monthlyShipmentReport"]>
   export type MonthlyShipmentReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
   export type MonthlyShipmentReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
   export type MonthlyShipmentReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    customers?: boolean | CustomersDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }
 
   export type $MonthlyShipmentReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MonthlyShipmentReport"
     objects: {
-      client: Prisma.$ClientPayload<ExtArgs>
+      customers: Prisma.$CustomersPayload<ExtArgs>
       product: Prisma.$ProductPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7525,7 +7538,7 @@ export namespace Prisma {
       productionDate: Date
       shipmentDate: Date
       productId: number
-      clientId: number
+      customersId: number
     }, ExtArgs["result"]["monthlyShipmentReport"]>
     composites: {}
   }
@@ -7920,7 +7933,7 @@ export namespace Prisma {
    */
   export interface Prisma__MonthlyShipmentReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    customers<T extends CustomersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomersDefaultArgs<ExtArgs>>): Prisma__CustomersClient<$Result.GetResult<Prisma.$CustomersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7959,7 +7972,7 @@ export namespace Prisma {
     readonly productionDate: FieldRef<"MonthlyShipmentReport", 'DateTime'>
     readonly shipmentDate: FieldRef<"MonthlyShipmentReport", 'DateTime'>
     readonly productId: FieldRef<"MonthlyShipmentReport", 'Int'>
-    readonly clientId: FieldRef<"MonthlyShipmentReport", 'Int'>
+    readonly customersId: FieldRef<"MonthlyShipmentReport", 'Int'>
   }
     
 
@@ -8393,13 +8406,14 @@ export namespace Prisma {
     name: 'name',
     username: 'username',
     password: 'password',
+    active: 'active',
     role: 'role'
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-  export const ClientScalarFieldEnum: {
+  export const CustomersScalarFieldEnum: {
     id: 'id',
     name: 'name',
     cpf: 'cpf',
@@ -8409,7 +8423,7 @@ export namespace Prisma {
     identificationCode: 'identificationCode'
   };
 
-  export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+  export type CustomersScalarFieldEnum = (typeof CustomersScalarFieldEnum)[keyof typeof CustomersScalarFieldEnum]
 
 
   export const ProductScalarFieldEnum: {
@@ -8446,7 +8460,7 @@ export namespace Prisma {
     userId: 'userId',
     vehicleId: 'vehicleId',
     productId: 'productId',
-    clientId: 'clientId'
+    customersId: 'customersId'
   };
 
   export type DailyShipmentReportScalarFieldEnum = (typeof DailyShipmentReportScalarFieldEnum)[keyof typeof DailyShipmentReportScalarFieldEnum]
@@ -8461,7 +8475,7 @@ export namespace Prisma {
     productionDate: 'productionDate',
     shipmentDate: 'shipmentDate',
     productId: 'productId',
-    clientId: 'clientId'
+    customersId: 'customersId'
   };
 
   export type MonthlyShipmentReportScalarFieldEnum = (typeof MonthlyShipmentReportScalarFieldEnum)[keyof typeof MonthlyShipmentReportScalarFieldEnum]
@@ -8517,6 +8531,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'role'
    */
   export type EnumroleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'role'>
@@ -8559,13 +8580,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -8590,6 +8604,7 @@ export namespace Prisma {
     name?: StringFilter<"Users"> | string
     username?: StringFilter<"Users"> | string
     password?: StringFilter<"Users"> | string
+    active?: BoolFilter<"Users"> | boolean
     role?: EnumroleFilter<"Users"> | $Enums.role
     dailyReports?: DailyShipmentReportListRelationFilter
   }
@@ -8599,6 +8614,7 @@ export namespace Prisma {
     name?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    active?: SortOrder
     role?: SortOrder
     dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
   }
@@ -8611,6 +8627,7 @@ export namespace Prisma {
     name?: StringFilter<"Users"> | string
     username?: StringFilter<"Users"> | string
     password?: StringFilter<"Users"> | string
+    active?: BoolFilter<"Users"> | boolean
     role?: EnumroleFilter<"Users"> | $Enums.role
     dailyReports?: DailyShipmentReportListRelationFilter
   }, "id">
@@ -8620,6 +8637,7 @@ export namespace Prisma {
     name?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    active?: SortOrder
     role?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _avg?: UsersAvgOrderByAggregateInput
@@ -8636,25 +8654,26 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Users"> | string
     username?: StringWithAggregatesFilter<"Users"> | string
     password?: StringWithAggregatesFilter<"Users"> | string
+    active?: BoolWithAggregatesFilter<"Users"> | boolean
     role?: EnumroleWithAggregatesFilter<"Users"> | $Enums.role
   }
 
-  export type ClientWhereInput = {
-    AND?: ClientWhereInput | ClientWhereInput[]
-    OR?: ClientWhereInput[]
-    NOT?: ClientWhereInput | ClientWhereInput[]
-    id?: IntFilter<"Client"> | number
-    name?: StringFilter<"Client"> | string
-    cpf?: StringFilter<"Client"> | string
-    cnpj?: StringFilter<"Client"> | string
-    address?: StringFilter<"Client"> | string
-    phone?: StringFilter<"Client"> | string
-    identificationCode?: StringFilter<"Client"> | string
+  export type CustomersWhereInput = {
+    AND?: CustomersWhereInput | CustomersWhereInput[]
+    OR?: CustomersWhereInput[]
+    NOT?: CustomersWhereInput | CustomersWhereInput[]
+    id?: IntFilter<"Customers"> | number
+    name?: StringFilter<"Customers"> | string
+    cpf?: StringFilter<"Customers"> | string
+    cnpj?: StringFilter<"Customers"> | string
+    address?: StringFilter<"Customers"> | string
+    phone?: StringFilter<"Customers"> | string
+    identificationCode?: StringFilter<"Customers"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
   }
 
-  export type ClientOrderByWithRelationInput = {
+  export type CustomersOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     cpf?: SortOrder
@@ -8666,22 +8685,22 @@ export namespace Prisma {
     monthlyReports?: MonthlyShipmentReportOrderByRelationAggregateInput
   }
 
-  export type ClientWhereUniqueInput = Prisma.AtLeast<{
+  export type CustomersWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: ClientWhereInput | ClientWhereInput[]
-    OR?: ClientWhereInput[]
-    NOT?: ClientWhereInput | ClientWhereInput[]
-    name?: StringFilter<"Client"> | string
-    cpf?: StringFilter<"Client"> | string
-    cnpj?: StringFilter<"Client"> | string
-    address?: StringFilter<"Client"> | string
-    phone?: StringFilter<"Client"> | string
-    identificationCode?: StringFilter<"Client"> | string
+    AND?: CustomersWhereInput | CustomersWhereInput[]
+    OR?: CustomersWhereInput[]
+    NOT?: CustomersWhereInput | CustomersWhereInput[]
+    name?: StringFilter<"Customers"> | string
+    cpf?: StringFilter<"Customers"> | string
+    cnpj?: StringFilter<"Customers"> | string
+    address?: StringFilter<"Customers"> | string
+    phone?: StringFilter<"Customers"> | string
+    identificationCode?: StringFilter<"Customers"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
   }, "id">
 
-  export type ClientOrderByWithAggregationInput = {
+  export type CustomersOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     cpf?: SortOrder
@@ -8689,24 +8708,24 @@ export namespace Prisma {
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
-    _count?: ClientCountOrderByAggregateInput
-    _avg?: ClientAvgOrderByAggregateInput
-    _max?: ClientMaxOrderByAggregateInput
-    _min?: ClientMinOrderByAggregateInput
-    _sum?: ClientSumOrderByAggregateInput
+    _count?: CustomersCountOrderByAggregateInput
+    _avg?: CustomersAvgOrderByAggregateInput
+    _max?: CustomersMaxOrderByAggregateInput
+    _min?: CustomersMinOrderByAggregateInput
+    _sum?: CustomersSumOrderByAggregateInput
   }
 
-  export type ClientScalarWhereWithAggregatesInput = {
-    AND?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
-    OR?: ClientScalarWhereWithAggregatesInput[]
-    NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Client"> | number
-    name?: StringWithAggregatesFilter<"Client"> | string
-    cpf?: StringWithAggregatesFilter<"Client"> | string
-    cnpj?: StringWithAggregatesFilter<"Client"> | string
-    address?: StringWithAggregatesFilter<"Client"> | string
-    phone?: StringWithAggregatesFilter<"Client"> | string
-    identificationCode?: StringWithAggregatesFilter<"Client"> | string
+  export type CustomersScalarWhereWithAggregatesInput = {
+    AND?: CustomersScalarWhereWithAggregatesInput | CustomersScalarWhereWithAggregatesInput[]
+    OR?: CustomersScalarWhereWithAggregatesInput[]
+    NOT?: CustomersScalarWhereWithAggregatesInput | CustomersScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Customers"> | number
+    name?: StringWithAggregatesFilter<"Customers"> | string
+    cpf?: StringWithAggregatesFilter<"Customers"> | string
+    cnpj?: StringWithAggregatesFilter<"Customers"> | string
+    address?: StringWithAggregatesFilter<"Customers"> | string
+    phone?: StringWithAggregatesFilter<"Customers"> | string
+    identificationCode?: StringWithAggregatesFilter<"Customers"> | string
   }
 
   export type ProductWhereInput = {
@@ -8841,8 +8860,8 @@ export namespace Prisma {
     userId?: IntFilter<"DailyShipmentReport"> | number
     vehicleId?: IntFilter<"DailyShipmentReport"> | number
     productId?: IntFilter<"DailyShipmentReport"> | number
-    clientId?: IntFilter<"DailyShipmentReport"> | number
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    customersId?: IntFilter<"DailyShipmentReport"> | number
+    customers?: XOR<CustomersScalarRelationFilter, CustomersWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     users?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     vehicle?: XOR<VehicleScalarRelationFilter, VehicleWhereInput>
@@ -8860,8 +8879,8 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
-    client?: ClientOrderByWithRelationInput
+    customersId?: SortOrder
+    customers?: CustomersOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
     users?: UsersOrderByWithRelationInput
     vehicle?: VehicleOrderByWithRelationInput
@@ -8882,8 +8901,8 @@ export namespace Prisma {
     userId?: IntFilter<"DailyShipmentReport"> | number
     vehicleId?: IntFilter<"DailyShipmentReport"> | number
     productId?: IntFilter<"DailyShipmentReport"> | number
-    clientId?: IntFilter<"DailyShipmentReport"> | number
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    customersId?: IntFilter<"DailyShipmentReport"> | number
+    customers?: XOR<CustomersScalarRelationFilter, CustomersWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     users?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     vehicle?: XOR<VehicleScalarRelationFilter, VehicleWhereInput>
@@ -8901,7 +8920,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
     _count?: DailyShipmentReportCountOrderByAggregateInput
     _avg?: DailyShipmentReportAvgOrderByAggregateInput
     _max?: DailyShipmentReportMaxOrderByAggregateInput
@@ -8924,7 +8943,7 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
     vehicleId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
     productId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
-    clientId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
+    customersId?: IntWithAggregatesFilter<"DailyShipmentReport"> | number
   }
 
   export type MonthlyShipmentReportWhereInput = {
@@ -8939,8 +8958,8 @@ export namespace Prisma {
     productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     productId?: IntFilter<"MonthlyShipmentReport"> | number
-    clientId?: IntFilter<"MonthlyShipmentReport"> | number
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    customersId?: IntFilter<"MonthlyShipmentReport"> | number
+    customers?: XOR<CustomersScalarRelationFilter, CustomersWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
 
@@ -8953,8 +8972,8 @@ export namespace Prisma {
     productionDate?: SortOrder
     shipmentDate?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
-    client?: ClientOrderByWithRelationInput
+    customersId?: SortOrder
+    customers?: CustomersOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
   }
 
@@ -8970,8 +8989,8 @@ export namespace Prisma {
     productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     productId?: IntFilter<"MonthlyShipmentReport"> | number
-    clientId?: IntFilter<"MonthlyShipmentReport"> | number
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    customersId?: IntFilter<"MonthlyShipmentReport"> | number
+    customers?: XOR<CustomersScalarRelationFilter, CustomersWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "id">
 
@@ -8984,7 +9003,7 @@ export namespace Prisma {
     productionDate?: SortOrder
     shipmentDate?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
     _count?: MonthlyShipmentReportCountOrderByAggregateInput
     _avg?: MonthlyShipmentReportAvgOrderByAggregateInput
     _max?: MonthlyShipmentReportMaxOrderByAggregateInput
@@ -9004,13 +9023,14 @@ export namespace Prisma {
     productionDate?: DateTimeWithAggregatesFilter<"MonthlyShipmentReport"> | Date | string
     shipmentDate?: DateTimeWithAggregatesFilter<"MonthlyShipmentReport"> | Date | string
     productId?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
-    clientId?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
+    customersId?: IntWithAggregatesFilter<"MonthlyShipmentReport"> | number
   }
 
   export type UsersCreateInput = {
     name: string
     username: string
     password: string
+    active?: boolean
     role?: $Enums.role
     dailyReports?: DailyShipmentReportCreateNestedManyWithoutUsersInput
   }
@@ -9020,6 +9040,7 @@ export namespace Prisma {
     name: string
     username: string
     password: string
+    active?: boolean
     role?: $Enums.role
     dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutUsersInput
   }
@@ -9028,6 +9049,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     dailyReports?: DailyShipmentReportUpdateManyWithoutUsersNestedInput
   }
@@ -9037,6 +9059,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutUsersNestedInput
   }
@@ -9046,6 +9069,7 @@ export namespace Prisma {
     name: string
     username: string
     password: string
+    active?: boolean
     role?: $Enums.role
   }
 
@@ -9053,6 +9077,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
@@ -9061,21 +9086,22 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
-  export type ClientCreateInput = {
+  export type CustomersCreateInput = {
     name: string
     cpf: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
-    dailyReports?: DailyShipmentReportCreateNestedManyWithoutClientInput
-    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutClientInput
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutCustomersInput
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientUncheckedCreateInput = {
+  export type CustomersUncheckedCreateInput = {
     id?: number
     name: string
     cpf: string
@@ -9083,22 +9109,22 @@ export namespace Prisma {
     address: string
     phone: string
     identificationCode: string
-    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput
-    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientUpdateInput = {
+  export type CustomersUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    dailyReports?: DailyShipmentReportUpdateManyWithoutClientNestedInput
-    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutClientNestedInput
+    dailyReports?: DailyShipmentReportUpdateManyWithoutCustomersNestedInput
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
 
-  export type ClientUncheckedUpdateInput = {
+  export type CustomersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
@@ -9106,11 +9132,11 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
-    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
 
-  export type ClientCreateManyInput = {
+  export type CustomersCreateManyInput = {
     id?: number
     name: string
     cpf: string
@@ -9120,7 +9146,7 @@ export namespace Prisma {
     identificationCode: string
   }
 
-  export type ClientUpdateManyMutationInput = {
+  export type CustomersUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
@@ -9129,7 +9155,7 @@ export namespace Prisma {
     identificationCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ClientUncheckedUpdateManyInput = {
+  export type CustomersUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
@@ -9265,7 +9291,7 @@ export namespace Prisma {
     temperature: Decimal | DecimalJsLike | number | string
     sanitaryCondition: boolean
     deliverer: string
-    client: ClientCreateNestedOneWithoutDailyReportsInput
+    customers: CustomersCreateNestedOneWithoutDailyReportsInput
     product: ProductCreateNestedOneWithoutDailyReportsInput
     users: UsersCreateNestedOneWithoutDailyReportsInput
     vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
@@ -9283,7 +9309,7 @@ export namespace Prisma {
     userId: number
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportUpdateInput = {
@@ -9294,7 +9320,7 @@ export namespace Prisma {
     temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
     deliverer?: StringFieldUpdateOperationsInput | string
-    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutDailyReportsNestedInput
     product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
     users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
     vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
@@ -9312,7 +9338,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     vehicleId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DailyShipmentReportCreateManyInput = {
@@ -9327,7 +9353,7 @@ export namespace Prisma {
     userId: number
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportUpdateManyMutationInput = {
@@ -9352,7 +9378,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     vehicleId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type MonthlyShipmentReportCreateInput = {
@@ -9362,7 +9388,7 @@ export namespace Prisma {
     deliverer: string
     productionDate: Date | string
     shipmentDate: Date | string
-    client: ClientCreateNestedOneWithoutMonthlyReportsInput
+    customers: CustomersCreateNestedOneWithoutMonthlyReportsInput
     product: ProductCreateNestedOneWithoutMonthlyReportsInput
   }
 
@@ -9375,7 +9401,7 @@ export namespace Prisma {
     productionDate: Date | string
     shipmentDate: Date | string
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type MonthlyShipmentReportUpdateInput = {
@@ -9385,7 +9411,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutMonthlyReportsNestedInput
     product?: ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput
   }
 
@@ -9398,7 +9424,7 @@ export namespace Prisma {
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type MonthlyShipmentReportCreateManyInput = {
@@ -9410,7 +9436,7 @@ export namespace Prisma {
     productionDate: Date | string
     shipmentDate: Date | string
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type MonthlyShipmentReportUpdateManyMutationInput = {
@@ -9431,7 +9457,7 @@ export namespace Prisma {
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -9460,6 +9486,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type EnumroleFilter<$PrismaModel = never> = {
     equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
     in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
@@ -9482,6 +9513,7 @@ export namespace Prisma {
     name?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    active?: SortOrder
     role?: SortOrder
   }
 
@@ -9494,6 +9526,7 @@ export namespace Prisma {
     name?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    active?: SortOrder
     role?: SortOrder
   }
 
@@ -9502,6 +9535,7 @@ export namespace Prisma {
     name?: SortOrder
     username?: SortOrder
     password?: SortOrder
+    active?: SortOrder
     role?: SortOrder
   }
 
@@ -9543,6 +9577,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type EnumroleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.role | EnumroleFieldRefInput<$PrismaModel>
     in?: $Enums.role[] | ListEnumroleFieldRefInput<$PrismaModel>
@@ -9563,7 +9605,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ClientCountOrderByAggregateInput = {
+  export type CustomersCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     cpf?: SortOrder
@@ -9573,21 +9615,11 @@ export namespace Prisma {
     identificationCode?: SortOrder
   }
 
-  export type ClientAvgOrderByAggregateInput = {
+  export type CustomersAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type ClientMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    cpf?: SortOrder
-    cnpj?: SortOrder
-    address?: SortOrder
-    phone?: SortOrder
-    identificationCode?: SortOrder
-  }
-
-  export type ClientMinOrderByAggregateInput = {
+  export type CustomersMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     cpf?: SortOrder
@@ -9597,7 +9629,17 @@ export namespace Prisma {
     identificationCode?: SortOrder
   }
 
-  export type ClientSumOrderByAggregateInput = {
+  export type CustomersMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    cpf?: SortOrder
+    cnpj?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    identificationCode?: SortOrder
+  }
+
+  export type CustomersSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -9719,14 +9761,9 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type ClientScalarRelationFilter = {
-    is?: ClientWhereInput
-    isNot?: ClientWhereInput
+  export type CustomersScalarRelationFilter = {
+    is?: CustomersWhereInput
+    isNot?: CustomersWhereInput
   }
 
   export type ProductScalarRelationFilter = {
@@ -9756,7 +9793,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type DailyShipmentReportAvgOrderByAggregateInput = {
@@ -9767,7 +9804,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type DailyShipmentReportMaxOrderByAggregateInput = {
@@ -9782,7 +9819,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type DailyShipmentReportMinOrderByAggregateInput = {
@@ -9797,7 +9834,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type DailyShipmentReportSumOrderByAggregateInput = {
@@ -9808,15 +9845,7 @@ export namespace Prisma {
     userId?: SortOrder
     vehicleId?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    customersId?: SortOrder
   }
 
   export type MonthlyShipmentReportCountOrderByAggregateInput = {
@@ -9828,7 +9857,7 @@ export namespace Prisma {
     productionDate?: SortOrder
     shipmentDate?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type MonthlyShipmentReportAvgOrderByAggregateInput = {
@@ -9836,7 +9865,7 @@ export namespace Prisma {
     quantity?: SortOrder
     temperature?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type MonthlyShipmentReportMaxOrderByAggregateInput = {
@@ -9848,7 +9877,7 @@ export namespace Prisma {
     productionDate?: SortOrder
     shipmentDate?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type MonthlyShipmentReportMinOrderByAggregateInput = {
@@ -9860,7 +9889,7 @@ export namespace Prisma {
     productionDate?: SortOrder
     shipmentDate?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type MonthlyShipmentReportSumOrderByAggregateInput = {
@@ -9868,7 +9897,7 @@ export namespace Prisma {
     quantity?: SortOrder
     temperature?: SortOrder
     productId?: SortOrder
-    clientId?: SortOrder
+    customersId?: SortOrder
   }
 
   export type DailyShipmentReportCreateNestedManyWithoutUsersInput = {
@@ -9887,6 +9916,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type EnumroleFieldUpdateOperationsInput = {
@@ -9929,87 +9962,87 @@ export namespace Prisma {
     deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type DailyShipmentReportCreateNestedManyWithoutClientInput = {
-    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
-    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+  export type DailyShipmentReportCreateNestedManyWithoutCustomersInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput> | DailyShipmentReportCreateWithoutCustomersInput[] | DailyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutCustomersInput | DailyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    createMany?: DailyShipmentReportCreateManyCustomersInputEnvelope
     connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type MonthlyShipmentReportCreateNestedManyWithoutClientInput = {
-    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
-    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+  export type MonthlyShipmentReportCreateNestedManyWithoutCustomersInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput> | MonthlyShipmentReportCreateWithoutCustomersInput[] | MonthlyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutCustomersInput | MonthlyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    createMany?: MonthlyShipmentReportCreateManyCustomersInputEnvelope
     connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
-  export type DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput = {
-    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
-    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+  export type DailyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput> | DailyShipmentReportCreateWithoutCustomersInput[] | DailyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutCustomersInput | DailyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    createMany?: DailyShipmentReportCreateManyCustomersInputEnvelope
     connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
   }
 
-  export type MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput = {
-    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
-    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+  export type MonthlyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput> | MonthlyShipmentReportCreateWithoutCustomersInput[] | MonthlyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutCustomersInput | MonthlyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    createMany?: MonthlyShipmentReportCreateManyCustomersInputEnvelope
     connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
   }
 
-  export type DailyShipmentReportUpdateManyWithoutClientNestedInput = {
-    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
-    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput | DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
-    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+  export type DailyShipmentReportUpdateManyWithoutCustomersNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput> | DailyShipmentReportCreateWithoutCustomersInput[] | DailyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutCustomersInput | DailyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput | DailyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput[]
+    createMany?: DailyShipmentReportCreateManyCustomersInputEnvelope
     set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
-    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput | DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
-    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutClientInput | DailyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput | DailyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutCustomersInput | DailyShipmentReportUpdateManyWithWhereWithoutCustomersInput[]
     deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type MonthlyShipmentReportUpdateManyWithoutClientNestedInput = {
-    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
-    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
-    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+  export type MonthlyShipmentReportUpdateManyWithoutCustomersNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput> | MonthlyShipmentReportCreateWithoutCustomersInput[] | MonthlyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutCustomersInput | MonthlyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput[]
+    createMany?: MonthlyShipmentReportCreateManyCustomersInputEnvelope
     set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
-    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
-    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput | MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutCustomersInput | MonthlyShipmentReportUpdateManyWithWhereWithoutCustomersInput[]
     deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
-  export type DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput = {
-    create?: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput> | DailyShipmentReportCreateWithoutClientInput[] | DailyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutClientInput | DailyShipmentReportCreateOrConnectWithoutClientInput[]
-    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput | DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
-    createMany?: DailyShipmentReportCreateManyClientInputEnvelope
+  export type DailyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput = {
+    create?: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput> | DailyShipmentReportCreateWithoutCustomersInput[] | DailyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutCustomersInput | DailyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    upsert?: DailyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput | DailyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput[]
+    createMany?: DailyShipmentReportCreateManyCustomersInputEnvelope
     set?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     disconnect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     delete?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
     connect?: DailyShipmentReportWhereUniqueInput | DailyShipmentReportWhereUniqueInput[]
-    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput | DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
-    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutClientInput | DailyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    update?: DailyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput | DailyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput[]
+    updateMany?: DailyShipmentReportUpdateManyWithWhereWithoutCustomersInput | DailyShipmentReportUpdateManyWithWhereWithoutCustomersInput[]
     deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput = {
-    create?: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput> | MonthlyShipmentReportCreateWithoutClientInput[] | MonthlyShipmentReportUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutClientInput | MonthlyShipmentReportCreateOrConnectWithoutClientInput[]
-    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput[]
-    createMany?: MonthlyShipmentReportCreateManyClientInputEnvelope
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput = {
+    create?: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput> | MonthlyShipmentReportCreateWithoutCustomersInput[] | MonthlyShipmentReportUncheckedCreateWithoutCustomersInput[]
+    connectOrCreate?: MonthlyShipmentReportCreateOrConnectWithoutCustomersInput | MonthlyShipmentReportCreateOrConnectWithoutCustomersInput[]
+    upsert?: MonthlyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput | MonthlyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput[]
+    createMany?: MonthlyShipmentReportCreateManyCustomersInputEnvelope
     set?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     disconnect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     delete?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
     connect?: MonthlyShipmentReportWhereUniqueInput | MonthlyShipmentReportWhereUniqueInput[]
-    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput[]
-    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput | MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput[]
+    update?: MonthlyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput | MonthlyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput[]
+    updateMany?: MonthlyShipmentReportUpdateManyWithWhereWithoutCustomersInput | MonthlyShipmentReportUpdateManyWithWhereWithoutCustomersInput[]
     deleteMany?: MonthlyShipmentReportScalarWhereInput | MonthlyShipmentReportScalarWhereInput[]
   }
 
@@ -10151,10 +10184,10 @@ export namespace Prisma {
     deleteMany?: DailyShipmentReportScalarWhereInput | DailyShipmentReportScalarWhereInput[]
   }
 
-  export type ClientCreateNestedOneWithoutDailyReportsInput = {
-    create?: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutDailyReportsInput
-    connect?: ClientWhereUniqueInput
+  export type CustomersCreateNestedOneWithoutDailyReportsInput = {
+    create?: XOR<CustomersCreateWithoutDailyReportsInput, CustomersUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: CustomersCreateOrConnectWithoutDailyReportsInput
+    connect?: CustomersWhereUniqueInput
   }
 
   export type ProductCreateNestedOneWithoutDailyReportsInput = {
@@ -10175,16 +10208,12 @@ export namespace Prisma {
     connect?: VehicleWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type ClientUpdateOneRequiredWithoutDailyReportsNestedInput = {
-    create?: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutDailyReportsInput
-    upsert?: ClientUpsertWithoutDailyReportsInput
-    connect?: ClientWhereUniqueInput
-    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutDailyReportsInput, ClientUpdateWithoutDailyReportsInput>, ClientUncheckedUpdateWithoutDailyReportsInput>
+  export type CustomersUpdateOneRequiredWithoutDailyReportsNestedInput = {
+    create?: XOR<CustomersCreateWithoutDailyReportsInput, CustomersUncheckedCreateWithoutDailyReportsInput>
+    connectOrCreate?: CustomersCreateOrConnectWithoutDailyReportsInput
+    upsert?: CustomersUpsertWithoutDailyReportsInput
+    connect?: CustomersWhereUniqueInput
+    update?: XOR<XOR<CustomersUpdateToOneWithWhereWithoutDailyReportsInput, CustomersUpdateWithoutDailyReportsInput>, CustomersUncheckedUpdateWithoutDailyReportsInput>
   }
 
   export type ProductUpdateOneRequiredWithoutDailyReportsNestedInput = {
@@ -10211,10 +10240,10 @@ export namespace Prisma {
     update?: XOR<XOR<VehicleUpdateToOneWithWhereWithoutDailyReportsInput, VehicleUpdateWithoutDailyReportsInput>, VehicleUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type ClientCreateNestedOneWithoutMonthlyReportsInput = {
-    create?: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutMonthlyReportsInput
-    connect?: ClientWhereUniqueInput
+  export type CustomersCreateNestedOneWithoutMonthlyReportsInput = {
+    create?: XOR<CustomersCreateWithoutMonthlyReportsInput, CustomersUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: CustomersCreateOrConnectWithoutMonthlyReportsInput
+    connect?: CustomersWhereUniqueInput
   }
 
   export type ProductCreateNestedOneWithoutMonthlyReportsInput = {
@@ -10223,12 +10252,12 @@ export namespace Prisma {
     connect?: ProductWhereUniqueInput
   }
 
-  export type ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
-    create?: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutMonthlyReportsInput
-    upsert?: ClientUpsertWithoutMonthlyReportsInput
-    connect?: ClientWhereUniqueInput
-    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutMonthlyReportsInput, ClientUpdateWithoutMonthlyReportsInput>, ClientUncheckedUpdateWithoutMonthlyReportsInput>
+  export type CustomersUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
+    create?: XOR<CustomersCreateWithoutMonthlyReportsInput, CustomersUncheckedCreateWithoutMonthlyReportsInput>
+    connectOrCreate?: CustomersCreateOrConnectWithoutMonthlyReportsInput
+    upsert?: CustomersUpsertWithoutMonthlyReportsInput
+    connect?: CustomersWhereUniqueInput
+    update?: XOR<XOR<CustomersUpdateToOneWithWhereWithoutMonthlyReportsInput, CustomersUpdateWithoutMonthlyReportsInput>, CustomersUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
   export type ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
@@ -10262,6 +10291,11 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumroleFilter<$PrismaModel = never> = {
@@ -10313,6 +10347,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumroleWithAggregatesFilter<$PrismaModel = never> = {
@@ -10377,19 +10419,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type DailyShipmentReportCreateWithoutUsersInput = {
     quantity: number
     invoiceNumber: number
@@ -10398,7 +10427,7 @@ export namespace Prisma {
     temperature: Decimal | DecimalJsLike | number | string
     sanitaryCondition: boolean
     deliverer: string
-    client: ClientCreateNestedOneWithoutDailyReportsInput
+    customers: CustomersCreateNestedOneWithoutDailyReportsInput
     product: ProductCreateNestedOneWithoutDailyReportsInput
     vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
   }
@@ -10414,7 +10443,7 @@ export namespace Prisma {
     deliverer: string
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportCreateOrConnectWithoutUsersInput = {
@@ -10458,10 +10487,10 @@ export namespace Prisma {
     userId?: IntFilter<"DailyShipmentReport"> | number
     vehicleId?: IntFilter<"DailyShipmentReport"> | number
     productId?: IntFilter<"DailyShipmentReport"> | number
-    clientId?: IntFilter<"DailyShipmentReport"> | number
+    customersId?: IntFilter<"DailyShipmentReport"> | number
   }
 
-  export type DailyShipmentReportCreateWithoutClientInput = {
+  export type DailyShipmentReportCreateWithoutCustomersInput = {
     quantity: number
     invoiceNumber: number
     productionDate: Date | string
@@ -10474,7 +10503,7 @@ export namespace Prisma {
     vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
   }
 
-  export type DailyShipmentReportUncheckedCreateWithoutClientInput = {
+  export type DailyShipmentReportUncheckedCreateWithoutCustomersInput = {
     id?: number
     quantity: number
     invoiceNumber: number
@@ -10488,17 +10517,17 @@ export namespace Prisma {
     productId: number
   }
 
-  export type DailyShipmentReportCreateOrConnectWithoutClientInput = {
+  export type DailyShipmentReportCreateOrConnectWithoutCustomersInput = {
     where: DailyShipmentReportWhereUniqueInput
-    create: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput>
+    create: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput>
   }
 
-  export type DailyShipmentReportCreateManyClientInputEnvelope = {
-    data: DailyShipmentReportCreateManyClientInput | DailyShipmentReportCreateManyClientInput[]
+  export type DailyShipmentReportCreateManyCustomersInputEnvelope = {
+    data: DailyShipmentReportCreateManyCustomersInput | DailyShipmentReportCreateManyCustomersInput[]
     skipDuplicates?: boolean
   }
 
-  export type MonthlyShipmentReportCreateWithoutClientInput = {
+  export type MonthlyShipmentReportCreateWithoutCustomersInput = {
     quantity: Decimal | DecimalJsLike | number | string
     destination: string
     temperature: Decimal | DecimalJsLike | number | string
@@ -10508,7 +10537,7 @@ export namespace Prisma {
     product: ProductCreateNestedOneWithoutMonthlyReportsInput
   }
 
-  export type MonthlyShipmentReportUncheckedCreateWithoutClientInput = {
+  export type MonthlyShipmentReportUncheckedCreateWithoutCustomersInput = {
     id?: number
     quantity: Decimal | DecimalJsLike | number | string
     destination: string
@@ -10519,46 +10548,46 @@ export namespace Prisma {
     productId: number
   }
 
-  export type MonthlyShipmentReportCreateOrConnectWithoutClientInput = {
+  export type MonthlyShipmentReportCreateOrConnectWithoutCustomersInput = {
     where: MonthlyShipmentReportWhereUniqueInput
-    create: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput>
+    create: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput>
   }
 
-  export type MonthlyShipmentReportCreateManyClientInputEnvelope = {
-    data: MonthlyShipmentReportCreateManyClientInput | MonthlyShipmentReportCreateManyClientInput[]
+  export type MonthlyShipmentReportCreateManyCustomersInputEnvelope = {
+    data: MonthlyShipmentReportCreateManyCustomersInput | MonthlyShipmentReportCreateManyCustomersInput[]
     skipDuplicates?: boolean
   }
 
-  export type DailyShipmentReportUpsertWithWhereUniqueWithoutClientInput = {
+  export type DailyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput = {
     where: DailyShipmentReportWhereUniqueInput
-    update: XOR<DailyShipmentReportUpdateWithoutClientInput, DailyShipmentReportUncheckedUpdateWithoutClientInput>
-    create: XOR<DailyShipmentReportCreateWithoutClientInput, DailyShipmentReportUncheckedCreateWithoutClientInput>
+    update: XOR<DailyShipmentReportUpdateWithoutCustomersInput, DailyShipmentReportUncheckedUpdateWithoutCustomersInput>
+    create: XOR<DailyShipmentReportCreateWithoutCustomersInput, DailyShipmentReportUncheckedCreateWithoutCustomersInput>
   }
 
-  export type DailyShipmentReportUpdateWithWhereUniqueWithoutClientInput = {
+  export type DailyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput = {
     where: DailyShipmentReportWhereUniqueInput
-    data: XOR<DailyShipmentReportUpdateWithoutClientInput, DailyShipmentReportUncheckedUpdateWithoutClientInput>
+    data: XOR<DailyShipmentReportUpdateWithoutCustomersInput, DailyShipmentReportUncheckedUpdateWithoutCustomersInput>
   }
 
-  export type DailyShipmentReportUpdateManyWithWhereWithoutClientInput = {
+  export type DailyShipmentReportUpdateManyWithWhereWithoutCustomersInput = {
     where: DailyShipmentReportScalarWhereInput
-    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutClientInput>
+    data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutCustomersInput>
   }
 
-  export type MonthlyShipmentReportUpsertWithWhereUniqueWithoutClientInput = {
+  export type MonthlyShipmentReportUpsertWithWhereUniqueWithoutCustomersInput = {
     where: MonthlyShipmentReportWhereUniqueInput
-    update: XOR<MonthlyShipmentReportUpdateWithoutClientInput, MonthlyShipmentReportUncheckedUpdateWithoutClientInput>
-    create: XOR<MonthlyShipmentReportCreateWithoutClientInput, MonthlyShipmentReportUncheckedCreateWithoutClientInput>
+    update: XOR<MonthlyShipmentReportUpdateWithoutCustomersInput, MonthlyShipmentReportUncheckedUpdateWithoutCustomersInput>
+    create: XOR<MonthlyShipmentReportCreateWithoutCustomersInput, MonthlyShipmentReportUncheckedCreateWithoutCustomersInput>
   }
 
-  export type MonthlyShipmentReportUpdateWithWhereUniqueWithoutClientInput = {
+  export type MonthlyShipmentReportUpdateWithWhereUniqueWithoutCustomersInput = {
     where: MonthlyShipmentReportWhereUniqueInput
-    data: XOR<MonthlyShipmentReportUpdateWithoutClientInput, MonthlyShipmentReportUncheckedUpdateWithoutClientInput>
+    data: XOR<MonthlyShipmentReportUpdateWithoutCustomersInput, MonthlyShipmentReportUncheckedUpdateWithoutCustomersInput>
   }
 
-  export type MonthlyShipmentReportUpdateManyWithWhereWithoutClientInput = {
+  export type MonthlyShipmentReportUpdateManyWithWhereWithoutCustomersInput = {
     where: MonthlyShipmentReportScalarWhereInput
-    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyWithoutClientInput>
+    data: XOR<MonthlyShipmentReportUpdateManyMutationInput, MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersInput>
   }
 
   export type MonthlyShipmentReportScalarWhereInput = {
@@ -10573,7 +10602,7 @@ export namespace Prisma {
     productionDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     shipmentDate?: DateTimeFilter<"MonthlyShipmentReport"> | Date | string
     productId?: IntFilter<"MonthlyShipmentReport"> | number
-    clientId?: IntFilter<"MonthlyShipmentReport"> | number
+    customersId?: IntFilter<"MonthlyShipmentReport"> | number
   }
 
   export type DailyShipmentReportCreateWithoutProductInput = {
@@ -10584,7 +10613,7 @@ export namespace Prisma {
     temperature: Decimal | DecimalJsLike | number | string
     sanitaryCondition: boolean
     deliverer: string
-    client: ClientCreateNestedOneWithoutDailyReportsInput
+    customers: CustomersCreateNestedOneWithoutDailyReportsInput
     users: UsersCreateNestedOneWithoutDailyReportsInput
     vehicle: VehicleCreateNestedOneWithoutDailyReportsInput
   }
@@ -10600,7 +10629,7 @@ export namespace Prisma {
     deliverer: string
     userId: number
     vehicleId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportCreateOrConnectWithoutProductInput = {
@@ -10620,7 +10649,7 @@ export namespace Prisma {
     deliverer: string
     productionDate: Date | string
     shipmentDate: Date | string
-    client: ClientCreateNestedOneWithoutMonthlyReportsInput
+    customers: CustomersCreateNestedOneWithoutMonthlyReportsInput
   }
 
   export type MonthlyShipmentReportUncheckedCreateWithoutProductInput = {
@@ -10631,7 +10660,7 @@ export namespace Prisma {
     deliverer: string
     productionDate: Date | string
     shipmentDate: Date | string
-    clientId: number
+    customersId: number
   }
 
   export type MonthlyShipmentReportCreateOrConnectWithoutProductInput = {
@@ -10684,7 +10713,7 @@ export namespace Prisma {
     temperature: Decimal | DecimalJsLike | number | string
     sanitaryCondition: boolean
     deliverer: string
-    client: ClientCreateNestedOneWithoutDailyReportsInput
+    customers: CustomersCreateNestedOneWithoutDailyReportsInput
     product: ProductCreateNestedOneWithoutDailyReportsInput
     users: UsersCreateNestedOneWithoutDailyReportsInput
   }
@@ -10700,7 +10729,7 @@ export namespace Prisma {
     deliverer: string
     userId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportCreateOrConnectWithoutVehicleInput = {
@@ -10729,17 +10758,17 @@ export namespace Prisma {
     data: XOR<DailyShipmentReportUpdateManyMutationInput, DailyShipmentReportUncheckedUpdateManyWithoutVehicleInput>
   }
 
-  export type ClientCreateWithoutDailyReportsInput = {
+  export type CustomersCreateWithoutDailyReportsInput = {
     name: string
     cpf: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
-    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutClientInput
+    monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientUncheckedCreateWithoutDailyReportsInput = {
+  export type CustomersUncheckedCreateWithoutDailyReportsInput = {
     id?: number
     name: string
     cpf: string
@@ -10747,12 +10776,12 @@ export namespace Prisma {
     address: string
     phone: string
     identificationCode: string
-    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutClientInput
+    monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientCreateOrConnectWithoutDailyReportsInput = {
-    where: ClientWhereUniqueInput
-    create: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
+  export type CustomersCreateOrConnectWithoutDailyReportsInput = {
+    where: CustomersWhereUniqueInput
+    create: XOR<CustomersCreateWithoutDailyReportsInput, CustomersUncheckedCreateWithoutDailyReportsInput>
   }
 
   export type ProductCreateWithoutDailyReportsInput = {
@@ -10781,6 +10810,7 @@ export namespace Prisma {
     name: string
     username: string
     password: string
+    active?: boolean
     role?: $Enums.role
   }
 
@@ -10789,6 +10819,7 @@ export namespace Prisma {
     name: string
     username: string
     password: string
+    active?: boolean
     role?: $Enums.role
   }
 
@@ -10817,28 +10848,28 @@ export namespace Prisma {
     create: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
   }
 
-  export type ClientUpsertWithoutDailyReportsInput = {
-    update: XOR<ClientUpdateWithoutDailyReportsInput, ClientUncheckedUpdateWithoutDailyReportsInput>
-    create: XOR<ClientCreateWithoutDailyReportsInput, ClientUncheckedCreateWithoutDailyReportsInput>
-    where?: ClientWhereInput
+  export type CustomersUpsertWithoutDailyReportsInput = {
+    update: XOR<CustomersUpdateWithoutDailyReportsInput, CustomersUncheckedUpdateWithoutDailyReportsInput>
+    create: XOR<CustomersCreateWithoutDailyReportsInput, CustomersUncheckedCreateWithoutDailyReportsInput>
+    where?: CustomersWhereInput
   }
 
-  export type ClientUpdateToOneWithWhereWithoutDailyReportsInput = {
-    where?: ClientWhereInput
-    data: XOR<ClientUpdateWithoutDailyReportsInput, ClientUncheckedUpdateWithoutDailyReportsInput>
+  export type CustomersUpdateToOneWithWhereWithoutDailyReportsInput = {
+    where?: CustomersWhereInput
+    data: XOR<CustomersUpdateWithoutDailyReportsInput, CustomersUncheckedUpdateWithoutDailyReportsInput>
   }
 
-  export type ClientUpdateWithoutDailyReportsInput = {
+  export type CustomersUpdateWithoutDailyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutClientNestedInput
+    monthlyReports?: MonthlyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
 
-  export type ClientUncheckedUpdateWithoutDailyReportsInput = {
+  export type CustomersUncheckedUpdateWithoutDailyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
@@ -10846,7 +10877,7 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
+    monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
 
   export type ProductUpsertWithoutDailyReportsInput = {
@@ -10892,6 +10923,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
@@ -10900,6 +10932,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
   }
 
@@ -10929,17 +10962,17 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ClientCreateWithoutMonthlyReportsInput = {
+  export type CustomersCreateWithoutMonthlyReportsInput = {
     name: string
     cpf: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
-    dailyReports?: DailyShipmentReportCreateNestedManyWithoutClientInput
+    dailyReports?: DailyShipmentReportCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientUncheckedCreateWithoutMonthlyReportsInput = {
+  export type CustomersUncheckedCreateWithoutMonthlyReportsInput = {
     id?: number
     name: string
     cpf: string
@@ -10947,12 +10980,12 @@ export namespace Prisma {
     address: string
     phone: string
     identificationCode: string
-    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutClientInput
+    dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
-  export type ClientCreateOrConnectWithoutMonthlyReportsInput = {
-    where: ClientWhereUniqueInput
-    create: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
+  export type CustomersCreateOrConnectWithoutMonthlyReportsInput = {
+    where: CustomersWhereUniqueInput
+    create: XOR<CustomersCreateWithoutMonthlyReportsInput, CustomersUncheckedCreateWithoutMonthlyReportsInput>
   }
 
   export type ProductCreateWithoutMonthlyReportsInput = {
@@ -10977,28 +11010,28 @@ export namespace Prisma {
     create: XOR<ProductCreateWithoutMonthlyReportsInput, ProductUncheckedCreateWithoutMonthlyReportsInput>
   }
 
-  export type ClientUpsertWithoutMonthlyReportsInput = {
-    update: XOR<ClientUpdateWithoutMonthlyReportsInput, ClientUncheckedUpdateWithoutMonthlyReportsInput>
-    create: XOR<ClientCreateWithoutMonthlyReportsInput, ClientUncheckedCreateWithoutMonthlyReportsInput>
-    where?: ClientWhereInput
+  export type CustomersUpsertWithoutMonthlyReportsInput = {
+    update: XOR<CustomersUpdateWithoutMonthlyReportsInput, CustomersUncheckedUpdateWithoutMonthlyReportsInput>
+    create: XOR<CustomersCreateWithoutMonthlyReportsInput, CustomersUncheckedCreateWithoutMonthlyReportsInput>
+    where?: CustomersWhereInput
   }
 
-  export type ClientUpdateToOneWithWhereWithoutMonthlyReportsInput = {
-    where?: ClientWhereInput
-    data: XOR<ClientUpdateWithoutMonthlyReportsInput, ClientUncheckedUpdateWithoutMonthlyReportsInput>
+  export type CustomersUpdateToOneWithWhereWithoutMonthlyReportsInput = {
+    where?: CustomersWhereInput
+    data: XOR<CustomersUpdateWithoutMonthlyReportsInput, CustomersUncheckedUpdateWithoutMonthlyReportsInput>
   }
 
-  export type ClientUpdateWithoutMonthlyReportsInput = {
+  export type CustomersUpdateWithoutMonthlyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    dailyReports?: DailyShipmentReportUpdateManyWithoutClientNestedInput
+    dailyReports?: DailyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
 
-  export type ClientUncheckedUpdateWithoutMonthlyReportsInput = {
+  export type CustomersUncheckedUpdateWithoutMonthlyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     cpf?: StringFieldUpdateOperationsInput | string
@@ -11006,7 +11039,7 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
-    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutClientNestedInput
+    dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
 
   export type ProductUpsertWithoutMonthlyReportsInput = {
@@ -11048,7 +11081,7 @@ export namespace Prisma {
     deliverer: string
     vehicleId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportUpdateWithoutUsersInput = {
@@ -11059,7 +11092,7 @@ export namespace Prisma {
     temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
     deliverer?: StringFieldUpdateOperationsInput | string
-    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutDailyReportsNestedInput
     product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
     vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
   }
@@ -11075,7 +11108,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     vehicleId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DailyShipmentReportUncheckedUpdateManyWithoutUsersInput = {
@@ -11089,10 +11122,10 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     vehicleId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type DailyShipmentReportCreateManyClientInput = {
+  export type DailyShipmentReportCreateManyCustomersInput = {
     id?: number
     quantity: number
     invoiceNumber: number
@@ -11106,7 +11139,7 @@ export namespace Prisma {
     productId: number
   }
 
-  export type MonthlyShipmentReportCreateManyClientInput = {
+  export type MonthlyShipmentReportCreateManyCustomersInput = {
     id?: number
     quantity: Decimal | DecimalJsLike | number | string
     destination: string
@@ -11117,7 +11150,7 @@ export namespace Prisma {
     productId: number
   }
 
-  export type DailyShipmentReportUpdateWithoutClientInput = {
+  export type DailyShipmentReportUpdateWithoutCustomersInput = {
     quantity?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: IntFieldUpdateOperationsInput | number
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11130,7 +11163,7 @@ export namespace Prisma {
     vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
   }
 
-  export type DailyShipmentReportUncheckedUpdateWithoutClientInput = {
+  export type DailyShipmentReportUncheckedUpdateWithoutCustomersInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: IntFieldUpdateOperationsInput | number
@@ -11144,7 +11177,7 @@ export namespace Prisma {
     productId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type DailyShipmentReportUncheckedUpdateManyWithoutClientInput = {
+  export type DailyShipmentReportUncheckedUpdateManyWithoutCustomersInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     invoiceNumber?: IntFieldUpdateOperationsInput | number
@@ -11158,7 +11191,7 @@ export namespace Prisma {
     productId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type MonthlyShipmentReportUpdateWithoutClientInput = {
+  export type MonthlyShipmentReportUpdateWithoutCustomersInput = {
     quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     destination?: StringFieldUpdateOperationsInput | string
     temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -11168,7 +11201,7 @@ export namespace Prisma {
     product?: ProductUpdateOneRequiredWithoutMonthlyReportsNestedInput
   }
 
-  export type MonthlyShipmentReportUncheckedUpdateWithoutClientInput = {
+  export type MonthlyShipmentReportUncheckedUpdateWithoutCustomersInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     destination?: StringFieldUpdateOperationsInput | string
@@ -11179,7 +11212,7 @@ export namespace Prisma {
     productId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type MonthlyShipmentReportUncheckedUpdateManyWithoutClientInput = {
+  export type MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     destination?: StringFieldUpdateOperationsInput | string
@@ -11201,7 +11234,7 @@ export namespace Prisma {
     deliverer: string
     userId: number
     vehicleId: number
-    clientId: number
+    customersId: number
   }
 
   export type MonthlyShipmentReportCreateManyProductInput = {
@@ -11212,7 +11245,7 @@ export namespace Prisma {
     deliverer: string
     productionDate: Date | string
     shipmentDate: Date | string
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportUpdateWithoutProductInput = {
@@ -11223,7 +11256,7 @@ export namespace Prisma {
     temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
     deliverer?: StringFieldUpdateOperationsInput | string
-    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutDailyReportsNestedInput
     users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
     vehicle?: VehicleUpdateOneRequiredWithoutDailyReportsNestedInput
   }
@@ -11239,7 +11272,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     vehicleId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DailyShipmentReportUncheckedUpdateManyWithoutProductInput = {
@@ -11253,7 +11286,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     vehicleId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type MonthlyShipmentReportUpdateWithoutProductInput = {
@@ -11263,7 +11296,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: ClientUpdateOneRequiredWithoutMonthlyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutMonthlyReportsNestedInput
   }
 
   export type MonthlyShipmentReportUncheckedUpdateWithoutProductInput = {
@@ -11274,7 +11307,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type MonthlyShipmentReportUncheckedUpdateManyWithoutProductInput = {
@@ -11285,7 +11318,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     productionDate?: DateTimeFieldUpdateOperationsInput | Date | string
     shipmentDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DailyShipmentReportCreateManyVehicleInput = {
@@ -11299,7 +11332,7 @@ export namespace Prisma {
     deliverer: string
     userId: number
     productId: number
-    clientId: number
+    customersId: number
   }
 
   export type DailyShipmentReportUpdateWithoutVehicleInput = {
@@ -11310,7 +11343,7 @@ export namespace Prisma {
     temperature?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     sanitaryCondition?: BoolFieldUpdateOperationsInput | boolean
     deliverer?: StringFieldUpdateOperationsInput | string
-    client?: ClientUpdateOneRequiredWithoutDailyReportsNestedInput
+    customers?: CustomersUpdateOneRequiredWithoutDailyReportsNestedInput
     product?: ProductUpdateOneRequiredWithoutDailyReportsNestedInput
     users?: UsersUpdateOneRequiredWithoutDailyReportsNestedInput
   }
@@ -11326,7 +11359,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
   export type DailyShipmentReportUncheckedUpdateManyWithoutVehicleInput = {
@@ -11340,7 +11373,7 @@ export namespace Prisma {
     deliverer?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    clientId?: IntFieldUpdateOperationsInput | number
+    customersId?: IntFieldUpdateOperationsInput | number
   }
 
 

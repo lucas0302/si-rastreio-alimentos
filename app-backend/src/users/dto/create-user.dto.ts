@@ -25,4 +25,5 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsEnum(role, { message: 'Cargo inválido' })
   role: role;
+
 }
