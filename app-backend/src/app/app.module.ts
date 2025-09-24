@@ -13,4 +13,5 @@ import { AuthModule } from 'src/auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule { }

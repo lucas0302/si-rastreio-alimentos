@@ -4,7 +4,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
 import { BcryptService } from "src/auth/hash/bcrypt.service";
 
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -102,6 +101,5 @@ export class UsersService {
 
     }
   }
-
 
 }

@@ -12,7 +12,9 @@ import { AdminRolesGuard } from 'src/auth/guard/roles/admin-roles.guard';
 @UseGuards(AuthTokenGuard)
 @Controller('users')
 export class UsersController {
+  
   constructor(private readonly usersService: UsersService) { }
+
   @UseGuards(AdminRolesGuard)
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
@@ -21,14 +23,15 @@ export class UsersController {
 
   @Get()
   findUsers(@Query() paginationDto: PaginationDto) {
-
     return this.usersService.findAll(paginationDto)
   }
+
   @UseGuards(AdminRolesGuard)
   @Patch(':id')
   updateUser(@Body() @Param('id', ParseIntPipe) id: number) {
     return "Deu bom PUT"
   }
+
   @UseGuards(AdminRolesGuard)
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number) {

@@ -25,6 +25,7 @@ export class AuthTokenGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException("Token não encontrado!")
     }
+
     try {
 
       const payload = await this.jwtService.verifyAsync(token, this.jwtConfiguration);
@@ -37,7 +38,7 @@ export class AuthTokenGuard implements CanActivate {
       })
 
       if (!user?.active) {
-        throw new UnauthorizedException("acesso não autorizado!")
+        throw new UnauthorizedException("Acesso não autorizado!")
       }
 
     } catch (err) {
@@ -57,4 +58,5 @@ export class AuthTokenGuard implements CanActivate {
 
     return authorization.replace("Bearer ", "")
   }
+
 }

@@ -187,7 +187,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\projeto4\\si-rastreio-alimentos\\app-backend\\generated\\prisma",
+      "value": "D:\\Projetos\\Pessoal\\si-rastreio-alimentos\\app-backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -201,7 +201,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\projeto4\\si-rastreio-alimentos\\app-backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Projetos\\Pessoal\\si-rastreio-alimentos\\app-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -215,7 +215,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

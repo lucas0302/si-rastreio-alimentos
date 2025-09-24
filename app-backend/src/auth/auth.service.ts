@@ -3,7 +3,7 @@ import type { ConfigType } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import jwtConfig from './config/jwt.config';
 import { JwtService } from '@nestjs/jwt';
-import { SingInDto } from './dto/signin.dto';
+import { SignInDto } from './dto/signin.dto';
 import { BcryptService } from './hash/bcrypt.service';
 
 @Injectable()
@@ -16,11 +16,11 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async Authenticate(singInDto: SingInDto) {
+  async Authenticate(signInDto: SignInDto) {
 
     const user = await this.prisma.users.findFirst({
       where: {
-        username: singInDto.username,
+        username: signInDto.username,
         active: true
       }
     })
@@ -29,7 +29,7 @@ export class AuthService {
       throw new HttpException("Falha ao autenticar o usuário.", HttpStatus.UNAUTHORIZED)
     }
 
-    const passwordIsValid = await this.hashingService.compare(singInDto.password, user.password);
+    const passwordIsValid = await this.hashingService.compare(signInDto.password, user.password);
 
     if (!passwordIsValid) {
       throw new HttpException("Usuario ou Senha incorreto.", HttpStatus.UNAUTHORIZED)
