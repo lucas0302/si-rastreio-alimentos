@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, MinLength } from "class-validator";
 
 export class SignInDto {
   
@@ -6,7 +6,7 @@ export class SignInDto {
   username: string
 
   @IsString()
-  @MinLength(6, { message: "A senha deve ter pelomenos 6 digitos" })
+  @MinLength(6, { message: "A senha deve ter pelo menos 6 dígitos" })
   @IsNotEmpty()
   password: string
 

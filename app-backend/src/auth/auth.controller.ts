@@ -8,7 +8,6 @@ export class AuthController {
 
   @Post()
   SignIn(@Body() signInDto: SignInDto) {
-
     return this.authService.Authenticate(signInDto)
   }
 

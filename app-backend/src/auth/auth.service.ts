@@ -8,6 +8,7 @@ import { BcryptService } from './hash/bcrypt.service';
 
 @Injectable()
 export class AuthService {
+
   constructor(private prisma: PrismaService,
     private readonly hashingService: BcryptService,
 
@@ -32,7 +33,7 @@ export class AuthService {
     const passwordIsValid = await this.hashingService.compare(signInDto.password, user.password);
 
     if (!passwordIsValid) {
-      throw new HttpException("Usuario ou Senha incorreto.", HttpStatus.UNAUTHORIZED)
+      throw new HttpException("Usuário ou Senha incorreto.", HttpStatus.UNAUTHORIZED)
     }
 
     const token = await this.jwtService.signAsync(
@@ -59,5 +60,5 @@ export class AuthService {
     }
 
   }
-}
 
+}

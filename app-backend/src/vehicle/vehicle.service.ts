@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { VehicleRepository } from './vehicle.repository';
 
 @Injectable()
 export class VehicleService {
 
-  private readonly vehicles: CreateVehicleDto[] = [];
+  constructor(private readonly vehicleRepository: VehicleRepository) { }
 
-  findAllVehicles(): CreateVehicleDto[] {
-    return this.vehicles;
+  findAllVehicles() {
+    return this.vehicleRepository.findAllVehicles();
   }
 
   createVehicle(vehicle: CreateVehicleDto) {
-    this.vehicles.push(vehicle);
+    return this.vehicleRepository.createVehicle(vehicle);
   }
 
 }

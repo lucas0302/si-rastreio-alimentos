@@ -55,7 +55,7 @@ model Vehicle {
   brand        String                @db.VarChar(30)
   dailyReports DailyShipmentReport[]
 
-  @@map("vehicle")
+  @@map("vehicles")
 }
 
 model DailyShipmentReport {
