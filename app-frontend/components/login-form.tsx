@@ -29,7 +29,7 @@ export function LoginForm() {
         { username, password }
       );
 
-      // 3. A resposta de sucesso já vem no campo 'data'
+      // 3. A resposta de sucesso já vem no campo data
       const data = response.data;
 
       // Armazenar o token JWT
