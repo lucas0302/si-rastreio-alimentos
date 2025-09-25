@@ -23,6 +23,13 @@ export function LoginForm() {
     setIsLoading(true);
     setError("");
 
+    setTimeout(() => {
+      // Set cookie for authentication
+      document.cookie = "isAuthenticated=true; path=/; max-age=86400" // 24 hours
+      router.push("/dashboard")
+      setIsLoading(false)
+    }, 1000)
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth`,
@@ -42,7 +49,6 @@ export function LoginForm() {
       }));
 
       router.push("/dashboard")
-      console.log("Comando executado")
 
     } catch (err) {
       // 4. Tratamento de erro aprimorado para o axios
