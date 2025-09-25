@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
 import { AdminRolesGuard } from 'src/auth/guard/roles/admin-roles.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 // Buscar os dados de um user (check)
 // cadastrar um user (check)
@@ -12,7 +13,7 @@ import { AdminRolesGuard } from 'src/auth/guard/roles/admin-roles.guard';
 @UseGuards(AuthTokenGuard)
 @Controller('users')
 export class UsersController {
-  
+
   constructor(private readonly usersService: UsersService) { }
 
   @UseGuards(AdminRolesGuard)
@@ -28,8 +29,9 @@ export class UsersController {
 
   @UseGuards(AdminRolesGuard)
   @Patch(':id')
-  updateUser(@Body() @Param('id', ParseIntPipe) id: number) {
-    return "Deu bom PUT"
+  updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+
+    return this.usersService.update(id, updateUserDto);
   }
 
   @UseGuards(AdminRolesGuard)

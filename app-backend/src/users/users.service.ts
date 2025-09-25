@@ -3,6 +3,8 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
 import { BcryptService } from "src/auth/hash/bcrypt.service";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { role } from "generated/prisma";
 
 @Injectable()
 export class UsersService {
@@ -66,9 +68,59 @@ export class UsersService {
   }
 
   //update user
-  async update() {
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      const user = await this.prisma.users.findFirst({ where: { id } });
 
+      if (!user) {
+        throw new HttpException('Esse usuário não existe.', HttpStatus.NOT_FOUND);
+      }
+
+      const dataUser: {
+        name?: string;
+        username?: string;
+        password?: string;
+        active?: boolean;
+        role?: role
+      } = {};
+
+      if (updateUserDto.username) {
+        dataUser.username = updateUserDto.username;
+      }
+
+      if (updateUserDto.password) {
+        dataUser.password = await this.bcryptService.hash(updateUserDto.password);
+      }
+
+      // if (typeof updateUserDto.active === 'boolean') {
+      //   dataUser.active = updateUserDto.active;
+      // }
+
+      if (updateUserDto.role) {
+        dataUser.role = updateUserDto.role;
+      }
+
+      const updateUser = await this.prisma.users.update({
+        where: { id: user.id },
+        data: dataUser,
+        select: {
+          id: true,
+          username: true,
+          name: true,
+          role: true,
+          active: true,
+        },
+      });
+
+      return {
+        updateUser,
+        message: 'Usuário atualizado!',
+      };
+    } catch (err) {
+      throw new HttpException('Falha ao atualizar usuário.', HttpStatus.BAD_REQUEST);
+    }
   }
+
 
   //Delete user
   async delete(id: number) {
