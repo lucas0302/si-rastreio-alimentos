@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, MinLength, MaxLength, Matches, IsEnum } from 'cla
 import { role } from 'generated/prisma';
 
 export class CreateUserDto {
-  
+
   @IsNotEmpty()
   @IsString()
   @MaxLength(30)

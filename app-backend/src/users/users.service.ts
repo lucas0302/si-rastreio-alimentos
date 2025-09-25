@@ -17,6 +17,17 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
 
     try {
+      const findUserName = await this.prisma.users.findFirst(
+        {
+          where: {
+            username: createUserDto.username
+          }
+        }
+      );
+
+      if (createUserDto.username === findUserName?.username) {
+        throw new HttpException('Esse nome de usuário já existe.', HttpStatus.CONFLICT);
+      }
 
       const passwordHash = await this.bcryptService.hash(createUserDto.password)
 
@@ -32,6 +43,10 @@ export class UsersService {
       return { message: "Usuario Registrado com sucesso!" };
     } catch (err) {
       console.log(err)
+      if (err.status === 409) {
+        throw new HttpException('Esse nome de usuário já existe.', HttpStatus.CONFLICT);
+      }
+
       throw new HttpException('Erro ao cadastrar usuario.', HttpStatus.BAD_REQUEST);
     }
   }
@@ -70,52 +85,17 @@ export class UsersService {
   //update user
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
-      const user = await this.prisma.users.findFirst({ where: { id } });
+      const user = await this.prisma.users.findFirst({
+        where: {
+          id: id
+        }
+      });
 
       if (!user) {
         throw new HttpException('Esse usuário não existe.', HttpStatus.NOT_FOUND);
       }
 
-      const dataUser: {
-        name?: string;
-        username?: string;
-        password?: string;
-        active?: boolean;
-        role?: role
-      } = {};
 
-      if (updateUserDto.username) {
-        dataUser.username = updateUserDto.username;
-      }
-
-      if (updateUserDto.password) {
-        dataUser.password = await this.bcryptService.hash(updateUserDto.password);
-      }
-
-      // if (typeof updateUserDto.active === 'boolean') {
-      //   dataUser.active = updateUserDto.active;
-      // }
-
-      if (updateUserDto.role) {
-        dataUser.role = updateUserDto.role;
-      }
-
-      const updateUser = await this.prisma.users.update({
-        where: { id: user.id },
-        data: dataUser,
-        select: {
-          id: true,
-          username: true,
-          name: true,
-          role: true,
-          active: true,
-        },
-      });
-
-      return {
-        updateUser,
-        message: 'Usuário atualizado!',
-      };
     } catch (err) {
       throw new HttpException('Falha ao atualizar usuário.', HttpStatus.BAD_REQUEST);
     }
