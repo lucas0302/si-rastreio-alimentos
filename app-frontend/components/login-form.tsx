@@ -41,6 +41,9 @@ export function LoginForm() {
         role: data.role
       }));
 
+      // Código temporário que seta o cookie de autenticação
+      document.cookie = "isAuthenticated=true; path=/";
+
       router.push("/dashboard")
       console.log("Comando executado")
 
