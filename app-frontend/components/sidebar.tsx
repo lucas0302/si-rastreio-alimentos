@@ -37,7 +37,7 @@ const menuItems = [
       },
       {
         title: "Usuários",
-        href: "#",
+        href: "/cadastrar-usuario",
       },
       {
         title: "Veículos",
