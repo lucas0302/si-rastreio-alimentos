@@ -13,7 +13,7 @@ export class CreateUserDto {
   @MinLength(3)
   @MaxLength(20)
   @Matches(/^[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+$/, {
-    message: 'O nome de usuario só pode conter letras e pontos. EX: Victor.Leal',
+    message: 'O nome de usuário só pode conter letras e pontos. Ex: Victor.Leal',
   })
   username: string;
 
