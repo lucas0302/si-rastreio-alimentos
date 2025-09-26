@@ -3835,73 +3835,93 @@ export namespace Prisma {
   }
 
   export type ProductAvgAggregateOutputType = {
-    id: number | null
-    quantity: Decimal | null
+    code: number | null
+    price: Decimal | null
+    weight: Decimal | null
+    expiration: Decimal | null
   }
 
   export type ProductSumAggregateOutputType = {
-    id: number | null
-    quantity: Decimal | null
+    code: number | null
+    price: Decimal | null
+    weight: Decimal | null
+    expiration: Decimal | null
   }
 
   export type ProductMinAggregateOutputType = {
-    id: number | null
+    code: number | null
     name: string | null
     unit: string | null
-    quantity: Decimal | null
-    expiration: Date | null
+    price: Decimal | null
+    weight: Decimal | null
+    expiration: Decimal | null
+    expiration_unit: string | null
   }
 
   export type ProductMaxAggregateOutputType = {
-    id: number | null
+    code: number | null
     name: string | null
     unit: string | null
-    quantity: Decimal | null
-    expiration: Date | null
+    price: Decimal | null
+    weight: Decimal | null
+    expiration: Decimal | null
+    expiration_unit: string | null
   }
 
   export type ProductCountAggregateOutputType = {
-    id: number
+    code: number
     name: number
     unit: number
-    quantity: number
+    price: number
+    weight: number
     expiration: number
+    expiration_unit: number
     _all: number
   }
 
 
   export type ProductAvgAggregateInputType = {
-    id?: true
-    quantity?: true
+    code?: true
+    price?: true
+    weight?: true
+    expiration?: true
   }
 
   export type ProductSumAggregateInputType = {
-    id?: true
-    quantity?: true
+    code?: true
+    price?: true
+    weight?: true
+    expiration?: true
   }
 
   export type ProductMinAggregateInputType = {
-    id?: true
+    code?: true
     name?: true
     unit?: true
-    quantity?: true
+    price?: true
+    weight?: true
     expiration?: true
+    expiration_unit?: true
   }
 
   export type ProductMaxAggregateInputType = {
-    id?: true
+    code?: true
     name?: true
     unit?: true
-    quantity?: true
+    price?: true
+    weight?: true
     expiration?: true
+    expiration_unit?: true
   }
 
   export type ProductCountAggregateInputType = {
-    id?: true
+    code?: true
     name?: true
     unit?: true
-    quantity?: true
+    price?: true
+    weight?: true
     expiration?: true
+    expiration_unit?: true
     _all?: true
   }
 
@@ -3992,11 +4012,13 @@ export namespace Prisma {
   }
 
   export type ProductGroupByOutputType = {
-    id: number
+    code: number
     name: string
     unit: string
-    quantity: Decimal
-    expiration: Date
+    price: Decimal
+    weight: Decimal
+    expiration: Decimal
+    expiration_unit: string
     _count: ProductCountAggregateOutputType | null
     _avg: ProductAvgAggregateOutputType | null
     _sum: ProductSumAggregateOutputType | null
@@ -4019,41 +4041,49 @@ export namespace Prisma {
 
 
   export type ProductSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    code?: boolean
     name?: boolean
     unit?: boolean
-    quantity?: boolean
+    price?: boolean
+    weight?: boolean
     expiration?: boolean
+    expiration_unit?: boolean
     dailyReports?: boolean | Product$dailyReportsArgs<ExtArgs>
     monthlyReports?: boolean | Product$monthlyReportsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    code?: boolean
     name?: boolean
     unit?: boolean
-    quantity?: boolean
+    price?: boolean
+    weight?: boolean
     expiration?: boolean
+    expiration_unit?: boolean
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    code?: boolean
     name?: boolean
     unit?: boolean
-    quantity?: boolean
+    price?: boolean
+    weight?: boolean
     expiration?: boolean
+    expiration_unit?: boolean
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectScalar = {
-    id?: boolean
+    code?: boolean
     name?: boolean
     unit?: boolean
-    quantity?: boolean
+    price?: boolean
+    weight?: boolean
     expiration?: boolean
+    expiration_unit?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unit" | "quantity" | "expiration", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"code" | "name" | "unit" | "price" | "weight" | "expiration" | "expiration_unit", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dailyReports?: boolean | Product$dailyReportsArgs<ExtArgs>
     monthlyReports?: boolean | Product$monthlyReportsArgs<ExtArgs>
@@ -4069,11 +4099,13 @@ export namespace Prisma {
       monthlyReports: Prisma.$MonthlyShipmentReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      code: number
       name: string
       unit: string
-      quantity: Prisma.Decimal
-      expiration: Date
+      price: Prisma.Decimal
+      weight: Prisma.Decimal
+      expiration: Prisma.Decimal
+      expiration_unit: string
     }, ExtArgs["result"]["product"]>
     composites: {}
   }
@@ -4157,8 +4189,8 @@ export namespace Prisma {
      * // Get first 10 Products
      * const products = await prisma.product.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const productWithIdOnly = await prisma.product.findMany({ select: { id: true } })
+     * // Only select the `code`
+     * const productWithCodeOnly = await prisma.product.findMany({ select: { code: true } })
      * 
      */
     findMany<T extends ProductFindManyArgs>(args?: SelectSubset<T, ProductFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -4202,9 +4234,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Products and only return the `id`
-     * const productWithIdOnly = await prisma.product.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Products and only return the `code`
+     * const productWithCodeOnly = await prisma.product.createManyAndReturn({
+     *   select: { code: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -4293,9 +4325,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Products and only return the `id`
-     * const productWithIdOnly = await prisma.product.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Products and only return the `code`
+     * const productWithCodeOnly = await prisma.product.updateManyAndReturn({
+     *   select: { code: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4499,11 +4531,13 @@ export namespace Prisma {
    * Fields of the Product model
    */
   interface ProductFieldRefs {
-    readonly id: FieldRef<"Product", 'Int'>
+    readonly code: FieldRef<"Product", 'Int'>
     readonly name: FieldRef<"Product", 'String'>
     readonly unit: FieldRef<"Product", 'String'>
-    readonly quantity: FieldRef<"Product", 'Decimal'>
-    readonly expiration: FieldRef<"Product", 'DateTime'>
+    readonly price: FieldRef<"Product", 'Decimal'>
+    readonly weight: FieldRef<"Product", 'Decimal'>
+    readonly expiration: FieldRef<"Product", 'Decimal'>
+    readonly expiration_unit: FieldRef<"Product", 'String'>
   }
     
 
@@ -8511,11 +8545,13 @@ export namespace Prisma {
 
 
   export const ProductScalarFieldEnum: {
-    id: 'id',
+    code: 'code',
     name: 'name',
     unit: 'unit',
-    quantity: 'quantity',
-    expiration: 'expiration'
+    price: 'price',
+    weight: 'weight',
+    expiration: 'expiration',
+    expiration_unit: 'expiration_unit'
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -8846,44 +8882,52 @@ export namespace Prisma {
     AND?: ProductWhereInput | ProductWhereInput[]
     OR?: ProductWhereInput[]
     NOT?: ProductWhereInput | ProductWhereInput[]
-    id?: IntFilter<"Product"> | number
+    code?: IntFilter<"Product"> | number
     name?: StringFilter<"Product"> | string
     unit?: StringFilter<"Product"> | string
-    quantity?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFilter<"Product"> | Date | string
+    price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFilter<"Product"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
-    id?: SortOrder
+    code?: SortOrder
     name?: SortOrder
     unit?: SortOrder
-    quantity?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
     expiration?: SortOrder
+    expiration_unit?: SortOrder
     dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
     monthlyReports?: MonthlyShipmentReportOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    code?: number
     AND?: ProductWhereInput | ProductWhereInput[]
     OR?: ProductWhereInput[]
     NOT?: ProductWhereInput | ProductWhereInput[]
     name?: StringFilter<"Product"> | string
     unit?: StringFilter<"Product"> | string
-    quantity?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFilter<"Product"> | Date | string
+    price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFilter<"Product"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
-  }, "id">
+  }, "code">
 
   export type ProductOrderByWithAggregationInput = {
-    id?: SortOrder
+    code?: SortOrder
     name?: SortOrder
     unit?: SortOrder
-    quantity?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
     expiration?: SortOrder
+    expiration_unit?: SortOrder
     _count?: ProductCountOrderByAggregateInput
     _avg?: ProductAvgOrderByAggregateInput
     _max?: ProductMaxOrderByAggregateInput
@@ -8895,11 +8939,13 @@ export namespace Prisma {
     AND?: ProductScalarWhereWithAggregatesInput | ProductScalarWhereWithAggregatesInput[]
     OR?: ProductScalarWhereWithAggregatesInput[]
     NOT?: ProductScalarWhereWithAggregatesInput | ProductScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Product"> | number
+    code?: IntWithAggregatesFilter<"Product"> | number
     name?: StringWithAggregatesFilter<"Product"> | string
     unit?: StringWithAggregatesFilter<"Product"> | string
-    quantity?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeWithAggregatesFilter<"Product"> | Date | string
+    price?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    weight?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringWithAggregatesFilter<"Product"> | string
   }
 
   export type VehicleWhereInput = {
@@ -9324,18 +9370,22 @@ export namespace Prisma {
   export type ProductCreateInput = {
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     dailyReports?: DailyShipmentReportCreateNestedManyWithoutProductInput
     monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
-    id?: number
+    code?: number
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutProductInput
     monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutProductInput
   }
@@ -9343,43 +9393,53 @@ export namespace Prisma {
   export type ProductUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUpdateManyWithoutProductNestedInput
     monthlyReports?: MonthlyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    code?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
     monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
-    id?: number
+    code?: number
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
   }
 
   export type ProductUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    code?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
   }
 
   export type VehicleCreateInput = {
@@ -9828,49 +9888,48 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type ProductCountOrderByAggregateInput = {
-    id?: SortOrder
+    code?: SortOrder
     name?: SortOrder
     unit?: SortOrder
-    quantity?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
     expiration?: SortOrder
+    expiration_unit?: SortOrder
   }
 
   export type ProductAvgOrderByAggregateInput = {
-    id?: SortOrder
-    quantity?: SortOrder
+    code?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
+    expiration?: SortOrder
   }
 
   export type ProductMaxOrderByAggregateInput = {
-    id?: SortOrder
+    code?: SortOrder
     name?: SortOrder
     unit?: SortOrder
-    quantity?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
     expiration?: SortOrder
+    expiration_unit?: SortOrder
   }
 
   export type ProductMinOrderByAggregateInput = {
-    id?: SortOrder
+    code?: SortOrder
     name?: SortOrder
     unit?: SortOrder
-    quantity?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
     expiration?: SortOrder
+    expiration_unit?: SortOrder
   }
 
   export type ProductSumOrderByAggregateInput = {
-    id?: SortOrder
-    quantity?: SortOrder
+    code?: SortOrder
+    price?: SortOrder
+    weight?: SortOrder
+    expiration?: SortOrder
   }
 
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -9887,20 +9946,6 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type VehicleCountOrderByAggregateInput = {
@@ -9933,6 +9978,17 @@ export namespace Prisma {
 
   export type VehicleSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type CustomersScalarRelationFilter = {
@@ -10020,6 +10076,20 @@ export namespace Prisma {
     vehicleId?: SortOrder
     productId?: SortOrder
     customersId?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type MonthlyShipmentReportCountOrderByAggregateInput = {
@@ -10256,10 +10326,6 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type DailyShipmentReportUpdateManyWithoutProductNestedInput = {
     create?: XOR<DailyShipmentReportCreateWithoutProductInput, DailyShipmentReportUncheckedCreateWithoutProductInput> | DailyShipmentReportCreateWithoutProductInput[] | DailyShipmentReportUncheckedCreateWithoutProductInput[]
     connectOrCreate?: DailyShipmentReportCreateOrConnectWithoutProductInput | DailyShipmentReportCreateOrConnectWithoutProductInput[]
@@ -10380,6 +10446,10 @@ export namespace Prisma {
     create?: XOR<VehicleCreateWithoutDailyReportsInput, VehicleUncheckedCreateWithoutDailyReportsInput>
     connectOrCreate?: VehicleCreateOrConnectWithoutDailyReportsInput
     connect?: VehicleWhereUniqueInput
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type CustomersUpdateOneRequiredWithoutDailyReportsNestedInput = {
@@ -10552,17 +10622,6 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -10577,6 +10636,17 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -10973,17 +11043,21 @@ export namespace Prisma {
   export type ProductCreateWithoutDailyReportsInput = {
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutDailyReportsInput = {
-    id?: number
+    code?: number
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -11092,17 +11166,21 @@ export namespace Prisma {
   export type ProductUpdateWithoutDailyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     monthlyReports?: MonthlyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutDailyReportsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    code?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -11201,17 +11279,21 @@ export namespace Prisma {
   export type ProductCreateWithoutMonthlyReportsInput = {
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     dailyReports?: DailyShipmentReportCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutMonthlyReportsInput = {
-    id?: number
+    code?: number
     name: string
     unit: string
-    quantity: Decimal | DecimalJsLike | number | string
-    expiration: Date | string
+    price: Decimal | DecimalJsLike | number | string
+    weight: Decimal | DecimalJsLike | number | string
+    expiration: Decimal | DecimalJsLike | number | string
+    expiration_unit: string
     dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -11278,17 +11360,21 @@ export namespace Prisma {
   export type ProductUpdateWithoutMonthlyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutMonthlyReportsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    code?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     unit?: StringFieldUpdateOperationsInput | string
-    quantity?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    expiration?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    weight?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiration_unit?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutProductNestedInput
   }
 
