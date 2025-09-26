@@ -22,25 +22,33 @@ model Users {
 }
 
 model Customers {
-  id                 Int                     @id @default(autoincrement())
-  name               String                  @db.VarChar(100)
-  cpf                String                  @db.VarChar(11)
-  cnpj               String                  @db.VarChar(14)
-  address            String                  @db.VarChar(255)
-  phone              String                  @db.VarChar(100)
-  identificationCode String                  @db.VarChar(255)
-  dailyReports       DailyShipmentReport[]
-  monthlyReports     MonthlyShipmentReport[]
+  id                 Int    @id @default(autoincrement())
+  name               String @db.VarChar(100)
+  email              String @db.VarChar(100)
+  cnpj               String @db.VarChar(14)
+  address            String @db.VarChar(255)
+  phone              String @db.VarChar(100)
+  identificationCode String @db.VarChar(255) //Codigo do cliente
+  paymentMethod      String @db.VarChar(255)
+  paymentTern        String @db.VarChar(255) //Forma de pagamento
+  city               String @db.VarChar(255)
+  State              String @db.VarChar(255) //Estado
+  legalName          String @db.VarChar(255) //Razão Social
+  stateRegistration  String @db.VarChar(255) //Insc. Estadual
+
+  dailyReports   DailyShipmentReport[]
+  monthlyReports MonthlyShipmentReport[]
 
   @@map("customers")
 }
 
 model Product {
-  id             Int                     @id @default(autoincrement())
-  name           String                  @db.VarChar(255)
-  unit           String                  @db.VarChar(10)
-  quantity       Decimal                 @db.Decimal(8, 2)
-  expiration     DateTime
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  unit       String   @db.VarChar(10)
+  quantity   Decimal  @db.Decimal(8, 2)
+  expiration DateTime
+
   dailyReports   DailyShipmentReport[]
   monthlyReports MonthlyShipmentReport[]
 
@@ -48,11 +56,12 @@ model Product {
 }
 
 model Vehicle {
-  id           Int                   @id @default(autoincrement())
-  model        String                @db.VarChar(100)
-  plate        String                @db.VarChar(10)
-  category     String                @db.VarChar(20)
-  brand        String                @db.VarChar(30)
+  id       Int    @id @default(autoincrement())
+  model    String @db.VarChar(100)
+  plate    String @db.VarChar(10)
+  category String @db.VarChar(20)
+  brand    String @db.VarChar(30)
+
   dailyReports DailyShipmentReport[]
 
   @@map("vehicles")

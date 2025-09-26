@@ -11,13 +11,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 //deletar um user 
 // atualizar um user
 @UseGuards(AuthTokenGuard)
-@Controller('users')
+@Controller('usuarios')
 export class UsersController {
 
   constructor(private readonly usersService: UsersService) { }
 
   @UseGuards(AdminRolesGuard)
-  @Post()
+  @Post('cadastro-usuario')
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto)
   }

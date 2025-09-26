@@ -2609,31 +2609,49 @@ export namespace Prisma {
   export type CustomersMinAggregateOutputType = {
     id: number | null
     name: string | null
-    cpf: string | null
+    email: string | null
     cnpj: string | null
     address: string | null
     phone: string | null
     identificationCode: string | null
+    paymentMethod: string | null
+    paymentTern: string | null
+    city: string | null
+    State: string | null
+    legalName: string | null
+    stateRegistration: string | null
   }
 
   export type CustomersMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    cpf: string | null
+    email: string | null
     cnpj: string | null
     address: string | null
     phone: string | null
     identificationCode: string | null
+    paymentMethod: string | null
+    paymentTern: string | null
+    city: string | null
+    State: string | null
+    legalName: string | null
+    stateRegistration: string | null
   }
 
   export type CustomersCountAggregateOutputType = {
     id: number
     name: number
-    cpf: number
+    email: number
     cnpj: number
     address: number
     phone: number
     identificationCode: number
+    paymentMethod: number
+    paymentTern: number
+    city: number
+    State: number
+    legalName: number
+    stateRegistration: number
     _all: number
   }
 
@@ -2649,31 +2667,49 @@ export namespace Prisma {
   export type CustomersMinAggregateInputType = {
     id?: true
     name?: true
-    cpf?: true
+    email?: true
     cnpj?: true
     address?: true
     phone?: true
     identificationCode?: true
+    paymentMethod?: true
+    paymentTern?: true
+    city?: true
+    State?: true
+    legalName?: true
+    stateRegistration?: true
   }
 
   export type CustomersMaxAggregateInputType = {
     id?: true
     name?: true
-    cpf?: true
+    email?: true
     cnpj?: true
     address?: true
     phone?: true
     identificationCode?: true
+    paymentMethod?: true
+    paymentTern?: true
+    city?: true
+    State?: true
+    legalName?: true
+    stateRegistration?: true
   }
 
   export type CustomersCountAggregateInputType = {
     id?: true
     name?: true
-    cpf?: true
+    email?: true
     cnpj?: true
     address?: true
     phone?: true
     identificationCode?: true
+    paymentMethod?: true
+    paymentTern?: true
+    city?: true
+    State?: true
+    legalName?: true
+    stateRegistration?: true
     _all?: true
   }
 
@@ -2766,11 +2802,17 @@ export namespace Prisma {
   export type CustomersGroupByOutputType = {
     id: number
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     _count: CustomersCountAggregateOutputType | null
     _avg: CustomersAvgAggregateOutputType | null
     _sum: CustomersSumAggregateOutputType | null
@@ -2795,11 +2837,17 @@ export namespace Prisma {
   export type CustomersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    cpf?: boolean
+    email?: boolean
     cnpj?: boolean
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
+    paymentMethod?: boolean
+    paymentTern?: boolean
+    city?: boolean
+    State?: boolean
+    legalName?: boolean
+    stateRegistration?: boolean
     dailyReports?: boolean | Customers$dailyReportsArgs<ExtArgs>
     monthlyReports?: boolean | Customers$monthlyReportsArgs<ExtArgs>
     _count?: boolean | CustomersCountOutputTypeDefaultArgs<ExtArgs>
@@ -2808,34 +2856,52 @@ export namespace Prisma {
   export type CustomersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    cpf?: boolean
+    email?: boolean
     cnpj?: boolean
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
+    paymentMethod?: boolean
+    paymentTern?: boolean
+    city?: boolean
+    State?: boolean
+    legalName?: boolean
+    stateRegistration?: boolean
   }, ExtArgs["result"]["customers"]>
 
   export type CustomersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    cpf?: boolean
+    email?: boolean
     cnpj?: boolean
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
+    paymentMethod?: boolean
+    paymentTern?: boolean
+    city?: boolean
+    State?: boolean
+    legalName?: boolean
+    stateRegistration?: boolean
   }, ExtArgs["result"]["customers"]>
 
   export type CustomersSelectScalar = {
     id?: boolean
     name?: boolean
-    cpf?: boolean
+    email?: boolean
     cnpj?: boolean
     address?: boolean
     phone?: boolean
     identificationCode?: boolean
+    paymentMethod?: boolean
+    paymentTern?: boolean
+    city?: boolean
+    State?: boolean
+    legalName?: boolean
+    stateRegistration?: boolean
   }
 
-  export type CustomersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cpf" | "cnpj" | "address" | "phone" | "identificationCode", ExtArgs["result"]["customers"]>
+  export type CustomersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "cnpj" | "address" | "phone" | "identificationCode" | "paymentMethod" | "paymentTern" | "city" | "State" | "legalName" | "stateRegistration", ExtArgs["result"]["customers"]>
   export type CustomersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dailyReports?: boolean | Customers$dailyReportsArgs<ExtArgs>
     monthlyReports?: boolean | Customers$monthlyReportsArgs<ExtArgs>
@@ -2853,11 +2919,17 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      cpf: string
+      email: string
       cnpj: string
       address: string
       phone: string
       identificationCode: string
+      paymentMethod: string
+      paymentTern: string
+      city: string
+      State: string
+      legalName: string
+      stateRegistration: string
     }, ExtArgs["result"]["customers"]>
     composites: {}
   }
@@ -3285,11 +3357,17 @@ export namespace Prisma {
   interface CustomersFieldRefs {
     readonly id: FieldRef<"Customers", 'Int'>
     readonly name: FieldRef<"Customers", 'String'>
-    readonly cpf: FieldRef<"Customers", 'String'>
+    readonly email: FieldRef<"Customers", 'String'>
     readonly cnpj: FieldRef<"Customers", 'String'>
     readonly address: FieldRef<"Customers", 'String'>
     readonly phone: FieldRef<"Customers", 'String'>
     readonly identificationCode: FieldRef<"Customers", 'String'>
+    readonly paymentMethod: FieldRef<"Customers", 'String'>
+    readonly paymentTern: FieldRef<"Customers", 'String'>
+    readonly city: FieldRef<"Customers", 'String'>
+    readonly State: FieldRef<"Customers", 'String'>
+    readonly legalName: FieldRef<"Customers", 'String'>
+    readonly stateRegistration: FieldRef<"Customers", 'String'>
   }
     
 
@@ -8416,11 +8494,17 @@ export namespace Prisma {
   export const CustomersScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    cpf: 'cpf',
+    email: 'email',
     cnpj: 'cnpj',
     address: 'address',
     phone: 'phone',
-    identificationCode: 'identificationCode'
+    identificationCode: 'identificationCode',
+    paymentMethod: 'paymentMethod',
+    paymentTern: 'paymentTern',
+    city: 'city',
+    State: 'State',
+    legalName: 'legalName',
+    stateRegistration: 'stateRegistration'
   };
 
   export type CustomersScalarFieldEnum = (typeof CustomersScalarFieldEnum)[keyof typeof CustomersScalarFieldEnum]
@@ -8664,11 +8748,17 @@ export namespace Prisma {
     NOT?: CustomersWhereInput | CustomersWhereInput[]
     id?: IntFilter<"Customers"> | number
     name?: StringFilter<"Customers"> | string
-    cpf?: StringFilter<"Customers"> | string
+    email?: StringFilter<"Customers"> | string
     cnpj?: StringFilter<"Customers"> | string
     address?: StringFilter<"Customers"> | string
     phone?: StringFilter<"Customers"> | string
     identificationCode?: StringFilter<"Customers"> | string
+    paymentMethod?: StringFilter<"Customers"> | string
+    paymentTern?: StringFilter<"Customers"> | string
+    city?: StringFilter<"Customers"> | string
+    State?: StringFilter<"Customers"> | string
+    legalName?: StringFilter<"Customers"> | string
+    stateRegistration?: StringFilter<"Customers"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
   }
@@ -8676,11 +8766,17 @@ export namespace Prisma {
   export type CustomersOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    cpf?: SortOrder
+    email?: SortOrder
     cnpj?: SortOrder
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
+    paymentMethod?: SortOrder
+    paymentTern?: SortOrder
+    city?: SortOrder
+    State?: SortOrder
+    legalName?: SortOrder
+    stateRegistration?: SortOrder
     dailyReports?: DailyShipmentReportOrderByRelationAggregateInput
     monthlyReports?: MonthlyShipmentReportOrderByRelationAggregateInput
   }
@@ -8691,11 +8787,17 @@ export namespace Prisma {
     OR?: CustomersWhereInput[]
     NOT?: CustomersWhereInput | CustomersWhereInput[]
     name?: StringFilter<"Customers"> | string
-    cpf?: StringFilter<"Customers"> | string
+    email?: StringFilter<"Customers"> | string
     cnpj?: StringFilter<"Customers"> | string
     address?: StringFilter<"Customers"> | string
     phone?: StringFilter<"Customers"> | string
     identificationCode?: StringFilter<"Customers"> | string
+    paymentMethod?: StringFilter<"Customers"> | string
+    paymentTern?: StringFilter<"Customers"> | string
+    city?: StringFilter<"Customers"> | string
+    State?: StringFilter<"Customers"> | string
+    legalName?: StringFilter<"Customers"> | string
+    stateRegistration?: StringFilter<"Customers"> | string
     dailyReports?: DailyShipmentReportListRelationFilter
     monthlyReports?: MonthlyShipmentReportListRelationFilter
   }, "id">
@@ -8703,11 +8805,17 @@ export namespace Prisma {
   export type CustomersOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    cpf?: SortOrder
+    email?: SortOrder
     cnpj?: SortOrder
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
+    paymentMethod?: SortOrder
+    paymentTern?: SortOrder
+    city?: SortOrder
+    State?: SortOrder
+    legalName?: SortOrder
+    stateRegistration?: SortOrder
     _count?: CustomersCountOrderByAggregateInput
     _avg?: CustomersAvgOrderByAggregateInput
     _max?: CustomersMaxOrderByAggregateInput
@@ -8721,11 +8829,17 @@ export namespace Prisma {
     NOT?: CustomersScalarWhereWithAggregatesInput | CustomersScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Customers"> | number
     name?: StringWithAggregatesFilter<"Customers"> | string
-    cpf?: StringWithAggregatesFilter<"Customers"> | string
+    email?: StringWithAggregatesFilter<"Customers"> | string
     cnpj?: StringWithAggregatesFilter<"Customers"> | string
     address?: StringWithAggregatesFilter<"Customers"> | string
     phone?: StringWithAggregatesFilter<"Customers"> | string
     identificationCode?: StringWithAggregatesFilter<"Customers"> | string
+    paymentMethod?: StringWithAggregatesFilter<"Customers"> | string
+    paymentTern?: StringWithAggregatesFilter<"Customers"> | string
+    city?: StringWithAggregatesFilter<"Customers"> | string
+    State?: StringWithAggregatesFilter<"Customers"> | string
+    legalName?: StringWithAggregatesFilter<"Customers"> | string
+    stateRegistration?: StringWithAggregatesFilter<"Customers"> | string
   }
 
   export type ProductWhereInput = {
@@ -9092,11 +9206,17 @@ export namespace Prisma {
 
   export type CustomersCreateInput = {
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     dailyReports?: DailyShipmentReportCreateNestedManyWithoutCustomersInput
     monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutCustomersInput
   }
@@ -9104,22 +9224,34 @@ export namespace Prisma {
   export type CustomersUncheckedCreateInput = {
     id?: number
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
     monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
   export type CustomersUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUpdateManyWithoutCustomersNestedInput
     monthlyReports?: MonthlyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
@@ -9127,11 +9259,17 @@ export namespace Prisma {
   export type CustomersUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
     monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
@@ -9139,30 +9277,48 @@ export namespace Prisma {
   export type CustomersCreateManyInput = {
     id?: number
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
   }
 
   export type CustomersUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
   }
 
   export type CustomersUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductCreateInput = {
@@ -9608,11 +9764,17 @@ export namespace Prisma {
   export type CustomersCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    cpf?: SortOrder
+    email?: SortOrder
     cnpj?: SortOrder
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
+    paymentMethod?: SortOrder
+    paymentTern?: SortOrder
+    city?: SortOrder
+    State?: SortOrder
+    legalName?: SortOrder
+    stateRegistration?: SortOrder
   }
 
   export type CustomersAvgOrderByAggregateInput = {
@@ -9622,21 +9784,33 @@ export namespace Prisma {
   export type CustomersMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    cpf?: SortOrder
+    email?: SortOrder
     cnpj?: SortOrder
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
+    paymentMethod?: SortOrder
+    paymentTern?: SortOrder
+    city?: SortOrder
+    State?: SortOrder
+    legalName?: SortOrder
+    stateRegistration?: SortOrder
   }
 
   export type CustomersMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    cpf?: SortOrder
+    email?: SortOrder
     cnpj?: SortOrder
     address?: SortOrder
     phone?: SortOrder
     identificationCode?: SortOrder
+    paymentMethod?: SortOrder
+    paymentTern?: SortOrder
+    city?: SortOrder
+    State?: SortOrder
+    legalName?: SortOrder
+    stateRegistration?: SortOrder
   }
 
   export type CustomersSumOrderByAggregateInput = {
@@ -10760,22 +10934,34 @@ export namespace Prisma {
 
   export type CustomersCreateWithoutDailyReportsInput = {
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     monthlyReports?: MonthlyShipmentReportCreateNestedManyWithoutCustomersInput
   }
 
   export type CustomersUncheckedCreateWithoutDailyReportsInput = {
     id?: number
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     monthlyReports?: MonthlyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
@@ -10861,22 +11047,34 @@ export namespace Prisma {
 
   export type CustomersUpdateWithoutDailyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     monthlyReports?: MonthlyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
 
   export type CustomersUncheckedUpdateWithoutDailyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     monthlyReports?: MonthlyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
 
@@ -10964,22 +11162,34 @@ export namespace Prisma {
 
   export type CustomersCreateWithoutMonthlyReportsInput = {
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     dailyReports?: DailyShipmentReportCreateNestedManyWithoutCustomersInput
   }
 
   export type CustomersUncheckedCreateWithoutMonthlyReportsInput = {
     id?: number
     name: string
-    cpf: string
+    email: string
     cnpj: string
     address: string
     phone: string
     identificationCode: string
+    paymentMethod: string
+    paymentTern: string
+    city: string
+    State: string
+    legalName: string
+    stateRegistration: string
     dailyReports?: DailyShipmentReportUncheckedCreateNestedManyWithoutCustomersInput
   }
 
@@ -11023,22 +11233,34 @@ export namespace Prisma {
 
   export type CustomersUpdateWithoutMonthlyReportsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUpdateManyWithoutCustomersNestedInput
   }
 
   export type CustomersUncheckedUpdateWithoutMonthlyReportsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    cpf?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     cnpj?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     identificationCode?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    paymentTern?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    State?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    stateRegistration?: StringFieldUpdateOperationsInput | string
     dailyReports?: DailyShipmentReportUncheckedUpdateManyWithoutCustomersNestedInput
   }
 
