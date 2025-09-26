@@ -146,11 +146,13 @@ exports.Prisma.CustomersScalarFieldEnum = {
 };
 
 exports.Prisma.ProductScalarFieldEnum = {
-  id: 'id',
+  code: 'code',
   name: 'name',
   unit: 'unit',
-  quantity: 'quantity',
-  expiration: 'expiration'
+  price: 'price',
+  weight: 'weight',
+  expiration: 'expiration',
+  expiration_unit: 'expiration_unit'
 };
 
 exports.Prisma.VehicleScalarFieldEnum = {
