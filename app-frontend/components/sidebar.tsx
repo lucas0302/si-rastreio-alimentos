@@ -67,7 +67,7 @@ export function Sidebar() {
   }
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <div className="w-130 bg-white border-r border-gray-300 flex flex-col">
       {/* Logo */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
@@ -76,7 +76,7 @@ export function Sidebar() {
               <Image src="/truck-logo.png" alt="Logo" fill className="object-contain" />
             </div>
           </div>
-          <span className="font-semibold text-gray-900">LOGO</span>
+          <span className="font-semibold text-gray-900">LF SOLUTION</span>
         </div>
       </div>
 
@@ -88,9 +88,8 @@ export function Sidebar() {
               <div>
                 <button
                   onClick={() => toggleExpanded(item.title)}
-                  className={`w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${
-                    expandedItems.includes(item.title) ? "bg-yellow-100 text-yellow-800" : "text-gray-700"
-                  }`}
+                  className={`w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${expandedItems.includes(item.title) ? "bg-yellow-100 text-yellow-800" : "text-gray-700"
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     <item.icon className="w-4 h-4" />
@@ -108,9 +107,8 @@ export function Sidebar() {
                       <Link
                         key={subItem.title}
                         href={subItem.href}
-                        className={`block px-3 py-2 text-sm rounded-lg hover:bg-gray-100 ${
-                          pathname === subItem.href ? "bg-yellow-100 text-yellow-800 font-medium" : "text-gray-600"
-                        }`}
+                        className={`block px-3 py-2 text-sm rounded-lg hover:bg-gray-100 ${pathname === subItem.href ? "bg-yellow-100 text-yellow-800 font-medium" : "text-gray-600"
+                          }`}
                       >
                         {subItem.title}
                       </Link>
@@ -121,9 +119,8 @@ export function Sidebar() {
             ) : (
               <Link
                 href={item.href}
-                className={`flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${
-                  pathname === item.href ? "bg-yellow-100 text-yellow-800" : "text-gray-700"
-                }`}
+                className={`flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${pathname === item.href ? "bg-yellow-100 text-yellow-800" : "text-gray-700"
+                  }`}
               >
                 <item.icon className="w-4 h-4" />
                 <span>{item.title}</span>

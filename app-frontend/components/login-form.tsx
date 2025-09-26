@@ -81,23 +81,37 @@ export function LoginForm() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             <div className="space-y-4">
-              <Input
-                type="text"
-                placeholder="Usuário"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="h-12 text-base border-gray-300 rounded-lg"
-                required
-              />
-              <Input
-                type="password"
-                placeholder="Senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 text-base border-gray-300 rounded-lg"
-                required
-              />
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="username" className="text-sm font-medium text-gray-700">
+                  Usuário
+                </label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="EX: julia.silva"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="h-12 text-base border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="password" className="text-sm font-medium text-gray-700">
+                  Senha
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="***********"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12 text-base border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
             </div>
+
 
             {error && (
               <div className="text-red-500 text-sm mt-2">{error}</div>

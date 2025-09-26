@@ -132,11 +132,17 @@ exports.Prisma.UsersScalarFieldEnum = {
 exports.Prisma.CustomersScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  cpf: 'cpf',
+  email: 'email',
   cnpj: 'cnpj',
   address: 'address',
   phone: 'phone',
-  identificationCode: 'identificationCode'
+  identificationCode: 'identificationCode',
+  paymentMethod: 'paymentMethod',
+  paymentTern: 'paymentTern',
+  city: 'city',
+  State: 'State',
+  legalName: 'legalName',
+  stateRegistration: 'stateRegistration'
 };
 
 exports.Prisma.ProductScalarFieldEnum = {
