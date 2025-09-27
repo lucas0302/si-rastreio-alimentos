@@ -85,7 +85,7 @@ export class UsersService {
   //update user
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
-      const user = await this.prisma.users.findFirst({
+      const user = await this.prisma.users.findUnique({
         where: {
           id: id
         }
@@ -95,6 +95,35 @@ export class UsersService {
         throw new HttpException('Esse usuário não existe.', HttpStatus.NOT_FOUND);
       }
 
+      const dataUser: { password?: string } = {};
+
+      if (updateUserDto?.password) {
+
+        const passwordHash = await this.bcryptService.hash(updateUserDto.password);
+        dataUser['password'] = passwordHash
+      }
+
+      const updateUser = await this.prisma.users.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          name: updateUserDto.name ?? user.name,
+          username: updateUserDto.username ?? user.username,
+          password: dataUser.password ?? user.password,
+          role: updateUserDto?.role ?? user.role
+        },
+        select: {
+          name: true,
+          username: true,
+          role: true
+        }
+      })
+
+      return {
+        updateUser,
+        message: "Usuario Atualizado com sucesso!"
+      }
 
     } catch (err) {
       throw new HttpException('Falha ao atualizar usuário.', HttpStatus.BAD_REQUEST);
