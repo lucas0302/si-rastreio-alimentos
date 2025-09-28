@@ -7,12 +7,25 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function VehicleForm() {
+interface VehicleFormProps {
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
   const [formData, setFormData] = useState({
     nome: "",
     placa: "",
     categoria: "",
   })
+
+  const resetForm = () => {
+    setFormData({
+      nome: "",
+      placa: "",
+      categoria: "",
+    })
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -25,14 +38,13 @@ export function VehicleForm() {
     e.preventDefault()
     console.log("Vehicle data:", formData)
     // Handle form submission
+    resetForm()
+    onSuccess?.()
   }
 
   const handleCancel = () => {
-    setFormData({
-      nome: "",
-      placa: "",
-      categoria: "",
-    })
+    resetForm()
+    onCancel?.()
   }
 
   return (

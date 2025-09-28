@@ -1,10 +1,9 @@
-
-import { UsuarioForm } from "@/components/usuario-form"
+import { AdministrationTabs } from "@/components/administration-tabs"
 
 export default function CadastrarUsuarioPage() {
   return (
-    <div >
-      <UsuarioForm />
+    <div className="h-full w-full p-8">
+      <AdministrationTabs defaultTab="usuarios" />
     </div>
   )
 }

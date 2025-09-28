@@ -8,7 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function ClientForm() {
+interface ClientFormProps {
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
   const [formData, setFormData] = useState({
     codigo: "#",
     nome: "",
@@ -28,6 +33,27 @@ export function ClientForm() {
   })
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
+
+  const resetForm = () => {
+    setFormData({
+      codigo: "#",
+      nome: "",
+      razaoSocial: "",
+      cnpj: "",
+      inscEstadual: "",
+      telefone: "",
+      email: "",
+      cep: "",
+      logadouro: "",
+      numero: "",
+      complemento: "",
+      cidade: "",
+      estado: "",
+      formaPagamento: "",
+      prazoPagamento: "",
+    })
+    setErrors({})
+  }
 
   const toDigits = (value: string) => value.replace(/\D/g, "")
 
@@ -61,9 +87,10 @@ export function ClientForm() {
     }
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clientes/cadastro-cliente`, payload)
-      alert("Cliente cadastrado com sucesso:")
-      handleCancel()
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clientes/cadastro-cliente`, payload)
+      alert("Cliente cadastrado com sucesso!")
+      resetForm()
+      onSuccess?.()
     } catch (error: any) {
       const errMessages: { [key: string]: string } = {}
 
@@ -88,24 +115,8 @@ export function ClientForm() {
   }
 
   const handleCancel = () => {
-    setFormData({
-      codigo: "#",
-      nome: "",
-      razaoSocial: "",
-      cnpj: "",
-      inscEstadual: "",
-      telefone: "",
-      email: "",
-      cep: "",
-      logadouro: "",
-      numero: "",
-      complemento: "",
-      cidade: "",
-      estado: "",
-      formaPagamento: "",
-      prazoPagamento: "",
-    })
-    setErrors({})
+    resetForm()
+    onCancel?.()
   }
 
 
