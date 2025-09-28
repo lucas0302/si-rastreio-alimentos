@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
+import InputMask from "react-input-mask"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function ClientForm() {
   const [formData, setFormData] = useState({
-    codigo: "",
+    codigo: "#",
     nome: "",
     razaoSocial: "",
     cnpj: "",
@@ -28,6 +29,8 @@ export function ClientForm() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
+  const toDigits = (value: string) => value.replace(/\D/g, "")
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -45,9 +48,9 @@ export function ClientForm() {
     const payload = {
       name: formData.nome,
       email: formData.email,
-      cnpj: formData.cnpj,
+      cnpj: toDigits(formData.cnpj),
       address: fullAddress,
-      phone: formData.telefone,
+      phone: toDigits(formData.telefone),
       identificationCode: formData.codigo,
       paymentMethod: formData.formaPagamento,
       paymentTern: formData.prazoPagamento,
@@ -71,7 +74,7 @@ export function ClientForm() {
           if (m.includes("CNPJ")) errMessages.cnpj = m
           else if (m.includes("Email")) errMessages.email = m
           else if (m.includes("Telefone")) errMessages.telefone = m
-          else if (m.includes("Código")) errMessages.codigo = m
+          else if (m.includes("CÃƒÂ³digo")) errMessages.codigo = m
         })
       } else if (typeof msg === "string") {
         // Aqui pega a mensagem do back e coloca como erro geral
@@ -86,7 +89,7 @@ export function ClientForm() {
 
   const handleCancel = () => {
     setFormData({
-      codigo: "",
+      codigo: "#",
       nome: "",
       razaoSocial: "",
       cnpj: "",
@@ -105,7 +108,7 @@ export function ClientForm() {
     setErrors({})
   }
 
-  // Função para mostrar erro de campo
+
   const showError = (field: string) => {
     return errors[field] ? (
       <span className="text-red-600 text-sm mt-1">{errors[field]}</span>
@@ -128,7 +131,7 @@ export function ClientForm() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col space-y-1">
               <label htmlFor="codigo" className="text-sm font-medium text-gray-700">
-                Código
+                Codigo Do Cliente
               </label>
               <Input
                 id="codigo"
@@ -174,19 +177,27 @@ export function ClientForm() {
               <label htmlFor="cnpj" className="text-sm font-medium text-gray-700">
                 CNPJ
               </label>
-              <Input
-                id="cnpj"
-                placeholder="Digite o CNPJ"
+              <InputMask
+                mask="99.999.999/9999-99"
+                maskPlaceholder={null}
                 value={formData.cnpj}
                 onChange={(e) => handleInputChange("cnpj", e.target.value)}
-                className="h-12 text-base border-gray-300 rounded-lg"
-              />
+              >
+                {(inputProps: React.ComponentProps<"input">) => (
+                  <Input
+                    {...inputProps}
+                    id="cnpj"
+                    placeholder="Digite o CNPJ"
+                    className="h-12 text-base border-gray-300 rounded-lg"
+                  />
+                )}
+              </InputMask>
               {showError("cnpj")}
             </div>
 
             <div className="flex flex-col space-y-1">
               <label htmlFor="inscEstadual" className="text-sm font-medium text-gray-700">
-                Inscrição Estadual
+                Inscrisão Estadual
               </label>
               <Input
                 id="inscEstadual"
@@ -207,13 +218,21 @@ export function ClientForm() {
                 <label htmlFor="telefone" className="text-sm font-medium text-gray-700">
                   Telefone
                 </label>
-                <Input
-                  id="telefone"
-                  placeholder="(99) 99999-9999"
+                <InputMask
+                  mask="(99) 99999-9999"
+                  maskPlaceholder={null}
                   value={formData.telefone}
                   onChange={(e) => handleInputChange("telefone", e.target.value)}
-                  className="h-12 text-base border-gray-300 rounded-lg"
-                />
+                >
+                  {(inputProps: React.ComponentProps<"input">) => (
+                    <Input
+                      {...inputProps}
+                      id="telefone"
+                      placeholder="(99) 99999-9999"
+                      className="h-12 text-base border-gray-300 rounded-lg"
+                    />
+                  )}
+                </InputMask>
                 {showError("telefone")}
               </div>
 
@@ -243,13 +262,21 @@ export function ClientForm() {
                   <label htmlFor="cep" className="text-sm font-medium text-gray-700">
                     CEP
                   </label>
-                  <Input
-                    id="cep"
-                    placeholder="Digite o CEP"
+                  <InputMask
+                    mask="99999-999"
+                    maskPlaceholder={null}
                     value={formData.cep}
                     onChange={(e) => handleInputChange("cep", e.target.value)}
-                    className="h-12 text-base border-gray-300 rounded-lg"
-                  />
+                  >
+                    {(inputProps: React.ComponentProps<"input">) => (
+                      <Input
+                        {...inputProps}
+                        id="cep"
+                        placeholder="Digite o CEP"
+                        className="h-12 text-base border-gray-300 rounded-lg"
+                      />
+                    )}
+                  </InputMask>
                   {showError("cep")}
                 </div>
 
@@ -269,11 +296,11 @@ export function ClientForm() {
 
                 <div className="flex flex-col space-y-1">
                   <label htmlFor="numero" className="text-sm font-medium text-gray-700">
-                    Número
+                    Numero
                   </label>
                   <Input
                     id="numero"
-                    placeholder="Digite o Número"
+                    placeholder="Digite o numero"
                     value={formData.numero}
                     onChange={(e) => handleInputChange("numero", e.target.value)}
                     className="h-12 text-base border-gray-300 rounded-lg"
@@ -289,7 +316,7 @@ export function ClientForm() {
                   </label>
                   <Input
                     id="complemento"
-                    placeholder="Digite um ponto de referência"
+                    placeholder="Digite um ponto de Complemento"
                     value={formData.complemento}
                     onChange={(e) => handleInputChange("complemento", e.target.value)}
                     className="h-12 text-base border-gray-300 rounded-lg"
