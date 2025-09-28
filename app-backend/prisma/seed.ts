@@ -4,12 +4,12 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-  const existingAdmin = await prisma.users.findUnique({
+  const existingAdmin = await prisma.users.findFirst({
     where: { username: 'admin.admin' },
   });
 
   if (!existingAdmin) {
-    const passwordHash = await bcrypt.hash('1234567', 10);
+    const passwordHash = await bcrypt.hash('12345678', 10);
     await prisma.users.create({
       data: {
         name: 'Administrador',
