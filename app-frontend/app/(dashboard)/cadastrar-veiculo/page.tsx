@@ -1,9 +1,9 @@
-import { VehicleForm } from "@/components/vehicle-form"
+import { AdministrationTabs } from "@/components/administration-tabs"
 
 export default function CadastrarVeiculoPage() {
   return (
-    <div className="p-6">
-      <VehicleForm />
+    <div className="h-full w-full p-8">
+      <AdministrationTabs defaultTab="veiculos" />
     </div>
   )
 }

@@ -1,9 +1,9 @@
 import { AdministrationTabs } from "@/components/administration-tabs"
 
-export default function CadastrarProdutoPage() {
+export default function CadastrarUsuarioPage() {
   return (
     <div className="h-full w-full p-8">
-      <AdministrationTabs defaultTab="produtos" />
+      <AdministrationTabs defaultTab="usuarios" />
     </div>
   )
 }

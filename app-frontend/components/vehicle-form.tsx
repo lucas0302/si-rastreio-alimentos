@@ -3,22 +3,34 @@
 import type React from "react"
 import { useState } from "react"
 import axios from "axios"
-import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2 } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
-export function VehicleForm() {
+interface VehicleFormProps {
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
   const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
   const [formData, setFormData] = useState({
-    model: "",
-    plate: "",
-    category: "",
-    brand: "",
+    nome: "",
+    placa: "",
+    categoria: "",
+    marca: "",
   })
+
+  const resetForm = () => {
+    setFormData({
+      nome: "",
+      placa: "",
+      categoria: "",
+      marca: "",
+    })
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -29,84 +41,44 @@ export function VehicleForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
 
     try {
-      const token = localStorage.getItem("token")
-      if (!token) {
-        throw new Error("No authentication token found")
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
+
+      const payload = {
+        model: formData.nome,
+        plate: formData.placa,
+        category: formData.categoria,
+        brand: formData.marca,
       }
 
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/veiculos/cadastrar-veiculo`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
+        payload,
+        token
+          ? {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+          : undefined,
       )
 
-      // Em vez de apenas um toast, ativamos a tela de sucesso
-      setIsSuccess(true)
-
-      // Resetar o formulário para um próximo cadastro
-      setFormData({
-        model: "",
-        plate: "",
-        category: "",
-        brand: "",
-      })
-    } catch (error) {
-      console.error("Error creating vehicle:", error)
-      toast({
-        title: "Erro",
-        description:
-          "Não foi possível cadastrar o veículo. Por favor, tente novamente.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
+      resetForm()
+      toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
+      onSuccess?.()
+    } catch (error: any) {
+      const msg = error?.response?.data?.message || "Erro ao cadastrar veículo"
+      toast?.({ description: String(msg) })
     }
   }
 
-  const handleRegisterAnother = () => {
-    setIsSuccess(false) // Volta para a tela do formulário
-  }
-
-  if (isSuccess) {
-    return (
-      <Card className="max-w-md mx-auto text-center animate-in fade-in-50">
-        <CardHeader>
-          <CheckCircle2
-            className="mx-auto h-16 w-16 text-green-500"
-            strokeWidth={1.5}
-          />
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <CardTitle className="text-2xl font-bold">
-              Cadastro Realizado!
-            </CardTitle>
-            <p className="text-gray-600">
-              O veículo foi adicionado com sucesso!
-            </p>
-          </div>
-          <Button
-            onClick={handleRegisterAnother}
-            className="w-full h-11 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
-          >
-            Cadastrar Outro Veículo
-          </Button>
-        </CardContent>
-      </Card>
-    )
+  const handleCancel = () => {
+    resetForm()
+    onCancel?.()
   }
 
   // Renderização padrão do formulário
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className=" max-w-full h-250 mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">
           Cadastrar Veículo
@@ -115,20 +87,24 @@ export function VehicleForm() {
       <CardContent className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="modelo" className="text-sm font-medium text-gray-700">Modelo</Label>
               <Input
-                placeholder="Modelo"
-                value={formData.model}
-                onChange={(e) => handleInputChange("model", e.target.value)}
+                id="modelo"
+                placeholder="Ex.: Volvo FH 540"
+                value={formData.nome}
+                onChange={(e) => handleInputChange("nome", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
             </div>
-            <div>
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="placa" className="text-sm font-medium text-gray-700">Placa</Label>
               <Input
-                placeholder="Placa"
-                value={formData.plate}
-                onChange={(e) => handleInputChange("plate", e.target.value)}
+                id="placa"
+                placeholder="Ex.: ABC-1234"
+                value={formData.placa}
+                onChange={(e) => handleInputChange("placa", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
@@ -136,22 +112,25 @@ export function VehicleForm() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="categoria" className="text-sm font-medium text-gray-700">Categoria</Label>
               <Input
-                placeholder="Marca"
-                value={formData.brand}
-                onChange={(e) => handleInputChange("brand", e.target.value)}
+                id="categoria"
+                placeholder="Ex.: Caminhão"
+                value={formData.categoria}
+                onChange={(e) => handleInputChange("categoria", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
             </div>
-            <div>
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="marca" className="text-sm font-medium text-gray-700">Marca</Label>
               <Input
-                placeholder="Categoria"
-                value={formData.category}
-                onChange={(e) => handleInputChange("category", e.target.value)}
+                id="marca"
+                placeholder="Ex.: Volvo"
+                value={formData.marca}
+                onChange={(e) => handleInputChange("marca", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
-                required
               />
             </div>
           </div>
@@ -160,16 +139,8 @@ export function VehicleForm() {
             <Button
               type="button"
               variant="outline"
-              onClick={() =>
-                setFormData({
-                  model: "",
-                  plate: "",
-                  category: "",
-                  brand: "",
-                })
-              }
-              className="px-8 py-2 h-10 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
-              disabled={isLoading}
+              onClick={handleCancel}
+              className="px-8 py-2 h-10 border-yellow-300 text-gray-700 hover:bg-gray-50 bg-transparent"
             >
               Cancelar
             </Button>

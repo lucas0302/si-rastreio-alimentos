@@ -46,7 +46,6 @@ export function ProductForm() {
     }));
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -122,7 +121,7 @@ export function ProductForm() {
   }
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-full h-250 mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Produto</CardTitle>
       </CardHeader>
@@ -223,7 +222,7 @@ export function ProductForm() {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="px-8 py-2 h-10 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+              className="px-8 py-2 h-10 border-yellow-300 text-gray-700 hover:bg-gray-50 bg-transparent"
             >
               Cancelar
             </Button>

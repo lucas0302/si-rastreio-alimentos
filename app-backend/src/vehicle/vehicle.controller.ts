@@ -5,7 +5,7 @@ import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
 import { AdminRolesGuard } from 'src/auth/guard/roles/admin-roles.guard';
 
 
-@UseGuards(AuthTokenGuard, AdminRolesGuard)
+@UseGuards(AuthTokenGuard)
 @Controller('veiculos')
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) { }
@@ -15,6 +15,7 @@ export class VehicleController {
     return this.vehicleService.findAllVehicles();
   }
 
+  @UseGuards(AdminRolesGuard)
   @Post('cadastrar-veiculo')
   createVehicle(@Body() createVehicleDto: CreateVehicleDto) {
     return this.vehicleService.createVehicle(createVehicleDto);
