@@ -217,13 +217,13 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
                 type="button"
                 variant="outline"
                 onClick={handleCancel}
-                className="h-11 rounded-full border-2 border-yellow-400 bg-white px-8 text-sm font-semibold text-yellow-600 transition-colors hover:bg-yellow-50"
+                className="px-8 py-2 h-10 border-yellow-300 text-gray-700 hover:bg-gray-50 bg-transparent"
               >
                 Cancelar
               </Button>
               <Button
                 type="submit"
-                className="h-11 rounded-full bg-yellow-400 px-10 text-sm font-semibold text-black transition-colors hover:bg-yellow-500"
+                className="px-8 py-2 h-10 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
               >
                 Salvar
               </Button>

@@ -37,7 +37,7 @@ export function ProductsList({ onAdd }: ProductsListProps) {
     <AdminListCard
       meta={TAB_CONFIG.produtos}
       onAdd={onAdd}
-      showHeader={false}
+      showHeader={true}
       actionPlacement="footer"
     >
       <Table>

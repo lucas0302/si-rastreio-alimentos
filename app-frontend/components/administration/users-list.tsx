@@ -39,7 +39,7 @@ export function UsersList({ onAdd }: UsersListProps) {
     <AdminListCard
       meta={TAB_CONFIG.usuarios}
       onAdd={onAdd}
-      showHeader={false}
+      showHeader={true}
       actionPlacement="footer"
     >
       <Table>

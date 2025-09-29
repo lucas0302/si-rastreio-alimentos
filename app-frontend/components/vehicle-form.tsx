@@ -89,7 +89,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="px-8 py-2 h-10 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+              className="px-8 py-2 h-10 border-yellow-300 text-gray-700 hover:bg-gray-50 bg-transparent"
             >
               Cancelar
             </Button>
