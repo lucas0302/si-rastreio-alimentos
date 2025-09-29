@@ -60,7 +60,7 @@ export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
   }
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-full h-250 mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Produto</CardTitle>
       </CardHeader>

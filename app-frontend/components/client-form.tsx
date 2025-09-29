@@ -127,7 +127,7 @@ export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
   }
 
   return (
-    <Card className="w-full h-screen rounded-none border-none">
+    <Card className="max-w-full h-250 mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">
           Cadastrar Cliente
