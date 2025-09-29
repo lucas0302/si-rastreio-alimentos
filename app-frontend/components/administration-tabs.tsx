@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ClientForm } from "@/components/client-form"
 import { ProductForm } from "@/components/product-form"
@@ -27,11 +28,31 @@ const DEFAULT_VIEW_MODE: Record<TabKey, ViewMode> = {
 }
 
 export function AdministrationTabs({ defaultTab = "clientes" }: AdministrationTabsProps) {
+  const router = useRouter()
+  const pathname = usePathname()
   const [activeTab, setActiveTab] = useState<TabKey>(defaultTab)
   const [viewMode, setViewMode] = useState<Record<TabKey, ViewMode>>({
     ...DEFAULT_VIEW_MODE,
     [defaultTab]: DEFAULT_VIEW_MODE[defaultTab] ?? "list",
   })
+
+  const TAB_TO_ROUTE: Record<TabKey, string> = {
+    clientes: "/cadastrar-cliente",
+    produtos: "/cadastrar-produto",
+    usuarios: "/cadastrar-usuario",
+    veiculos: "/cadastrar-veiculo",
+  }
+
+  // Keep activeTab in sync with current route so the yellow bottom border
+  // reflects the route even when navigation comes from outside (e.g., sidebar)
+  useEffect(() => {
+    if (!pathname) return
+    const match = (Object.entries(TAB_TO_ROUTE) as [TabKey, string][])
+      .find(([, href]) => pathname.startsWith(href))
+    if (match && activeTab !== match[0]) {
+      setActiveTab(match[0])
+    }
+  }, [pathname])
 
   const handleShowForm = (tab: TabKey) => {
     setViewMode((prev) => ({ ...prev, [tab]: "form" }))
@@ -79,13 +100,22 @@ export function AdministrationTabs({ defaultTab = "clientes" }: AdministrationTa
       <div>
         <h1 className="text-3xl font-semibold text-gray-900">Administração</h1>
       </div>
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as TabKey)} className="flex-1">
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) => {
+          const tab = value as TabKey
+          setActiveTab(tab)
+          const href = TAB_TO_ROUTE[tab]
+          if (href) router.push(href)
+        }}
+        className="flex-1"
+      >
         <TabsList className="flex w-full items-start gap-6 rounded-none border-b border-gray-200 bg-transparent p-0 justify-start">
           {(Object.keys(TAB_CONFIG) as TabKey[]).map((tab) => (
             <TabsTrigger
               key={tab}
               value={tab}
-              className="flex-none rounded-none border-none bg-transparent px-0 pb-3 text-base font-medium text-gray-500 outline-none transition-colors hover:text-gray-900 data-[state=active]:border-b-2 data-[state=active]:border-yellow-400 data-[state=active]:text-gray-900 data-[state=active]:shadow-none"
+              className="relative flex-none rounded-none bg-transparent px-0 pb-3 text-base font-medium text-gray-900 transition-colors hover:text-gray-500 border-none data-[state=active]:text-gray-900 data-[state=active]:shadow-none focus-visible:outline-none focus-visible:ring-0 after:content-[''] after:absolute after:left-0 after:w-full after:h-[2px] after:bottom-[-1px] after:bg-transparent data-[state=active]:after:bg-yellow-400"
             >
               {TAB_CONFIG[tab].label}
             </TabsTrigger>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
@@ -57,6 +57,17 @@ export function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
+  // Auto-expand parent menu if current route matches a submenu item
+  useEffect(() => {
+    const parentsToExpand = menuItems
+      .filter((item) => item.submenu?.some((s) => s.href === pathname))
+      .map((item) => item.title)
+
+    if (parentsToExpand.length) {
+      setExpandedItems((prev) => Array.from(new Set([...prev, ...parentsToExpand])))
+    }
+  }, [pathname])
+
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) => (prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]))
   }
@@ -107,7 +118,9 @@ export function Sidebar() {
                       <Link
                         key={subItem.title}
                         href={subItem.href}
-                        className={`block px-3 py-2 text-sm rounded-lg hover:bg-gray-100 ${pathname === subItem.href ? "bg-yellow-100 text-yellow-800 font-medium" : "text-gray-600"
+                        className={`block px-3 py-2 text-sm rounded-lg  border-b-2 ${pathname === subItem.href
+                          ? "border-yellow-400 text-gray-900 font-medium"
+                          : "border-transparent text-gray-600"
                           }`}
                       >
                         {subItem.title}
