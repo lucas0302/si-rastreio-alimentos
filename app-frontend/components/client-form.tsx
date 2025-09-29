@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import InputMask from "react-input-mask"
 import axios from "axios"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,6 +15,7 @@ interface ClientFormProps {
 }
 
 export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     codigo: "#",
     nome: "",
@@ -88,7 +90,7 @@ export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
 
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clientes/cadastro-cliente`, payload)
-      alert("Cliente cadastrado com sucesso!")
+      toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
       resetForm()
       onSuccess?.()
     } catch (error: any) {

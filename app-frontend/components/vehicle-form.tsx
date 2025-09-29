@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
 
 interface VehicleFormProps {
   onCancel?: () => void
@@ -13,6 +14,7 @@ interface VehicleFormProps {
 }
 
 export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     nome: "",
     placa: "",
@@ -39,6 +41,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
     console.log("Vehicle data:", formData)
     // Handle form submission
     resetForm()
+    toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
     onSuccess?.()
   }
 

@@ -6,7 +6,7 @@ import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useToast } from "../components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -71,8 +71,8 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
       )
 
       toast?.({
-        title: "Sucesso",
-        description: "Usuario cadastrado com sucesso!",
+        description: "cadastro realizado com sucesso!",
+        variant: "success",
       })
 
       setFormData({

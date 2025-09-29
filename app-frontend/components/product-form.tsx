@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
 
 interface ProductFormProps {
   onCancel?: () => void
@@ -15,6 +16,7 @@ interface ProductFormProps {
 }
 
 export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     codigo: "",
     descricao: "",
@@ -51,6 +53,7 @@ export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
     console.log("Product data:", formData)
     // Handle form submission
     resetForm()
+    toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
     onSuccess?.()
   }
 
