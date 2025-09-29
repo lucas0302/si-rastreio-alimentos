@@ -4,7 +4,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
 import { BcryptService } from "src/auth/hash/bcrypt.service";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { role } from "generated/prisma";
+
 
 @Injectable()
 export class UsersService {

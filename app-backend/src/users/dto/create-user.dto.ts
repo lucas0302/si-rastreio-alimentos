@@ -1,5 +1,6 @@
+import { role } from '@prisma/client';
 import { IsNotEmpty, IsString, MinLength, MaxLength, Matches, IsEnum } from 'class-validator';
-import { role } from 'generated/prisma';
+
 
 export class CreateUserDto {
 
@@ -26,5 +27,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsEnum(role, { message: 'Cargo inválido' })
   role: role;
-
 }

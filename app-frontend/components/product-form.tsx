@@ -9,7 +9,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function ProductForm() {
+interface ProductFormProps {
+  onCancel?: () => void
+  onSuccess?: () => void
+}
+
+export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
   const [formData, setFormData] = useState({
     codigo: "",
     descricao: "",
@@ -20,6 +25,19 @@ export function ProductForm() {
     unidadeTempo: "",
     informacoesAdicionais: "",
   })
+
+  const resetForm = () => {
+    setFormData({
+      codigo: "",
+      descricao: "",
+      preco: "",
+      peso: "",
+      unidade: "",
+      validade: "",
+      unidadeTempo: "",
+      informacoesAdicionais: "",
+    })
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -32,19 +50,13 @@ export function ProductForm() {
     e.preventDefault()
     console.log("Product data:", formData)
     // Handle form submission
+    resetForm()
+    onSuccess?.()
   }
 
   const handleCancel = () => {
-    setFormData({
-      codigo: "",
-      descricao: "",
-      preco: "",
-      peso: "",
-      unidade: "",
-      validade: "",
-      unidadeTempo: "",
-      informacoesAdicionais: "",
-    })
+    resetForm()
+    onCancel?.()
   }
 
   return (
@@ -154,7 +166,7 @@ export function ProductForm() {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="px-8 py-2 h-10 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+              className="px-8 py-2 h-10 border-yellow-300 text-gray-700 hover:bg-gray-50 bg-transparent"
             >
               Cancelar
             </Button>

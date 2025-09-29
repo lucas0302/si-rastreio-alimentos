@@ -1,9 +1,9 @@
-import { ProductForm } from "@/components/product-form"
+import { AdministrationTabs } from "@/components/administration-tabs"
 
 export default function CadastrarProdutoPage() {
   return (
-    <div className="p-6">
-      <ProductForm />
+    <div className="h-full w-full p-8">
+      <AdministrationTabs defaultTab="produtos" />
     </div>
   )
 }

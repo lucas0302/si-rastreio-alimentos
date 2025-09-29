@@ -1,13 +1,13 @@
-import { DailyShipmentReport } from "generated/prisma";
+import { DailyShipmentReport } from "@prisma/client";
 
 export class Vehicle {
- 
+
     private _model: string;
     private _plate: string;
     private _category: string;
     private _brand: string;
     private _dailyReports: DailyShipmentReport[];
-    
+
     constructor(model: string, plate: string, category: string, brand: string, dailyReports: DailyShipmentReport[]) {
         this._model = model;
         this._plate = plate;

@@ -53,7 +53,7 @@ const menuItems = [
 ]
 
 export function Sidebar() {
-  const [expandedItems, setExpandedItems] = useState<string[]>(["Administração"])
+  const [expandedItems, setExpandedItems] = useState<string[]>([""])
   const pathname = usePathname()
   const router = useRouter()
 
