@@ -8,6 +8,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly bcryptService: BcryptService,
@@ -15,7 +16,6 @@ export class UsersService {
 
   // Create user
   async create(createUserDto: CreateUserDto) {
-
     try {
       const findUserName = await this.prisma.users.findFirst(
         {
@@ -40,14 +40,14 @@ export class UsersService {
         }
       });
 
-      return { message: "Usuario Registrado com sucesso!" };
+      return { message: "Usuário registrado com sucesso!" };
     } catch (err) {
       console.log(err)
       if (err.status === 409) {
         throw new HttpException('Esse nome de usuário já existe.', HttpStatus.CONFLICT);
       }
 
-      throw new HttpException('Erro ao cadastrar usuario.', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Erro ao cadastrar usuário.', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -76,7 +76,7 @@ export class UsersService {
       };
     } catch (err) {
       throw new HttpException(
-        'Erro ao buscar os usuarios',
+        'Erro ao buscar usuários',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -133,7 +133,6 @@ export class UsersService {
 
   //Delete user
   async delete(id: number) {
-
     try {
       const findUser = await this.prisma.users.findFirst(
         {
@@ -144,7 +143,7 @@ export class UsersService {
       )
 
       if (!findUser) {
-        throw new HttpException('Esse usuario nao existe.', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Esse usuário não existe.', HttpStatus.NOT_FOUND);
       }
 
       await this.prisma.users.delete(
@@ -155,11 +154,10 @@ export class UsersService {
         }
       )
 
-      return { message: "Usuario deletado com sucesso!" }
+      return { message: "Usuário deletado com sucesso!" }
 
     } catch (err) {
-      throw new HttpException('Falha ao deletar usuario.', HttpStatus.BAD_REQUEST);
-
+      throw new HttpException('Falha ao deletar usuário.', HttpStatus.BAD_REQUEST);
     }
   }
 

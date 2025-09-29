@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
@@ -77,10 +76,13 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
     onCancel?.()
   }
 
+  // Renderização padrão do formulário
   return (
     <Card className=" max-w-full h-250 mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Veículo</CardTitle>
+        <CardTitle className="text-2xl font-semibold text-gray-900">
+          Cadastrar Veículo
+        </CardTitle>
       </CardHeader>
       <CardContent className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -93,6 +95,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
                 value={formData.nome}
                 onChange={(e) => handleInputChange("nome", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
+                required
               />
             </div>
             <div className="flex flex-col space-y-1">
@@ -103,6 +106,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
                 value={formData.placa}
                 onChange={(e) => handleInputChange("placa", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
+                required
               />
             </div>
           </div>
@@ -116,6 +120,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
                 value={formData.categoria}
                 onChange={(e) => handleInputChange("categoria", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
+                required
               />
             </div>
             <div className="flex flex-col space-y-1">
@@ -139,8 +144,12 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
             >
               Cancelar
             </Button>
-            <Button type="submit" className="px-8 py-2 h-10 bg-yellow-400 hover:bg-yellow-500 text-black font-medium">
-              Salvar
+            <Button
+              type="submit"
+              className="px-8 py-2 h-10 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
+              disabled={isLoading}
+            >
+              {isLoading ? "Salvando..." : "Salvar"}
             </Button>
           </div>
         </form>

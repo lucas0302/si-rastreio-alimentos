@@ -2,64 +2,122 @@
 
 import type React from "react"
 
+import axios from 'axios'; // 1. Importar axios
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useToast } from "@/hooks/use-toast"
+import { CheckCircle2 } from "lucide-react";
 
-interface ProductFormProps {
-  onCancel?: () => void
-  onSuccess?: () => void
-}
+type FormDataType = {
+  code: number | null;
+  name: string;
+  price: string;
+  weight: string;
+  unit: string;
+  expiration: string;
+  expiration_unit: string;
+  informacoesAdicionais: string;
+};
 
-export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
-  const { toast } = useToast()
-  const [formData, setFormData] = useState({
-    codigo: "",
-    descricao: "",
-    preco: "",
-    peso: "",
-    unidade: "",
-    validade: "",
-    unidadeTempo: "",
+export function ProductForm() {
+  const [error, setError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [formData, setFormData] = useState<FormDataType>({
+    code: null,
+    name: "",
+    price: "",
+    weight: "",
+    unit: "",
+    expiration: "",
+    expiration_unit: "",
     informacoesAdicionais: "",
   })
 
-  const resetForm = () => {
+  type FormField = keyof FormDataType;
+
+  const handleInputChange = (field: FormField, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: field === "code" ? Number(value) : value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/produtos/cadastrar-produto`,
+        formData
+      );
+
+      setIsSuccess(true)
+      return response.data;
+    } catch (err) {
+      // 4. Tratamento de erro aprimorado para o axios
+      // Axios lança um erro para status 4xx/5xx, que é capturado aqui.
+      // A mensagem de erro da API geralmente está em err.response.data.message
+      let errorMessage = 'Erro ao cadastrar produto';
+      if (axios.isAxiosError(err) && err.response) {
+        errorMessage = err.response.data.message || 'Falha no cadastro do produto';
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+    }
+  };
+
+  const handleCancel = () => {
     setFormData({
-      codigo: "",
-      descricao: "",
-      preco: "",
-      peso: "",
-      unidade: "",
-      validade: "",
-      unidadeTempo: "",
+      code: null,
+      name: "",
+      price: "",
+      weight: "",
+      unit: "",
+      expiration: "",
+      expiration_unit: "",
       informacoesAdicionais: "",
     })
   }
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
+  const handleRegisterAnother = () => {
+    setIsSuccess(false) // Volta para a tela do formulário
+    handleCancel()
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Product data:", formData)
-    // Handle form submission
-    resetForm()
-    toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
-    onSuccess?.()
-  }
-
-  const handleCancel = () => {
-    resetForm()
-    onCancel?.()
+  if (isSuccess) {
+    return (
+      <Card className="max-w-md mx-auto text-center animate-in fade-in-50">
+        <CardHeader>
+          <CheckCircle2
+            className="mx-auto h-16 w-16 text-green-500"
+            strokeWidth={1.5}
+          />
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <CardTitle className="text-2xl font-bold">
+              Cadastro Realizado!
+            </CardTitle>
+            <p className="text-gray-600">
+              O produto foi adicionado com sucesso!
+            </p>
+          </div>
+          <Button
+            onClick={handleRegisterAnother}
+            className="w-full h-11 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
+          >
+            Cadastrar Outro Produto
+          </Button>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
@@ -74,31 +132,26 @@ export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
             <div>
               <Input
                 placeholder="Código"
-                value={formData.codigo}
-                onChange={(e) => handleInputChange("codigo", e.target.value)}
+                value={formData.code ?? ""}
+                onChange={(e) => handleInputChange("code", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
             <div>
               <Input
                 placeholder="Descrição"
-                value={formData.descricao}
-                onChange={(e) => handleInputChange("descricao", e.target.value)}
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
             <div>
-              <Select value={formData.preco} onValueChange={(value) => handleInputChange("preco", value)}>
-                <SelectTrigger className="h-12 text-base border-gray-300 rounded-lg">
-                  <SelectValue placeholder="Preço (R$)" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="0-50">R$ 0 - 50</SelectItem>
-                  <SelectItem value="50-100">R$ 50 - 100</SelectItem>
-                  <SelectItem value="100-200">R$ 100 - 200</SelectItem>
-                  <SelectItem value="200+">R$ 200+</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                placeholder="Preço (R$)"
+                value={formData.price}
+                onChange={(e) => handleInputChange("price", e.target.value)}
+                className="h-12 text-base border-gray-300 rounded-lg"
+              />
             </div>
           </div>
 
@@ -107,13 +160,13 @@ export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
             <div>
               <Input
                 placeholder="Peso"
-                value={formData.peso}
-                onChange={(e) => handleInputChange("peso", e.target.value)}
+                value={formData.weight}
+                onChange={(e) => handleInputChange("weight", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
             <div>
-              <Select value={formData.unidade} onValueChange={(value) => handleInputChange("unidade", value)}>
+              <Select value={formData.unit} onValueChange={(value) => handleInputChange("unit", value)}>
                 <SelectTrigger className="h-12 text-base border-gray-300 rounded-lg">
                   <SelectValue placeholder="Unidade" />
                 </SelectTrigger>
@@ -133,13 +186,13 @@ export function ProductForm({ onCancel, onSuccess }: ProductFormProps = {}) {
             <div>
               <Input
                 placeholder="Validade"
-                value={formData.validade}
-                onChange={(e) => handleInputChange("validade", e.target.value)}
+                value={formData.expiration}
+                onChange={(e) => handleInputChange("expiration", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
             <div>
-              <Select value={formData.unidadeTempo} onValueChange={(value) => handleInputChange("unidadeTempo", value)}>
+              <Select value={formData.expiration_unit} onValueChange={(value) => handleInputChange("expiration_unit", value)}>
                 <SelectTrigger className="h-12 text-base border-gray-300 rounded-lg">
                   <SelectValue placeholder="Unidade de tempo" />
                 </SelectTrigger>

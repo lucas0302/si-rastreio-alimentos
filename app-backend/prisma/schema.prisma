@@ -42,11 +42,13 @@ model Customers {
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
+  code         Int      @id @default(autoincrement())
   name       String   @db.VarChar(255)
   unit       String   @db.VarChar(10)
-  quantity   Decimal  @db.Decimal(8, 2)
-  expiration DateTime
+  price      Decimal  @db.Decimal(10, 2)
+  weight     Decimal  @db.Decimal(10, 2)
+  expiration Decimal  @db.Decimal(5, 2) // validade em dias
+  expiration_unit String   @db.VarChar(10) // unidade de medida da validade (dias, meses, anos)
 
   dailyReports   DailyShipmentReport[]
   monthlyReports MonthlyShipmentReport[]
@@ -82,7 +84,7 @@ model DailyShipmentReport {
   customersId Int
 
   customers Customers @relation(fields: [customersId], references: [id])
-  product   Product   @relation(fields: [productId], references: [id])
+  product   Product   @relation(fields: [productId], references: [code])
   users     Users     @relation(fields: [userId], references: [id])
   vehicle   Vehicle   @relation(fields: [vehicleId], references: [id])
 
@@ -102,7 +104,7 @@ model MonthlyShipmentReport {
   customersId Int
 
   customers Customers @relation(fields: [customersId], references: [id])
-  product   Product   @relation(fields: [productId], references: [id])
+  product   Product   @relation(fields: [productId], references: [code])
 
   @@map("monthly_shipment_report")
 }
