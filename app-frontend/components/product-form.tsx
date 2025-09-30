@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import axios from 'axios'; // 1. Importar axios
+import axios from 'axios';
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -10,8 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2 } from "lucide-react";
-
+import { useToast } from "@/hooks/use-toast"
 type FormDataType = {
   code: number | null;
   name: string;
@@ -22,10 +21,14 @@ type FormDataType = {
   expiration_unit: string;
   informacoesAdicionais: string;
 };
+interface ProdutoFormProps {
+  onCancel?: () => void
+  onSuccess?: () => void
+}
 
-export function ProductForm() {
+export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
+  const { toast } = useToast()
   const [error, setError] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false)
   const [formData, setFormData] = useState<FormDataType>({
     code: null,
     name: "",
@@ -55,8 +58,9 @@ export function ProductForm() {
         `${process.env.NEXT_PUBLIC_API_URL}/produtos/cadastrar-produto`,
         formData
       );
-
-      setIsSuccess(true)
+      toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
+      handleRegisterAnother()
+      onSuccess?.()
       return response.data;
     } catch (err) {
       // 4. Tratamento de erro aprimorado para o axios
@@ -87,37 +91,8 @@ export function ProductForm() {
   }
 
   const handleRegisterAnother = () => {
-    setIsSuccess(false) // Volta para a tela do formulário
     handleCancel()
-  }
-
-  if (isSuccess) {
-    return (
-      <Card className="max-w-md mx-auto text-center animate-in fade-in-50">
-        <CardHeader>
-          <CheckCircle2
-            className="mx-auto h-16 w-16 text-green-500"
-            strokeWidth={1.5}
-          />
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <CardTitle className="text-2xl font-bold">
-              Cadastro Realizado!
-            </CardTitle>
-            <p className="text-gray-600">
-              O produto foi adicionado com sucesso!
-            </p>
-          </div>
-          <Button
-            onClick={handleRegisterAnother}
-            className="w-full h-11 bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
-          >
-            Cadastrar Outro Produto
-          </Button>
-        </CardContent>
-      </Card>
-    )
+    onCancel?.()
   }
 
   return (
