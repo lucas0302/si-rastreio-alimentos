@@ -64,7 +64,8 @@ export class UsersService {
             id: true,
             name: true,
             username: true,
-            role: true
+            role: true,
+            active: true
           }
         })
       ]);

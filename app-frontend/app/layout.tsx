@@ -7,8 +7,11 @@ import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'LF Solutions',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  description: 'LF Solutions - Soluções em Tecnologia',
+  generator: 'next.js',
+  icons: {
+    icon: "/truck-logo.png",
+  },
 }
 
 export default function RootLayout({
@@ -18,6 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
         <Analytics />

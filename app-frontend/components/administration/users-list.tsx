@@ -21,6 +21,7 @@ type ApiUser = {
   name: string
   username: string
   role: "admin" | "user"
+  active: boolean
 }
 
 type ApiResponse = {
@@ -77,7 +78,7 @@ export function UsersList({ onAdd }: UsersListProps) {
         name: u.name,
         username: u.username,
         role: ROLE_LABEL[u.role] ?? u.role,
-        status: "Ativo",
+        status: u.active ? "Ativo" : "Desativado",
       }))
 
       setRows(mapped)
