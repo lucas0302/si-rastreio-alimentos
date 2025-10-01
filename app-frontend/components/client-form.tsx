@@ -89,7 +89,8 @@ export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
     }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clientes/cadastro-cliente`, payload)
+      const token = localStorage.getItem("token")
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clientes/cadastro-cliente`, payload, { headers: { Authorization: `Bearer ${token}` } })
       toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
       resetForm()
       onSuccess?.()

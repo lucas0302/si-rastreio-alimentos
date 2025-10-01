@@ -51,23 +51,22 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
       if (!token) {
         toast?.({
           title: "Token nao encontrado",
-          description: "Faca login novamente.",
+          description: "Faça login novamente.",
         })
         return
       }
 
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios/cadastro-usuario`,
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios/cadastrar-usuario`,
         {
           name: nome,
           username,
           password: senha,
           role: perfil,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        }, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      }
       )
 
       toast?.({
