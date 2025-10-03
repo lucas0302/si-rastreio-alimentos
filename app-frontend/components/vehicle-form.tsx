@@ -39,10 +39,13 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
     }))
   }
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
+      setIsLoading(true)
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
 
       const payload = {
@@ -63,11 +66,13 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
       )
 
       resetForm()
-      toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
+      toast?.({ description: "Cadastro realizado com sucesso!", variant: "success" })
       onSuccess?.()
     } catch (error: any) {
       const msg = error?.response?.data?.message || "Erro ao cadastrar veículo"
       toast?.({ description: String(msg) })
+    } finally {
+      setIsLoading(false)
     }
   }
 
