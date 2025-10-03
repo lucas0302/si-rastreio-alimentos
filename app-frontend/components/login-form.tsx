@@ -78,7 +78,7 @@ export function LoginForm() {
     <Card className="w-full max-w-md mx-auto shadow-lg border-0">
       <CardContent className="p-8">
         <div className="flex flex-col items-center space-y-8">
-          {/* Logo (LCP) */}
+          {/* Logo */}
           <div className="w-24 h-24 rounded-full flex items-center justify-center bg-white">
             <div className="w-48 h-48 relative">
               <Image src={Logo} alt="Logo" fill className="object-contain" priority />
