@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL") // usa o pooler (porta 6543) em produção
-  directUrl = env("DIRECT_URL")  
+  directUrl = env("DIRECT_URL")
 }
 
 model Users {
@@ -58,11 +58,12 @@ model Product {
 }
 
 model Vehicle {
-  id       Int    @id @default(autoincrement())
-  model    String @db.VarChar(100)
-  plate    String @db.VarChar(10)
-  category String @db.VarChar(20)
-  brand    String @db.VarChar(30)
+  id           Int    @id @default(autoincrement())
+  maximum_load Float  @db.DoublePrecision
+  model        String @db.Text
+  plate        String @db.Text
+  phone        String @db.Text
+  description  String @db.Text
 
   dailyReports DailyShipmentReport[]
 
