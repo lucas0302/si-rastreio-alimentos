@@ -6,12 +6,12 @@ import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
 import { AdminRolesGuard } from 'src/auth/guard/roles/admin-roles.guard';
 
 @UseGuards(AuthTokenGuard)
-@Controller('clientes')
+@Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) { }
 
   @UseGuards(AdminRolesGuard)
-  @Post('cadastro-cliente')
+  @Post('register-customer')
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.customersService.create(createCustomerDto);
   }

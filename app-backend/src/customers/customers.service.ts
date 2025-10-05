@@ -1,124 +1,137 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { CreateCustomerDto } from "./dto/create-customer.dto";
+import { UpdateCustomerDto } from "./dto/update-customer.dto";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 export class CustomersService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
     try {
-      const findCostomers = await this.prisma.customers.findFirst({
+      const existingCustomer = await this.prisma.customers.findFirst({
         where: {
-          cnpj: createCustomerDto.cnpj
-        }
-      });
+          OR: [
+            { code: BigInt(createCustomerDto.code) },
+            { cnpj_cpf: createCustomerDto.cnpj_cpf },
+          ],
+        },
+      } as any);
 
-      if (findCostomers?.cnpj === createCustomerDto.cnpj) {
-        throw new HttpException('Esse cliente já existe.', HttpStatus.CONFLICT);
+      if (existingCustomer) {
+        throw new HttpException("Esse cliente já existe.", HttpStatus.CONFLICT);
       }
 
       await this.prisma.customers.create({
         data: {
-          name: createCustomerDto.name,
-          email: createCustomerDto.email,
-          cnpj: createCustomerDto.cnpj,
+          code: BigInt(createCustomerDto.code),
+          fantasy_name: createCustomerDto.fantasy_name,
+          legal_name: createCustomerDto.legal_name,
+          cnpj_cpf: createCustomerDto.cnpj_cpf,
+          state_subscrition: createCustomerDto.state_subscrition,
+          neighborhood: createCustomerDto.neighborhood,
+          state: createCustomerDto.state,
           address: createCustomerDto.address,
+          cep: createCustomerDto.cep,
+          corporate_network: createCustomerDto.corporate_network,
+          email: createCustomerDto.email,
           phone: createCustomerDto.phone,
-          identificationCode: createCustomerDto.identificationCode,
-          paymentMethod: createCustomerDto.paymentMethod,
-          paymentTern: createCustomerDto.paymentTern,
-          city: createCustomerDto.city,
-          State: createCustomerDto.state,
-          legalName: createCustomerDto.legalName,
-          stateRegistration: createCustomerDto.stateRegistration,
-        }
-      });
+          payment_method: createCustomerDto.payment_method,
+        } as any,
+      } as any);
       return { message: "Cliente cadastrado com sucesso!" };
-
     } catch (err) {
-      if (err.status === 409) {
-        throw new HttpException('Esse cliente já existe.', HttpStatus.CONFLICT);
+      if (err?.status === 409) {
+        throw new HttpException("Esse cliente já existe.", HttpStatus.CONFLICT);
       }
-
-      throw new HttpException('falha ao cadastrar o cliente.', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Falha ao cadastrar o cliente.",
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 
   async findAll() {
-    return await this.prisma.customers.findMany();
+    return await this.prisma.customers.findMany({
+      orderBy: { code: "desc" } as any,
+    } as any);
   }
 
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
-
     try {
-      const user = await this.prisma.customers.findFirst({
+      const customer: any = await this.prisma.customers.findFirst({
         where: {
-          id: id
-        }
-      });
+          code: BigInt(id),
+        },
+      } as any);
 
-      if (!user) {
-        throw new HttpException('Esse cliente não esta na nossa base de dados.', HttpStatus.CONFLICT);
+      if (!customer) {
+        throw new HttpException(
+          "Esse cliente não está na nossa base de dados.",
+          HttpStatus.CONFLICT
+        );
       }
 
-      const updatecustomer = await this.prisma.customers.update({
+      const updatecustomer: any = await this.prisma.customers.update({
         where: {
-          id: user.id
+          code: customer.code,
         },
         data: {
-          name: updateCustomerDto?.name ?? user.name,
-          email: updateCustomerDto?.email ?? user.email,
-          cnpj: updateCustomerDto?.cnpj ?? user.cnpj,
-          address: updateCustomerDto?.address ?? user.address,
-          phone: updateCustomerDto?.phone ?? user.phone,
-          identificationCode: updateCustomerDto?.identificationCode ?? user.identificationCode,
-          paymentMethod: updateCustomerDto?.paymentMethod ?? user.paymentMethod,
-          paymentTern: updateCustomerDto?.paymentTern ?? user.paymentTern,
-          city: updateCustomerDto?.city ?? user.city,
-          legalName: updateCustomerDto?.legalName ?? user.legalName,
-          stateRegistration: updateCustomerDto?.stateRegistration ?? user.stateRegistration,
-        }
-      })
+          fantasy_name:
+            updateCustomerDto?.fantasy_name ?? customer.fantasy_name,
+          legal_name: updateCustomerDto?.legal_name ?? customer.legal_name,
+          cnpj_cpf: updateCustomerDto?.cnpj_cpf ?? customer.cnpj_cpf,
+          address: updateCustomerDto?.address ?? customer.address,
+          neighborhood:
+            updateCustomerDto?.neighborhood ?? customer.neighborhood,
+          state: updateCustomerDto?.state ?? customer.state,
+          cep: updateCustomerDto?.cep ?? customer.cep,
+          corporate_network:
+            updateCustomerDto?.corporate_network ?? customer.corporate_network,
+          email: updateCustomerDto?.email ?? customer.email,
+          phone: updateCustomerDto?.phone ?? customer.phone,
+          payment_method:
+            updateCustomerDto?.payment_method ?? customer.payment_method,
+          state_subscrition:
+            updateCustomerDto?.state_subscrition ?? customer.state_subscrition,
+        } as any,
+      } as any);
 
       return {
         updatecustomer,
-        message: "cliente atualizado com sucesso!"
-      }
-
+        message: "Cliente atualizado com sucesso!",
+      };
     } catch (err) {
-
-      throw new HttpException('falha ao atualizar o cliente.', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Falha ao atualizar o cliente.",
+        HttpStatus.BAD_REQUEST
+      );
     }
-
   }
 
   async remove(id: number) {
-
     try {
-      console.log(id)
-      const user = await this.prisma.customers.findFirst({
-        where: {
-          id: id
-        }
-      });
+      const customer: any = await this.prisma.customers.findFirst({
+        where: { code: BigInt(id) },
+      } as any);
 
-      if (!user) {
-        throw new HttpException('Esse usuario nao existe.', HttpStatus.BAD_REQUEST);
+      if (!customer) {
+        throw new HttpException(
+          "Esse cliente não está na nossa base de dados.",
+          HttpStatus.BAD_REQUEST
+        );
       }
 
       await this.prisma.customers.delete({
-        where: {
-          id: user.id
-        }
-      });
+        where: { code: customer.code },
+      } as any);
 
-      return { message: "Usuario deleta com sucesso!" }
-
+      return { message: "Cliente deletado com sucesso!" };
     } catch (err) {
-      console.log(err);
-      throw new HttpException('Falha ao deletar Comprador.', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Falha ao deletar Cliente.",
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 }

@@ -1,19 +1,34 @@
-import { IsString, IsEmail, IsOptional, Length, Matches, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsOptional, Matches, IsNotEmpty, IsNumberString } from 'class-validator';
 
 export class CreateCustomerDto {
   @IsNotEmpty()
+  @IsNumberString()
+  code: string;
+
+  @IsNotEmpty()
   @IsString()
-  name: string;
+  fantasy_name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  legal_name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/^\d+$/, { message: 'CNPJ/CPF deve conter apenas números' })
+  cnpj_cpf: string;
+
+  @IsNotEmpty()
+  @IsString()
+  state_subscrition: string;
 
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
   @IsNotEmpty()
-  @IsString()
-  @Length(14, 14, { message: 'CNPJ deve ter 14 dígitos' })
-  @Matches(/^\d+$/, { message: 'CNPJ deve conter apenas números' })
-  cnpj: string;
+  @Matches(/^\d+$/, { message: 'Telefone deve conter apenas números' })
+  phone: string;
 
   @IsNotEmpty()
   @IsString()
@@ -21,33 +36,21 @@ export class CreateCustomerDto {
 
   @IsNotEmpty()
   @IsString()
-  phone: string;
+  neighborhood: string;
 
   @IsNotEmpty()
   @IsString()
-  identificationCode: string;
+  state: string;
 
   @IsNotEmpty()
   @IsString()
-  paymentMethod: string;
+  cep: string;
 
   @IsNotEmpty()
   @IsString()
-  paymentTern: string;          // Prazo de pagamento
+  corporate_network: string;
 
   @IsNotEmpty()
   @IsString()
-  city: string;
-
-  @IsNotEmpty()
-  @IsString()
-  state: string;                // Estado
-
-  @IsOptional()
-  @IsString()
-  legalName: string;            // Razão Social
-
-  @IsNotEmpty()
-  @IsString()
-  stateRegistration: string;    // Inscrição Estadual
+  payment_method: string;
 }

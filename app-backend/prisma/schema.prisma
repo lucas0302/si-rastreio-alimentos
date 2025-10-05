@@ -4,67 +4,62 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL") // usa o pooler (porta 6543) em produção
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Users {
-  id       Int     @id @default(autoincrement())
-  name     String  @db.VarChar(100)
-  username String  @db.VarChar(100)
-  password String  @db.VarChar(255)
-  active   Boolean @default(true)
-
+  id           Int                   @id @default(autoincrement())
+  name         String                @db.VarChar(100)
+  username     String                @db.VarChar(100)
+  password     String                @db.VarChar(255)
   role         role                  @default(user)
+  active       Boolean               @default(true)
   dailyReports DailyShipmentReport[]
 
   @@map("users")
 }
 
 model Customers {
-  id                 Int    @id @default(autoincrement())
-  name               String @db.VarChar(100)
-  email              String @db.VarChar(100)
-  cnpj               String @db.VarChar(14)
-  address            String @db.VarChar(255)
-  phone              String @db.VarChar(100)
-  identificationCode String @db.VarChar(255) //Codigo do cliente
-  paymentMethod      String @db.VarChar(255)
-  paymentTern        String @db.VarChar(255) //Forma de pagamento
-  city               String @db.VarChar(255)
-  State              String @db.VarChar(255) //Estado
-  legalName          String @db.VarChar(255) //Razǜo Social
-  stateRegistration  String @db.VarChar(255) //Insc. Estadual
-
-  dailyReports   DailyShipmentReport[]
-  monthlyReports MonthlyShipmentReport[]
+  code              Int    @id
+  legal_name        String?
+  fantasy_name      String?
+  state_subscrition String?
+  neighborhood      String?
+  state             String?
+  address           String?
+  cep               String?
+  corporate_network String?
+  cnpj_cpf          String?   @map("cnpj/cpf")
+  email             String?
+  phone             String?
+  last_sale_date    DateTime? @db.Date
+  payment_method    String?
 
   @@map("customers")
 }
 
 model Product {
-  code            Int     @id @default(autoincrement())
-  name            String  @db.VarChar(255)
-  unit            String  @db.VarChar(10)
-  price           Decimal @db.Decimal(10, 2)
-  weight          Decimal @db.Decimal(10, 2)
-  expiration      Decimal @db.Decimal(5, 2) // validade em dias
-  expiration_unit String  @db.VarChar(10) // unidade de medida da validade (dias, meses, anos)
-
-  dailyReports   DailyShipmentReport[]
-  monthlyReports MonthlyShipmentReport[]
+  code            Int                     @id @default(autoincrement())
+  name            String                  @db.VarChar(255)
+  unit            String                  @db.VarChar(10)
+  price           Decimal                 @db.Decimal(10, 2)
+  weight          Decimal                 @db.Decimal(10, 2)
+  expiration      Decimal                 @db.Decimal(5, 2)
+  expiration_unit String                  @db.VarChar(10)
+  dailyReports    DailyShipmentReport[]
+  monthlyReports  MonthlyShipmentReport[]
 
   @@map("products")
 }
 
 model Vehicle {
-  id           Int    @id @default(autoincrement())
-  maximumLoad Float  @db.DoublePrecision
-  model        String @db.Text
-  plate        String @db.Text
-  phone        String @db.Text
-  description  String @db.Text
-
+  id           Int                   @id @default(autoincrement())
+  model        String                @db.VarChar(100)
+  plate        String                @db.VarChar(10)
+  description  String?
+  maximumLoad  Float?
+  phone        String?
   dailyReports DailyShipmentReport[]
 
   @@map("vehicles")
@@ -79,16 +74,13 @@ model DailyShipmentReport {
   temperature       Decimal
   sanitaryCondition Boolean
   deliverer         String   @db.VarChar(100)
-
-  userId      Int
-  vehicleId   Int
-  productId   Int
-  customersId Int
-
-  customers Customers @relation(fields: [customersId], references: [id])
-  product   Product   @relation(fields: [productId], references: [code])
-  users     Users     @relation(fields: [userId], references: [id])
-  vehicle   Vehicle   @relation(fields: [vehicleId], references: [id])
+  userId            Int
+  vehicleId         Int
+  productId         Int
+  customersId       Int
+  product           Product  @relation(fields: [productId], references: [code])
+  users             Users    @relation(fields: [userId], references: [id])
+  vehicle           Vehicle  @relation(fields: [vehicleId], references: [id])
 
   @@map("daily_shipment_report")
 }
@@ -101,12 +93,9 @@ model MonthlyShipmentReport {
   deliverer      String   @db.VarChar(100)
   productionDate DateTime
   shipmentDate   DateTime
-
-  productId   Int
-  customersId Int
-
-  customers Customers @relation(fields: [customersId], references: [id])
-  product   Product   @relation(fields: [productId], references: [code])
+  productId      Int
+  customersId    Int
+  product        Product  @relation(fields: [productId], references: [code])
 
   @@map("monthly_shipment_report")
 }
