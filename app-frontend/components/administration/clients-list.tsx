@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Fragment, useCallback } from "react"
 import axios from "axios"
-import { Eye, Pencil, Trash2 } from "lucide-react"
+import { Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -16,19 +16,20 @@ import { AdminListCard } from "./list-card"
 import { TAB_CONFIG } from "./config"
 
 interface ApiClient {
-  code: number;      
+  code: number;
   legal_name: string;
-  fantasy_name: string;          
-  cnpj_cpf: string;            
-  state_subscrition: string;   
+  fantasy_name: string;
+  cnpj_cpf: string;   
+  state_subscrition: string;
   email: string;
   phone: string;
   state: string;
   neighborhood: string;
   address: string;
-  cep: string;                 
-  corporate_network: string;   
-  payment_method: string;      
+  cep: string;   
+  corporate_network: string;
+  payment_method: string;
+  last_sale_date: string;
 }
 
 interface ClientsListProps {
@@ -39,18 +40,6 @@ export function ClientsList({ onAdd }: ClientsListProps) {
   const [clients, setClients] = useState<ApiClient[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [expanded, setExpanded] = useState<Set<number>>(new Set())
-
-  const toggleRow = useCallback((id: number) => {
-    setExpanded(prev => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }, [])
-
-  const isExpanded = useCallback((id: number) => expanded.has(id), [expanded])
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -75,6 +64,14 @@ export function ClientsList({ onAdd }: ClientsListProps) {
     }
     fetchClients()
   }, [])
+
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return "-"
+    const onlyDate = dateString.split("T")[0]
+    const [year, month, day] = onlyDate.split("-")
+    if (!year || !month || !day) return "-"
+    return `${day}/${month}/${year}`
+  }
 
   if (loading) {
     return (
@@ -110,6 +107,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
             <TableHead>CEP</TableHead>
             <TableHead>Rede</TableHead>
             <TableHead>Forma de pagamento</TableHead>
+            <TableHead>Última venda</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -133,6 +131,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                   <TableCell>{client.cep}</TableCell>
                   <TableCell>{client.corporate_network}</TableCell>
                   <TableCell>{client.payment_method}</TableCell>
+                  <TableCell>{formatDate(client.last_sale_date)}</TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-2">
                       <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900">
