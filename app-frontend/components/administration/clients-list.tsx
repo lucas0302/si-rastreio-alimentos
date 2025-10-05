@@ -16,19 +16,19 @@ import { AdminListCard } from "./list-card"
 import { TAB_CONFIG } from "./config"
 
 interface ApiClient {
-  id: number
-  name: string
-  email: string
-  cnpj: string
-  address: string
-  phone: string
-  identificationCode: string
-  paymentMethod: string
-  paymentTern: string
-  city: string
-  State: string
-  legalName?: string
-  stateRegistration: string
+  code: number;      
+  legal_name: string;
+  fantasy_name: string;          
+  cnpj_cpf: string;            
+  state_subscrition: string;   
+  email: string;
+  phone: string;
+  address: string;
+  neighborhood: string;        
+  state: string;               
+  cep: string;                 
+  corporate_network: string;   
+  payment_method: string;      
 }
 
 interface ClientsListProps {
@@ -58,7 +58,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
         setError(null)
         const token = localStorage.getItem("token")
         const res = await axios.get<ApiClient[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/clientes`,
+          `${process.env.NEXT_PUBLIC_API_URL}/customers`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         setClients(res.data)
@@ -66,7 +66,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
         console.error(e)
         setError(
           e?.response?.status === 401
-            ? "Não autorizado: verifique seu login/token."
+            ? "Não autorizado: verifique seu login."
             : "Erro ao carregar clientes."
         )
       } finally {
@@ -109,25 +109,25 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
         <TableBody>
           {clients.map((client) => {
-            const open = isExpanded(client.id)
+            const open = isExpanded(client.code)
             return (
-              <Fragment key={client.id}>
+              <Fragment key={client.code}>
                 <TableRow className="text-gray-700">
                   <TableCell className="font-medium text-gray-900">
-                    {client.identificationCode}
+                    {client.code}
                   </TableCell>
-                  <TableCell>{client.name}</TableCell>
-                  <TableCell>{client.legalName ?? "—"}</TableCell>
-                  <TableCell>{client.cnpj}</TableCell>
+                  <TableCell>{client.fantasy_name}</TableCell>
+                  <TableCell>{client.legal_name ?? "—"}</TableCell>
+                  <TableCell>{client.cnpj_cpf}</TableCell>
                   <TableCell>{client.phone}</TableCell>
                   <TableCell>{client.email}</TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-2">
                       <Button
                         type="button"
-                        onClick={() => toggleRow(client.id)}
+                        onClick={() => toggleRow(client.code)}
                         aria-expanded={open}
-                        aria-controls={`details-${client.id}`}
+                        aria-controls={`details-${client.code}`}
                         variant="ghost"
                         size="icon"
                         className={`h-8 w-8 rounded-full text-gray-500 hover:text-gray-900 transition-transform ${open ? "rotate-0 scale-110" : ""}`}
@@ -148,7 +148,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
                 {/* Detalhes expandíveis */}
                 <TableRow
-                  id={`details-${client.id}`}
+                  id={`details-${client.code}`}
                   className={`text-sm text-gray-600 bg-gray-50`}
                 >
                   <TableCell className="p-0 border-none" />
@@ -164,16 +164,15 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                         <div>
                           <p className="text-xs uppercase text-gray-900">Endereço</p>
                           <p className="font-medium text-gray-500">{client.address}</p>
-                          <p>{client.city} - {client.State}</p>
+                          <p>{client.address}, {client.neighborhood} - {client.state}</p>
                         </div>
                         <div>
                           <p className="text-xs uppercase text-gray-900">Insc. estadual</p>
-                          <p className="font-medium text-gray-500">{client.stateRegistration}</p>
+                          <p className="font-medium text-gray-500">{client.state_subscrition}</p>
                         </div>
                         <div>
                           <p className="text-xs uppercase text-gray-900">Pagamento</p>
-                          <p className="font-medium text-gray-500">{client.paymentMethod}</p>
-                          <p className="font-medium text-gray-500">{client.paymentTern}</p>
+                          <p className="font-medium text-gray-500">{client.payment_method}</p>
                         </div>
                       </div>
                     </div>
