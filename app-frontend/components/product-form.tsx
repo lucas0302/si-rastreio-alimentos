@@ -54,9 +54,32 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
     setError("");
 
     try {
+      // Basic validation
+      if (formData.code === null || Number.isNaN(Number(formData.code))) {
+        setError("Informe um código numérico válido.");
+        return;
+      }
+      if (!formData.name.trim()) {
+        setError("Informe a descrição do produto.");
+        return;
+      }
+
+      // Normalize decimal strings (accept 10,50 -> 10.50)
+      const toDecimal = (v: string) => (v || "").replace(/\./g, "").replace(/,/g, ".");
+
+      const payload = {
+        code: Number(formData.code),
+        name: formData.name,
+        price: toDecimal(formData.price),
+        weight: toDecimal(formData.weight),
+        unit: formData.unit,
+        expiration: toDecimal(formData.expiration),
+        expiration_unit: formData.expiration_unit,
+      }
+
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/produtos/produtos`,
-        formData
+        `${process.env.NEXT_PUBLIC_API_URL}/products/register-products`,
+        payload
       );
       toast?.({ description: "Cadastro realizado com sucesso!", variant: "success" })
       handleRegisterAnother()
@@ -65,7 +88,9 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
     } catch (err) {
       let errorMessage = 'Erro ao cadastrar produto';
       if (axios.isAxiosError(err) && err.response) {
-        errorMessage = err.response.data.message || 'Falha no cadastro do produto';
+        const msg = err.response.data?.message;
+        if (Array.isArray(msg)) errorMessage = msg.join("\n");
+        else errorMessage = msg || 'Falha no cadastro do produto';
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }

@@ -10,7 +10,6 @@ export class ProductsService {
     private readonly prisma: PrismaService,
   ) { }
 
-  // Create user
   async create(createProductDto: CreateProductDto) {
     try {
       const findCode = await this.prisma.product.findFirst(
@@ -28,12 +27,9 @@ export class ProductsService {
       await this.prisma.product.create({
         data: {
           code: Number(createProductDto.code),
-          name: createProductDto.name,
-          price: createProductDto.price,
-          weight: createProductDto.weight,
-          unit: createProductDto.unit,
-          expiration: createProductDto.expiration,
-          expiration_unit: createProductDto.expiration_unit
+          description: createProductDto.description,
+          group: createProductDto.group,
+          company: createProductDto.company,
         }
       });
 
@@ -48,8 +44,10 @@ export class ProductsService {
     }
   }
 
-  findAll() {
-    return "Chego";
+  async findAll() {
+    return this.prisma.product.findMany({
+      orderBy: { code: 'desc' } as any,
+    } as any);
   }
 
   findOne(id: number) {

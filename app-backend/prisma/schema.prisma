@@ -21,7 +21,7 @@ model Users {
 }
 
 model Customers {
-  code              Int    @id
+  code              Int       @id
   legal_name        String?
   fantasy_name      String?
   state_subscrition String?
@@ -40,15 +40,12 @@ model Customers {
 }
 
 model Product {
-  code            Int                     @id @default(autoincrement())
-  name            String                  @db.VarChar(255)
-  unit            String                  @db.VarChar(10)
-  price           Decimal                 @db.Decimal(10, 2)
-  weight          Decimal                 @db.Decimal(10, 2)
-  expiration      Decimal                 @db.Decimal(5, 2)
-  expiration_unit String                  @db.VarChar(10)
-  dailyReports    DailyShipmentReport[]
-  monthlyReports  MonthlyShipmentReport[]
+  code             Int       @id @unique
+  description      String?
+  group            String?
+  company          String?
+  last_buying_date DateTime? @db.Date
+  last_sale_date   DateTime? @db.Date
 
   @@map("products")
 }
@@ -78,7 +75,6 @@ model DailyShipmentReport {
   vehicleId         Int
   productId         Int
   customersId       Int
-  product           Product  @relation(fields: [productId], references: [code])
   users             Users    @relation(fields: [userId], references: [id])
   vehicle           Vehicle  @relation(fields: [vehicleId], references: [id])
 
@@ -95,7 +91,6 @@ model MonthlyShipmentReport {
   shipmentDate   DateTime
   productId      Int
   customersId    Int
-  product        Product  @relation(fields: [productId], references: [code])
 
   @@map("monthly_shipment_report")
 }

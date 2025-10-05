@@ -3,31 +3,17 @@ import { IsNotEmpty, IsString, MinLength, MaxLength, Matches, IsEnum, IsInt, IsD
 export class CreateProductDto {
     @IsNotEmpty()
     @IsInt()
-    code: string;
+    code: number;
 
     @IsNotEmpty()
     @IsString()
-    @MinLength(3)
-    @MaxLength(255)
-    name: string;
-
-    @IsNotEmpty()
-    @IsDecimal()
-    price: number;
-
-    @IsNotEmpty()
-    @IsDecimal()
-    weight: number;
+    description: string;
 
     @IsNotEmpty()
     @IsString()
-    unit: string;
-
-    @IsNotEmpty()
-    @IsDecimal()
-    expiration: string;
+    group: string;
 
     @IsNotEmpty()
     @IsString()
-    expiration_unit: string;
+    company: string;
 }
