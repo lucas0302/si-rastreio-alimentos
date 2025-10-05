@@ -97,7 +97,7 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Produto</CardTitle>
       </CardHeader>
-      <CardContent className="p-8">
+      <CardContent className="p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* First row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -78,21 +78,21 @@ export function Sidebar() {
   }
 
   return (
-    <div className="w-130 bg-white border-r border-gray-300 flex flex-col">
+    <div className="w-56 bg-white border-r border-gray-300 flex flex-col">
       {/* Logo */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full border-2 border-yellow-400 flex items-center justify-center bg-white">
-            <div className="w-6 h-6 relative">
+      <div className="p-3 border-b border-gray-200">
+        <div className="flex items-center space-x-2">
+          <div className="w-9 h-9 rounded-full border-2 border-yellow-400 flex items-center justify-center bg-white">
+            <div className="w-5 h-5 relative">
               <Image src="/truck-logo.png" alt="Logo" fill className="object-contain" />
             </div>
           </div>
-          <span className="font-semibold text-gray-900">LF SOLUTION</span>
+          <span className="font-semibold text-gray-900 text-sm">LF SOLUTION</span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-3 space-y-1">
         {menuItems.map((item) => (
           <div key={item.title}>
             {item.submenu ? (
@@ -113,7 +113,7 @@ export function Sidebar() {
                   )}
                 </button>
                 {expandedItems.includes(item.title) && (
-                  <div className="ml-6 mt-1 space-y-1">
+                  <div className="ml-4 mt-1 space-y-1">
                     {item.submenu.map((subItem) => (
                       <Link
                         key={subItem.title}
@@ -144,9 +144,9 @@ export function Sidebar() {
       </nav>
 
       {/* User section */}
-      <div className="p-4 border-t border-gray-200">
-        <div className="flex items-center space-x-3 mb-3">
-          <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+      <div className="p-3 border-t border-gray-200">
+        <div className="flex items-center space-x-2 mb-2">
+          <div className="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center">
             <User className="w-4 h-4 text-gray-600" />
           </div>
           <span className="text-sm font-medium text-gray-900">Luiz Fernando</span>

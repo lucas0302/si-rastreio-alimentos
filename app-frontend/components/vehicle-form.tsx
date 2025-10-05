@@ -86,13 +86,13 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
 
   // Renderização padrão do formulário
   return (
-    <Card className=" max-w-full h-250 mx-auto">
+    <Card className="w-full max-w-5xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">
           Cadastrar Veículo
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-8">
+      <CardContent className="p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col space-y-1">

@@ -25,7 +25,7 @@ export function AdminListCard({
   const label = actionLabel ?? meta?.actionLabel ?? "+ Adicionar"
 
   return (
-    <Card className="border border-gray-200 shadow-sm">
+    <Card className="w-full border border-gray-200 shadow-sm">
       {showHeader && meta ? (
         <CardHeader className="flex flex-row items-center justify-between gap-4">
           <div>
@@ -42,7 +42,7 @@ export function AdminListCard({
           ) : null}
         </CardHeader>
       ) : null}
-      <CardContent className={cn("px-6 pb-6", !showHeader && "pt-6")}>
+      <CardContent className={cn("px-4 md:px-6 pb-6", !showHeader && "pt-6") }>
         <div className="space-y-4">
           {children}
           {actionPlacement === "footer" ? (

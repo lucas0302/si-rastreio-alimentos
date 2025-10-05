@@ -12,7 +12,7 @@ export class CustomersService {
       const existingCustomer = await this.prisma.customers.findFirst({
         where: {
           OR: [
-            { code: BigInt(createCustomerDto.code) },
+            { code: Number(createCustomerDto.code) },
             { cnpj_cpf: createCustomerDto.cnpj_cpf },
           ],
         },
@@ -24,7 +24,7 @@ export class CustomersService {
 
       await this.prisma.customers.create({
         data: {
-          code: BigInt(createCustomerDto.code),
+          code: Number(createCustomerDto.code),
           fantasy_name: createCustomerDto.fantasy_name,
           legal_name: createCustomerDto.legal_name,
           cnpj_cpf: createCustomerDto.cnpj_cpf,
@@ -61,7 +61,7 @@ export class CustomersService {
     try {
       const customer: any = await this.prisma.customers.findFirst({
         where: {
-          code: BigInt(id),
+          code: Number(id),
         },
       } as any);
 

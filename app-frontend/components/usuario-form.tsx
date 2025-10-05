@@ -108,7 +108,7 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
       <CardHeader className="pb-4">
         <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Usuario</CardTitle>
       </CardHeader>
-      <CardContent className="pb-10">
+      <CardContent className="p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="flex flex-col gap-2">

@@ -40,7 +40,8 @@ export function ProductsList({ onAdd }: ProductsListProps) {
       showHeader={true}
       actionPlacement="footer"
     >
-      <Table>
+      <div className="w-full overflow-x-auto">
+        <Table className="min-w-max">
         <TableHeader>
           <TableRow className="text-gray-500">
             <TableHead className="w-[90px]">Cod.</TableHead>
@@ -78,7 +79,8 @@ export function ProductsList({ onAdd }: ProductsListProps) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+        </Table>
+      </div>
     </AdminListCard>
   )
 }
