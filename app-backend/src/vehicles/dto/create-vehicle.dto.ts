@@ -1,17 +1,24 @@
-import { IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateVehicleDto {
  
     @IsString()
+    @IsNotEmpty()
     model: string;
 
     @IsString()
+    @IsNotEmpty()
     plate: string;
 
     @IsString()
-    category: string;
+    @IsNotEmpty()
+    phone: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    maximumLoad: number;
 
     @IsString()
-    brand: string;
+    description: string;
 
 }

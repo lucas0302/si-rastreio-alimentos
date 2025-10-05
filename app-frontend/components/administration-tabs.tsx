@@ -37,10 +37,10 @@ export function AdministrationTabs({ defaultTab = "clientes" }: AdministrationTa
   })
 
   const TAB_TO_ROUTE: Record<TabKey, string> = {
-    clientes: "/cadastrar-cliente",
-    produtos: "/cadastrar-produto",
-    usuarios: "/cadastrar-usuario",
-    veiculos: "/cadastrar-veiculo",
+    clientes: "/clientes",
+    produtos: "/produtos",
+    usuarios: "/usuarios",
+    veiculos: "/veiculos",
   }
 
   // Keep activeTab in sync with current route so the yellow bottom border

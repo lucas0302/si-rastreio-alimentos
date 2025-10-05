@@ -1,18 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
-import { VehicleRepository } from './vehicle.repository';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class VehicleService {
 
-  constructor(private readonly vehicleRepository: VehicleRepository) { }
+  constructor(private readonly prisma: PrismaService) { }
 
-  findAllVehicles() {
-    return this.vehicleRepository.findAllVehicles();
+  async createVehicle(vehicle: CreateVehicleDto) {
+    return this.prisma.vehicle.create({
+      data: {
+        maximumLoad: vehicle.maximumLoad,
+        model: vehicle.model,
+        plate: vehicle.plate,
+        phone: vehicle.phone,
+        description: vehicle.description,
+      },
+    });
   }
 
-  createVehicle(vehicle: CreateVehicleDto) {
-    return this.vehicleRepository.createVehicle(vehicle);
+  async findAll() {
+    return this.prisma.vehicle.findMany();
   }
 
 }

@@ -56,7 +56,7 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
         return
       }
 
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios/cadastrar-usuario`,
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios/usuarios`,
         {
           name: nome,
           username,
@@ -70,7 +70,7 @@ export function UsuarioForm({ onCancel, onSuccess }: UsuarioFormProps = {}) {
       )
 
       toast?.({
-        description: "cadastro realizado com sucesso!",
+        description: "Cadastro realizado com sucesso!",
         variant: "success",
       })
 

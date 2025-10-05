@@ -55,17 +55,14 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/produtos/cadastrar-produto`,
+        `${process.env.NEXT_PUBLIC_API_URL}/produtos/produtos`,
         formData
       );
-      toast?.({ description: "cadastro realizado com sucesso!", variant: "success" })
+      toast?.({ description: "Cadastro realizado com sucesso!", variant: "success" })
       handleRegisterAnother()
       onSuccess?.()
       return response.data;
     } catch (err) {
-      // 4. Tratamento de erro aprimorado para o axios
-      // Axios lança um erro para status 4xx/5xx, que é capturado aqui.
-      // A mensagem de erro da API geralmente está em err.response.data.message
       let errorMessage = 'Erro ao cadastrar produto';
       if (axios.isAxiosError(err) && err.response) {
         errorMessage = err.response.data.message || 'Falha no cadastro do produto';

@@ -59,7 +59,7 @@ model Product {
 
 model Vehicle {
   id           Int    @id @default(autoincrement())
-  maximum_load Float  @db.DoublePrecision
+  maximumLoad Float  @db.DoublePrecision
   model        String @db.Text
   plate        String @db.Text
   phone        String @db.Text

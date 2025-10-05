@@ -29,19 +29,19 @@ const menuItems = [
     submenu: [
       {
         title: "Clientes",
-        href: "/cadastrar-cliente",
+        href: "/clientes",
       },
       {
         title: "Produtos",
-        href: "/cadastrar-produto",
+        href: "/produtos",
       },
       {
         title: "Usuários",
-        href: "/cadastrar-usuario",
+        href: "/usuarios",
       },
       {
         title: "Veículos",
-        href: "/cadastrar-veiculo",
+        href: "/veiculos",
       },
     ],
   },

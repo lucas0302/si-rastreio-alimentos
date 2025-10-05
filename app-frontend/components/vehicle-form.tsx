@@ -17,18 +17,20 @@ interface VehicleFormProps {
 export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
   const { toast } = useToast()
   const [formData, setFormData] = useState({
-    nome: "",
-    placa: "",
-    categoria: "",
-    marca: "",
+    model: "",
+    plate: "",
+    phone: "",
+    maximumLoad: "",
+    description: "",
   })
 
   const resetForm = () => {
     setFormData({
-      nome: "",
-      placa: "",
-      categoria: "",
-      marca: "",
+      model: "",
+      plate: "",
+      phone: "",
+      maximumLoad: "",
+      description: "",
     })
   }
 
@@ -49,14 +51,15 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
 
       const payload = {
-        model: formData.nome,
-        plate: formData.placa,
-        category: formData.categoria,
-        brand: formData.marca,
+        model: formData.model,
+        plate: formData.plate,
+        phone: formData.phone,
+        maximumLoad: Number(formData.maximumLoad),
+        description: formData.description,
       }
 
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/veiculos/cadastrar-veiculo`,
+        `${process.env.NEXT_PUBLIC_API_URL}/vehicles/register-vehicle`,
         payload,
         token
           ? {
@@ -93,23 +96,23 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col space-y-1">
-              <Label htmlFor="modelo" className="text-sm font-medium text-gray-700">Modelo</Label>
+              <Label htmlFor="model" className="text-sm font-medium text-gray-700">Modelo</Label>
               <Input
-                id="modelo"
+                id="model"
                 placeholder="Ex.: Volvo FH 540"
-                value={formData.nome}
-                onChange={(e) => handleInputChange("nome", e.target.value)}
+                value={formData.model}
+                onChange={(e) => handleInputChange("model", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
             </div>
             <div className="flex flex-col space-y-1">
-              <Label htmlFor="placa" className="text-sm font-medium text-gray-700">Placa</Label>
+              <Label htmlFor="plate" className="text-sm font-medium text-gray-700">Placa</Label>
               <Input
-                id="placa"
+                id="plate"
                 placeholder="Ex.: ABC-1234"
-                value={formData.placa}
-                onChange={(e) => handleInputChange("placa", e.target.value)}
+                value={formData.plate}
+                onChange={(e) => handleInputChange("plate", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
@@ -118,23 +121,33 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col space-y-1">
-              <Label htmlFor="categoria" className="text-sm font-medium text-gray-700">Categoria</Label>
+              <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Telefone para contato</Label>
               <Input
-                id="categoria"
-                placeholder="Ex.: Caminhão"
-                value={formData.categoria}
-                onChange={(e) => handleInputChange("categoria", e.target.value)}
+                id="phone"
+                placeholder="Ex.: 61 99999-9999"
+                value={formData.phone}
+                onChange={(e) => handleInputChange("phone", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
                 required
               />
             </div>
             <div className="flex flex-col space-y-1">
-              <Label htmlFor="marca" className="text-sm font-medium text-gray-700">Marca</Label>
+              <Label htmlFor="maximumLoad" className="text-sm font-medium text-gray-700">Carga Máxima de transporte</Label>
               <Input
-                id="marca"
-                placeholder="Ex.: Volvo"
-                value={formData.marca}
-                onChange={(e) => handleInputChange("marca", e.target.value)}
+                id="maximumLoad"
+                type="number"
+                placeholder="Ex.: 5000"
+                value={formData.maximumLoad}
+                onChange={(e) => handleInputChange("maximumLoad", e.target.value)}
+                className="h-12 text-base border-gray-300 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label htmlFor="description" className="text-sm font-medium text-gray-700">Observações</Label>
+              <Input
+                id="description"
+                value={formData.description}
+                onChange={(e) => handleInputChange("description", e.target.value)}
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
