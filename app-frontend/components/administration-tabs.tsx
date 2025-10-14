@@ -45,7 +45,6 @@ export function AdministrationTabs({
     veiculos: "/veiculos",
   };
 
-  // Keep activeTab in sync with current route so the yellow bottom border
   // reflects the route even when navigation comes from outside (e.g., sidebar)
   useEffect(() => {
     if (!pathname) return;
