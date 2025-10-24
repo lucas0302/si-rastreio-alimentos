@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ChevronDown, ChevronRight, Edit, Trash2 } from "lucide-react"
-
+import { ChevronDown, ChevronRight, Edit, Trash2, Filter } from "lucide-react"
+import { Label } from "@/components/ui/label"
 // Mock data for the reports
 const mockExpedicaoData = [
   {
@@ -155,7 +155,7 @@ export function ReportsPage() {
     <div className="space-y-6">
       {/* Header with New Record Button */}
       <div className="flex justify-between items-center">
-        <div></div>
+        <div className="text-xl font-semibold text-gray-900">Relatórios</div>
         <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6">+ Novo Registro</Button>
       </div>
 
@@ -171,31 +171,41 @@ export function ReportsPage() {
         </TabsList>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-          <Input
-            placeholder="Nome do Produto"
-            value={filters.nomeProduto}
-            onChange={(e) => handleFilterChange("nomeProduto", e.target.value)}
-            className="h-10 border-gray-300"
-          />
-          <Input
-            placeholder="Lote"
-            value={filters.lote}
-            onChange={(e) => handleFilterChange("lote", e.target.value)}
-            className="h-10 border-gray-300"
-          />
-          <Input
-            placeholder="Cliente"
-            value={filters.cliente}
-            onChange={(e) => handleFilterChange("cliente", e.target.value)}
-            className="h-10 border-gray-300"
-          />
-          <Input
-            placeholder="01-08-2025 a 30-08-2025"
-            value={filters.dataRange}
-            onChange={(e) => handleFilterChange("dataRange", e.target.value)}
-            className="h-10 border-gray-300"
-          />
+        <div className="mt-6 flex items-center gap-2 text-sm text-gray-600">
+          <Filter className="h-4 w-4 text-gray-500" />
+          <span>Filtros</span>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="filtro-nome-produto" className="text-sm text-gray-700">Nome do produto</Label>
+            <Input
+              id="filtro-nome-produto"
+              placeholder="Nome do Produto"
+              value={filters.nomeProduto}
+              onChange={(e) => handleFilterChange("nomeProduto", e.target.value)}
+              className="h-10 border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="filtro-cliente" className="text-sm text-gray-700">Cliente</Label>
+            <Input
+              id="filtro-cliente"
+              placeholder="Cliente"
+              value={filters.cliente}
+              onChange={(e) => handleFilterChange("cliente", e.target.value)}
+              className="h-10 border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="filtro-data" className="text-sm text-gray-700">Data</Label>
+            <Input
+              id="filtro-data"
+              placeholder="01-08-2025 a 30-08-2025"
+              value={filters.dataRange}
+              onChange={(e) => handleFilterChange("dataRange", e.target.value)}
+              className="h-10 border-gray-300"
+            />
+          </div>
         </div>
 
         {/* Controle de Expedição Tab */}
