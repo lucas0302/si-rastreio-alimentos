@@ -72,9 +72,10 @@ export function Sidebar() {
       .map((item) => item.title);
 
     if (parentsToExpand.length) {
-      setExpandedItems((prev) => Array.from(new Set([...prev, ...parentsToExpand])));
+      setExpandedItems([parentsToExpand[0]]);
       setActiveParent(parentsToExpand[0]);
     } else {
+      setExpandedItems([]);
       setActiveParent(null);
     }
   }, [pathname]);
@@ -87,11 +88,7 @@ export function Sidebar() {
   }, [collapsed]);
 
   const toggleExpanded = (title: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(title)
-        ? prev.filter((item) => item !== title)
-        : [...prev, title]
-    );
+    setExpandedItems((prev) => (prev.includes(title) ? [] : [title]));
     setActiveParent(title);
   };
 
