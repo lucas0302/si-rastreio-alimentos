@@ -62,7 +62,8 @@ export function Sidebar() {
   const [expandedItems, setExpandedItems] = useState<string[]>([""]);
   const pathname = usePathname();
   const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); // Este estado agora será usado
+  const [activeParent, setActiveParent] = useState<string | null>(null);
 
   // Auto-expand parent menu if current route matches a submenu item
   useEffect(() => {
@@ -71,9 +72,10 @@ export function Sidebar() {
       .map((item) => item.title);
 
     if (parentsToExpand.length) {
-      setExpandedItems((prev) =>
-        Array.from(new Set([...prev, ...parentsToExpand]))
-      );
+      setExpandedItems((prev) => Array.from(new Set([...prev, ...parentsToExpand])));
+      setActiveParent(parentsToExpand[0]);
+    } else {
+      setActiveParent(null);
     }
   }, [pathname]);
 
@@ -90,6 +92,7 @@ export function Sidebar() {
         ? prev.filter((item) => item !== title)
         : [...prev, title]
     );
+    setActiveParent(title);
   };
 
   const handleLogout = () => {
@@ -169,11 +172,10 @@ export function Sidebar() {
                 <button
                   onClick={() => toggleExpanded(item.title)}
                   className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${
-                    expandedItems.includes(item.title)
+                    !collapsed && activeParent === item.title
                       ? "bg-yellow-100 text-yellow-800"
                       : "text-gray-700"
                   } ${
-                    // Centraliza o ícone quando fechado, justifica entre quando aberto
                     collapsed ? "justify-center" : "justify-between"
                   }`}
                   // Desabilita o clique no submenu se o painel estiver fechado
