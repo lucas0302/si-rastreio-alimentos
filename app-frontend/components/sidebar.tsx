@@ -10,21 +10,23 @@ import {
   ChevronRight,
   User,
   LogOut,
-  BarChart3,
-  Settings,
+  ChartColumnDecreasing,
+  ClipboardList,
   PanelLeftOpen,
   PanelLeftClose,
 } from "lucide-react";
+
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 const menuItems = [
   {
     title: "Dashboard",
     href: "/dashboard",
-    icon: BarChart3,
+    icon: ChartColumnDecreasing,
   },
   {
     title: "Relatório",
-    icon: BarChart3,
+    icon: ClipboardList,
     submenu: [
       {
         title: "Controle de expedição",
@@ -34,7 +36,7 @@ const menuItems = [
   },
   {
     title: "Administração",
-    icon: Settings,
+    icon: MdOutlineAdminPanelSettings,
     submenu: [
       {
         title: "Clientes",
@@ -54,18 +56,13 @@ const menuItems = [
       },
     ],
   },
-  {
-    title: "Configurações",
-    href: "/configuracoes",
-    icon: Settings,
-  },
 ];
 
 export function Sidebar() {
   const [expandedItems, setExpandedItems] = useState<string[]>([""]);
   const pathname = usePathname();
   const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false); // Este estado agora será usado
+  const [collapsed, setCollapsed] = useState(false);
 
   // Auto-expand parent menu if current route matches a submenu item
   useEffect(() => {
