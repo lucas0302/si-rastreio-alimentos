@@ -184,16 +184,16 @@ export function Sidebar() {
                       collapsed ? "space-x-0" : "space-x-3"
                     }`}
                   >
-                    <item.icon className="w-4 h-4 shrink-0" />
+                    <item.icon className="w-5 h-5 shrink-0" />
                     {/* Oculta o título quando fechado */}
                     {!collapsed && <span>{item.title}</span>}
                   </div>
                   {/* Oculta a seta quando fechado */}
                   {!collapsed &&
                     (expandedItems.includes(item.title) ? (
-                      <ChevronDown className="w-4 h-4 shrink-0" />
+                      <ChevronDown className="w-5 h-5 shrink-0" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 shrink-0" />
+                      <ChevronRight className="w-5 h-5 shrink-0" />
                     ))}
                 </button>
                 {/* Oculta o submenu quando fechado */}
@@ -265,7 +265,7 @@ export function Sidebar() {
         >
           {/* Ajusta a margem do ícone quando fechado */}
           <LogOut
-            className={`w-4 h-4 shrink-0 ${collapsed ? "mr-0" : "mr-2"}`}
+            className={`w-6 h-6 shrink-0 ${collapsed ? "mr-0" : "mr-2"}`}
           />
           {/* Oculta o texto quando fechado */}
           {!collapsed && "Sair"}
