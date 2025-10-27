@@ -32,6 +32,13 @@ interface ApiClient {
   last_sale_date: string;
 }
 
+type ApiResponse = {
+  data: ApiClient[];
+  limit: number;
+  offset: number;
+  total?: number;
+};
+
 interface ClientsListProps {
   onAdd: () => void;
 }
@@ -41,30 +48,47 @@ export function ClientsList({ onAdd }: ClientsListProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [hasNext, setHasNext] = useState(false);
+  const limit = 14;
 
   useEffect(() => {
     const fetchClients = async () => {
+      const offset = page * limit;
+
       try {
+        setLoading(true);
         setError(null);
         const token = localStorage.getItem("token");
-        const res = await axios.get<ApiClient[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/customers`,
-          { headers: { Authorization: `Bearer ${token}` } }
+        const res = await axios.get<ApiResponse>(
+          `${process.env.NEXT_PUBLIC_API_URL}/customers?limit=${limit}&offset=${offset}`,
+          token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
         );
-        setClients(res.data);
+
+        const list = Array.isArray(res.data?.data) ? res.data.data : [];
+        setClients(list);
+        setExpandedRow(null);
+
+        const total = res.data?.total;
+        const computedHasNext =
+          typeof total === "number"
+            ? offset + list.length < total
+            : list.length === limit;
+        setHasNext(computedHasNext);
       } catch (e: any) {
         console.error(e);
         setError(
           e?.response?.status === 401
-            ? "Não autorizado: verifique seu login."
+            ? "Nao autorizado: verifique seu login."
             : "Erro ao carregar clientes."
         );
       } finally {
         setLoading(false);
       }
     };
+
     fetchClients();
-  }, []);
+  }, [page, limit]);
 
   const handleToggleRow = (code: number) => {
     setExpandedRow((prev) => (prev === code ? null : code));
@@ -80,34 +104,40 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
   if (loading) {
     return (
-      <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd}>
-        <div className="p-4 text-gray-500">Carregando clientes…</div>
+      <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
+        <div className="p-4 text-gray-500">Carregando clientes.</div>
       </AdminListCard>
     );
   }
 
   if (error) {
     return (
-      <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd}>
+      <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
         <div className="p-4 text-red-600">{error}</div>
       </AdminListCard>
     );
   }
 
+  if (clients.length === 0) {
+    return (
+      <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
+        <div className="p-4 text-gray-500">Nenhum cliente encontrado.</div>
+      </AdminListCard>
+    );
+  }
+
   return (
-    <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd}>
-      <Table className="text-[12px]"> {/* Reduzindo o tamanho da fonte da tabela */}
+    <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
+      <Table className="text-[12px]">
         <TableHeader>
           <TableRow className="text-gray-500 text-xs">
-            {/* Reduzindo o padding vertical das TableHead */}
-            <TableHead className="w-[80px] py-1.5">Cód.</TableHead> 
-            <TableHead className="py-1.5">Razão social</TableHead>
+            <TableHead className="w-[80px] py-1.5">Cod.</TableHead>
+            <TableHead className="py-1.5">Razao social</TableHead>
             <TableHead className="py-1.5">Nome fantasia</TableHead>
             <TableHead className="py-1.5">CNPJ/CPF</TableHead>
-            <TableHead className="py-1.5">Inscrição estadual</TableHead>
-            <TableHead className="py-1.5">Última venda</TableHead>
-            {/* Ajustando a largura e padding das ações */}
-            <TableHead className="w-[90px] text-right py-1.5">Ações</TableHead>
+            <TableHead className="py-1.5">Inscricao estadual</TableHead>
+            <TableHead className="py-1.5">Ultima venda</TableHead>
+            <TableHead className="w-[90px] text-right py-1.5">Acoes</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -117,9 +147,8 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
             return (
               <Fragment key={client.code}>
-                <TableRow className="text-gray-700 text-[12px] h-8"> {/* Reduzindo a altura da linha */}
-                  {/* Reduzindo o padding vertical das TableCell */}
-                  <TableCell className="font-medium text-gray-900 py-1.5"> 
+                <TableRow className="text-gray-700 text-[12px] h-8">
+                  <TableCell className="font-medium text-gray-900 py-1.5">
                     {client.code}
                   </TableCell>
                   <TableCell className="py-1.5">{client.legal_name}</TableCell>
@@ -132,16 +161,14 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                     {formatDate(client.last_sale_date)}
                   </TableCell>
                   <TableCell className="py-1.5">
-                    <div className="flex items-center justify-end gap-0.5"> {/* Reduzindo o gap entre os botões */}
+                    <div className="flex items-center justify-end gap-0.5">
                       <Button
                         variant="ghost"
                         size="icon"
-                        // Reduzindo o tamanho dos botões
-                        className="h-6 w-6 rounded-full text-gray-500 hover:text-gray-900" 
+                        className="h-6 w-6 rounded-full text-gray-500 hover:text-gray-900"
                         onClick={() => handleToggleRow(client.code)}
                       >
-                        {/* Reduzindo o tamanho dos ícones */}
-                        <Eye className="h-3 w-3" /> 
+                        <Eye className="h-3 w-3" />
                       </Button>
                       <Button
                         variant="ghost"
@@ -162,20 +189,19 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                 </TableRow>
                 {isExpanded && (
                   <TableRow className="bg-gray-50 hover:bg-gray-50">
-                    {/* Mantendo colSpan 7 */}
-                    <TableCell colSpan={7} className="p-0"> 
+                    <TableCell colSpan={7} className="p-0">
                       <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 lg:grid-cols-4">
                         <div>
                           <h4 className="font-bold text-gray-800 text-sm">
-                            Endereço
+                            Endereco
                           </h4>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
+                          <p className="text-gray-600 text-[12px]">
                             {client.address || "-"}
                           </p>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
+                          <p className="text-gray-600 text-[12px]">
                             {client.neighborhood || "-"}
                           </p>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
+                          <p className="text-gray-600 text-[12px]">
                             {client.cep} - {client.state}
                           </p>
                         </div>
@@ -183,7 +209,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                           <h4 className="font-bold text-gray-800 text-sm">
                             Rede
                           </h4>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
+                          <p className="text-gray-600 text-[12px]">
                             {client.corporate_network || "-"}
                           </p>
                         </div>
@@ -191,7 +217,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                           <h4 className="font-bold text-gray-800 text-sm">
                             Forma de pagamento
                           </h4>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
+                          <p className="text-gray-600 text-[12px]">
                             {client.payment_method || "-"}
                           </p>
                         </div>
@@ -199,11 +225,11 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                           <h4 className="font-bold text-gray-800 text-sm">
                             Contatos
                           </h4>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
-                            {client.email || "Email não informado"}
+                          <p className="text-gray-600 text-[12px]">
+                            {client.email || "Email nao informado"}
                           </p>
-                          <p className="text-gray-600 text-[12px]"> {/* Ajustando a fonte */}
-                            {client.phone || "Telefone não informado"}
+                          <p className="text-gray-600 text-[12px]">
+                            {client.phone || "Telefone nao informado"}
                           </p>
                         </div>
                       </div>
@@ -215,6 +241,24 @@ export function ClientsList({ onAdd }: ClientsListProps) {
           })}
         </TableBody>
       </Table>
+
+      <div className="flex items-center justify-between p-4">
+        <Button
+          variant="outline"
+          disabled={page === 0}
+          onClick={() => setPage((current) => Math.max(current - 1, 0))}
+        >
+          Anterior
+        </Button>
+        <span className="text-sm text-gray-600">Pagina {page + 1}</span>
+        <Button
+          variant="outline"
+          disabled={!hasNext}
+          onClick={() => setPage((current) => current + 1)}
+        >
+          Proximo
+        </Button>
+      </div>
     </AdminListCard>
   );
 }
