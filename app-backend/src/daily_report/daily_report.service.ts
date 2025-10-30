@@ -17,8 +17,8 @@ export class DailyReportService {
           where: { id: createDailyReportDto.userId },
         }),
         this.prisma.customers.findFirst({
-          where: { code: BigInt(createDailyReportDto.customerCode) },
-        } as any),
+          where: { code: Number(createDailyReportDto.customerCode) },
+        }),
         createDailyReportDto.deliverVehicle
           ? this.prisma.vehicle.findFirst({
               where: { plate: createDailyReportDto.deliverVehicle },
@@ -68,10 +68,11 @@ export class DailyReportService {
           driver: createDailyReportDto.driver,
           userId: createDailyReportDto.userId,
           products: productsJson, // JSON
-          customerCode: BigInt(createDailyReportDto.customerCode),
+          customerCode: Number(createDailyReportDto.customerCode),
           hasSifOrSisbi: createDailyReportDto.hasSifOrSisbi,
           productTemperature: createDailyReportDto.productTemperature,
-          fillingDate: new Date(createDailyReportDto.fillingDate),
+          // Preenchimento: data/hora atual do servidor
+          fillingDate: new Date(),
           shipmentDate: new Date(createDailyReportDto.shipmentDate),
           deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
         } as any,
