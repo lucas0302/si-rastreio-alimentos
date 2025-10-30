@@ -6,6 +6,10 @@ function serializeBigInt(value: any): any {
   if (typeof value === "bigint") {
     return value.toString();
   }
+  // Preserve Date objects as ISO strings
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
   if (Array.isArray(value)) {
     return value.map((v) => serializeBigInt(v));
   }
