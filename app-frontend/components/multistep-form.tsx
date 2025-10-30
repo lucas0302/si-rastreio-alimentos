@@ -12,7 +12,8 @@ import {
   Store,
   Truck,
   PiggyBank,
-  ClipboardPen
+  ClipboardPen,
+  Trash2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,6 +62,7 @@ const steps = [
 
 interface FormData {
   client: string;
+  clientCode?: string; // código do cliente selecionado
   driver: string;
   company: string;
   profession: string;
@@ -74,7 +76,7 @@ interface FormData {
   productItems: { code: string; quantity: string }[];
   sisOrSisbi: string; // "sim" | "não"
   productTemperature: string;
-  lotDate: string; // ISO date (YYYY-MM-DD)
+  deliverDate: string; // ISO date (YYYY-MM-DD)
 }
 
 const fadeInUp = {
@@ -115,6 +117,7 @@ const OnboardingForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     client: "",
+    clientCode: "",
     driver: "",
     company: "",
     profession: "",
@@ -128,7 +131,7 @@ const OnboardingForm = () => {
     productItems: [{ code: "", quantity: "" }],
     sisOrSisbi: "",
     productTemperature: "",
-    lotDate: "",
+    deliverDate: "",
   });
 
   // Estados para o combobox de clientes
@@ -249,11 +252,121 @@ const OnboardingForm = () => {
   const handleSubmit = () => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      toast.success("Form submitted successfully!");
-      setIsSubmitting(false);
-    }, 1500);
+    (async () => {
+      try {
+        const token =
+          typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+        if (!token) {
+          throw new Error("Token de autenticação não encontrado.");
+        }
+
+        // Extrair userId do JWT (campo sub)
+        let userId = 0;
+        try {
+          const payloadBase64 = token.split(".")[1];
+          const payloadJson = JSON.parse(atob(payloadBase64));
+          userId = Number(payloadJson?.sub ?? 0);
+        } catch (e) {
+          console.warn("Falha ao decodificar JWT:", e);
+        }
+
+        if (!userId || Number.isNaN(userId)) {
+          throw new Error("Não foi possível identificar o usuário (sub).");
+        }
+
+        // Encontrar código do cliente (BigInt em string)
+        let customerCodeStr = formData.clientCode || "";
+        if (!customerCodeStr) {
+          const match = clients.find(
+            (c) => (c.fantasy_name || c.legal_name) === formData.client
+          );
+          if (match?.code) customerCodeStr = String(match.code);
+        }
+
+        if (!customerCodeStr) {
+          throw new Error(
+            "Cliente inválido: selecione novamente para capturar o código."
+          );
+        }
+
+        // Montar objetos de produtos válidos (exigem código e quantidade)
+        const productList = (formData.productItems ?? [])
+          .filter((it) => {
+            const codeStr = (it.code || "").trim();
+            const qtyStr = (it.quantity || "").trim();
+            return codeStr !== "" && qtyStr !== "";
+          })
+          .map((it) => {
+            const codeNum = Number(it.code);
+            const qtyNum = Number(it.quantity);
+            const found = products.find((p) => p.code === codeNum);
+            return {
+              code: codeNum,
+              quantity: qtyNum,
+              description: found?.description ?? undefined,
+            };
+          });
+
+        if (productList.length === 0) {
+          throw new Error("Informe ao menos um produto com quantidade.");
+        }
+
+        // Somar quantidade total com base apenas nos itens válidos
+        const totalQuantity = productList
+          .map((p) => Number(p.quantity))
+          .reduce((acc, n) => acc + (Number.isFinite(n) ? n : 0), 0);
+
+        if (totalQuantity <= 0) {
+          throw new Error("Quantidade total inválida.");
+        }
+
+        // Converter datas para ISO (YYYY-MM-DDT00:00:00.000Z)
+        const dateISO = `${formData.deliverDate}T00:00:00.000Z`;
+
+        // Temperaturas
+        const vehicleTemp = Number((formData.vehicleTemperature || "").replace(",", "."));
+        const productTemp = Number((formData.productTemperature || "").replace(",", "."));
+
+        // Placa do veículo (opcional) pela seleção de vehicleId
+        const selectedPlate = vehicles.find((v) => String(v.id) === formData.vehicleId)?.plate;
+
+        const payload = {
+          quantity: totalQuantity,
+          invoiceNumber: Number(formData.invoiceNumber),
+          productionDate: dateISO,
+          vehicleTemperature: vehicleTemp,
+          hasGoodSanitaryCondition: formData.sanitaryCondition === "conforme",
+          driver: formData.driver,
+          userId,
+          products: productList,
+          customerCode: customerCodeStr,
+          hasSifOrSisbi: formData.sisOrSisbi === "sim",
+          productTemperature: productTemp,
+          fillingDate: dateISO,
+          shipmentDate: dateISO,
+          deliverVehicle: selectedPlate,
+        };
+
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/daily-report`,
+          payload,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        toast.success("Relatório diário criado com sucesso!");
+      } catch (err: any) {
+        console.error(err);
+        let message = err?.response?.data?.message || err?.message || "Falha ao enviar o relatório.";
+        // Se o ValidationPipe retornar uma lista de mensagens, converter em string legível
+        if (Array.isArray(message)) {
+          message = message.join("; ");
+        }
+        toast.error(message);
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
   // Check if step is valid for next button
@@ -267,15 +380,14 @@ const OnboardingForm = () => {
         return formData.driver.trim() !== "" && formData.vehicleId.trim() !== "";
       case 2:
         // Validar campos da etapa de Produto
-        const firstItem = (formData.productItems ?? [])[0];
-        const hasFirstProduct = !!firstItem && (firstItem.code || "").trim() !== "";
-        const hasFirstQuantity = !!firstItem && (firstItem.quantity || "").trim() !== "";
+        const items = formData.productItems ?? [];
+        const hasItems = items.length > 0;
+        const allValid = hasItems && items.every((it) => (it.code || "").trim() !== "" && (it.quantity || "").trim() !== "");
         return (
           formData.invoiceNumber.trim() !== "" &&
-          hasFirstProduct &&
-          hasFirstQuantity &&
+          allValid &&
           formData.sisOrSisbi.trim() !== "" &&
-          formData.lotDate.trim() !== ""
+          formData.deliverDate.trim() !== ""
         );
       case 3:
         // Revisão não exige preenchimento adicional para prosseguir
@@ -492,10 +604,11 @@ const OnboardingForm = () => {
                                           .filter(Boolean)
                                           .join(" ")}`}
                                         onSelect={() => {
-                                          updateFormData(
-                                            "client",
-                                            c.fantasy_name || c.legal_name
-                                          );
+                                          setFormData((prev) => ({
+                                            ...prev,
+                                            client: c.fantasy_name || c.legal_name,
+                                            clientCode: String(c.code),
+                                          }));
                                           setClientOpen(false);
                                         }}
                                       >
@@ -539,7 +652,6 @@ const OnboardingForm = () => {
                         </Label>
                         <Input
                           id="driver"
-                          placeholder="e.g. Alex"
                           value={formData.driver}
                           onChange={(e) =>
                             updateFormData("driver", e.target.value)
@@ -685,7 +797,7 @@ const OnboardingForm = () => {
                                       })
                                       .map((p) => (
                                         <SelectItem key={p.code} value={String(p.code)}>
-                                          {p.description} {p.company ? `• ${p.company}` : ""}
+                                          {p.description}
                                         </SelectItem>
                                       ))}
                                   </SelectContent>
@@ -693,20 +805,38 @@ const OnboardingForm = () => {
                                 </div>
                                 <div className="col-span-2 space-y-2">
                                   <Label>Quantidade (Unidade)</Label>
-                                  <Input
-                                    inputMode="numeric"
-                                    placeholder="Somente números"
-                                    value={item.quantity || ""}
-                                    onChange={(e) => {
-                                      const digits = (e.target.value || "").replace(/\D/g, "");
-                                      setFormData((prev) => {
-                                        const list = [...(prev.productItems ?? [])];
-                                        list[idx] = { ...list[idx], quantity: digits };
-                                        return { ...prev, productItems: list };
-                                      });
-                                    }}
-                                    className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                                  />
+                                  <div className="flex items-center gap-2">
+                                    <Input
+                                      inputMode="numeric"
+                                      placeholder="Somente números"
+                                      value={item.quantity || ""}
+                                      onChange={(e) => {
+                                        const digits = (e.target.value || "").replace(/\D/g, "");
+                                        setFormData((prev) => {
+                                          const list = [...(prev.productItems ?? [])];
+                                          list[idx] = { ...list[idx], quantity: digits };
+                                          return { ...prev, productItems: list };
+                                        });
+                                      }}
+                                      className="flex-1 transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      size="icon"
+                                      aria-label="Remover produto"
+                                      onClick={() => {
+                                        setFormData((prev) => {
+                                          const list = [...(prev.productItems ?? [])];
+                                          list.splice(idx, 1);
+                                          const next = list.length > 0 ? list : [{ code: "", quantity: "" }];
+                                          return { ...prev, productItems: next };
+                                        });
+                                      }}
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             ))}
@@ -798,9 +928,9 @@ const OnboardingForm = () => {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button variant="outline" className="w-full justify-start text-left font-normal">
-                              {formData.lotDate
+                              {formData.deliverDate
                                 ? (() => {
-                                    const [y, m, d] = formData.lotDate.split("-").map(Number);
+                                    const [y, m, d] = formData.deliverDate.split("-").map(Number);
                                     return new Date(y, m - 1, d).toLocaleDateString("pt-BR");
                                   })()
                                 : "Selecione uma data"}
@@ -811,12 +941,12 @@ const OnboardingForm = () => {
                             {/* @ts-ignore */}
                             <Calendar
                               mode="single"
-                              selected={formData.lotDate ? (() => { const [y, m, d] = formData.lotDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
+                              selected={formData.deliverDate ? (() => { const [y, m, d] = formData.deliverDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
                               onSelect={(date: Date | undefined) => {
                                 if (!date) return;
                                 // Salvar como ISO local YYYY-MM-DD para evitar mudança de dia por timezone
                                 const isoLocal = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                                updateFormData("lotDate", isoLocal);
+                                updateFormData("deliverDate", isoLocal);
                               }}
                             />
                           </PopoverContent>
@@ -862,7 +992,11 @@ const OnboardingForm = () => {
                                         key={c.code}
                                         value={`${[c.fantasy_name, c.legal_name, String(c.code)].filter(Boolean).join(" ")}`}
                                         onSelect={() => {
-                                          updateFormData("client", c.fantasy_name || c.legal_name);
+                                          setFormData((prev) => ({
+                                            ...prev,
+                                            client: c.fantasy_name || c.legal_name,
+                                            clientCode: String(c.code),
+                                          }));
                                           setReviewClientOpen(false);
                                         }}
                                       >
@@ -951,9 +1085,8 @@ const OnboardingForm = () => {
                         <Label>Produtos</Label>
                         <div className="space-y-3">
                           {(formData.productItems ?? [{ code: "", quantity: "" }]).map((item, idx) => (
-                            <div key={`review-product-row-${idx}`} className="grid grid-cols-5 gap-3">
-                              <div className="col-span-3 space-y-2">
-                                <Label>Produto</Label>
+                            <div key={`review-product-row-${idx}`} className="grid grid-cols-5 gap-3 items-center">
+                              <div className="col-span-3">
                                 <Select
                                   value={item.code || ""}
                                   onValueChange={(val) => {
@@ -975,28 +1108,45 @@ const OnboardingForm = () => {
                                       })
                                       .map((p) => (
                                         <SelectItem key={p.code} value={String(p.code)}>
-                                          {p.description} {p.company ? `• ${p.company}` : ""}
+                                          {p.description}
                                         </SelectItem>
                                       ))}
                                   </SelectContent>
                                 </Select>
                               </div>
-                              <div className="col-span-2 space-y-2">
-                                <Label>Quantidade (Unidade)</Label>
-                                <Input
-                                  inputMode="numeric"
-                                  placeholder="Somente números"
-                                  value={item.quantity || ""}
-                                  onChange={(e) => {
-                                    const digits = (e.target.value || "").replace(/\D/g, "");
-                                    setFormData((prev) => {
-                                      const list = [...(prev.productItems ?? [])];
-                                      list[idx] = { ...list[idx], quantity: digits };
-                                      return { ...prev, productItems: list };
-                                    });
-                                  }}
-                                  className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                                />
+                              <div className="col-span-2">
+                                <div className="flex items-center gap-2">
+                                  <Input
+                                    inputMode="numeric"
+                                    placeholder="Somente números"
+                                    value={item.quantity || ""}
+                                    onChange={(e) => {
+                                      const digits = (e.target.value || "").replace(/\D/g, "");
+                                      setFormData((prev) => {
+                                        const list = [...(prev.productItems ?? [])];
+                                        list[idx] = { ...list[idx], quantity: digits };
+                                        return { ...prev, productItems: list };
+                                      });
+                                    }}
+                                    className="flex-1 transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                                  />
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="icon"
+                                    aria-label="Remover produto"
+                                    onClick={() => {
+                                      setFormData((prev) => {
+                                        const list = [...(prev.productItems ?? [])];
+                                        list.splice(idx, 1);
+                                        const next = list.length > 0 ? list : [{ code: "", quantity: "" }];
+                                        return { ...prev, productItems: next };
+                                      });
+                                    }}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
                               </div>
                             </div>
                           ))}
@@ -1040,23 +1190,22 @@ const OnboardingForm = () => {
                           <Popover>
                             <PopoverTrigger asChild>
                               <Button variant="outline" className="w-full justify-start text-left font-normal">
-                                {formData.lotDate
+                                {formData.deliverDate
                                   ? (() => {
-                                      const [y, m, d] = formData.lotDate.split("-").map(Number);
+                                      const [y, m, d] = formData.deliverDate.split("-").map(Number);
                                       return new Date(y, m - 1, d).toLocaleDateString("pt-BR");
                                     })()
                                   : "Selecione uma data"}
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent className="p-2" align="start">
-                              {/* @ts-ignore */}
                               <Calendar
                                 mode="single"
-                                selected={formData.lotDate ? (() => { const [y, m, d] = formData.lotDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
+                                selected={formData.deliverDate ? (() => { const [y, m, d] = formData.deliverDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
                                 onSelect={(date: Date | undefined) => {
                                   if (!date) return;
                                   const isoLocal = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                                  updateFormData("lotDate", isoLocal);
+                                  updateFormData("deliverDate", isoLocal);
                                 }}
                               />
                             </PopoverContent>
