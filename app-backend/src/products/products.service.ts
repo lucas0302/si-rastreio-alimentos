@@ -21,7 +21,7 @@ export class ProductsService {
         }
       );
 
-      if (Number(createProductDto.code) === findCode?.code) {
+      if (findCode && Number(createProductDto.code) === Number(findCode.code)) {
         throw new HttpException('Esse produto já existe.', HttpStatus.CONFLICT);
       }
 
