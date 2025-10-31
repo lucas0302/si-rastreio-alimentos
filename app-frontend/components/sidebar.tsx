@@ -64,6 +64,8 @@ export function Sidebar() {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false); // Este estado agora será usado
   const [activeParent, setActiveParent] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const displayName = userName.trim().length > 0 ? userName : "Usuario";
 
   // Auto-expand parent menu if current route matches a submenu item
   useEffect(() => {
@@ -87,12 +89,46 @@ export function Sidebar() {
     }
   }, [collapsed]);
 
+  useEffect(() => {
+    const loadUserName = () => {
+      if (typeof window === "undefined") {
+        return;
+      }
+
+      try {
+        const stored = window.localStorage.getItem("user");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setUserName(parsed?.name ?? parsed?.username ?? "");
+        } else {
+          setUserName("");
+        }
+      } catch (err) {
+        console.error(err);
+        setUserName("");
+      }
+    };
+
+    loadUserName();
+    window.addEventListener("storage", loadUserName);
+
+    return () => {
+      window.removeEventListener("storage", loadUserName);
+    };
+  }, []);
+
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) => (prev.includes(title) ? [] : [title]));
     setActiveParent(title);
   };
 
   const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("token");
+      window.localStorage.removeItem("user");
+    }
+
+    setUserName("");
     document.cookie =
       "isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     router.push("/sign-in");
@@ -249,7 +285,7 @@ export function Sidebar() {
           {/* Oculta o nome quando fechado */}
           {!collapsed && (
             <span className="text-sm font-medium text-gray-900 whitespace-nowrap overflow-hidden">
-              Luiz Fernando
+              {displayName}
             </span>
           )}
         </div>
