@@ -16,7 +16,7 @@ export class UsersController {
 
   constructor(private readonly usersService: UsersService) { }
 
-  // @UseGuards(AdminRolesGuard)
+  @UseGuards(AdminRolesGuard)
   @Post('cadastrar-usuario')
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto)
