@@ -158,13 +158,17 @@ export function ReportsPage() {
         // Buscar relatórios, clientes e produtos em paralelo
         const [repRes, custRes, prodRes, usersRes] = await Promise.all([
           axios.get<ApiDailyReport[]>(`${baseURL}/daily-report`, { headers }),
-          axios.get<ApiCustomer[]>(`${baseURL}/customers`, { headers }),
-          axios.get<ApiProduct[]>(`${baseURL}/products`, { headers }),
+          axios.get<{ data: ApiCustomer[], limit: number, offset: number, total?: number }>(`${baseURL}/customers`, { headers }),
+          axios.get<{ data: ApiProduct[], limit: number, offset: number, total?: number }>(`${baseURL}/products`, { headers }),
           axios.get<{ data: ApiUser[][], limit: number, offset: number }>(`${baseURL}/usuarios?limit=100`, { headers }),
         ]);
 
-        const customers = custRes.data || [];
-        const products = prodRes.data || [];
+        const customers = Array.isArray(custRes.data)
+          ? (custRes.data as unknown as ApiCustomer[])
+          : (custRes.data?.data ?? []);
+        const products = Array.isArray(prodRes.data)
+          ? (prodRes.data as unknown as ApiProduct[])
+          : (prodRes.data?.data ?? []);
         const reports = repRes.data || [];
         const users = (usersRes.data?.data?.[0] ?? []) as ApiUser[];
 

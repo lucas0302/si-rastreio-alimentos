@@ -112,6 +112,14 @@ interface ApiProduct {
   company: string;
 }
 
+// Resposta paginada comum dos endpoints (customers, products, vehicles)
+type Paginated<T> = {
+  data: T[];
+  limit: number;
+  offset: number;
+  total?: number;
+};
+
 const OnboardingForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -140,6 +148,7 @@ const OnboardingForm = () => {
   const [reviewClientOpen, setReviewClientOpen] = useState(false);
   const [clientsLoading, setClientsLoading] = useState(false);
   const [clientsError, setClientsError] = useState<string | null>(null);
+  const [clientsFullyLoaded, setClientsFullyLoaded] = useState(false);
 
   // Estados para veículos
   const [vehicles, setVehicles] = useState<ApiVehicle[]>([]);
@@ -151,34 +160,85 @@ const OnboardingForm = () => {
   const [productsLoading, setProductsLoading] = useState(false);
   const [productsError, setProductsError] = useState<string | null>(null);
 
-  // Carregar clientes da API
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        setClientsLoading(true);
-        setClientsError(null);
-        const token =
-          typeof window !== "undefined" ? localStorage.getItem("token") : null;
-        const res = await axios.get<ApiClient[]>(
+  // Buscar todos os clientes paginando até completar a lista
+  const fetchAllClients = async () => {
+    try {
+      setClientsLoading(true);
+      setClientsError(null);
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+      const limit = 100; // página de 100 para reduzir requisições
+      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+
+      // Primeira página para descobrir total
+      const firstRes = await axios.get<Paginated<ApiClient> | ApiClient[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/customers`,
+        {
+          headers,
+          params: { limit, offset: 0 },
+        }
+      );
+
+      const firstPayload = firstRes.data as any;
+      const firstList: ApiClient[] = Array.isArray(firstPayload)
+        ? firstPayload
+        : Array.isArray(firstPayload?.data)
+        ? firstPayload.data
+        : [];
+      const total: number = Array.isArray(firstPayload)
+        ? firstList.length
+        : Number(firstPayload?.total ?? firstList.length);
+
+      let all = [...firstList];
+
+      // Se houver mais páginas, buscar cada uma
+      for (let offset = firstList.length; offset < total; offset += limit) {
+        const pageRes = await axios.get<Paginated<ApiClient> | ApiClient[]>(
           `${process.env.NEXT_PUBLIC_API_URL}/customers`,
           {
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            headers,
+            params: { limit, offset },
           }
         );
-        setClients(res.data);
-      } catch (e: any) {
-        console.error(e);
-        setClientsError(
-          e?.response?.status === 401
-            ? "Não autorizado: verifique seu login."
-            : "Erro ao carregar clientes"
-        );
-      } finally {
-        setClientsLoading(false);
+        const pagePayload = pageRes.data as any;
+        const pageList: ApiClient[] = Array.isArray(pagePayload)
+          ? pagePayload
+          : Array.isArray(pagePayload?.data)
+          ? pagePayload.data
+          : [];
+        all = all.concat(pageList);
       }
-    };
-    fetchClients();
-  }, []);
+
+      setClients(all);
+      setClientsFullyLoaded(true);
+    } catch (e: any) {
+      console.error(e);
+      setClientsError(
+        e?.response?.status === 401
+          ? "Não autorizado: verifique seu login."
+          : "Erro ao carregar clientes"
+      );
+    } finally {
+      setClientsLoading(false);
+    }
+  };
+
+  // Abrir combobox de clientes: carregar todos se ainda não carregado
+  const handleClientOpenChange = (open: boolean) => {
+    setClientOpen(open);
+    if (open && !clientsFullyLoaded && !clientsLoading) {
+      void fetchAllClients();
+    }
+  };
+
+  // Abrir combobox na revisão: mesma lógica
+  const handleReviewClientOpenChange = (open: boolean) => {
+    setReviewClientOpen(open);
+    if (open && !clientsFullyLoaded && !clientsLoading) {
+      void fetchAllClients();
+    }
+  };
 
   // Carregar veículos da API
   useEffect(() => {
@@ -188,11 +248,17 @@ const OnboardingForm = () => {
         setVehiclesError(null);
         const token =
           typeof window !== "undefined" ? localStorage.getItem("token") : null;
-        const res = await axios.get<ApiVehicle[]>(
+        const res = await axios.get<Paginated<ApiVehicle> | ApiVehicle[]>(
           `${process.env.NEXT_PUBLIC_API_URL}/vehicles`,
           token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
         );
-        setVehicles(res.data);
+        const payload = res.data as any;
+        const list: ApiVehicle[] = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.data)
+          ? payload.data
+          : [];
+        setVehicles(list);
       } catch (e: any) {
         console.error(e);
         setVehiclesError(
@@ -215,11 +281,17 @@ const OnboardingForm = () => {
         setProductsError(null);
         const token =
           typeof window !== "undefined" ? localStorage.getItem("token") : null;
-        const res = await axios.get<ApiProduct[]>(
+        const res = await axios.get<Paginated<ApiProduct> | ApiProduct[]>(
           `${process.env.NEXT_PUBLIC_API_URL}/products`,
           token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
         );
-        setProducts(res.data);
+        const payload = res.data as any;
+        const list: ApiProduct[] = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.data)
+          ? payload.data
+          : [];
+        setProducts(list);
       } catch (e: any) {
         console.error(e);
         setProductsError(
@@ -559,7 +631,7 @@ const OnboardingForm = () => {
                     <CardContent className="space-y-4">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="client"></Label>
-                        <Popover open={clientOpen} onOpenChange={setClientOpen}>
+                        <Popover open={clientOpen} onOpenChange={handleClientOpenChange}>
                           <PopoverTrigger asChild>
                             <Button
                               variant="outline"
@@ -971,7 +1043,7 @@ const OnboardingForm = () => {
                         <Label>Comprador</Label>
                         <div className="flex gap-3 items-center">
                           <Input value={formData.client} readOnly className="flex-1" />
-                          <Popover open={reviewClientOpen} onOpenChange={setReviewClientOpen}>
+                          <Popover open={reviewClientOpen} onOpenChange={handleReviewClientOpenChange}>
                             <PopoverTrigger asChild>
                               <Button type="button" variant="secondary">Trocar</Button>
                             </PopoverTrigger>
