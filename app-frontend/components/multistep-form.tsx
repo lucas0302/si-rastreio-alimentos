@@ -74,7 +74,7 @@ interface FormData {
   // Etapa 3 - Produto
   invoiceNumber: string;
   productItems: { code: string; quantity: string }[];
-  sisOrSisbi: string; // "sim" | "não"
+  sifOrSisbi: "" | "SIF" | "SISBI";
   productTemperature: string;
   deliverDate: string; // ISO date (YYYY-MM-DD)
 }
@@ -137,7 +137,7 @@ const OnboardingForm = () => {
     // Etapa 3 - Produto
     invoiceNumber: "",
     productItems: [{ code: "", quantity: "" }],
-    sisOrSisbi: "",
+    sifOrSisbi: "",
     productTemperature: "",
     deliverDate: "",
   });
@@ -348,15 +348,15 @@ const OnboardingForm = () => {
         }
 
         // Encontrar código do cliente (BigInt em string)
-        let customerCodeStr = formData.clientCode || "";
-        if (!customerCodeStr) {
+        let customerCodeNum: number | null = (formData.clientCode || "").trim() !== "" ? Number(formData.clientCode) : null;
+        if (customerCodeNum === null) {
           const match = clients.find(
             (c) => (c.fantasy_name || c.legal_name) === formData.client
           );
-          if (match?.code) customerCodeStr = String(match.code);
+          if (match?.code) customerCodeNum = Number(match.code);
         }
 
-        if (!customerCodeStr) {
+        if (customerCodeNum === null || Number.isNaN(customerCodeNum)) {
           throw new Error(
             "Cliente inválido: selecione novamente para capturar o código."
           );
@@ -393,8 +393,9 @@ const OnboardingForm = () => {
           throw new Error("Quantidade total inválida.");
         }
 
-        // Converter datas para ISO (YYYY-MM-DDT00:00:00.000Z)
-        const dateISO = `${formData.deliverDate}T00:00:00.000Z`;
+        // Converter datas para ISO
+        const dateISO = `${formData.deliverDate}T00:00:00.000Z`; // produção/expedição (apenas data)
+        const fillingISO = new Date().toISOString(); // preenchimento (data e hora atuais)
 
         // Temperaturas
         const vehicleTemp = Number((formData.vehicleTemperature || "").replace(",", "."));
@@ -412,11 +413,10 @@ const OnboardingForm = () => {
           driver: formData.driver,
           userId,
           products: productList,
-          customerCode: customerCodeStr,
-          hasSifOrSisbi: formData.sisOrSisbi === "sim",
+          customerCode: Number(customerCodeNum),
+          sifOrSisbi: formData.sifOrSisbi || null,
           productTemperature: productTemp,
-          fillingDate: dateISO,
-          shipmentDate: dateISO,
+          fillingDate: fillingISO,
           deliverVehicle: selectedPlate,
         };
 
@@ -458,7 +458,6 @@ const OnboardingForm = () => {
         return (
           formData.invoiceNumber.trim() !== "" &&
           allValid &&
-          formData.sisOrSisbi.trim() !== "" &&
           formData.deliverDate.trim() !== ""
         );
       case 3:
@@ -940,13 +939,13 @@ const OnboardingForm = () => {
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label>SIF ou SISBI?</Label>
                         <RadioGroup
-                          value={formData.sisOrSisbi}
-                          onValueChange={(v) => updateFormData("sisOrSisbi", v)}
+                          value={formData.sifOrSisbi}
+                          onValueChange={(v) => updateFormData("sifOrSisbi", v)}
                           className="space-y-2"
                         >
                           {[
-                            { value: "sim", label: "Sim" },
-                            { value: "não", label: "Não" },
+                            { value: "SIF", label: "SIF" },
+                            { value: "SISBI", label: "SISBI" },
                           ].map((opt, index) => (
                             <motion.div
                               key={opt.value}
@@ -994,9 +993,9 @@ const OnboardingForm = () => {
 
                       {/* Quantidade removida: agora é relativa a cada produto */}
 
-                      {/* Lote - calendário */}
+                      {/* Data Prod/Lote - calendário */}
                       <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label>Lote</Label>
+                        <Label>Data Prod/Lote</Label>
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button variant="outline" className="w-full justify-start text-left font-normal">
@@ -1256,9 +1255,9 @@ const OnboardingForm = () => {
                           />
                         </div>
 
-                        {/* Lote */}
+                        {/* Data Prod/Lote */}
                         <div className="space-y-2">
-                          <Label>Lote</Label>
+                          <Label>Data Prod/Lote</Label>
                           <Popover>
                             <PopoverTrigger asChild>
                               <Button variant="outline" className="w-full justify-start text-left font-normal">

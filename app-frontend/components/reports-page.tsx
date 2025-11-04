@@ -65,9 +65,7 @@ export function ReportsPage() {
     clientName: string;
     productCode: string;
     productName: string;
-    shipmentDate: string;
     productionDate: string;
-    shipmentDateIso: string;
     productionDateIso: string;
     quantity: number;
     destination: string;
@@ -189,10 +187,8 @@ export function ReportsPage() {
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
-          const shipDateIso = String(r.shipmentDate);
-          const prodDateIso = String(r.productionDate ?? r.shipmentDate);
-          const shipDate = formatDate(shipDateIso);
-          const prodDate = formatDate(prodDateIso);
+        const prodDateIso = String(r.productionDate ?? r.shipmentDate);
+        const prodDate = formatDate(prodDateIso);
 
           const items = Array.isArray(r.products) ? r.products : [];
           for (const it of items) {
@@ -207,9 +203,7 @@ export function ReportsPage() {
               clientName,
               productCode: String((it as any)?.code ?? ""),
               productName: prodName,
-              shipmentDate: shipDate, // também usado como Data Prod/Lote conforme instrução
               productionDate: prodDate,
-              shipmentDateIso: shipDateIso,
               productionDateIso: prodDateIso,
               quantity: qty,
               destination,
@@ -267,9 +261,9 @@ export function ReportsPage() {
     });
   };
 
-  // Agrupamento por mês (Data Expe.)
+  // Agrupamento por mês (Data Prod/Lote)
   const groups = rows.reduce<Record<string, ReportRow[]>>((acc, row) => {
-    const k = getMonthKey(row.shipmentDateIso);
+    const k = getMonthKey(row.productionDateIso);
     if (!acc[k]) acc[k] = [];
     acc[k].push(row);
     return acc;
@@ -389,21 +383,21 @@ export function ReportsPage() {
                   <tbody className="divide-y divide-gray-200">
                     {loading && (
                       <tr>
-                        <td className="px-4 py-3 text-sm" colSpan={8}>
+                        <td className="px-4 py-3 text-sm" colSpan={4}>
                           Carregando...
                         </td>
                       </tr>
                     )}
                     {error && !loading && (
                       <tr>
-                        <td className="px-4 py-3 text-sm text-red-600" colSpan={8}>
+                        <td className="px-4 py-3 text-sm text-red-600" colSpan={4}>
                           {error}
                         </td>
                       </tr>
                     )}
                     {!loading && !error && rows.length === 0 && (
                       <tr>
-                        <td className="px-4 py-3 text-sm" colSpan={8}>
+                        <td className="px-4 py-3 text-sm" colSpan={4}>
                           Nenhum relatório encontrado.
                         </td>
                       </tr>
@@ -417,7 +411,7 @@ export function ReportsPage() {
                         <>
                           {/* Linha de resumo do mês */}
                           <tr key={`sum-${mk}`} className="bg-gray-100 border-b">
-                            <td colSpan={8} className="px-4 py-3 text-sm text-gray-900">
+                            <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
                               <div className="flex items-center gap-4">
                                 <button
                                   aria-label={isExpanded ? "Recolher" : "Expandir"}
@@ -439,10 +433,6 @@ export function ReportsPage() {
                             <tr className="bg-gray-50 border-b">
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Nº da NF</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Cliente</th>
-                              <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Produto</th>
-                              <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Data Expe.</th>
-                              <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Quantidade</th>
-                              <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Data Prod/Lote</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Destino</th>
                               <th className="px-4 py-3 text-center text-sm font-medium text-gray-900">Ações</th>
                             </tr>
@@ -472,20 +462,6 @@ export function ReportsPage() {
                                     {row.clientName}
                                   </td>
                                   <td className="px-4 py-3 text-sm text-gray-900">
-                                    <div className="flex items-center gap-2">
-                                      <span>{row.productName}</span>
-                                    </div>
-                                  </td>
-                                  <td className="px-4 py-3 text-sm text-gray-900">
-                                    {row.shipmentDate}
-                                  </td>
-                                  <td className="px-4 py-3 text-sm text-gray-900">
-                                    {row.quantity}
-                                  </td>
-                                  <td className="px-4 py-3 text-sm text-gray-900">
-                                    {row.productionDate}
-                                  </td>
-                                  <td className="px-4 py-3 text-sm text-gray-900">
                                     {row.destination}
                                   </td>
                                   <td className="px-4 py-3 text-center">
@@ -502,8 +478,20 @@ export function ReportsPage() {
 
                                 {rExpanded && (
                                   <tr key={`${rkey}-details`} className="bg-gray-50">
-                                    <td colSpan={8} className="px-4 py-3 text-sm text-gray-900">
+                                    <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
                                       <div className="grid grid-cols-5 gap-6">
+                                        <div>
+                                          <div className="text-gray-600">Produto</div>
+                                          <div className="font-medium">{row.productName ?? "—"}</div>
+                                        </div>
+                                        <div>
+                                          <div className="text-gray-600">Quantidade</div>
+                                          <div className="font-medium">{row.quantity ?? "—"}</div>
+                                        </div>
+                                        <div>
+                                          <div className="text-gray-600">Data Prod/Lote</div>
+                                          <div className="font-medium">{row.productionDate ?? "—"}</div>
+                                        </div>
                                         <div>
                                           <div className="text-gray-600">Placa do veículo</div>
                                           <div className="font-medium">{row.deliverVehicle ?? "—"}</div>
@@ -515,14 +503,6 @@ export function ReportsPage() {
                                           ) : (
                                             <span className="inline-flex items-center px-2 py-0.5 rounded border border-red-500 text-red-600">Não conforme</span>
                                           )}
-                                        </div>
-                                        <div>
-                                          <div className="text-gray-600">Temperatura</div>
-                                          <div className="font-medium">{Number.isFinite(row.productTemperature) ? `${row.productTemperature}°` : "—"}</div>
-                                        </div>
-                                        <div>
-                                          <div className="text-gray-600">Responsável pelo preenchimento</div>
-                                          <div className="font-medium">{/* Nome será resolvido no backend/usuario map se necessário */}</div>
                                         </div>
                                       </div>
                                     </td>
