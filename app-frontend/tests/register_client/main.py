@@ -5,7 +5,6 @@ from selenium.common.exceptions import TimeoutException
 
 import os
 import sys
-import time
 
 CURRENT_DIR = os.path.dirname(__file__)
 TESTS_DIR = os.path.abspath(os.path.join(CURRENT_DIR, '..'))
@@ -14,7 +13,6 @@ if TESTS_DIR not in sys.path:
 
 from utils.url import URL
 from utils.driver import driver
-# from utils.button_path import target_xpath # OTIMIZAÇÃO: Removido, não estava em uso.
 
 wait = WebDriverWait(driver, 10)
 
@@ -30,8 +28,6 @@ def wait_and_fill(wait_object, locator, text):
     element = wait_object.until(
         EC.visibility_of_element_located(locator)
     )
-    # OTIMIZAÇÃO: Adicionado .clear() para garantir que o campo esteja vazio
-    # Isso evita problemas caso o campo venha com dados pré-preenchidos.
     element.clear() 
     element.send_keys(text)
 
@@ -49,8 +45,6 @@ try:
     print("Logging in...")
     wait_and_fill(wait, (By.XPATH, "//*[@id='username']"), "tainara.daroca")
     wait_and_fill(wait, (By.XPATH, "//*[@id='password']"), "daroca123456")
-    
-    # --- OTIMIZAÇÃO: Seletor absoluto substituído por um relativo e robusto ---
     wait_and_click(wait, (By.XPATH, "//form//button[@type='submit']"))
 
     # 3. Acessar a página de Clientes
@@ -76,19 +70,16 @@ try:
     print("Preenchendo dados de contato...")
     wait_and_fill(wait, (By.XPATH, "//label[contains(., 'Email')]/following::input[1]"), "teste@empresa.com")
     
-    # --- OTIMIZAÇÃO: Removido try/except interno. Deixe o principal cuidar disso. ---
     print("Preenchendo 'Telefone' (campo com máscara)...")
     telefone_locator = (By.XPATH, "//input[@placeholder='(99) 99999-9999']")
     telefone_field = wait.until(EC.element_to_be_clickable(telefone_locator))
     telefone_field.click() 
     telefone_field.send_keys("61999998888")
-    # --- OTIMIZAÇÃO: time.sleep(1) REMOVIDO ---
 
     print("Preenchendo endereço...")
     wait_and_fill(wait, (By.XPATH, "//label[contains(., 'Estado')]/following::input[1]"), "DF")
     wait_and_fill(wait, (By.XPATH, "//label[contains(., 'Bairro')]/following::input[1]"), "Asa Sul")
     wait_and_fill(wait, (By.XPATH, "//label[contains(., 'Endereço')]/following::input[1]"), "QS 14 CONJUNTO 07 LOTE 03/04")
-    # --- OTIMIZAÇÃO: time.sleep(1) REMOVIDO ---
 
     print("Preenchendo 'CEP' (campo com máscara)...")
     cep_locator = (By.XPATH, "//input[@placeholder='12345-678']")
@@ -103,15 +94,11 @@ try:
     print("Preenchimento concluído. Clicando em Salvar...")
     wait_and_click(wait, (By.XPATH, "//button[contains(., 'Salvar')]"))
 
-    # --- OTIMIZAÇÃO: Adicionada validação de sucesso ---
-    # Substitua o texto pelo que realmente aparece (ex: "Sucesso!", "Cliente salvo", etc.)
     print("Aguardando confirmação de sucesso...")
     wait.until(
         EC.visibility_of_element_located((By.XPATH, "//*[contains(., 'Cliente cadastrado com sucesso')]"))
     )
     print("Teste concluído com sucesso!")
-    
-    # --- OTIMIZAÇÃO: time.sleep(2) REMOVIDO ---
 
 except TimeoutException:
     print(f"Erro: O elemento não foi encontrado ou não ficou clicável a tempo.")
