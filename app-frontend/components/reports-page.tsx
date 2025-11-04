@@ -98,16 +98,17 @@ export function ReportsPage() {
     }
 
     if (!iso) return "N/A";
-    // Tenta parse padrão
+
+    // Prioriza o parse de AAAA-MM-DD (com ou sem parte de horário), evitando shift por timezone
+    const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s].*)?$/);
+    if (m) {
+      const dLocal = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      if (!isNaN(dLocal.getTime())) return dLocal.toLocaleDateString("pt-BR");
+    }
+
+    // Fallback: tenta parse padrão
     const d1 = new Date(iso);
     if (!isNaN(d1.getTime())) return d1.toLocaleDateString("pt-BR");
-
-    // Fallback para formato YYYY-MM-DD
-    const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (m) {
-      const d2 = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-      if (!isNaN(d2.getTime())) return d2.toLocaleDateString("pt-BR");
-    }
 
     // Último recurso: retorna string original
     return iso;
@@ -119,17 +120,23 @@ export function ReportsPage() {
     if (input instanceof Date) {
       d = input;
     } else if (typeof input === "string") {
-      const tryIso = new Date(input);
-      if (!isNaN(tryIso.getTime())) {
-        d = tryIso;
+      // Prioriza AAAA-MM-DD (com ou sem horário) para evitar timezone
+      const m = input.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s].*)?$/);
+      if (m) {
+        d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
       } else {
-        const m1 = input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-        if (m1) {
-          d = new Date(Number(m1[3]), Number(m1[2]) - 1, Number(m1[1]));
+        const tryIso = new Date(input);
+        if (!isNaN(tryIso.getTime())) {
+          d = tryIso;
         } else {
-          const m2 = input.match(/^(\d{4})-(\d{2})-(\d{2})/);
-          if (m2) {
-            d = new Date(Number(m2[1]), Number(m2[2]) - 1, Number(m2[3]));
+          const m1 = input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+          if (m1) {
+            d = new Date(Number(m1[3]), Number(m1[2]) - 1, Number(m1[1]));
+          } else {
+            const m2 = input.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (m2) {
+              d = new Date(Number(m2[1]), Number(m2[2]) - 1, Number(m2[3]));
+            }
           }
         }
       }
