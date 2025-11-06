@@ -68,12 +68,11 @@ export class DailyReportService {
           driver: createDailyReportDto.driver,
           userId: createDailyReportDto.userId,
           products: productsJson, // JSON
-          customerCode: Number(createDailyReportDto.customerCode),
-          hasSifOrSisbi: createDailyReportDto.hasSifOrSisbi,
+          customerCode: BigInt(createDailyReportDto.customerCode),
+          sifOrSisbi: createDailyReportDto.sifOrSisbi ?? null,
           productTemperature: createDailyReportDto.productTemperature,
-          // Preenchimento: data/hora atual do servidor
-          fillingDate: new Date(),
-          shipmentDate: new Date(createDailyReportDto.shipmentDate),
+          // Preenchimento: data/hora enviada pelo cliente (momento da confirmação)
+          fillingDate: new Date(createDailyReportDto.fillingDate),
           deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
         } as any,
       });

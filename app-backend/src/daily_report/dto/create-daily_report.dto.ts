@@ -3,6 +3,7 @@ import {
   IsArray,
   IsBoolean,
   IsDateString,
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsNumber,
@@ -59,12 +60,14 @@ export class CreateDailyReportDto {
   @Type(() => ProductItemDto)
   products!: ProductItemDto[];
 
-  // BigInt handled as numeric string to preserve precision
+  // Código do cliente (BigInt no banco, aceitamos number aqui)
+  @IsInt()
+  customerCode!: number;
+  // Somente 'SIF' | 'SISBI' ou ausente (NULL)
+  @IsOptional()
   @IsString()
-  customerCode!: string;
-
-  @IsBoolean()
-  hasSifOrSisbi!: boolean;
+  @IsIn(["SIF", "SISBI"])
+  sifOrSisbi?: string;
 
   @Type(() => Number)
   @IsNumber()
@@ -73,8 +76,7 @@ export class CreateDailyReportDto {
   @IsDateString()
   fillingDate!: string;
 
-  @IsDateString()
-  shipmentDate!: string;
+  // Removido: shipmentDate não existe mais no schema
 
   @IsOptional()
   @IsString()
