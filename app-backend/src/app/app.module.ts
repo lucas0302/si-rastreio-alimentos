@@ -8,9 +8,21 @@ import { CustomersModule } from 'src/customers/customers.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { VehicleModule } from 'src/vehicles/vehicle.module';
 import { DailyReportModule } from 'src/daily_report/daily_report.module';
+import { DashboardModule } from 'src/dashboard/dashboard.module';
+import { MonthlyReportModule } from 'src/monthly_report/monthly_report.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, ProductsModule, CustomersModule, VehicleModule, AuthModule, DailyReportModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    ProductsModule,
+    CustomersModule,
+    VehicleModule,
+    AuthModule,
+    DailyReportModule,
+    DashboardModule,
+    MonthlyReportModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
