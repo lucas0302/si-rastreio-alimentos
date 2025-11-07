@@ -27,7 +27,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -35,7 +34,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
   PopoverTrigger,
@@ -54,8 +52,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 const steps = [
-  { id: "client", title: "Cliente" },
   { id: "transport", title: "Transporte" },
+  { id: "client", title: "Cliente" },
   { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
 ];
@@ -445,13 +443,15 @@ const OnboardingForm = () => {
   const isStepValid = () => {
     switch (currentStep) {
       case 0:
-        // Apenas exigir cliente preenchido para prosseguir
-        return formData.client.trim() !== "";
+        return (
+          formData.driver.trim() !== "" &&
+          formData.vehicleId.trim() !== "" &&
+          formData.sanitaryCondition.trim() !== "" &&
+          formData.vehicleTemperature.trim() !== ""
+        );
       case 1:
-        // Exigir motorista e veículo selecionado
-        return formData.driver.trim() !== "" && formData.vehicleId.trim() !== "";
+        return formData.client.trim() !== "";
       case 2:
-        // Validar campos da etapa de Produto
         const items = formData.productItems ?? [];
         const hasItems = items.length > 0;
         const allValid = hasItems && items.every((it) => (it.code || "").trim() !== "" && (it.quantity || "").trim() !== "");
@@ -461,15 +461,10 @@ const OnboardingForm = () => {
           formData.deliverDate.trim() !== ""
         );
       case 3:
-        // Revisão não exige preenchimento adicional para prosseguir
         return true;
       default:
         return true;
     }
-  };
-
-  const preventDefault = (e: React.MouseEvent) => {
-    e.preventDefault();
   };
 
   return (
@@ -505,7 +500,7 @@ const OnboardingForm = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Store className="h-4 w-4" />
+                <Truck className="h-5 w-5" />
                 </motion.div>
               ) : index === 1 ? (
                 <motion.div
@@ -524,7 +519,7 @@ const OnboardingForm = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Truck className="h-5 w-5" />
+                <Store className="h-4 w-4" />
                 </motion.div>
               ) : index === 2 ? (
                 <motion.div
@@ -543,7 +538,7 @@ const OnboardingForm = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <PiggyBank className="h-5 w-5" />
+                <PiggyBank className="h-5 w-5" />
                 </motion.div>
               ) : index === 3 ? (
                 <motion.div
@@ -562,7 +557,7 @@ const OnboardingForm = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <ClipboardPen className="h-5 w-5" />
+                <ClipboardPen className="h-5 w-5" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -621,97 +616,8 @@ const OnboardingForm = () => {
                 exit="exit"
                 variants={contentVariants}
               >
-                {/* Step 1: Client Information */}
-                {currentStep === 0 && (
-                  <>
-                    <CardHeader>
-                      <CardTitle>Comprador</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label htmlFor="client"></Label>
-                        <Popover open={clientOpen} onOpenChange={handleClientOpenChange}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              aria-expanded={clientOpen}
-                              className="w-full justify-between transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                            >
-                              {formData.client
-                                ? formData.client
-                                : "Selecionar comprador..."}
-                              <ChevronsUpDown className="h-4 w-4 opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="p-0">
-                            <Command>
-                              <CommandInput placeholder="Buscar cliente por nome ou código..." />
-                              <CommandEmpty>
-                                Nenhum cliente encontrado.
-                              </CommandEmpty>
-                              <CommandList>
-                                <CommandGroup>
-                                  {clientsLoading && (
-                                    <div className="p-3 text-sm text-muted-foreground">
-                                      Carregando...
-                                    </div>
-                                  )}
-                                  {clientsError && (
-                                    <div className="p-3 text-sm text-red-600">
-                                      {clientsError}
-                                    </div>
-                                  )}
-                                  {!clientsLoading &&
-                                    !clientsError &&
-                                    clients.map((c) => (
-                                      <CommandItem
-                                        key={c.code}
-                                        value={`${[
-                                          c.fantasy_name,
-                                          c.legal_name,
-                                          String(c.code),
-                                        ]
-                                          .filter(Boolean)
-                                          .join(" ")}`}
-                                        onSelect={() => {
-                                          setFormData((prev) => ({
-                                            ...prev,
-                                            client: c.fantasy_name || c.legal_name,
-                                            clientCode: String(c.code),
-                                          }));
-                                          setClientOpen(false);
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "mr-2 h-4 w-4",
-                                            formData.client ===
-                                              (c.fantasy_name || c.legal_name)
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                        <span className="truncate">
-                                          {c.fantasy_name || c.legal_name}
-                                        </span>
-                                        <span className="ml-2 text-xs text-muted-foreground">
-                                          ({c.code})
-                                        </span>
-                                      </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                      </motion.div>
-                    </CardContent>
-                  </>
-                )}
-
                 {/* Step 2: Transport Information */}
-                {currentStep === 1 && (
+                {currentStep === 0 && (
                   <>
                     <CardHeader>
                       <CardTitle>Informações do Transporte</CardTitle>
@@ -794,6 +700,7 @@ const OnboardingForm = () => {
                           inputMode="decimal"
                           step="0.1"
                           placeholder="Ex.: 4.5"
+                          required
                           value={formData.vehicleTemperature}
                           onChange={(e) => {
                             const v = e.target.value.replace(/[^0-9.,-]/g, "").replace(",", ".");
@@ -801,6 +708,95 @@ const OnboardingForm = () => {
                           }}
                           className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                         />
+                      </motion.div>
+                    </CardContent>
+                  </>
+                )}
+
+                {/* Step 1: Client Information */}
+                {currentStep === 1 && (
+                  <>
+                    <CardHeader>
+                      <CardTitle>Comprador</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <motion.div variants={fadeInUp} className="space-y-2">
+                        <Label htmlFor="client"></Label>
+                        <Popover open={clientOpen} onOpenChange={handleClientOpenChange}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={clientOpen}
+                              className="w-full justify-between transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            >
+                              {formData.client
+                                ? formData.client
+                                : "Selecionar comprador..."}
+                              <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="p-0">
+                            <Command>
+                              <CommandInput placeholder="Buscar cliente por nome ou código..." />
+                              <CommandEmpty>
+                                Nenhum cliente encontrado.
+                              </CommandEmpty>
+                              <CommandList>
+                                <CommandGroup>
+                                  {clientsLoading && (
+                                    <div className="p-3 text-sm text-muted-foreground">
+                                      Carregando...
+                                    </div>
+                                  )}
+                                  {clientsError && (
+                                    <div className="p-3 text-sm text-red-600">
+                                      {clientsError}
+                                    </div>
+                                  )}
+                                  {!clientsLoading &&
+                                    !clientsError &&
+                                    clients.map((c) => (
+                                      <CommandItem
+                                        key={c.code}
+                                        value={`${[
+                                          c.fantasy_name,
+                                          c.legal_name,
+                                          String(c.code),
+                                        ]
+                                          .filter(Boolean)
+                                          .join(" ")}`}
+                                        onSelect={() => {
+                                          setFormData((prev) => ({
+                                            ...prev,
+                                            client: c.fantasy_name || c.legal_name,
+                                            clientCode: String(c.code),
+                                          }));
+                                          setClientOpen(false);
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            formData.client ===
+                                              (c.fantasy_name || c.legal_name)
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        <span className="truncate">
+                                          {c.fantasy_name || c.legal_name}
+                                        </span>
+                                        <span className="ml-2 text-xs text-muted-foreground">
+                                          ({c.code})
+                                        </span>
+                                      </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                       </motion.div>
                     </CardContent>
                   </>
