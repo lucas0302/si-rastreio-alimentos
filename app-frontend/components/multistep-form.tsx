@@ -13,7 +13,8 @@ import {
   Truck,
   PiggyBank,
   ClipboardPen,
-  Trash2
+  Trash2,
+  FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,6 +54,7 @@ import { cn } from "@/lib/utils";
 
 const steps = [
   { id: "transport", title: "Transporte" },
+  { id: "invoice", title: "Nota Fiscal" },
   { id: "client", title: "Cliente" },
   { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
@@ -450,17 +452,15 @@ const OnboardingForm = () => {
           formData.vehicleTemperature.trim() !== ""
         );
       case 1:
-        return formData.client.trim() !== "";
+        return formData.invoiceNumber.trim() !== "";
       case 2:
+        return formData.client.trim() !== "";
+      case 3:
         const items = formData.productItems ?? [];
         const hasItems = items.length > 0;
         const allValid = hasItems && items.every((it) => (it.code || "").trim() !== "" && (it.quantity || "").trim() !== "");
-        return (
-          formData.invoiceNumber.trim() !== "" &&
-          allValid &&
-          formData.deliverDate.trim() !== ""
-        );
-      case 3:
+        return allValid && formData.deliverDate.trim() !== "";
+      case 4:
         return true;
       default:
         return true;
@@ -477,118 +477,137 @@ const OnboardingForm = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex justify-between mb-2">
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
-            >
-              {index === 0 ? (
+              {steps.map((step, index) => (
                 <motion.div
-                  className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                    index < currentStep
-                      ? "text-primary"
-                      : index === currentStep
-                      ? "text-primary ring-primary/20"
-                      : "text-muted-foreground"
-                  )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
+                  key={index}
+                  className="flex flex-col items-center"
+                  whileHover={{ scale: 1.1 }}
                 >
-                <Truck className="h-5 w-5" />
-                </motion.div>
+                  {index === 0 ? (
+                    <motion.div
+                      className={cn(
+                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                        index < currentStep
+                          ? "text-primary"
+                          : index === currentStep
+                          ? "text-primary ring-primary/20"
+                          : "text-muted-foreground"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                    <Truck className="h-5 w-5" />
+                    </motion.div>
               ) : index === 1 ? (
-                <motion.div
-                  className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                    index < currentStep
-                      ? "text-primary"
-                      : index === currentStep
-                      ? "text-primary ring-primary/20"
-                      : "text-muted-foreground"
-                  )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                <Store className="h-4 w-4" />
-                </motion.div>
+                    <motion.div
+                      className={cn(
+                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                        index < currentStep
+                          ? "text-primary"
+                          : index === currentStep
+                          ? "text-primary ring-primary/20"
+                          : "text-muted-foreground"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                    <FileText className="h-5 w-5" />
+                    </motion.div>
               ) : index === 2 ? (
-                <motion.div
-                  className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                    index < currentStep
-                      ? "text-primary"
-                      : index === currentStep
-                      ? "text-primary ring-primary/20"
-                      : "text-muted-foreground"
-                  )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                <PiggyBank className="h-5 w-5" />
-                </motion.div>
+                    <motion.div
+                      className={cn(
+                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                        index < currentStep
+                          ? "text-primary"
+                          : index === currentStep
+                          ? "text-primary ring-primary/20"
+                          : "text-muted-foreground"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                    <Store className="h-4 w-4" />
+                    </motion.div>
               ) : index === 3 ? (
-                <motion.div
-                  className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                    index < currentStep
-                      ? "text-primary"
-                      : index === currentStep
-                      ? "text-primary ring-primary/20"
-                      : "text-muted-foreground"
-                  )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                <ClipboardPen className="h-5 w-5" />
-                </motion.div>
+                    <motion.div
+                      className={cn(
+                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                        index < currentStep
+                          ? "text-primary"
+                          : index === currentStep
+                          ? "text-primary ring-primary/20"
+                          : "text-muted-foreground"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                    <PiggyBank className="h-5 w-5" />
+                    </motion.div>
+              ) : index === 4 ? (
+                    <motion.div
+                      className={cn(
+                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                        index < currentStep
+                          ? "text-primary"
+                          : index === currentStep
+                          ? "text-primary ring-primary/20"
+                          : "text-muted-foreground"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                    <ClipboardPen className="h-5 w-5" />
+                    </motion.div>
               ) : (
-                <motion.div
-                  className={cn(
-                    "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
-                    index < currentStep
-                      ? "bg-primary"
-                      : index === currentStep
-                      ? "bg-primary ring-4 ring-primary/20"
-                      : "bg-muted"
+                    <motion.div
+                      className={cn(
+                        "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
+                        index < currentStep
+                          ? "bg-primary"
+                          : index === currentStep
+                          ? "bg-primary ring-4 ring-primary/20"
+                          : "bg-muted"
+                      )}
+                      onClick={() => {
+                        if (index <= currentStep) {
+                          setCurrentStep(index);
+                        }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    />
                   )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                />
-              )}
-              <motion.span
-                className={cn(
-                  "text-xs mt-1.5 hidden sm:block",
-                  index === currentStep
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground"
-                )}
-              >
-                {step.title}
-              </motion.span>
-            </motion.div>
-          ))}
+                  <motion.span
+                    className={cn(
+                      "text-xs mt-1.5 hidden sm:block",
+                      index === currentStep
+                        ? "text-primary font-medium"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {step.title}
+                  </motion.span>
+                </motion.div>
+              ))}
         </div>
         <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
           <motion.div
@@ -713,8 +732,34 @@ const OnboardingForm = () => {
                   </>
                 )}
 
-                {/* Step 1: Client Information */}
+                {/* Step 1: Nota Fiscal */}
                 {currentStep === 1 && (
+                  <>
+                    <CardHeader>
+                      <CardTitle>Nota Fiscal</CardTitle>
+                      <CardDescription>Informe o número da Nota Fiscal</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <motion.div variants={fadeInUp} className="space-y-2">
+                        <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
+                        <Input
+                          id="invoiceNumber"
+                          inputMode="numeric"
+                          placeholder="Somente números"
+                          value={formData.invoiceNumber}
+                          onChange={(e) => {
+                            const digits = (e.target.value || "").replace(/\D/g, "");
+                            updateFormData("invoiceNumber", digits);
+                          }}
+                          className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        />
+                      </motion.div>
+                    </CardContent>
+                  </>
+                )}
+
+                {/* Step 2: Client Information */}
+                {currentStep === 2 && (
                   <>
                     <CardHeader>
                       <CardTitle>Comprador</CardTitle>
@@ -803,7 +848,7 @@ const OnboardingForm = () => {
                 )}
 
                 {/* Step 3: Produto */}
-                {currentStep === 2 && (
+                {currentStep === 3 && (
                   <>
                     <CardHeader>
                       <CardTitle>Produto</CardTitle>
@@ -812,21 +857,7 @@ const OnboardingForm = () => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      {/* N° Nota Fiscal */}
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
-                        <Input
-                          id="invoiceNumber"
-                          inputMode="numeric"
-                          placeholder="Somente números"
-                          value={formData.invoiceNumber}
-                          onChange={(e) => {
-                            const digits = (e.target.value || "").replace(/\D/g, "");
-                            updateFormData("invoiceNumber", digits);
-                          }}
-                          className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
-                      </motion.div>
+                      {/* N° Nota Fiscal movido para etapa própria */}
 
                       {/* Produto + Quantidade por linha */}
                       <motion.div variants={fadeInUp} className="space-y-2">
@@ -1023,8 +1054,8 @@ const OnboardingForm = () => {
                   </>
                 )}
 
-                {/* Step 4: Revisão */}
-                {currentStep === 3 && (
+                {/* Step 5: Revisão */}
+                {currentStep === 4 && (
                   <>
                     <CardHeader>
                       <CardTitle>Revisão</CardTitle>
