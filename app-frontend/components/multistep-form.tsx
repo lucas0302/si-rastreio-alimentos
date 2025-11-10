@@ -51,6 +51,9 @@ import {
 } from "@/components/ui/command";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 
 const steps = [
   { id: "transport", title: "Transporte" },
@@ -71,12 +74,25 @@ interface FormData {
   vehicleId: string;
   sanitaryCondition: string;
   vehicleTemperature: string;
-  // Etapa 3 - Produto
+  // Etapa 1 - Nota Fiscal
   invoiceNumber: string;
+  // Estrutura antiga (Produto): mantida para compatibilidade, será desativada
   productItems: { code: string; quantity: string }[];
   sifOrSisbi: "" | "SIF" | "SISBI";
   productTemperature: string;
   deliverDate: string; // ISO date (YYYY-MM-DD)
+  // Novo: múltiplos clientes com subform de produtos
+  customerGroups: {
+    clientCode: string; // código do cliente
+    clientName: string; // para exibição
+    items: {
+      code: string;
+      quantity: string;
+      sifOrSisbi: "" | "SIF" | "SISBI" | "NA";
+      productTemperature: string;
+      productionDate: string; // YYYY-MM-DD
+    }[];
+  }[];
 }
 
 const fadeInUp = {
@@ -140,6 +156,13 @@ const OnboardingForm = () => {
     sifOrSisbi: "",
     productTemperature: "",
     deliverDate: "",
+    customerGroups: [
+      {
+        clientCode: "",
+        clientName: "",
+        items: [],
+      },
+    ],
   });
 
   // Estados para o combobox de clientes
@@ -159,6 +182,81 @@ const OnboardingForm = () => {
   const [products, setProducts] = useState<ApiProduct[]>([]);
   const [productsLoading, setProductsLoading] = useState(false);
   const [productsError, setProductsError] = useState<string | null>(null);
+
+  // Estado do modal de produto (adicionar/editar)
+  const [productModalOpen, setProductModalOpen] = useState(false);
+  const [productModalGroupIndex, setProductModalGroupIndex] = useState<number | null>(null);
+  const [productEditIndex, setProductEditIndex] = useState<number | null>(null);
+  const [productForm, setProductForm] = useState<{ code: string; quantity: string; sifOrSisbi: "" | "SIF" | "SISBI" | "NA"; productTemperature: string; productionDate: string }>({
+    code: "",
+    quantity: "",
+    sifOrSisbi: "",
+    productTemperature: "",
+    productionDate: "",
+  });
+
+  const resetProductForm = () => {
+    setProductForm({ code: "", quantity: "", sifOrSisbi: "", productTemperature: "", productionDate: "" });
+    setProductEditIndex(null);
+  };
+
+  const openAddProduct = (groupIndex: number) => {
+    setProductModalGroupIndex(groupIndex);
+    resetProductForm();
+    setProductModalOpen(true);
+  };
+
+  const openEditProduct = (groupIndex: number, itemIndex: number) => {
+    const item = formData.customerGroups[groupIndex]?.items[itemIndex];
+    if (!item) return;
+    setProductModalGroupIndex(groupIndex);
+    setProductEditIndex(itemIndex);
+    setProductForm({
+      code: item.code || "",
+      quantity: item.quantity || "",
+      sifOrSisbi: (item.sifOrSisbi || "") as any,
+      productTemperature: item.productTemperature || "",
+      productionDate: item.productionDate || "",
+    });
+    setProductModalOpen(true);
+  };
+
+  const deleteProduct = (groupIndex: number, itemIndex: number) => {
+    updateCustomerGroup(groupIndex, (g) => {
+      const items = [...(g.items || [])];
+      items.splice(itemIndex, 1);
+      return { ...g, items };
+    });
+  };
+
+  const saveProductModal = () => {
+    if (productModalGroupIndex == null) return;
+    const gIdx = productModalGroupIndex;
+    const data = productForm;
+    // validações simples
+    if (!data.code || !data.quantity || !data.productTemperature || !data.productionDate) {
+      toast.error("Preencha todos os campos do produto.");
+      return;
+    }
+    updateCustomerGroup(gIdx, (g) => {
+      const items = [...(g.items || [])];
+      const newItem = {
+        code: data.code,
+        quantity: data.quantity.replace(/\D/g, ""),
+        sifOrSisbi: (data.sifOrSisbi || "") as any,
+        productTemperature: data.productTemperature,
+        productionDate: data.productionDate,
+      };
+      if (productEditIndex == null) {
+        items.push(newItem);
+      } else {
+        items[productEditIndex] = newItem;
+      }
+      return { ...g, items };
+    });
+    setProductModalOpen(false);
+    resetProductForm();
+  };
 
   // Buscar todos os clientes paginando até completar a lista
   const fetchAllClients = async () => {
@@ -309,6 +407,38 @@ const OnboardingForm = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const updateCustomerGroup = (index: number, updater: (g: FormData["customerGroups"][number]) => FormData["customerGroups"][number]) => {
+    setFormData((prev) => {
+      const groups = [...prev.customerGroups];
+      groups[index] = updater(groups[index]);
+      return { ...prev, customerGroups: groups };
+    });
+  };
+
+  const addCustomerGroup = () => {
+    setFormData((prev) => ({
+      ...prev,
+      customerGroups: [
+        ...prev.customerGroups,
+        {
+          clientCode: "",
+          clientName: "",
+          items: [],
+        },
+      ],
+    }));
+  };
+
+  const removeCustomerGroup = (index: number) => {
+    setFormData((prev) => {
+      const groups = [...prev.customerGroups];
+      groups.splice(index, 1);
+      return { ...prev, customerGroups: groups.length > 0 ? groups : [
+        { clientCode: "", clientName: "", items: [] },
+      ] };
+    });
+  };
+
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
@@ -347,77 +477,50 @@ const OnboardingForm = () => {
           throw new Error("Não foi possível identificar o usuário (sub).");
         }
 
-        // Encontrar código do cliente (BigInt em string)
-        let customerCodeNum: number | null = (formData.clientCode || "").trim() !== "" ? Number(formData.clientCode) : null;
-        if (customerCodeNum === null) {
-          const match = clients.find(
-            (c) => (c.fantasy_name || c.legal_name) === formData.client
-          );
-          if (match?.code) customerCodeNum = Number(match.code);
-        }
+        const fillingISO = new Date().toISOString();
 
-        if (customerCodeNum === null || Number.isNaN(customerCodeNum)) {
-          throw new Error(
-            "Cliente inválido: selecione novamente para capturar o código."
-          );
-        }
+        const vehicleTemp = Number((formData.vehicleTemperature || "").replace(",", "."));
 
-        // Montar objetos de produtos válidos (exigem código e quantidade)
-        const productList = (formData.productItems ?? [])
-          .filter((it) => {
-            const codeStr = (it.code || "").trim();
-            const qtyStr = (it.quantity || "").trim();
-            return codeStr !== "" && qtyStr !== "";
-          })
-          .map((it) => {
+        const selectedPlate = vehicles.find((v) => String(v.id) === formData.vehicleId)?.plate;
+
+        // Novo payload: customerGroups
+        const groupsValid = (formData.customerGroups ?? []).map((g) => {
+          const clientCodeNum = Number((g.clientCode || "").trim());
+          const items = (g.items ?? []).filter((it) =>
+            (it.code || "").trim() !== "" &&
+            (it.quantity || "").trim() !== "" &&
+            (it.productTemperature || "").trim() !== "" &&
+            (it.productionDate || "").trim() !== ""
+          ).map((it) => {
             const codeNum = Number(it.code);
             const qtyNum = Number(it.quantity);
+            const tempNum = Number((it.productTemperature || "").replace(",", "."));
             const found = products.find((p) => p.code === codeNum);
             return {
               code: codeNum,
               quantity: qtyNum,
               description: found?.description ?? undefined,
+              sifOrSisbi: it.sifOrSisbi || undefined,
+              productTemperature: tempNum,
+              productionDate: `${it.productionDate}T00:00:00.000Z`,
             };
           });
+          return { customerCode: clientCodeNum, items };
+        }).filter((g) => !!g.customerCode && g.items.length > 0);
 
-        if (productList.length === 0) {
-          throw new Error("Informe ao menos um produto com quantidade.");
+        if (groupsValid.length === 0) {
+          throw new Error("Adicione ao menos um cliente com produto(s) válido(s).");
         }
 
-        // Somar quantidade total com base apenas nos itens válidos
-        const totalQuantity = productList
-          .map((p) => Number(p.quantity))
-          .reduce((acc, n) => acc + (Number.isFinite(n) ? n : 0), 0);
-
-        if (totalQuantity <= 0) {
-          throw new Error("Quantidade total inválida.");
-        }
-
-        // Converter datas para ISO
-        const dateISO = `${formData.deliverDate}T00:00:00.000Z`; // produção/expedição (apenas data)
-        const fillingISO = new Date().toISOString(); // preenchimento (data e hora atuais)
-
-        // Temperaturas
-        const vehicleTemp = Number((formData.vehicleTemperature || "").replace(",", "."));
-        const productTemp = Number((formData.productTemperature || "").replace(",", "."));
-
-        // Placa do veículo (opcional) pela seleção de vehicleId
-        const selectedPlate = vehicles.find((v) => String(v.id) === formData.vehicleId)?.plate;
-
-        const payload = {
-          quantity: totalQuantity,
+        const payload: any = {
           invoiceNumber: Number(formData.invoiceNumber),
-          productionDate: dateISO,
           vehicleTemperature: vehicleTemp,
           hasGoodSanitaryCondition: formData.sanitaryCondition === "conforme",
           driver: formData.driver,
           userId,
-          products: productList,
-          customerCode: Number(customerCodeNum),
-          sifOrSisbi: formData.sifOrSisbi || null,
-          productTemperature: productTemp,
           fillingDate: fillingISO,
           deliverVehicle: selectedPlate,
+          customerGroups: groupsValid,
         };
 
         const res = await axios.post(
@@ -453,13 +556,26 @@ const OnboardingForm = () => {
         );
       case 1:
         return formData.invoiceNumber.trim() !== "";
-      case 2:
-        return formData.client.trim() !== "";
+      case 2: {
+        // Validar múltiplos clientes com produtos
+        const groups = formData.customerGroups ?? [];
+        if (groups.length === 0) return false;
+        const eachValid = groups.every((g) => {
+          const hasClient = (g.clientCode || "").trim() !== "";
+          const items = g.items ?? [];
+          if (items.length === 0) return false;
+          return items.every((it) =>
+            (it.code || "").trim() !== "" &&
+            (it.quantity || "").trim() !== "" &&
+            (it.productTemperature || "").trim() !== "" &&
+            (it.productionDate || "").trim() !== ""
+          );
+        });
+        return eachValid;
+      }
       case 3:
-        const items = formData.productItems ?? [];
-        const hasItems = items.length > 0;
-        const allValid = hasItems && items.every((it) => (it.code || "").trim() !== "" && (it.quantity || "").trim() !== "");
-        return allValid && formData.deliverDate.trim() !== "";
+        // Etapa Produto antiga desativada
+        return true;
       case 4:
         return true;
       default:
@@ -758,298 +874,237 @@ const OnboardingForm = () => {
                   </>
                 )}
 
-                {/* Step 2: Client Information */}
+                {/* Step 2: Cliente + Produtos (Accordion + Modal) */}
                 {currentStep === 2 && (
                   <>
                     <CardHeader>
-                      <CardTitle>Comprador</CardTitle>
+                      <CardTitle>Clientes e Produtos</CardTitle>
+                      <CardDescription>Selecione um ou mais clientes e associe seus produtos</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label htmlFor="client"></Label>
-                        <Popover open={clientOpen} onOpenChange={handleClientOpenChange}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              aria-expanded={clientOpen}
-                              className="w-full justify-between transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                            >
-                              {formData.client
-                                ? formData.client
-                                : "Selecionar comprador..."}
-                              <ChevronsUpDown className="h-4 w-4 opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="p-0">
-                            <Command>
-                              <CommandInput placeholder="Buscar cliente por nome ou código..." />
-                              <CommandEmpty>
-                                Nenhum cliente encontrado.
-                              </CommandEmpty>
-                              <CommandList>
-                                <CommandGroup>
-                                  {clientsLoading && (
-                                    <div className="p-3 text-sm text-muted-foreground">
-                                      Carregando...
-                                    </div>
-                                  )}
-                                  {clientsError && (
-                                    <div className="p-3 text-sm text-red-600">
-                                      {clientsError}
-                                    </div>
-                                  )}
-                                  {!clientsLoading &&
-                                    !clientsError &&
-                                    clients.map((c) => (
-                                      <CommandItem
-                                        key={c.code}
-                                        value={`${[
-                                          c.fantasy_name,
-                                          c.legal_name,
-                                          String(c.code),
-                                        ]
-                                          .filter(Boolean)
-                                          .join(" ")}`}
-                                        onSelect={() => {
-                                          setFormData((prev) => ({
-                                            ...prev,
-                                            client: c.fantasy_name || c.legal_name,
-                                            clientCode: String(c.code),
-                                          }));
-                                          setClientOpen(false);
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "mr-2 h-4 w-4",
-                                            formData.client ===
-                                              (c.fantasy_name || c.legal_name)
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                        <span className="truncate">
-                                          {c.fantasy_name || c.legal_name}
-                                        </span>
-                                        <span className="ml-2 text-xs text-muted-foreground">
-                                          ({c.code})
-                                        </span>
-                                      </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
+                      <motion.div variants={fadeInUp} className="space-y-6">
+                        <Accordion type="multiple" className="w-full">
+                          {formData.customerGroups.map((group, gIdx) => (
+                            <AccordionItem key={`group-${gIdx}`} value={`group-${gIdx}`}>
+                              <AccordionTrigger>
+                                <div className="flex w-full items-center justify-between pr-2">
+                                  <span className="font-medium">
+                                    {group.clientName ? `${group.clientName}${group.clientCode ? ` (${group.clientCode})` : ""}` : `Cliente #${gIdx + 1}`}
+                                  </span>
+                                  <Button type="button" variant="outline" size="icon" aria-label="Remover cliente" onClick={() => removeCustomerGroup(gIdx)}>
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <div className="space-y-4">
+                                  <Popover onOpenChange={(open) => { if (open && !clientsFullyLoaded && !clientsLoading) { void fetchAllClients(); } }}>
+                                    <PopoverTrigger asChild>
+                                      <Button variant="outline" role="combobox" className="w-full justify-between">
+                                        {group.clientName ? group.clientName : "Selecionar cliente..."}
+                                        <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="p-0">
+                                      <Command>
+                                        <CommandInput placeholder="Buscar cliente por nome ou código..." />
+                                        <CommandEmpty>Nenhum cliente encontrado.</CommandEmpty>
+                                        <CommandList>
+                                          <CommandGroup>
+                                            {clientsLoading && (<div className="p-3 text-sm text-muted-foreground">Carregando...</div>)}
+                                            {clientsError && (<div className="p-3 text-sm text-red-600">{clientsError}</div>)}
+                                            {!clientsLoading && !clientsError && clients.map((c) => (
+                                              <CommandItem
+                                                key={c.code}
+                                                value={`${[c.fantasy_name, c.legal_name, String(c.code)].filter(Boolean).join(" ")}`}
+                                                onSelect={() => {
+                                                  updateCustomerGroup(gIdx, (g) => ({ ...g, clientCode: String(c.code), clientName: c.fantasy_name || c.legal_name }));
+                                                }}
+                                              >
+                                                <Check className={cn("mr-2 h-4 w-4", group.clientName === (c.fantasy_name || c.legal_name) ? "opacity-100" : "opacity-0")} />
+                                                <span className="truncate">{c.fantasy_name || c.legal_name}</span>
+                                                <span className="ml-2 text-xs text-muted-foreground">({c.code})</span>
+                                              </CommandItem>
+                                            ))}
+                                          </CommandGroup>
+                                        </CommandList>
+                                      </Command>
+                                    </PopoverContent>
+                                  </Popover>
+
+                                  {/* Tabela resumo de produtos */}
+                                  <div className="space-y-2">
+                                    <Label>Produtos do cliente</Label>
+                                    {group.items && group.items.length > 0 ? (
+                                      <Table>
+                                        <TableHeader>
+                                          <TableRow>
+                                            <TableHead>Produto</TableHead>
+                                            <TableHead>Quantidade</TableHead>
+                                            <TableHead>SIF/SISBI</TableHead>
+                                            <TableHead>Temp (°C)</TableHead>
+                                            <TableHead>Produção</TableHead>
+                                            <TableHead>Ações</TableHead>
+                                          </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                          {group.items.map((item, iIdx) => {
+                                            const pDesc = products.find((p) => String(p.code) === item.code)?.description || item.code;
+                                            return (
+                                              <TableRow key={`g${gIdx}-row-${iIdx}`}>
+                                                <TableCell>{pDesc}</TableCell>
+                                                <TableCell>{item.quantity}</TableCell>
+                                                <TableCell>{item.sifOrSisbi || ""}</TableCell>
+                                                <TableCell>{item.productTemperature}</TableCell>
+                                                <TableCell>
+                                                  {item.productionDate
+                                                    ? (() => { const [y, m, d] = item.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
+                                                    : ""}
+                                                </TableCell>
+                                                <TableCell>
+                                                  <div className="flex gap-2">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar" onClick={() => openEditProduct(gIdx, iIdx)}>
+                                                      <ClipboardPen className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Remover" onClick={() => deleteProduct(gIdx, iIdx)}>
+                                                      <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                  </div>
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                          })}
+                                        </TableBody>
+                                      </Table>
+                                    ) : (
+                                      <div className="text-sm text-muted-foreground">Nenhum produto adicionado.</div>
+                                    )}
+                                  </div>
+
+                                  <div className="flex justify-end">
+                                    <Button type="button" variant="secondary" onClick={() => openAddProduct(gIdx)}>
+                                      Adicionar produto
+                                    </Button>
+                                  </div>
+                                </div>
+                              </AccordionContent>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                        <Button type="button" onClick={addCustomerGroup}>Adicionar cliente</Button>
                       </motion.div>
+
+                      {/* Modal de produto */}
+                      <Dialog open={productModalOpen} onOpenChange={setProductModalOpen}>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>{productEditIndex == null ? "Adicionar produto" : "Editar produto"}</DialogTitle>
+                            <DialogDescription>Preencha os detalhes do produto para o cliente selecionado.</DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label>Produto expedido</Label>
+                              <Select value={productForm.code} onValueChange={(val) => setProductForm((f) => ({ ...f, code: val }))}>
+                                <SelectTrigger className="w-full">
+                                  <SelectValue placeholder="Selecione um produto" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {products.map((p) => (
+                                    <SelectItem key={p.code} value={String(p.code)}>
+                                      {p.description}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Quantidade</Label>
+                              <Input
+                                inputMode="numeric"
+                                placeholder="Somente números"
+                                value={productForm.quantity}
+                                onChange={(e) => {
+                                  const digits = (e.target.value || "").replace(/\D/g, "");
+                                  setProductForm((f) => ({ ...f, quantity: digits }));
+                                }}
+                              />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>SIF ou SISBI?</Label>
+                              <RadioGroup
+                                value={productForm.sifOrSisbi}
+                                onValueChange={(v) => setProductForm((f) => ({ ...f, sifOrSisbi: v as any }))}
+                                className="space-y-2"
+                              >
+                                {[{ value: "SIF", label: "SIF" }, { value: "SISBI", label: "SISBI" }, { value: "NA", label: "N/A" }].map((opt, index) => (
+                                  <motion.div key={opt.value} className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
+                                    <RadioGroupItem value={opt.value} id={`modal-sis-${index}`} />
+                                    <Label htmlFor={`modal-sis-${index}`} className="cursor-pointer w-full">{opt.label}</Label>
+                                  </motion.div>
+                                ))}
+                              </RadioGroup>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Temperatura do produto (°C)</Label>
+                              <Input
+                                inputMode="decimal"
+                                placeholder="Ex.: 4,5"
+                                value={productForm.productTemperature}
+                                onChange={(e) => {
+                                  let sanitized = (e.target.value || "").replace(/[^\d,-]/g, "");
+                                  sanitized = sanitized.replace(/(?!^)-/g, "");
+                                  setProductForm((f) => ({ ...f, productTemperature: sanitized }));
+                                }}
+                              />
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Data de produção</Label>
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                                    {productForm.productionDate
+                                      ? (() => { const [y, m, d] = productForm.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
+                                      : "Selecione uma data"}
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-2" align="start">
+                                  {/* @ts-ignore */}
+                                  <Calendar
+                                    mode="single"
+                                    selected={productForm.productionDate ? (() => { const [y, m, d] = productForm.productionDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
+                                    onSelect={(date: Date | undefined) => {
+                                      if (!date) return;
+                                      const isoLocal = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+                                      setProductForm((f) => ({ ...f, productionDate: isoLocal }));
+                                    }}
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <Button type="button" variant="secondary" onClick={() => setProductModalOpen(false)}>Cancelar</Button>
+                            <Button type="button" onClick={saveProductModal}>{productEditIndex == null ? "Adicionar" : "Salvar"}</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </CardContent>
                   </>
                 )}
 
-                {/* Step 3: Produto */}
+                {/* Step 3: Produto (desativado, movido para etapa Cliente) */}
                 {currentStep === 3 && (
                   <>
                     <CardHeader>
                       <CardTitle>Produto</CardTitle>
-                      <CardDescription>
-                        Preencha as informações do produto expedido
-                      </CardDescription>
+                      <CardDescription>Esta etapa foi integrada à etapa de Clientes e Produtos.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      {/* N° Nota Fiscal movido para etapa própria */}
-
-                      {/* Produto + Quantidade por linha */}
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        {productsLoading ? (
-                          <div className="text-sm text-muted-foreground">Carregando produtos…</div>
-                        ) : productsError ? (
-                          <div className="text-sm text-red-600">{productsError}</div>
-                        ) : products.length === 0 ? (
-                          <div className="text-sm text-muted-foreground">Nenhum produto cadastrado.</div>
-                        ) : (
-                          <div className="space-y-3">
-                            {(formData.productItems ?? [{ code: "", quantity: "" }]).map((item, idx) => (
-                              <div key={`product-row-${idx}`} className="grid grid-cols-5 gap-3">
-                                <div className="col-span-3 space-y-2">
-                                  <Label>Produto</Label>
-                                  <Select
-                                    value={item.code || ""}
-                                    onValueChange={(val) => {
-                                      setFormData((prev) => {
-                                        const list = [...(prev.productItems ?? [])];
-                                        list[idx] = { ...list[idx], code: val };
-                                        return { ...prev, productItems: list };
-                                      });
-                                    }}
-                                  >
-                                    <SelectTrigger className="w-full">
-                                      <SelectValue placeholder="Selecione um produto" />
-                                    </SelectTrigger>
-                                  <SelectContent>
-                                    {products
-                                      .filter((p) => {
-                                        const codeStr = String(p.code);
-                                        // Ocultar produtos já selecionados em outras linhas
-                                        return !((formData.productItems ?? []).some((it, iIdx) => iIdx !== idx && it.code === codeStr));
-                                      })
-                                      .map((p) => (
-                                        <SelectItem key={p.code} value={String(p.code)}>
-                                          {p.description}
-                                        </SelectItem>
-                                      ))}
-                                  </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="col-span-2 space-y-2">
-                                  <Label>Quantidade (Unidade)</Label>
-                                  <div className="flex items-center gap-2">
-                                    <Input
-                                      inputMode="numeric"
-                                      placeholder="Somente números"
-                                      value={item.quantity || ""}
-                                      onChange={(e) => {
-                                        const digits = (e.target.value || "").replace(/\D/g, "");
-                                        setFormData((prev) => {
-                                          const list = [...(prev.productItems ?? [])];
-                                          list[idx] = { ...list[idx], quantity: digits };
-                                          return { ...prev, productItems: list };
-                                        });
-                                      }}
-                                      className="flex-1 transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                                    />
-                                    <Button
-                                      type="button"
-                                      variant="outline"
-                                      size="icon"
-                                      aria-label="Remover produto"
-                                      onClick={() => {
-                                        setFormData((prev) => {
-                                          const list = [...(prev.productItems ?? [])];
-                                          list.splice(idx, 1);
-                                          const next = list.length > 0 ? list : [{ code: "", quantity: "" }];
-                                          return { ...prev, productItems: next };
-                                        });
-                                      }}
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-
-                            {formData.productItems && formData.productItems[0]?.code &&
-                              // Exibir botão apenas se houver algum produto ainda não selecionado
-                              products.some((p) => {
-                                const codeStr = String(p.code);
-                                return !((formData.productItems ?? []).some((it) => it.code === codeStr));
-                              }) && (
-                              <Button
-                                type="button"
-                                variant="secondary"
-                                onClick={() =>
-                                  setFormData((prev) => ({
-                                    ...prev,
-                                    productItems: [...(prev.productItems ?? []), { code: "", quantity: "" }],
-                                  }))
-                                }
-                              >
-                                Adicionar mais produtos
-                              </Button>
-                            )}
-                          </div>
-                        )}
-                      </motion.div>
-
-                      {/* SIF ou SISBI? */}
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label>SIF ou SISBI?</Label>
-                        <RadioGroup
-                          value={formData.sifOrSisbi}
-                          onValueChange={(v) => updateFormData("sifOrSisbi", v)}
-                          className="space-y-2"
-                        >
-                          {[
-                            { value: "SIF", label: "SIF" },
-                            { value: "SISBI", label: "SISBI" },
-                          ].map((opt, index) => (
-                            <motion.div
-                              key={opt.value}
-                              className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              transition={{ duration: 0.2 }}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{
-                                opacity: 1,
-                                x: 0,
-                                transition: {
-                                  delay: 0.1 * index,
-                                  duration: 0.3,
-                                },
-                              }}
-                            >
-                              <RadioGroupItem value={opt.value} id={`sis-${index}`} />
-                              <Label htmlFor={`sis-${index}`} className="cursor-pointer w-full">
-                                {opt.label}
-                              </Label>
-                            </motion.div>
-                          ))}
-                        </RadioGroup>
-                      </motion.div>
-
-                      {/* Temperatura do produto (Brasil) */}
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label htmlFor="productTemperature">Temperatura do produto (°C)</Label>
-                        <Input
-                          id="productTemperature"
-                          inputMode="decimal"
-                          placeholder="Ex.: 4,5"
-                          value={formData.productTemperature}
-                          onChange={(e) => {
-                            // Permitir dígitos, vírgula e valores negativos
-                            let sanitized = (e.target.value || "").replace(/[^\d,-]/g, "");
-                            // Manter apenas um '-' e preferir no início
-                            sanitized = sanitized.replace(/(?!^)-/g, "");
-                            updateFormData("productTemperature", sanitized);
-                          }}
-                          className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
-                      </motion.div>
-
-                      {/* Quantidade removida: agora é relativa a cada produto */}
-
-                      {/* Data Prod/Lote - calendário */}
-                      <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label>Data Prod/Lote</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button variant="outline" className="w-full justify-start text-left font-normal">
-                              {formData.deliverDate
-                                ? (() => {
-                                    const [y, m, d] = formData.deliverDate.split("-").map(Number);
-                                    return new Date(y, m - 1, d).toLocaleDateString("pt-BR");
-                                  })()
-                                : "Selecione uma data"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="p-2" align="start">
-                            {/* Calendar importado do UI */}
-                            {/* @ts-ignore */}
-                            <Calendar
-                              mode="single"
-                              selected={formData.deliverDate ? (() => { const [y, m, d] = formData.deliverDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
-                              onSelect={(date: Date | undefined) => {
-                                if (!date) return;
-                                // Salvar como ISO local YYYY-MM-DD para evitar mudança de dia por timezone
-                                const isoLocal = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                                updateFormData("deliverDate", isoLocal);
-                              }}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </motion.div>
+                      <div className="text-sm text-muted-foreground">Produtos agora são definidos na etapa "Clientes e Produtos".</div>
                     </CardContent>
                   </>
                 )}
@@ -1060,255 +1115,112 @@ const OnboardingForm = () => {
                     <CardHeader>
                       <CardTitle>Revisão</CardTitle>
                       <CardDescription>
-                        Revise e ajuste as informações antes de prosseguir
+                        Resumo dos dados antes de confirmar
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      {/* Comprador */}
+                      {/* Nota Fiscal */}
                       <motion.div variants={fadeInUp} className="space-y-2">
-                        <Label>Comprador</Label>
-                        <div className="flex gap-3 items-center">
-                          <Input value={formData.client} readOnly className="flex-1" />
-                          <Popover open={reviewClientOpen} onOpenChange={handleReviewClientOpenChange}>
-                            <PopoverTrigger asChild>
-                              <Button type="button" variant="secondary">Trocar</Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-[280px] p-0" align="start">
-                              <Command>
-                                <CommandInput placeholder="Buscar comprador…" />
-                                <CommandList>
-                                  <CommandEmpty>Nenhum comprador encontrado.</CommandEmpty>
-                                  <CommandGroup>
-                                    {clientsLoading && (
-                                      <div className="p-2 text-sm text-muted-foreground">Carregando…</div>
-                                    )}
-                                    {clientsError && (
-                                      <div className="p-2 text-sm text-red-600">{clientsError}</div>
-                                    )}
-                                    {!clientsLoading && !clientsError && clients.map((c) => (
-                                      <CommandItem
-                                        key={c.code}
-                                        value={`${[c.fantasy_name, c.legal_name, String(c.code)].filter(Boolean).join(" ")}`}
-                                        onSelect={() => {
-                                          setFormData((prev) => ({
-                                            ...prev,
-                                            client: c.fantasy_name || c.legal_name,
-                                            clientCode: String(c.code),
-                                          }));
-                                          setReviewClientOpen(false);
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "mr-2 h-4 w-4",
-                                            formData.client === (c.fantasy_name || c.legal_name)
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                        {c.fantasy_name || c.legal_name}
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                </CommandList>
-                              </Command>
-                            </PopoverContent>
-                          </Popover>
-                        </div>
+                        <Label>Nota Fiscal</Label>
+                        <Input value={formData.invoiceNumber} readOnly />
                       </motion.div>
 
-                      {/* Transporte */}
-                      <motion.div variants={fadeInUp} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="driver">Motorista</Label>
-                          <Input
-                            id="driver"
-                            placeholder="e.g. Alex"
-                            value={formData.driver}
-                            onChange={(e) => updateFormData("driver", e.target.value)}
-                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="vehicleId">Veículo</Label>
-                          <Select
-                            value={formData.vehicleId}
-                            onValueChange={(value) => updateFormData("vehicleId", value)}
-                          >
-                            <SelectTrigger id="vehicleId" className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary">
-                              <SelectValue placeholder="Selecione um veículo" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {vehiclesLoading && (
-                                <SelectItem value="__loading" disabled>
-                                  Carregando veículos…
-                                </SelectItem>
-                              )}
-                              {vehiclesError && (
-                                <SelectItem value="__error" disabled>
-                                  {vehiclesError}
-                                </SelectItem>
-                              )}
-                              {!vehiclesLoading && !vehiclesError && vehicles.length === 0 && (
-                                <SelectItem value="__empty" disabled>
-                                  Nenhum veículo encontrado
-                                </SelectItem>
-                              )}
-                              {!vehiclesLoading && !vehiclesError && vehicles.map((v) => (
-                                <SelectItem key={v.id} value={String(v.id)}>
-                                  {v.plate} — {v.model}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="vehicleTemperature">Temperatura do veículo (°C)</Label>
-                          <Input
-                            id="vehicleTemperature"
-                            inputMode="decimal"
-                            placeholder="Ex.: 4.5"
-                            value={formData.vehicleTemperature}
-                            onChange={(e) => {
-                              const v = e.target.value.replace(/[^0-9.,-]/g, "").replace(",", ".");
-                              updateFormData("vehicleTemperature", v);
-                            }}
-                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                          />
-                        </div>
+                      {/* Clientes e Produtos */}
+                      <motion.div variants={fadeInUp} className="space-y-3">
+                        <Label>Clientes e produtos</Label>
+                        {formData.customerGroups.length === 0 ? (
+                          <div className="text-sm text-muted-foreground">Nenhum cliente adicionado.</div>
+                        ) : (
+                          <Accordion type="single" collapsible defaultValue={`client-0`}>
+                            {formData.customerGroups.map((group, gIdx) => (
+                              <AccordionItem key={`review-client-${gIdx}`} value={`client-${gIdx}`}>
+                                <AccordionTrigger>
+                                  {group.clientName || `Cliente ${gIdx + 1}`}
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                  <div className="flex justify-end gap-2 mb-3">
+                                    <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
+                                      <ClipboardPen className="mr-2 h-4 w-4" /> Editar cliente
+                                    </Button>
+                                    <Button type="button" variant="outline" onClick={() => removeCustomerGroup(gIdx)}>
+                                      <Trash2 className="mr-2 h-4 w-4" /> Excluir cliente
+                                    </Button>
+                                  </div>
+                                  {group.items.length === 0 ? (
+                                    <div className="text-sm text-muted-foreground">Nenhum produto adicionado.</div>
+                                  ) : (
+                                    <div className="rounded-md border">
+                                      <Table>
+                                        <TableHeader>
+                                          <TableRow>
+                                            <TableHead>Produto</TableHead>
+                                            <TableHead>Quantidade</TableHead>
+                                            <TableHead>SIF/SISBI</TableHead>
+                                            <TableHead>Temperatura (°C)</TableHead>
+                                            <TableHead>Data de produção</TableHead>
+                                            <TableHead>Ações</TableHead>
+                                          </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                          {group.items.map((it, idx) => {
+                                            const desc = products.find((p) => String(p.code) === String(it.code))?.description || it.code;
+                                            return (
+                                              <TableRow key={`review-row-${gIdx}-${idx}`}>
+                                                <TableCell>{desc}</TableCell>
+                                                <TableCell>{it.quantity}</TableCell>
+                                                <TableCell>{it.sifOrSisbi || "N/A"}</TableCell>
+                                                <TableCell>{it.productTemperature}</TableCell>
+                                                <TableCell>
+                                                  {it.productionDate
+                                                    ? (() => { const [y, m, d] = it.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
+                                                    : "—"}
+                                                </TableCell>
+                                                <TableCell>
+                                                  <div className="flex gap-2">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar produto" onClick={() => { setCurrentStep(2); openEditProduct(gIdx, idx); }}>
+                                                      <ClipboardPen className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Excluir produto" onClick={() => deleteProduct(gIdx, idx)}>
+                                                      <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                  </div>
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                          })}
+                                        </TableBody>
+                                      </Table>
+                                    </div>
+                                  )}
+                                </AccordionContent>
+                              </AccordionItem>
+                            ))}
+                          </Accordion>
+                        )}
                       </motion.div>
 
-                      {/* Produtos */}
-                      <motion.div variants={fadeInUp} className="space-y-4">
-                        <Label>Produtos</Label>
-                        <div className="space-y-3">
-                          {(formData.productItems ?? [{ code: "", quantity: "" }]).map((item, idx) => (
-                            <div key={`review-product-row-${idx}`} className="grid grid-cols-5 gap-3 items-center">
-                              <div className="col-span-3">
-                                <Select
-                                  value={item.code || ""}
-                                  onValueChange={(val) => {
-                                    setFormData((prev) => {
-                                      const list = [...(prev.productItems ?? [])];
-                                      list[idx] = { ...list[idx], code: val };
-                                      return { ...prev, productItems: list };
-                                    });
-                                  }}
-                                >
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Selecione um produto" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {products
-                                      .filter((p) => {
-                                        const codeStr = String(p.code);
-                                        return !((formData.productItems ?? []).some((it, iIdx) => iIdx !== idx && it.code === codeStr));
-                                      })
-                                      .map((p) => (
-                                        <SelectItem key={p.code} value={String(p.code)}>
-                                          {p.description}
-                                        </SelectItem>
-                                      ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="col-span-2">
-                                <div className="flex items-center gap-2">
-                                  <Input
-                                    inputMode="numeric"
-                                    placeholder="Somente números"
-                                    value={item.quantity || ""}
-                                    onChange={(e) => {
-                                      const digits = (e.target.value || "").replace(/\D/g, "");
-                                      setFormData((prev) => {
-                                        const list = [...(prev.productItems ?? [])];
-                                        list[idx] = { ...list[idx], quantity: digits };
-                                        return { ...prev, productItems: list };
-                                      });
-                                    }}
-                                    className="flex-1 transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                                  />
-                                  <Button
-                                    type="button"
-                                    variant="outline"
-                                    size="icon"
-                                    aria-label="Remover produto"
-                                    onClick={() => {
-                                      setFormData((prev) => {
-                                        const list = [...(prev.productItems ?? [])];
-                                        list.splice(idx, 1);
-                                        const next = list.length > 0 ? list : [{ code: "", quantity: "" }];
-                                        return { ...prev, productItems: next };
-                                      });
-                                    }}
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                          {formData.productItems && formData.productItems[0]?.code && products.some((p) => {
-                            const codeStr = String(p.code);
-                            return !((formData.productItems ?? []).some((it) => it.code === codeStr));
-                          }) && (
-                            <Button
-                              type="button"
-                              variant="secondary"
-                              onClick={() => setFormData((prev) => ({
-                                ...prev,
-                                productItems: [...(prev.productItems ?? []), { code: "", quantity: "" }],
-                              }))}
-                            >
-                              Adicionar produto
-                            </Button>
-                          )}
-                        </div>
+                      {/* Motorista */}
+                      <motion.div variants={fadeInUp} className="space-y-2">
+                        <Label>Motorista</Label>
+                        <Input value={formData.driver} readOnly />
+                      </motion.div>
 
-                        {/* Temperatura do produto (permite negativos) */}
-                        <div className="space-y-2">
-                          <Label htmlFor="reviewProductTemp">Temperatura do produto (°C)</Label>
-                          <Input
-                            id="reviewProductTemp"
-                            inputMode="decimal"
-                            placeholder="Ex.: -4,5"
-                            value={formData.productTemperature}
-                            onChange={(e) => {
-                              let sanitized = (e.target.value || "").replace(/[^\d,-]/g, "");
-                              sanitized = sanitized.replace(/(?!^)-/g, "");
-                              updateFormData("productTemperature", sanitized);
-                            }}
-                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                          />
-                        </div>
+                      {/* Veículo */}
+                      <motion.div variants={fadeInUp} className="space-y-2">
+                        <Label>Veículo</Label>
+                        <Input
+                          readOnly
+                          value={(() => {
+                            const v = vehicles.find((vv) => String(vv.id) === String(formData.vehicleId));
+                            return v ? `${v.plate} — ${v.model}` : "";
+                          })()}
+                        />
+                      </motion.div>
 
-                        {/* Data Prod/Lote */}
-                        <div className="space-y-2">
-                          <Label>Data Prod/Lote</Label>
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <Button variant="outline" className="w-full justify-start text-left font-normal">
-                                {formData.deliverDate
-                                  ? (() => {
-                                      const [y, m, d] = formData.deliverDate.split("-").map(Number);
-                                      return new Date(y, m - 1, d).toLocaleDateString("pt-BR");
-                                    })()
-                                  : "Selecione uma data"}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-2" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={formData.deliverDate ? (() => { const [y, m, d] = formData.deliverDate.split("-").map(Number); return new Date(y, m - 1, d); })() : undefined}
-                                onSelect={(date: Date | undefined) => {
-                                  if (!date) return;
-                                  const isoLocal = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                                  updateFormData("deliverDate", isoLocal);
-                                }}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        </div>
+                      {/* Temperatura do veículo */}
+                      <motion.div variants={fadeInUp} className="space-y-2">
+                        <Label>Temperatura do veículo (°C)</Label>
+                        <Input value={formData.vehicleTemperature} readOnly />
                       </motion.div>
                     </CardContent>
                   </>
