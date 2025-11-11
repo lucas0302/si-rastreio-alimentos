@@ -59,7 +59,6 @@ const steps = [
   { id: "transport", title: "Transporte" },
   { id: "invoice", title: "Nota Fiscal" },
   { id: "client", title: "Cliente" },
-  { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
 ];
 
@@ -1096,21 +1095,8 @@ const OnboardingForm = () => {
                   </>
                 )}
 
-                {/* Step 3: Produto (desativado, movido para etapa Cliente) */}
-                {currentStep === 3 && (
-                  <>
-                    <CardHeader>
-                      <CardTitle>Produto</CardTitle>
-                      <CardDescription>Esta etapa foi integrada à etapa de Clientes e Produtos.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="text-sm text-muted-foreground">Produtos agora são definidos na etapa "Clientes e Produtos".</div>
-                    </CardContent>
-                  </>
-                )}
-
                 {/* Step 5: Revisão */}
-                {currentStep === 4 && (
+                {currentStep === 3 && (
                   <>
                     <CardHeader>
                       <CardTitle>Revisão</CardTitle>

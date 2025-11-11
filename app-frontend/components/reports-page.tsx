@@ -764,16 +764,18 @@ export function ReportsPage() {
                         return isNaN(n) ? 0 : n;
                       };
 
-                      // Criar um mapa de agregação para Quantidades (para resolver Request 2)
-                      // Somamos todas as quantidades do array 'monthly' para cada productId.
+                      // Criar um mapa de agregação para Quantidades com base nos relatórios diários carregados (rows)
+                      // Isso garante que a aba DIPOVA reflita imediatamente exclusões/edições feitas no frontend e persistidas no backend.
                       const quantityPerProduct = new Map<number, number>();
-                      if (monthly && monthly.length > 0) {
-                        for (const m of monthly) {
-                          const productId = Number(m.productId);
+                      const currentMonthKey = getMonthKey(new Date());
+                      for (const r of rows) {
+                        // Considerar apenas o mês corrente
+                        if (getMonthKey(r.fillingDateIso) !== currentMonthKey) continue;
+                        for (const p of r.products) {
+                          const productId = Number(p.productCode);
                           const currentQty = quantityPerProduct.get(productId) || 0;
-                          // Usa nosso parser corrigido
-                          const newQty = parseQuantity(m.quantity);
-                          quantityPerProduct.set(productId, currentQty + newQty);
+                          const addQty = Number(p.quantity) || 0;
+                          quantityPerProduct.set(productId, currentQty + addQty);
                         }
                       }
 
@@ -784,7 +786,14 @@ export function ReportsPage() {
                       const defaultDeliverer = 'Próprio';
 
                       // Request 1: Fazer o loop sobre 'productsState' em vez de 'monthly'
-                      return productsState.map((product) => {
+                      // Observação: usar um nome diferente de 'rows' para evitar sombra do estado 'rows' (ReportRow[])
+                      // Regra: ocultar produtos com quantidade 0 na tabela DIPOVA
+                      const filteredProducts = productsState.filter((product) => {
+                        const prodCode = Number(product.code);
+                        const qtyNum = quantityPerProduct.get(prodCode) || 0;
+                        return qtyNum > 0;
+                      });
+                      const tableRows = filteredProducts.map((product) => {
                         const prodCode = Number(product.code);
                         const prodName = product.description ?? `Produto ${prodCode}`;
 
@@ -813,6 +822,32 @@ export function ReportsPage() {
                           </tr>
                         );
                       });
+
+                      // Soma total das quantidades exibidas
+                      const totalQty = Array.from(quantityPerProduct.values()).reduce((acc, n) => acc + (Number(n) || 0), 0);
+
+                      // Linha de rodapé com valor apenas em Quant.
+                      const footerRow = (
+                        <tr key="dipova-total" className="bg-gray-50">
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2 font-semibold">
+                            {totalQty.toLocaleString('pt-BR', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                        </tr>
+                      );
+
+                      return [
+                        ...tableRows,
+                        footerRow,
+                      ];
                     })()}
                   </tbody>
                 </table>
