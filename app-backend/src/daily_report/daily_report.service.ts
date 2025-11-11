@@ -152,8 +152,108 @@ export class DailyReportService {
     return this.prisma.dailyShipmentReport.findFirst({ where: { id } });
   }
 
-  update(id: number, updateDailyReportDto: UpdateDailyReportDto) {
-    return `This action updates a #${id} dailyReport`;
+  async update(id: number, updateDailyReportDto: UpdateDailyReportDto) {
+    try {
+      const existing = await this.prisma.dailyShipmentReport.findFirst({ where: { id } });
+      if (!existing) {
+        throw new HttpException("Relatório não encontrado.", HttpStatus.NOT_FOUND);
+      }
+
+      // Validar usuário (se enviado)
+      if (typeof updateDailyReportDto.userId === "number") {
+        const user = await this.prisma.users.findFirst({ where: { id: updateDailyReportDto.userId } });
+        if (!user) throw new HttpException("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+      }
+
+      // Validar veículo (se placa enviada)
+      if (updateDailyReportDto.deliverVehicle) {
+        const vehicle = await this.prisma.vehicle.findFirst({ where: { plate: updateDailyReportDto.deliverVehicle } });
+        if (!vehicle) throw new HttpException("Veículo (placa) não encontrado.", HttpStatus.NOT_FOUND);
+      }
+
+      // Usar UncheckedUpdateInput para permitir atualizar FKs diretamente (userId, deliverVehicle, customerCode)
+      let data: Prisma.DailyShipmentReportUncheckedUpdateInput = {};
+
+      // Campos simples (mantém valor atual se não enviados)
+      if (typeof updateDailyReportDto.invoiceNumber === "number") data.invoiceNumber = updateDailyReportDto.invoiceNumber;
+      if (typeof updateDailyReportDto.vehicleTemperature === "number") data.vehicleTemperature = updateDailyReportDto.vehicleTemperature;
+      if (typeof updateDailyReportDto.hasGoodSanitaryCondition === "boolean") data.hasGoodSanitaryCondition = updateDailyReportDto.hasGoodSanitaryCondition;
+      if (typeof updateDailyReportDto.driver === "string") data.driver = updateDailyReportDto.driver;
+      if (typeof updateDailyReportDto.userId === "number") data.userId = updateDailyReportDto.userId;
+      if (typeof updateDailyReportDto.deliverVehicle === "string") data.deliverVehicle = updateDailyReportDto.deliverVehicle;
+
+      if (updateDailyReportDto.fillingDate) {
+        data.fillingDate = new Date(updateDailyReportDto.fillingDate);
+      }
+
+      // Branch 1: atualização via customerGroups (modelo novo)
+      if (updateDailyReportDto.customerGroups && updateDailyReportDto.customerGroups.length > 0) {
+        const group = updateDailyReportDto.customerGroups[0]; // para este relatório único, usamos o primeiro grupo
+
+        const customer = await this.prisma.customers.findFirst({ where: { code: Number(group.customerCode) } });
+        if (!customer) throw new HttpException(`Cliente não encontrado: código ${group.customerCode}.`, HttpStatus.NOT_FOUND);
+
+        const items = group.items ?? [];
+        if (items.length === 0) throw new HttpException("Grupo de cliente sem produtos.", HttpStatus.BAD_REQUEST);
+
+        const productsJson: Prisma.InputJsonValue = items.map((p) => ({
+          code: p.code,
+          quantity: p.quantity,
+          ...(p.description ? { description: p.description } : {}),
+          ...(p.sifOrSisbi ? { sifOrSisbi: p.sifOrSisbi } : {}),
+          productTemperature: p.productTemperature,
+          productionDate: p.productionDate,
+        }));
+
+        const totalQuantity = items.reduce((acc, it) => acc + (Number(it.quantity) || 0), 0);
+        const earliestProdTime = items
+          .map((it) => new Date(it.productionDate).getTime())
+          .reduce((min, t) => (Number.isFinite(min) ? Math.min(min, t) : t), Infinity);
+        const productionDate = new Date(earliestProdTime);
+        const minProductTemp = items
+          .map((it) => Number(it.productTemperature))
+          .reduce((min, v) => (Number.isFinite(min) ? Math.min(min, v) : v), Infinity);
+        const primarySifOrSisbi = items[0]?.sifOrSisbi;
+
+        data.products = productsJson;
+        data.quantity = totalQuantity;
+        data.productionDate = productionDate;
+        data.productTemperature = minProductTemp;
+        data.customerCode = BigInt(group.customerCode);
+        data.sifOrSisbi = primarySifOrSisbi && primarySifOrSisbi !== "NA" ? primarySifOrSisbi : null;
+      }
+
+      // Branch 2: compatibilidade com payload antigo (products + customerCode etc.)
+      if (updateDailyReportDto.products && updateDailyReportDto.products.length > 0) {
+        const productsJson: Prisma.InputJsonValue = updateDailyReportDto.products.map((p) => ({
+          code: p.code,
+          quantity: p.quantity,
+          ...(p.description ? { description: p.description } : {}),
+        }));
+        data.products = productsJson;
+      }
+      if (typeof updateDailyReportDto.quantity === "number") data.quantity = updateDailyReportDto.quantity;
+      if (updateDailyReportDto.productionDate) data.productionDate = new Date(updateDailyReportDto.productionDate);
+      if (typeof updateDailyReportDto.productTemperature === "number") data.productTemperature = updateDailyReportDto.productTemperature;
+      if (typeof updateDailyReportDto.customerCode === "number") data.customerCode = BigInt(updateDailyReportDto.customerCode);
+      if (typeof updateDailyReportDto.sifOrSisbi === "string") {
+        data.sifOrSisbi = updateDailyReportDto.sifOrSisbi && updateDailyReportDto.sifOrSisbi !== "NA" ? updateDailyReportDto.sifOrSisbi : null;
+      }
+
+      const updated = await this.prisma.dailyShipmentReport.update({ where: { id }, data });
+      return updated;
+    } catch (err: unknown) {
+      if (err instanceof HttpException) throw err;
+      if (err && typeof err === "object") {
+        const anyErr = err as any;
+        if (anyErr.code && typeof anyErr.code === "string") {
+          const details = anyErr.meta?.cause || anyErr.message || "Erro de banco de dados.";
+          throw new HttpException(details, HttpStatus.BAD_REQUEST);
+        }
+      }
+      console.error("[DailyReportService.update] Unknown error:", err);
+      throw new HttpException("Falha ao atualizar relatório diário.", HttpStatus.BAD_REQUEST);
+    }
   }
 
   remove(id: number) {

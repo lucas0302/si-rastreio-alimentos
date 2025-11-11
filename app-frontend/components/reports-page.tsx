@@ -15,6 +15,16 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
 // Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
 
@@ -33,9 +43,10 @@ export function ReportsPage() {
     id: number;
     invoiceNumber: number;
     customerCode: number | string; // pode vir como string se BigInt serializado
-    products: Array<{ code: number | string; quantity: number; description?: string }>;
-    shipmentDate: string; // ISO
-    productionDate?: string; // ISO
+    products: Array<{ code: number | string; quantity: number; description?: string; sifOrSisbi?: string; productTemperature?: number; productionDate?: string }>;
+    shipmentDate: string; // legado
+    productionDate?: string; // ISO (agregado)
+    fillingDate?: string; // ISO (momento do preenchimento)
     userId: number;
     deliverVehicle?: string | null;
     hasGoodSanitaryCondition: boolean;
@@ -62,18 +73,24 @@ export function ReportsPage() {
   type ReportRow = {
     reportId: number;
     invoiceNumber: number;
+    customerCode?: number;
     clientName: string;
-    productCode: string;
-    productName: string;
-    productionDate: string;
-    productionDateIso: string;
-    quantity: number;
     destination: string;
     userId: number;
     userName?: string;
     deliverVehicle?: string | null;
     hasGoodSanitaryCondition: boolean;
     productTemperature: number;
+    fillingDate: string;
+    fillingDateIso: string;
+    products: Array<{
+      productCode: string;
+      productName: string;
+      quantity: number;
+      productionDate: string;
+      productTemperature?: number;
+      sifOrSisbi?: string;
+    }>;
   };
 
   const [rows, setRows] = useState<ReportRow[]>([]);
@@ -187,40 +204,48 @@ export function ReportsPage() {
         const userById = new Map<number, ApiUser>();
         users.forEach((u) => userById.set(Number(u.id), u));
 
-        // Para cada relatório, criar uma linha por produto
+        // Para cada relatório, criar UMA linha agregada por cliente no dia (fillingDate)
         const builtRows: ReportRow[] = [];
         for (const r of reports) {
           const invoice = Number(r.invoiceNumber);
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
-        const prodDateIso = String(r.productionDate ?? r.shipmentDate);
-        const prodDate = formatDate(prodDateIso);
-
+          const fillingIso = String(r.fillingDate ?? r.productionDate ?? r.shipmentDate);
           const items = Array.isArray(r.products) ? r.products : [];
+
+          const productRows: ReportRow["products"] = [];
           for (const it of items) {
             const codeNum = Number((it as any)?.code);
             const prod = productByCode.get(codeNum);
             const prodName = prod?.description ?? it?.description ?? "N/A";
             const qty = Number((it as any)?.quantity) || 0;
-
-            builtRows.push({
-              reportId: Number(r.id),
-              invoiceNumber: invoice,
-              clientName,
+            const prodDateIso = String((it as any)?.productionDate ?? r.productionDate ?? r.shipmentDate);
+            productRows.push({
               productCode: String((it as any)?.code ?? ""),
               productName: prodName,
-              productionDate: prodDate,
-              productionDateIso: prodDateIso,
               quantity: qty,
-              destination,
-              userId: Number(r.userId),
-              userName: userById.get(Number(r.userId))?.name ?? "—",
-              deliverVehicle: r.deliverVehicle ?? null,
-              hasGoodSanitaryCondition: !!r.hasGoodSanitaryCondition,
-              productTemperature: Number(r.productTemperature ?? 0),
+              productionDate: formatDate(prodDateIso),
+              productTemperature: Number((it as any)?.productTemperature ?? r.productTemperature ?? 0),
+              sifOrSisbi: String((it as any)?.sifOrSisbi ?? "") || undefined,
             });
           }
+
+          builtRows.push({
+            reportId: Number(r.id),
+            invoiceNumber: invoice,
+            customerCode: Number(r.customerCode),
+            clientName,
+            destination,
+            userId: Number(r.userId),
+            userName: userById.get(Number(r.userId))?.name ?? "—",
+            deliverVehicle: r.deliverVehicle ?? null,
+            hasGoodSanitaryCondition: !!r.hasGoodSanitaryCondition,
+            productTemperature: Number(r.productTemperature ?? 0),
+            fillingDate: formatDate(fillingIso),
+            fillingDateIso: fillingIso,
+            products: productRows,
+          });
         }
 
         setRows(builtRows);
@@ -268,9 +293,89 @@ export function ReportsPage() {
     });
   };
 
-  // Agrupamento por mês (Data Prod/Lote)
+  // ====== Edição/Exclusão ======
+  const [editOpen, setEditOpen] = useState(false);
+  const [editRow, setEditRow] = useState<ReportRow | null>(null);
+  const [customersState, setCustomersState] = useState<ApiCustomer[]>([]);
+  const [productsState, setProductsState] = useState<ApiProduct[]>([]);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
+  const { toast } = useToast();
+
+  // Armazenar clientes/produtos carregados para o modal
+  useEffect(() => {
+    (async () => {
+      try {
+        const baseURL = process.env.NEXT_PUBLIC_API_URL;
+        const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+        const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+        const [custRes, prodRes] = await Promise.all([
+          axios.get<{ data: ApiCustomer[] }>(`${baseURL}/customers`, { headers }),
+          axios.get<{ data: ApiProduct[] }>(`${baseURL}/products`, { headers }),
+        ]);
+        setCustomersState(custRes.data?.data ?? []);
+        setProductsState(prodRes.data?.data ?? []);
+      } catch (_) {
+        // silencioso; não bloquear a página
+      }
+    })();
+  }, []);
+
+  const parsePtBrToISO = (d: string) => {
+    const m = d.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!m) return d; // retornar como veio se já está ISO
+    return `${m[3]}-${m[2]}-${m[1]}`;
+  };
+
+  const openEdit = (row: ReportRow) => {
+    setEditRow({ ...row });
+    setEditOpen(true);
+  };
+
+  const handleEditSave = async () => {
+    if (!editRow) return;
+    try {
+      const baseURL = process.env.NEXT_PUBLIC_API_URL;
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+
+      const payload = {
+        invoiceNumber: editRow.invoiceNumber,
+        customerGroups: [
+          {
+            customerCode: Number(editRow.customerCode || 0),
+            items: editRow.products.map((p) => ({
+              code: Number(p.productCode),
+              quantity: Number(p.quantity),
+              description: p.productName,
+              sifOrSisbi: p.sifOrSisbi ?? "NA",
+              productTemperature: Number(p.productTemperature ?? 0),
+              productionDate: parsePtBrToISO(p.productionDate),
+            })),
+          },
+        ],
+      };
+
+      await axios.patch(`${baseURL}/daily-report/${editRow.reportId}`, payload, { headers });
+
+      // Atualizar estado local
+      setRows((prev) => prev.map((r) => (r.reportId === editRow.reportId ? { ...editRow } : r)));
+      setEditOpen(false);
+    } catch (e: any) {
+      const msg = e?.response?.data?.message || e?.message || "Falha ao atualizar relatório.";
+      alert(msg);
+    }
+  };
+
+  const handleDelete = async (reportId: number) => {
+    // Abre modal de confirmação
+    setPendingDeleteId(reportId);
+    setDeleteOpen(true);
+  };
+
+  // Agrupamento por mês (Data de preenchimento)
   const groups = rows.reduce<Record<string, ReportRow[]>>((acc, row) => {
-    const k = getMonthKey(row.productionDateIso);
+    const k = getMonthKey(row.fillingDateIso);
     if (!acc[k]) acc[k] = [];
     acc[k].push(row);
     return acc;
@@ -287,7 +392,8 @@ export function ReportsPage() {
     return parse(b) - parse(a);
   });
 
-  const sumQty = (arr: ReportRow[]) => arr.reduce((s, r) => s + (Number(r.quantity) || 0), 0);
+  const sumQty = (arr: ReportRow[]) =>
+    arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
 
   return (
     <div className="space-y-6">
@@ -447,7 +553,7 @@ export function ReportsPage() {
 
                           {/* Linhas detalhadas do mês */}
                           {isExpanded && groupRows.map((row, idx) => {
-                            const rkey = `${row.reportId}-${row.productCode}-${idx}`;
+                            const rkey = `${row.reportId}-${idx}`;
                             const rExpanded = expandedRowKeys.has(rkey);
                             const userName = row.userName ?? "—";
                             return (
@@ -473,31 +579,23 @@ export function ReportsPage() {
                                   </td>
                                   <td className="px-4 py-3 text-center">
                                     <div className="flex justify-center space-x-2">
-                                      <Button variant="ghost" size="sm" className="h-8 px-2">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => openEdit(row)} aria-label="Editar relatório">
                                         <Edit className="h-4 w-4" />
                                       </Button>
-                                      <Button variant="ghost" size="sm" className="h-8 px-2">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
                                         <Trash2 className="h-4 w-4" />
                                       </Button>
-                                    </div>
+                                  </div>
                                   </td>
                                 </tr>
 
                                 {rExpanded && (
                                   <tr key={`${rkey}-details`} className="bg-gray-50">
                                     <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
-                                      <div className="grid grid-cols-5 gap-6">
+                                      <div className="mb-3 grid grid-cols-3 gap-6">
                                         <div>
-                                          <div className="text-gray-600">Produto</div>
-                                          <div className="font-medium">{row.productName ?? "—"}</div>
-                                        </div>
-                                        <div>
-                                          <div className="text-gray-600">Quantidade</div>
-                                          <div className="font-medium">{row.quantity ?? "—"}</div>
-                                        </div>
-                                        <div>
-                                          <div className="text-gray-600">Data Prod/Lote</div>
-                                          <div className="font-medium">{row.productionDate ?? "—"}</div>
+                                          <div className="text-gray-600">Data de preenchimento</div>
+                                          <div className="font-medium">{row.fillingDate ?? "—"}</div>
                                         </div>
                                         <div>
                                           <div className="text-gray-600">Placa do veículo</div>
@@ -511,6 +609,31 @@ export function ReportsPage() {
                                             <span className="inline-flex items-center px-2 py-0.5 rounded border border-red-500 text-red-600">Não conforme</span>
                                           )}
                                         </div>
+                                      </div>
+
+                                      <div className="overflow-x-auto">
+                                        <table className="w-full">
+                                          <thead className="bg-gray-100 border">
+                                            <tr>
+                                              <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Produto</th>
+                                              <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Quantidade</th>
+                                              <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">SIF/SISBI</th>
+                                              <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Temperatura (°C)</th>
+                                              <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Data Prod/Lote</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody className="divide-y">
+                                            {row.products.map((p, i) => (
+                                              <tr key={`${rkey}-prod-${i}`}>
+                                                <td className="px-3 py-2">{p.productName}</td>
+                                                <td className="px-3 py-2">{p.quantity}</td>
+                                                <td className="px-3 py-2">{p.sifOrSisbi ?? "—"}</td>
+                                                <td className="px-3 py-2">{typeof p.productTemperature === "number" ? p.productTemperature : "—"}</td>
+                                                <td className="px-3 py-2">{p.productionDate}</td>
+                                              </tr>
+                                            ))}
+                                          </tbody>
+                                        </table>
                                       </div>
                                     </td>
                                   </tr>
@@ -574,6 +697,239 @@ export function ReportsPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Modal de edição */}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="max-w-2xl">
+          {editRow && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm">Nº da NF</Label>
+                  <Input
+                    value={String(editRow.invoiceNumber)}
+                    onChange={(e) =>
+                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: Number(e.target.value) || 0 } : prev))
+                    }
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm">Cliente</Label>
+                  <select
+                    className="h-10 w-full border rounded px-2"
+                    value={String(editRow.customerCode ?? "")}
+                    onChange={(e) => {
+                      const code = Number(e.target.value);
+                      const cust = customersState.find((c) => Number(c.code) === code);
+                      setEditRow((prev) =>
+                        prev ? { ...prev, customerCode: code, clientName: cust?.legal_name ?? prev.clientName } : prev
+                      );
+                    }}
+                  >
+                    <option value="">Selecione...</option>
+                    {customersState.map((c) => (
+                      <option key={c.code} value={Number(c.code)}>
+                        {c.legal_name ?? "Cliente"} ({c.code})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-100 border">
+                    <tr>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Produto</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Quantidade</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">SIF/SISBI</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Temperatura (°C)</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Data Prod/Lote</th>
+                      <th className="px-3 py-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {editRow.products.map((p, i) => (
+                      <tr key={`edit-prod-${i}`}>
+                        <td className="px-3 py-2">
+                          <select
+                            className="h-10 w-full border rounded px-2"
+                            value={String(p.productCode)}
+                            onChange={(e) => {
+                              const code = e.target.value;
+                              const prod = productsState.find((pr) => String(pr.code) === String(code));
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = [...prev.products];
+                                next[i] = { ...next[i], productCode: String(code), productName: prod?.description ?? next[i].productName };
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          >
+                            {productsState.map((pr) => (
+                              <option key={String(pr.code)} value={String(pr.code)}>
+                                {pr.description ?? pr.code}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-3 py-2">
+                          <Input
+                            value={String(p.quantity)}
+                            onChange={(e) => {
+                              const val = Number(e.target.value) || 0;
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = [...prev.products];
+                                next[i] = { ...next[i], quantity: val };
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          />
+                        </td>
+                        <td className="px-3 py-2">
+                          <select
+                            className="h-10 w-full border rounded px-2"
+                            value={p.sifOrSisbi ?? "NA"}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = [...prev.products];
+                                next[i] = { ...next[i], sifOrSisbi: val };
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          >
+                            <option value="NA">N/A</option>
+                            <option value="SIF">SIF</option>
+                            <option value="SISBI">SISBI</option>
+                          </select>
+                        </td>
+                        <td className="px-3 py-2">
+                          <Input
+                            value={String(p.productTemperature ?? 0)}
+                            onChange={(e) => {
+                              const val = Number(e.target.value) || 0;
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = [...prev.products];
+                                next[i] = { ...next[i], productTemperature: val };
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          />
+                        </td>
+                        <td className="px-3 py-2">
+                          <Input
+                            placeholder="dd/mm/aaaa"
+                            value={p.productionDate}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = [...prev.products];
+                                next[i] = { ...next[i], productionDate: val };
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          />
+                        </td>
+                        <td className="px-3 py-2 text-right">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setEditRow((prev) => {
+                                if (!prev) return prev;
+                                const next = prev.products.filter((_, idx) => idx !== i);
+                                return { ...prev, products: next };
+                              });
+                            }}
+                          >
+                            Remover
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="mt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setEditRow((prev) => {
+                        if (!prev) return prev;
+                        const firstProd = productsState[0];
+                        const next = [
+                          ...prev.products,
+                          {
+                            productCode: String(firstProd?.code ?? ""),
+                            productName: firstProd?.description ?? "Produto",
+                            quantity: 0,
+                            productionDate: formatDate(new Date()),
+                            productTemperature: 0,
+                            sifOrSisbi: "NA",
+                          },
+                        ];
+                        return { ...prev, products: next };
+                      });
+                    }}
+                  >
+                    Adicionar produto
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setEditOpen(false)}>Cancelar</Button>
+                <Button className="bg-yellow-400 hover:bg-yellow-500 text-black" onClick={handleEditSave}>Salvar</Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de confirmação de exclusão */}
+      <AlertDialog open={deleteOpen} onOpenChange={(open) => setDeleteOpen(open)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar exclusão?</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDeleteOpen(false)}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={async () => {
+                if (pendingDeleteId == null) return;
+                try {
+                  const baseURL = process.env.NEXT_PUBLIC_API_URL;
+                  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+                  const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+                  await axios.delete(`${baseURL}/daily-report/${pendingDeleteId}`, { headers });
+                  setRows((prev) => prev.filter((r) => r.reportId !== pendingDeleteId));
+                  setDeleteOpen(false);
+                  setPendingDeleteId(null);
+                  toast({
+                    title: "Exclusão efetuada com sucesso",
+                    description: "O relatório foi excluído.",
+                  });
+                } catch (e: any) {
+                  const msg = e?.response?.data?.message || e?.message || "Falha ao excluir relatório.";
+                  setDeleteOpen(false);
+                  setPendingDeleteId(null);
+                  alert(msg);
+                }
+              }}
+            >
+              Confirmar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
