@@ -70,6 +70,19 @@ export function ReportsPage() {
     username: string;
   };
 
+  // Registros mensais (DIPOVA)
+  type ApiMonthlyReport = {
+    id: number;
+    quantity: string | number; // Decimal vem como string
+    destination: string;
+    temperature: string | number;
+    deliverer: string;
+    productionDate: string; // ISO
+    shipmentDate: string; // ISO
+    productId: number; // código do produto
+    customersId: number;
+  };
+
   type ReportRow = {
     reportId: number;
     invoiceNumber: number;
@@ -94,6 +107,7 @@ export function ReportsPage() {
   };
 
   const [rows, setRows] = useState<ReportRow[]>([]);
+  const [monthly, setMonthly] = useState<ApiMonthlyReport[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedRowKeys, setExpandedRowKeys] = useState<Set<string>>(new Set());
@@ -178,11 +192,12 @@ export function ReportsPage() {
         const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
 
         // Buscar relatórios, clientes e produtos em paralelo
-        const [repRes, custRes, prodRes, usersRes] = await Promise.all([
+        const [repRes, custRes, prodRes, usersRes, monthlyRes] = await Promise.all([
           axios.get<ApiDailyReport[]>(`${baseURL}/daily-report`, { headers }),
           axios.get<{ data: ApiCustomer[], limit: number, offset: number, total?: number }>(`${baseURL}/customers`, { headers }),
           axios.get<{ data: ApiProduct[], limit: number, offset: number, total?: number }>(`${baseURL}/products`, { headers }),
           axios.get<{ data: ApiUser[][], limit: number, offset: number }>(`${baseURL}/usuarios?limit=100`, { headers }),
+          axios.get<ApiMonthlyReport[]>(`${baseURL}/monthly-report`, { headers }),
         ]);
 
         const customers = Array.isArray(custRes.data)
@@ -193,6 +208,7 @@ export function ReportsPage() {
           : (prodRes.data?.data ?? []);
         const reports = repRes.data || [];
         const users = (usersRes.data?.data?.[0] ?? []) as ApiUser[];
+        const monthlyReports = Array.isArray(monthlyRes.data) ? monthlyRes.data : [];
 
         // Mapas auxiliares
         const customerByCode = new Map<number, ApiCustomer>();
@@ -249,6 +265,7 @@ export function ReportsPage() {
         }
 
         setRows(builtRows);
+        setMonthly(monthlyReports);
       } catch (e: any) {
         console.error(e);
         const msg = e?.response?.data?.message || e?.message || "Erro ao carregar relatórios.";
@@ -310,8 +327,8 @@ export function ReportsPage() {
         const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
         const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
         const [custRes, prodRes] = await Promise.all([
-          axios.get<{ data: ApiCustomer[] }>(`${baseURL}/customers`, { headers }),
-          axios.get<{ data: ApiProduct[] }>(`${baseURL}/products`, { headers }),
+          axios.get<{ data: ApiCustomer[] }>(`${baseURL}/customers?limit=20`, { headers }),
+          axios.get<{ data: ApiProduct[] }>(`${baseURL}/products?limit=20`, { headers }),
         ]);
         setCustomersState(custRes.data?.data ?? []);
         setProductsState(prodRes.data?.data ?? []);
@@ -394,6 +411,31 @@ export function ReportsPage() {
 
   const sumQty = (arr: ReportRow[]) =>
     arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
+
+  // ===== Helpers DIPOVA =====
+  const monthAbbr = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const formatMonthBr = (iso: string) => {
+    const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
+    let d: Date | null = null;
+    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    else {
+      const tryD = new Date(iso);
+      if (!isNaN(tryD.getTime())) d = tryD; else return iso;
+    }
+    const mm = d.getMonth();
+    const yy = d.getFullYear() % 100;
+    return `${monthAbbr[mm]}-${yy}`;
+  };
+  const isSameMonthYear = (iso: string, ref: Date) => {
+    const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
+    let d: Date | null = null;
+    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    else {
+      const tryD = new Date(iso);
+      if (!isNaN(tryD.getTime())) d = tryD; else return false;
+    }
+    return d.getMonth() === ref.getMonth() && d.getFullYear() === ref.getFullYear();
+  };
 
   return (
     <div className="space-y-6">
@@ -659,38 +701,120 @@ export function ReportsPage() {
                 <table className="w-full">
                   <thead className="bg-gray-100 border-b">
                     <tr>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">
-                        Mês
-                      </th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">
-                        Total Expedições
-                      </th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">
-                        Total (kg)
-                      </th>
-                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">
-                        <div className="flex justify-end space-x-2">
-                          <Button
-                            onClick={handleExportPDF}
-                            variant="outline"
-                            size="sm"
-                            className="h-8 px-3 text-xs bg-transparent"
-                          >
-                            Gerar PDF
-                          </Button>
-                          <Button
-                            onClick={handleExportExcel}
-                            variant="outline"
-                            size="sm"
-                            className="h-8 px-3 text-xs bg-transparent"
-                          >
-                            Gerar Excel
-                          </Button>
-                        </div>
-                      </th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Produto</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Data de produção/lote</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Data da expedição</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Quant.</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Destino</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Temp.</th>
+                      <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Entregador/caminhão</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200"></tbody>
+                  <tbody className="divide-y divide-gray-200">
+                    {(() => {
+                      if (loading) {
+                        return (<tr><td className="px-3 py-2 text-sm" colSpan={7}>Carregando...</td></tr>);
+                      }
+                      if (error) {
+                        return (<tr><td className="px-3 py-2 text-sm text-red-600" colSpan={7}>{error}</td></tr>);
+                      }
+
+                      // Request 1: Usar productsState como a fonte da verdade.
+                      // Precisamos que o productsState esteja carregado.
+                      if (!productsState || productsState.length === 0) {
+                        return (<tr><td className="px-3 py-2 text-sm" colSpan={7}>Nenhum produto cadastrado.</td></tr>);
+                      }
+
+                      // Helper: Correção para Request 2 (Cálculo de Quantidade)
+                      // Esta função analisa corretamente uma string numérica.
+                      const parseQuantity = (q: any): number => {
+                        if (q === null || q === undefined) return 0;
+                        // Se já for um número, retorne
+                        if (typeof q === 'number') return q;
+
+                        // Tenta converter para string
+                        let s: string;
+                        try {
+                          s = String(q).trim();
+                        } catch (e) {
+                          return 0; // Falha ao converter
+                        }
+
+                        if (!s) return 0; // String vazia
+
+                        const hasComma = s.includes(',');
+                        const hasDot = s.includes('.');
+                        
+                        // Caso 1: Formato "1.234,56" (pt-BR com milhar)
+                        if (hasComma && hasDot && s.lastIndexOf('.') < s.lastIndexOf(',')) {
+                          s = s.replace(/\./g, '').replace(/,/g, '.'); // "1.234,56" -> "1234.56"
+                        } 
+                        // Caso 2: Formato "1,234.56" (en-US com milhar)
+                        else if (hasComma && hasDot && s.lastIndexOf(',') < s.lastIndexOf('.')) {
+                          s = s.replace(/,/g, ''); // "1,234.56" -> "1234.56"
+                        }
+                        // Caso 3: Formato "1234,56" (pt-BR simples)
+                        else if (hasComma && !hasDot) {
+                          s = s.replace(/,/g, '.'); // "1234,56" -> "1234.56"
+                        }
+                        // Caso 4: Formato "1234.56" (padrão) ou "1234" (inteiro)
+                        // Nenhuma ação necessária, 'Number()' já entende.
+                        
+                        const n = Number(s);
+                        return isNaN(n) ? 0 : n;
+                      };
+
+                      // Criar um mapa de agregação para Quantidades (para resolver Request 2)
+                      // Somamos todas as quantidades do array 'monthly' para cada productId.
+                      const quantityPerProduct = new Map<number, number>();
+                      if (monthly && monthly.length > 0) {
+                        for (const m of monthly) {
+                          const productId = Number(m.productId);
+                          const currentQty = quantityPerProduct.get(productId) || 0;
+                          // Usa nosso parser corrigido
+                          const newQty = parseQuantity(m.quantity);
+                          quantityPerProduct.set(productId, currentQty + newQty);
+                        }
+                      }
+
+                      // Valores fixos do código original (pois não são específicos do produto)
+                      const abbrCurrent = formatMonthBr(new Date().toISOString());
+                      const defaultDest = 'N/A'; // Ou "Distrito Federal" se preferir
+                      const defaultTemp = '0 °C';
+                      const defaultDeliverer = 'Próprio';
+
+                      // Request 1: Fazer o loop sobre 'productsState' em vez de 'monthly'
+                      return productsState.map((product) => {
+                        const prodCode = Number(product.code);
+                        const prodName = product.description ?? `Produto ${prodCode}`;
+
+                        // Request 2: Obter a soma pré-calculada para este produto
+                        const qtyNum = quantityPerProduct.get(prodCode) || 0;
+                        
+                        // Como agregamos a quantidade, colunas como "Destino" perdem o
+                        // detalhe transacional. Manteremos os valores padrão que já
+                        // estavam no código.
+
+                        return (
+                          <tr key={`dipova-prod-${prodCode}`}>
+                            <td className="px-3 py-2">{prodName}</td>
+                            <td className="px-3 py-2">{abbrCurrent}</td>
+                            <td className="px-3 py-2">{abbrCurrent}</td>
+                            <td className="px-3 py-2">
+                              {/* Formata o número para o padrão pt-BR (ex: 1.234,50) */}
+                              {qtyNum.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                              })}
+                            </td>
+                            <td className="px-3 py-2">{defaultDest}</td>
+                            <td className="px-3 py-2">{defaultTemp}</td>
+                            <td className="px-3 py-2">{defaultDeliverer}</td>
+                          </tr>
+                        );
+                      });
+                    })()}
+                  </tbody>
                 </table>
               </div>
             </CardContent>

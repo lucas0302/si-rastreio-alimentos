@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model Users {
@@ -47,6 +46,7 @@ model Product {
   company          String?
   last_buying_date DateTime? @db.Date
   last_sale_date   DateTime? @db.Date
+  weight           Float?
 
   @@map("products")
 }
@@ -67,7 +67,6 @@ model DailyShipmentReport {
   id                       Int       @id @default(autoincrement())
   quantity                 Int
   invoiceNumber            Int
-  productionDate           DateTime  @db.Date
   vehicleTemperature       Float     @db.Real
   hasGoodSanitaryCondition Boolean
   driver                   String
@@ -76,6 +75,7 @@ model DailyShipmentReport {
   customerCode             BigInt
   productTemperature       Float     @db.Real
   fillingDate              DateTime  @db.Timestamptz(6)
+  productionDate           DateTime  @db.Date
   deliverVehicle           String?
   sifOrSisbi               String?   @db.VarChar(5)
   customers                Customers @relation(fields: [customerCode], references: [code], onDelete: NoAction, onUpdate: NoAction)
@@ -87,9 +87,9 @@ model DailyShipmentReport {
 
 model MonthlyShipmentReport {
   id             Int      @id @default(autoincrement())
-  quantity       Decimal
+  quantity       Float
   destination    String   @db.VarChar(50)
-  temperature    Decimal
+  temperature    Float
   deliverer      String   @db.VarChar(100)
   productionDate DateTime
   shipmentDate   DateTime
