@@ -26,6 +26,8 @@ export class DailyReportService {
         throw new HttpException("Veículo (placa) não encontrado.", HttpStatus.NOT_FOUND);
       }
 
+      const invoiceNumberValue = BigInt(createDailyReportDto.invoiceNumber);
+
       // Branch: novo payload com múltiplos clientes
       if (createDailyReportDto.customerGroups && createDailyReportDto.customerGroups.length > 0) {
         const results: any[] = [];
@@ -67,7 +69,7 @@ export class DailyReportService {
           const created = await this.prisma.dailyShipmentReport.create({
             data: {
               quantity: totalQuantity,
-              invoiceNumber: createDailyReportDto.invoiceNumber,
+              invoiceNumber: invoiceNumberValue,
               productionDate,
               vehicleTemperature: createDailyReportDto.vehicleTemperature,
               hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
@@ -106,7 +108,7 @@ export class DailyReportService {
       const created = await this.prisma.dailyShipmentReport.create({
         data: {
           quantity: createDailyReportDto.quantity!,
-          invoiceNumber: createDailyReportDto.invoiceNumber,
+          invoiceNumber: invoiceNumberValue,
           productionDate: new Date(createDailyReportDto.productionDate!),
           vehicleTemperature: createDailyReportDto.vehicleTemperature,
           hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
@@ -175,7 +177,9 @@ export class DailyReportService {
       let data: Prisma.DailyShipmentReportUncheckedUpdateInput = {};
 
       // Campos simples (mantém valor atual se não enviados)
-      if (typeof updateDailyReportDto.invoiceNumber === "number") data.invoiceNumber = updateDailyReportDto.invoiceNumber;
+      if (typeof updateDailyReportDto.invoiceNumber === "number") {
+        data.invoiceNumber = BigInt(updateDailyReportDto.invoiceNumber) as any;
+      }
       if (typeof updateDailyReportDto.vehicleTemperature === "number") data.vehicleTemperature = updateDailyReportDto.vehicleTemperature;
       if (typeof updateDailyReportDto.hasGoodSanitaryCondition === "boolean") data.hasGoodSanitaryCondition = updateDailyReportDto.hasGoodSanitaryCondition;
       if (typeof updateDailyReportDto.driver === "string") data.driver = updateDailyReportDto.driver;
@@ -219,7 +223,7 @@ export class DailyReportService {
         data.quantity = totalQuantity;
         data.productionDate = productionDate;
         data.productTemperature = minProductTemp;
-        data.customerCode = BigInt(group.customerCode);
+        data.customerCode = BigInt(group.customerCode) as any;
         data.sifOrSisbi = primarySifOrSisbi && primarySifOrSisbi !== "NA" ? primarySifOrSisbi : null;
       }
 
@@ -235,7 +239,7 @@ export class DailyReportService {
       if (typeof updateDailyReportDto.quantity === "number") data.quantity = updateDailyReportDto.quantity;
       if (updateDailyReportDto.productionDate) data.productionDate = new Date(updateDailyReportDto.productionDate);
       if (typeof updateDailyReportDto.productTemperature === "number") data.productTemperature = updateDailyReportDto.productTemperature;
-      if (typeof updateDailyReportDto.customerCode === "number") data.customerCode = BigInt(updateDailyReportDto.customerCode);
+      if (typeof updateDailyReportDto.customerCode === "number") data.customerCode = BigInt(updateDailyReportDto.customerCode) as any;
       if (typeof updateDailyReportDto.sifOrSisbi === "string") {
         data.sifOrSisbi = updateDailyReportDto.sifOrSisbi && updateDailyReportDto.sifOrSisbi !== "NA" ? updateDailyReportDto.sifOrSisbi : null;
       }

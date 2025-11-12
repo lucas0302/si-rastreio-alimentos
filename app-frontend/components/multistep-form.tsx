@@ -136,7 +136,7 @@ type Paginated<T> = {
   total?: number;
 };
 
-const OnboardingForm = () => {
+const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -529,7 +529,44 @@ const OnboardingForm = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        toast.success("Relatório diário criado com sucesso!");
+        toast.success("Relatório diário criado com sucesso!", {
+          duration: 3000,
+          position: "top-center",
+        });
+        
+        // Resetar o formulário
+        setFormData({
+          client: "",
+          clientCode: "",
+          driver: "",
+          company: "",
+          profession: "",
+          experience: "",
+          industry: "",
+          vehicleId: "",
+          sanitaryCondition: "",
+          vehicleTemperature: "",
+          invoiceNumber: "",
+          productItems: [{ code: "", quantity: "" }],
+          sifOrSisbi: "",
+          productTemperature: "",
+          deliverDate: "",
+          customerGroups: [
+            {
+              clientCode: "",
+              clientName: "",
+              items: [],
+            },
+          ],
+        });
+        
+        // Voltar para a primeira etapa
+        setCurrentStep(0);
+        
+        // Chamar a função de callback se existir
+        if (onSuccess) {
+          onSuccess();
+        }
       } catch (err: any) {
         console.error(err);
         let message = err?.response?.data?.message || err?.message || "Falha ao enviar o relatório.";
@@ -584,10 +621,10 @@ const OnboardingForm = () => {
   };
 
   return (
-    <div className="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto p-5">
+    <div className="w-full max-w-xl mx-auto p-4">
       {/* Progress indicator */}
       <motion.div
-        className="mb-8"
+        className="mb-6"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -604,9 +641,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
                         index < currentStep
-                          ? "text-primary"
+                          ? "text-yellow-500"
                           : index === currentStep
-                          ? "text-primary ring-primary/20"
+                          ? "text-yellow-500 ring-yellow-400/20"
                           : "text-muted-foreground"
                       )}
                       onClick={() => {
@@ -623,9 +660,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
                         index < currentStep
-                          ? "text-primary"
+                          ? "text-yellow-500"
                           : index === currentStep
-                          ? "text-primary ring-primary/20"
+                          ? "text-yellow-500 ring-yellow-400/20"
                           : "text-muted-foreground"
                       )}
                       onClick={() => {
@@ -642,9 +679,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
                         index < currentStep
-                          ? "text-primary"
+                          ? "text-yellow-500"
                           : index === currentStep
-                          ? "text-primary ring-primary/20"
+                          ? "text-yellow-500 ring-yellow-400/20"
                           : "text-muted-foreground"
                       )}
                       onClick={() => {
@@ -661,9 +698,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
                         index < currentStep
-                          ? "text-primary"
+                          ? "text-yellow-500"
                           : index === currentStep
-                          ? "text-primary ring-primary/20"
+                          ? "text-yellow-500 ring-yellow-400/20"
                           : "text-muted-foreground"
                       )}
                       onClick={() => {
@@ -680,9 +717,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
                         index < currentStep
-                          ? "text-primary"
+                          ? "text-yellow-500"
                           : index === currentStep
-                          ? "text-primary ring-primary/20"
+                          ? "text-yellow-500 ring-yellow-400/20"
                           : "text-muted-foreground"
                       )}
                       onClick={() => {
@@ -699,9 +736,9 @@ const OnboardingForm = () => {
                       className={cn(
                         "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
                         index < currentStep
-                          ? "bg-primary"
+                          ? "bg-yellow-500"
                           : index === currentStep
-                          ? "bg-primary ring-4 ring-primary/20"
+                          ? "bg-yellow-500 ring-4 ring-yellow-400/20"
                           : "bg-muted"
                       )}
                       onClick={() => {
@@ -716,7 +753,7 @@ const OnboardingForm = () => {
                     className={cn(
                       "text-xs mt-1.5 hidden sm:block",
                       index === currentStep
-                        ? "text-primary font-medium"
+                        ? "text-yellow-500 font-medium"
                         : "text-muted-foreground"
                     )}
                   >
@@ -727,7 +764,7 @@ const OnboardingForm = () => {
         </div>
         <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
           <motion.div
-            className="h-full bg-primary"
+            className="h-full bg-yellow-400"
             initial={{ width: 0 }}
             animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
             transition={{ duration: 0.3 }}
@@ -741,7 +778,7 @@ const OnboardingForm = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="border shadow-md rounded-3xl overflow-hidden">
+        <Card className="border shadow-lg rounded-3xl overflow-hidden bg-white w-full h-auto min-h-[600px] max-h-[85vh]">
           <div>
             <AnimatePresence mode="wait">
               <motion.div
@@ -754,10 +791,12 @@ const OnboardingForm = () => {
                 {/* Step 2: Transport Information */}
                 {currentStep === 0 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Informações do Transporte</CardTitle>
+                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
+                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                        <Truck className="h-5 w-5 text-yellow-500" /> Informações do Transporte
+                      </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 py-6 px-6">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="driver">
                           Motorista
@@ -816,11 +855,11 @@ const OnboardingForm = () => {
                           onValueChange={(value) => updateFormData("sanitaryCondition", value)}
                           className="space-y-2"
                         >
-                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
+                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
                             <RadioGroupItem value="conforme" id="sanitary-conforme" />
                             <Label htmlFor="sanitary-conforme" className="cursor-pointer w-full">Conforme</Label>
                           </div>
-                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
+                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
                             <RadioGroupItem value="nao-conforme" id="sanitary-nao-conforme" />
                             <Label htmlFor="sanitary-nao-conforme" className="cursor-pointer w-full">Não conforme</Label>
                           </div>
@@ -851,11 +890,13 @@ const OnboardingForm = () => {
                 {/* Step 1: Nota Fiscal */}
                 {currentStep === 1 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Nota Fiscal</CardTitle>
+                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
+                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-yellow-500" /> Nota Fiscal
+                      </CardTitle>
                       <CardDescription>Informe o número da Nota Fiscal</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 py-6 px-6">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
                         <Input
@@ -877,11 +918,13 @@ const OnboardingForm = () => {
                 {/* Step 2: Cliente + Produtos (Accordion + Modal) */}
                 {currentStep === 2 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Clientes e Produtos</CardTitle>
+                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
+                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                        <Store className="h-5 w-5 text-yellow-500" /> Clientes e Produtos
+                      </CardTitle>
                       <CardDescription>Selecione um ou mais clientes e associe seus produtos</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 py-6 px-6">
                       <motion.div variants={fadeInUp} className="space-y-6">
                         <Accordion type="multiple" className="w-full">
                           {formData.customerGroups.map((group, gIdx) => (
@@ -963,10 +1006,10 @@ const OnboardingForm = () => {
                                                 </TableCell>
                                                 <TableCell>
                                                   <div className="flex gap-2">
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar" onClick={() => openEditProduct(gIdx, iIdx)}>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar" onClick={() => openEditProduct(gIdx, iIdx)} className="hover:border-yellow-400 hover:bg-yellow-50">
                                                       <ClipboardPen className="h-4 w-4" />
                                                     </Button>
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Remover" onClick={() => deleteProduct(gIdx, iIdx)}>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Remover" onClick={() => deleteProduct(gIdx, iIdx)} className="hover:border-red-400 hover:bg-red-50">
                                                       <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                   </div>
@@ -982,7 +1025,7 @@ const OnboardingForm = () => {
                                   </div>
 
                                   <div className="flex justify-end">
-                                    <Button type="button" variant="secondary" onClick={() => openAddProduct(gIdx)}>
+                                    <Button type="button" variant="secondary" onClick={() => openAddProduct(gIdx)} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">
                                       Adicionar produto
                                     </Button>
                                   </div>
@@ -991,21 +1034,23 @@ const OnboardingForm = () => {
                             </AccordionItem>
                           ))}
                         </Accordion>
-                        <Button type="button" onClick={addCustomerGroup}>Adicionar cliente</Button>
+                        <Button type="button" onClick={addCustomerGroup} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">Adicionar cliente</Button>
                       </motion.div>
 
                       {/* Modal de produto */}
                       <Dialog open={productModalOpen} onOpenChange={setProductModalOpen}>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>{productEditIndex == null ? "Adicionar produto" : "Editar produto"}</DialogTitle>
+                        <DialogContent className="bg-white w-[500px] max-w-[90vw]">
+                          <DialogHeader className="bg-gray-50 border-b pb-4 mb-2">
+                            <DialogTitle className="text-xl font-semibold flex items-center gap-2">
+                              <PiggyBank className="h-5 w-5 text-yellow-500" /> {productEditIndex == null ? "Adicionar produto" : "Editar produto"}
+                            </DialogTitle>
                             <DialogDescription>Preencha os detalhes do produto para o cliente selecionado.</DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4">
                             <div className="space-y-2">
-                              <Label>Produto expedido</Label>
+                              <Label className="text-sm font-medium">Produto expedido</Label>
                               <Select value={productForm.code} onValueChange={(val) => setProductForm((f) => ({ ...f, code: val }))}>
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className="w-full focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all">
                                   <SelectValue placeholder="Selecione um produto" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1019,7 +1064,7 @@ const OnboardingForm = () => {
                             </div>
 
                             <div className="space-y-2">
-                              <Label>Quantidade</Label>
+                              <Label className="text-sm font-medium">Quantidade</Label>
                               <Input
                                 inputMode="numeric"
                                 placeholder="Somente números"
@@ -1028,18 +1073,19 @@ const OnboardingForm = () => {
                                   const digits = (e.target.value || "").replace(/\D/g, "");
                                   setProductForm((f) => ({ ...f, quantity: digits }));
                                 }}
+                                className="focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                               />
                             </div>
 
                             <div className="space-y-2">
-                              <Label>SIF ou SISBI?</Label>
+                              <Label className="text-sm font-medium">SIF ou SISBI?</Label>
                               <RadioGroup
                                 value={productForm.sifOrSisbi}
                                 onValueChange={(v) => setProductForm((f) => ({ ...f, sifOrSisbi: v as any }))}
                                 className="space-y-2"
                               >
                                 {[{ value: "SIF", label: "SIF" }, { value: "SISBI", label: "SISBI" }, { value: "NA", label: "N/A" }].map((opt, index) => (
-                                  <motion.div key={opt.value} className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
+                                  <motion.div key={opt.value} className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
                                     <RadioGroupItem value={opt.value} id={`modal-sis-${index}`} />
                                     <Label htmlFor={`modal-sis-${index}`} className="cursor-pointer w-full">{opt.label}</Label>
                                   </motion.div>
@@ -1048,7 +1094,7 @@ const OnboardingForm = () => {
                             </div>
 
                             <div className="space-y-2">
-                              <Label>Temperatura do produto (°C)</Label>
+                              <Label className="text-sm font-medium">Temperatura do produto (°C)</Label>
                               <Input
                                 inputMode="decimal"
                                 placeholder="Ex.: 4,5"
@@ -1058,14 +1104,15 @@ const OnboardingForm = () => {
                                   sanitized = sanitized.replace(/(?!^)-/g, "");
                                   setProductForm((f) => ({ ...f, productTemperature: sanitized }));
                                 }}
+                                className="focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                               />
                             </div>
 
                             <div className="space-y-2">
-                              <Label>Data de produção</Label>
+                              <Label className="text-sm font-medium">Data de produção</Label>
                               <Popover>
                                 <PopoverTrigger asChild>
-                                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                                  <Button variant="outline" className="w-full justify-start text-left font-normal focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all">
                                     {productForm.productionDate
                                       ? (() => { const [y, m, d] = productForm.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
                                       : "Selecione uma data"}
@@ -1087,8 +1134,8 @@ const OnboardingForm = () => {
                             </div>
                           </div>
                           <DialogFooter>
-                            <Button type="button" variant="secondary" onClick={() => setProductModalOpen(false)}>Cancelar</Button>
-                            <Button type="button" onClick={saveProductModal}>{productEditIndex == null ? "Adicionar" : "Salvar"}</Button>
+                            <Button type="button" variant="outline" onClick={() => setProductModalOpen(false)} className="hover:border-gray-400">Cancelar</Button>
+                            <Button type="button" onClick={saveProductModal} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">{productEditIndex == null ? "Adicionar" : "Salvar"}</Button>
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>
@@ -1099,12 +1146,63 @@ const OnboardingForm = () => {
                 {/* Step 3: Produto (desativado, movido para etapa Cliente) */}
                 {currentStep === 3 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Produto</CardTitle>
-                      <CardDescription>Esta etapa foi integrada à etapa de Clientes e Produtos.</CardDescription>
+                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
+                      <CardTitle className="flex items-center gap-2">
+                        <PiggyBank className="h-5 w-5 text-yellow-500" /> Resumo de Produtos
+                      </CardTitle>
+                      <CardDescription>Lista de todos os produtos por cliente</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="text-sm text-muted-foreground">Produtos agora são definidos na etapa "Clientes e Produtos".</div>
+                    <CardContent className="space-y-5 py-6 px-6">
+                      {formData.customerGroups.length === 0 ? (
+                        <div className="text-center py-8">
+                          <PiggyBank className="h-12 w-12 text-yellow-400 opacity-80 mx-auto mb-4" />
+                          <p className="text-sm text-muted-foreground">Nenhum produto adicionado ainda.</p>
+                          <p className="text-sm text-muted-foreground mt-2">Volte à etapa anterior para adicionar produtos.</p>
+                        </div>
+                      ) : (
+                        formData.customerGroups.map((group, gIdx) => (
+                          <div key={`product-summary-${gIdx}`} className="border rounded-lg overflow-hidden mb-6">
+                            <div className="bg-gray-50 px-4 py-3 border-b">
+                              <h3 className="font-medium">{group.clientName || `Cliente #${gIdx + 1}`}</h3>
+                            </div>
+                            {group.items && group.items.length > 0 ? (
+                              <Table>
+                                <TableHeader>
+                                  <TableRow>
+                                    <TableHead>Produto</TableHead>
+                                    <TableHead>Quantidade</TableHead>
+                                    <TableHead>SIF/SISBI</TableHead>
+                                    <TableHead>Temp (°C)</TableHead>
+                                    <TableHead>Produção</TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {group.items.map((item, iIdx) => {
+                                    const pDesc = products.find((p) => String(p.code) === item.code)?.description || item.code;
+                                    return (
+                                      <TableRow key={`prod-summary-${gIdx}-${iIdx}`}>
+                                        <TableCell>{pDesc}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
+                                        <TableCell>{item.sifOrSisbi || ""}</TableCell>
+                                        <TableCell>{item.productTemperature}</TableCell>
+                                        <TableCell>
+                                          {item.productionDate
+                                            ? (() => { const [y, m, d] = item.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
+                                            : ""}
+                                        </TableCell>
+                                      </TableRow>
+                                    );
+                                  })}
+                                </TableBody>
+                              </Table>
+                            ) : (
+                              <div className="p-4 text-center text-sm text-muted-foreground">
+                                Nenhum produto adicionado para este cliente.
+                              </div>
+                            )}
+                          </div>
+                        ))
+                      )}
                     </CardContent>
                   </>
                 )}
@@ -1112,8 +1210,10 @@ const OnboardingForm = () => {
                 {/* Step 5: Revisão */}
                 {currentStep === 4 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Revisão</CardTitle>
+                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
+                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                        <ClipboardPen className="h-5 w-5 text-yellow-500" /> Revisão
+                      </CardTitle>
                       <CardDescription>
                         Resumo dos dados antes de confirmar
                       </CardDescription>
@@ -1139,10 +1239,10 @@ const OnboardingForm = () => {
                                 </AccordionTrigger>
                                 <AccordionContent>
                                   <div className="flex justify-end gap-2 mb-3">
-                                    <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
+                                    <Button type="button" variant="outline" onClick={() => setCurrentStep(2)} className="hover:border-yellow-400 hover:bg-yellow-50">
                                       <ClipboardPen className="mr-2 h-4 w-4" /> Editar cliente
                                     </Button>
-                                    <Button type="button" variant="outline" onClick={() => removeCustomerGroup(gIdx)}>
+                                    <Button type="button" variant="outline" onClick={() => removeCustomerGroup(gIdx)} className="hover:border-red-400 hover:bg-red-50">
                                       <Trash2 className="mr-2 h-4 w-4" /> Excluir cliente
                                     </Button>
                                   </div>
@@ -1177,10 +1277,10 @@ const OnboardingForm = () => {
                                                 </TableCell>
                                                 <TableCell>
                                                   <div className="flex gap-2">
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar produto" onClick={() => { setCurrentStep(2); openEditProduct(gIdx, idx); }}>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar produto" onClick={() => { setCurrentStep(2); openEditProduct(gIdx, idx); }} className="hover:border-yellow-400 hover:bg-yellow-50">
                                                       <ClipboardPen className="h-4 w-4" />
                                                     </Button>
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Excluir produto" onClick={() => deleteProduct(gIdx, idx)}>
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Excluir produto" onClick={() => deleteProduct(gIdx, idx)} className="hover:border-red-400 hover:bg-red-50">
                                                       <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                   </div>
@@ -1228,7 +1328,7 @@ const OnboardingForm = () => {
               </motion.div>
             </AnimatePresence>
 
-            <CardFooter className="flex justify-between pt-6 pb-4">
+            <CardFooter className="flex items-center justify-between py-5 px-6 bg-gray-50 border-t">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -1238,11 +1338,16 @@ const OnboardingForm = () => {
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
-                  className="flex items-center gap-1 transition-all duration-300 rounded-2xl"
+                  className="flex items-center gap-1 transition-all duration-300 rounded-2xl hover:border-yellow-400"
                 >
                   <ChevronLeft className="h-4 w-4" /> Voltar
                 </Button>
               </motion.div>
+              
+              <div className="text-center text-sm text-muted-foreground">
+                Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
+              </div>
+              
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -1255,7 +1360,7 @@ const OnboardingForm = () => {
                   disabled={!isStepValid() || isSubmitting}
                   className={cn(
                     "flex items-center gap-1 transition-all duration-300 rounded-2xl",
-                    currentStep === steps.length - 1 ? "" : ""
+                    currentStep === steps.length - 1 ? "bg-yellow-400 hover:bg-yellow-500 text-black font-medium" : "bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
                   )}
                 >
                   {isSubmitting ? (
@@ -1280,14 +1385,6 @@ const OnboardingForm = () => {
       </motion.div>
 
       {/* Step indicator */}
-      <motion.div
-        className="mt-4 text-center text-sm text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
-        Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
-      </motion.div>
     </div>
   );
 };
