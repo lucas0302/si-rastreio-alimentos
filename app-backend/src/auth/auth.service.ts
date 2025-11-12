@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import type { ConfigType } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import jwtConfig from './config/jwt.config';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { SignInDto } from './dto/signin.dto';
 import { BcryptService } from './hash/bcrypt.service';
 
@@ -44,7 +44,7 @@ export class AuthService {
       },
       {
         secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.jwtTtl,
+        expiresIn: this.getExpiresIn(),
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer
       }
@@ -59,6 +59,16 @@ export class AuthService {
       token: token
     }
 
+  }
+
+  private getExpiresIn(): JwtSignOptions['expiresIn'] {
+    const ttl = this.jwtConfiguration.jwtTtl;
+    if (!ttl) {
+      return undefined;
+    }
+
+    const numericValue = Number(ttl);
+    return Number.isNaN(numericValue) ? ttl : numericValue;
   }
 
 }
