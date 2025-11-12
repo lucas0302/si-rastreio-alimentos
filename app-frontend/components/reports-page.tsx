@@ -409,10 +409,17 @@ export function ReportsPage() {
     return parse(b) - parse(a);
   });
 
+  // Estado de mês selecionado para DIPOVA, baseado na data de preenchimento
+  const [dipovaMonth, setDipovaMonth] = useState<string | null>(null);
+  useEffect(() => {
+    if (!dipovaMonth && orderedMonthKeys.length > 0) {
+      setDipovaMonth(orderedMonthKeys[0]);
+    }
+  }, [orderedMonthKeys, dipovaMonth]);
+
   const sumQty = (arr: ReportRow[]) =>
     arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
 
-  // ===== Helpers DIPOVA =====
   const monthAbbr = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
   const formatMonthBr = (iso: string) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
@@ -425,6 +432,13 @@ export function ReportsPage() {
     const mm = d.getMonth();
     const yy = d.getFullYear() % 100;
     return `${monthAbbr[mm]}-${yy}`;
+  };
+
+  // Formata a label exibida nas tabs de mês (Mon-YY)
+  const formatChipLabel = (key: string) => {
+    const [mon, yr] = key.split("-");
+    const yr2 = String(yr).slice(-2);
+    return `${mon}-${yr2}`;
   };
   const isSameMonthYear = (iso: string, ref: Date) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
@@ -697,6 +711,18 @@ export function ReportsPage() {
         <TabsContent value="dipova" className="mt-6">
           <Card>
             <CardContent className="p-0">
+              {/* Seleção de mês da DIPOVA */}
+              <div className="px-4 py-3 border-b">
+                <Tabs value={dipovaMonth ?? ""} onValueChange={(v) => setDipovaMonth(v)}>
+                  <TabsList className="flex flex-wrap gap-2">
+                    {orderedMonthKeys.map((key) => (
+                      <TabsTrigger key={key} value={key} className="rounded-full">
+                        {formatChipLabel(key)}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-100 border-b">
@@ -767,10 +793,10 @@ export function ReportsPage() {
                       // Criar um mapa de agregação para Quantidades com base nos relatórios diários carregados (rows)
                       // Isso garante que a aba DIPOVA reflita imediatamente exclusões/edições feitas no frontend e persistidas no backend.
                       const quantityPerProduct = new Map<number, number>();
-                      const currentMonthKey = getMonthKey(new Date());
+                      const selectedMonthKey = dipovaMonth ?? (orderedMonthKeys[0] ?? getMonthKey(new Date()));
                       for (const r of rows) {
-                        // Considerar apenas o mês corrente
-                        if (getMonthKey(r.fillingDateIso) !== currentMonthKey) continue;
+                        // Considerar apenas o mês selecionado (data de preenchimento)
+                        if (getMonthKey(r.fillingDateIso) !== selectedMonthKey) continue;
                         for (const p of r.products) {
                           const productId = Number(p.productCode);
                           const currentQty = quantityPerProduct.get(productId) || 0;
