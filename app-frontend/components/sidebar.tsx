@@ -1,24 +1,35 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react"
+import type { ElementType } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 import {
+  ChartColumnDecreasing,
   ChevronDown,
   ChevronRight,
-  User,
-  LogOut,
-  ChartColumnDecreasing,
   ClipboardList,
-  PanelLeftOpen,
+  LogOut,
   PanelLeftClose,
-} from "lucide-react";
+  PanelLeftOpen,
+  User,
+} from "lucide-react"
+import { MdOutlineAdminPanelSettings } from "react-icons/md"
 
-import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { useIsMobile } from "@/components/ui/use-mobile"
+import { cn } from "@/lib/utils"
+import { useNavigationStore } from "@/store/navigation-store"
 
-const menuItems = [
+type MenuItem = {
+  title: string
+  href?: string
+  icon: ElementType
+  submenu?: { title: string; href: string }[]
+}
+
+const menuItems: MenuItem[] = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -56,193 +67,215 @@ const menuItems = [
       },
     ],
   },
-];
+]
 
 export function Sidebar() {
-  const [expandedItems, setExpandedItems] = useState<string[]>([""]);
-  const pathname = usePathname();
-  const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false); // Este estado agora será usado
-  const [activeParent, setActiveParent] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string>("");
-  const displayName = userName.trim().length > 0 ? userName : "Usuario";
+  const pathname = usePathname()
+  const router = useRouter()
+  const isMobile = useIsMobile()
+  const { isSidebarOpen, closeSidebar } = useNavigationStore((state) => ({
+    isSidebarOpen: state.isSidebarOpen,
+    closeSidebar: state.closeSidebar,
+  }))
 
-  // Auto-expand parent menu if current route matches a submenu item
+  const [collapsed, setCollapsed] = useState(false)
+  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const [activeParent, setActiveParent] = useState<string | null>(null)
+  const [userName, setUserName] = useState("")
+
+  const displayName = userName.trim().length > 0 ? userName : "Usuário"
+
   useEffect(() => {
     const parentsToExpand = menuItems
-      .filter((item) => item.submenu?.some((s) => s.href === pathname))
-      .map((item) => item.title);
+      .filter((item) => item.submenu?.some((submenu) => submenu.href === pathname))
+      .map((item) => item.title)
 
     if (parentsToExpand.length) {
-      setExpandedItems([parentsToExpand[0]]);
-      setActiveParent(parentsToExpand[0]);
+      setExpandedItems([parentsToExpand[0]])
+      setActiveParent(parentsToExpand[0])
     } else {
-      setExpandedItems([]);
-      setActiveParent(null);
+      setExpandedItems([])
+      setActiveParent(null)
     }
-  }, [pathname]);
+  }, [pathname])
 
-  // Se o menu for fechado, recolhe os submenus abertos
   useEffect(() => {
     if (collapsed) {
-      setExpandedItems([]);
+      setExpandedItems([])
     }
-  }, [collapsed]);
+  }, [collapsed])
 
   useEffect(() => {
-    const loadUserName = () => {
-      if (typeof window === "undefined") {
-        return;
-      }
+    if (isMobile && collapsed) {
+      setCollapsed(false)
+    }
+  }, [isMobile, collapsed])
 
+  useEffect(() => {
+    const loadUser = () => {
+      if (typeof window === "undefined") return
       try {
-        const stored = window.localStorage.getItem("user");
+        const stored = window.localStorage.getItem("user")
         if (stored) {
-          const parsed = JSON.parse(stored);
-          setUserName(parsed?.name ?? parsed?.username ?? "");
+          const parsed = JSON.parse(stored)
+          setUserName(parsed?.name ?? parsed?.username ?? "")
         } else {
-          setUserName("");
+          setUserName("")
         }
-      } catch (err) {
-        console.error(err);
-        setUserName("");
+      } catch (error) {
+        console.error(error)
+        setUserName("")
       }
-    };
+    }
 
-    loadUserName();
-    window.addEventListener("storage", loadUserName);
+    loadUser()
+    window.addEventListener("storage", loadUser)
 
     return () => {
-      window.removeEventListener("storage", loadUserName);
-    };
-  }, []);
+      window.removeEventListener("storage", loadUser)
+    }
+  }, [])
 
   const toggleExpanded = (title: string) => {
-    setExpandedItems((prev) => (prev.includes(title) ? [] : [title]));
-    setActiveParent(title);
-  };
+    setExpandedItems((prev) => (prev.includes(title) ? [] : [title]))
+    setActiveParent(title)
+  }
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("user");
+      window.localStorage.removeItem("token")
+      window.localStorage.removeItem("user")
+      document.cookie = "isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
     }
+    router.push("/sign-in")
+    if (isMobile) closeSidebar()
+  }
 
-    setUserName("");
-    document.cookie =
-      "isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    router.push("/sign-in");
-  };
+  const handleNavigate = () => {
+    if (isMobile) closeSidebar()
+  }
+
+  const sidebarWidth = collapsed ? "w-20" : "w-64"
+  const isOpen = isMobile ? isSidebarOpen : true
 
   return (
     <div
-      className={`bg-white border-r border-gray-300 flex flex-col transition-all duration-300 ease-in-out ${
-        collapsed ? "w-20" : "w-56"
-      }`}
+      className={cn(
+        "bg-white border-r border-gray-200 flex h-full flex-col transition-all duration-300 ease-in-out",
+        isMobile
+          ? [
+              "fixed inset-y-0 left-0 z-50 w-[280px] max-w-[85vw] shadow-2xl lg:relative lg:w-64 lg:shadow-none",
+              isOpen ? "translate-x-0" : "-translate-x-full",
+              "lg:translate-x-0",
+            ]
+          : ["relative shrink-0", sidebarWidth]
+      )}
     >
-      {/* Logo e Botão de Toggle */}
-      <div className="p-3 border-b border-gray-200">
+      <div className="border-b border-gray-200 p-3">
         <div
-          className={`flex items-center ${
-            collapsed ? "justify-center" : "justify-between"
-          }`}
+          className={cn("flex items-center", {
+            "justify-center": collapsed && !isMobile,
+            "justify-between": !collapsed || isMobile,
+          })}
         >
           <div
-            className={`flex items-center shrink-0 ${
-              collapsed ? "space-x-0" : "space-x-2"
-            }`}
+            className={cn("flex items-center", {
+              "space-x-0": collapsed && !isMobile,
+              "space-x-2": !collapsed || isMobile,
+            })}
           >
-            <div className="w-9 h-9 rounded-full border-2 border-yellow-400 flex items-center justify-center bg-white shrink-0">
-              <div className="w-5 h-5 relative">
-                <Image
-                  src="/truck-logo.png"
-                  alt="Logo"
-                  fill
-                  className="object-contain"
-                />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-yellow-400 bg-white">
+              <div className="relative h-5 w-5">
+                <Image src="/truck-logo.png" alt="Logo Track+" fill className="object-contain" />
               </div>
             </div>
-            {!collapsed && (
-              <span className="font-semibold text-gray-900 text-sm whitespace-nowrap">
-                TRACK+
-              </span>
+            {(!collapsed || isMobile) && (
+              <span className="whitespace-nowrap text-sm font-semibold text-gray-900">TRACK+</span>
             )}
           </div>
-          {/* Botão de Fechar */}
-          {!collapsed && (
+
+          {!isMobile && !collapsed && (
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setCollapsed(true)}
               className="shrink-0 text-gray-600 hover:text-gray-900"
+              onClick={() => setCollapsed(true)}
             >
-              <PanelLeftClose className="w-5 h-5" />
+              <PanelLeftClose className="h-5 w-5" />
+            </Button>
+          )}
+
+          {isMobile && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0 text-gray-600 hover:text-gray-900"
+              onClick={() => closeSidebar()}
+            >
+              <PanelLeftClose className="h-5 w-5" />
             </Button>
           )}
         </div>
 
-        {/* Botão de Abrir */}
-        {collapsed && (
-          <div className="flex justify-center mt-2">
+        {!isMobile && collapsed && (
+          <div className="mt-2 flex justify-center">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setCollapsed(false)}
               className="shrink-0 text-gray-600 hover:text-gray-900"
+              onClick={() => setCollapsed(false)}
             >
-              <PanelLeftOpen className="w-5 h-5" />
+              <PanelLeftOpen className="h-5 w-5" />
             </Button>
           </div>
         )}
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-3 space-y-1">
+      <nav className="flex-1 space-y-1 overflow-y-auto p-3">
         {menuItems.map((item) => (
           <div key={item.title}>
             {item.submenu ? (
               <div>
                 <button
                   onClick={() => toggleExpanded(item.title)}
-                  className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${
+                  disabled={collapsed && !isMobile}
+                  className={cn(
+                    "flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    collapsed && !isMobile ? "justify-center" : "justify-between",
                     !collapsed && activeParent === item.title
                       ? "bg-yellow-100 text-yellow-800"
-                      : "text-gray-700"
-                  } ${
-                    collapsed ? "justify-center" : "justify-between"
-                  }`}
-                  // Desabilita o clique no submenu se o painel estiver fechado
-                  disabled={collapsed}
+                      : "text-gray-700 hover:bg-gray-100"
+                  )}
                 >
                   <div
-                    className={`flex items-center ${
-                      collapsed ? "space-x-0" : "space-x-3"
-                    }`}
+                    className={cn("flex items-center", {
+                      "space-x-0": collapsed && !isMobile,
+                      "space-x-3": !collapsed || isMobile,
+                    })}
                   >
-                    <item.icon className="w-5 h-5 shrink-0" />
-                    {/* Oculta o título quando fechado */}
-                    {!collapsed && <span>{item.title}</span>}
+                    <item.icon className="h-5 w-5 shrink-0" />
+                    {(!collapsed || isMobile) && <span>{item.title}</span>}
                   </div>
-                  {/* Oculta a seta quando fechado */}
-                  {!collapsed &&
+                  {(!collapsed || isMobile) &&
                     (expandedItems.includes(item.title) ? (
-                      <ChevronDown className="w-5 h-5 shrink-0" />
+                      <ChevronDown className="h-5 w-5 shrink-0" />
                     ) : (
-                      <ChevronRight className="w-5 h-5 shrink-0" />
+                      <ChevronRight className="h-5 w-5 shrink-0" />
                     ))}
                 </button>
-                {/* Oculta o submenu quando fechado */}
-                {expandedItems.includes(item.title) && !collapsed && (
-                  <div className="ml-4 mt-1 space-y-1">
+                {expandedItems.includes(item.title) && (!collapsed || isMobile) && (
+                  <div className="mt-1 space-y-1 border-l border-gray-100 pl-4">
                     {item.submenu.map((subItem) => (
                       <Link
                         key={subItem.title}
                         href={subItem.href}
-                        className={`block px-3 py-2 text-sm rounded-lg border-b-2 ${
+                        className={cn(
+                          "block rounded-lg border-b-2 px-3 py-2 text-sm transition-colors",
                           pathname === subItem.href
-                            ? "border-yellow-400 text-gray-900 font-medium"
-                            : "border-transparent text-gray-600"
-                        }`}
+                            ? "border-yellow-400 text-gray-900"
+                            : "border-transparent text-gray-600 hover:bg-gray-50"
+                        )}
+                        onClick={handleNavigate}
                       >
                         {subItem.title}
                       </Link>
@@ -252,60 +285,52 @@ export function Sidebar() {
               </div>
             ) : (
               <Link
-                href={item.href}
-                className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-100 ${
+                href={item.href ?? "#"}
+                className={cn(
+                  "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   pathname === item.href
                     ? "bg-yellow-100 text-yellow-800"
-                    : "text-gray-700"
-                } ${
-                  // Centraliza o ícone e remove o espaço quando fechado
-                  collapsed ? "justify-center space-x-0" : "space-x-3"
-                }`}
+                    : "text-gray-700 hover:bg-gray-100",
+                  collapsed && !isMobile ? "justify-center space-x-0" : "space-x-3"
+                )}
+                onClick={handleNavigate}
               >
-                <item.icon className="w-4 h-4 shrink-0" />
-                {/* Oculta o título quando fechado */}
-                {!collapsed && <span>{item.title}</span>}
+                <item.icon className="h-4 w-4 shrink-0" />
+                {(!collapsed || isMobile) && <span>{item.title}</span>}
               </Link>
             )}
           </div>
         ))}
       </nav>
 
-      {/* User section */}
-      <div className="p-3 border-t border-gray-200">
+      <div className="border-t border-gray-200 p-3">
         <div
-          className={`flex items-center mb-2 ${
-            // Centraliza o ícone do usuário quando fechado
-            collapsed ? "justify-center space-x-0" : "space-x-2"
-          }`}
+          className={cn("mb-2 flex items-center", {
+            "justify-center space-x-0": collapsed && !isMobile,
+            "space-x-2": !collapsed || isMobile,
+          })}
         >
-          <div className="w-7 h-7 bg-gray-300 rounded-full flex items-center justify-center shrink-0">
-            <User className="w-4 h-4 text-gray-600" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
+            <User className="h-4 w-4 text-gray-600" />
           </div>
-          {/* Oculta o nome quando fechado */}
-          {!collapsed && (
-            <span className="text-sm font-medium text-gray-900 whitespace-nowrap overflow-hidden">
-              {displayName}
-            </span>
+          {(!collapsed || isMobile) && (
+            <span className="truncate text-sm font-medium text-gray-900">{displayName}</span>
           )}
         </div>
+
         <Button
-          onClick={handleLogout}
           variant="ghost"
           size="sm"
-          className={`w-full text-gray-600 hover:text-gray-900 ${
-            // Centraliza o botão de sair quando fechado
-            collapsed ? "justify-center" : "justify-start"
-          }`}
+          className={cn(
+            "w-full text-gray-600 hover:text-gray-900",
+            collapsed && !isMobile ? "justify-center" : "justify-start"
+          )}
+          onClick={handleLogout}
         >
-          {/* Ajusta a margem do ícone quando fechado */}
-          <LogOut
-            className={`w-6 h-6 shrink-0 ${collapsed ? "mr-0" : "mr-2"}`}
-          />
-          {/* Oculta o texto quando fechado */}
-          {!collapsed && "Sair"}
+          <LogOut className={cn("h-5 w-5 shrink-0", { "mr-0": collapsed && !isMobile, "mr-2": !collapsed || isMobile })} />
+          {(!collapsed || isMobile) && "Sair"}
         </Button>
       </div>
     </div>
-  );
+  )
 }

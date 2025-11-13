@@ -8,6 +8,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronDown, ChevronRight, Edit, Trash2, Filter } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import {
+  useNavigationStore,
+  type ReportsTabKey,
+} from "@/store/navigation-store";
 
 // 1. IMPORTS ADICIONADOS
 import {
@@ -45,7 +49,12 @@ const formatInvoiceValue = (value: string | number | null | undefined) => {
 };
 
 export function ReportsPage() {
-  const [activeTab, setActiveTab] = useState("controle");
+  const { reportsActiveTab, setReportsActiveTab } = useNavigationStore(
+    (state) => ({
+      reportsActiveTab: state.reportsActiveTab,
+      setReportsActiveTab: state.setReportsActiveTab,
+    })
+  );
   const [filters, setFilters] = useState({
     nomeProduto: "",
     lote: "",
@@ -493,7 +502,11 @@ export function ReportsPage() {
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <Tabs
+        value={reportsActiveTab}
+        onValueChange={(value) => setReportsActiveTab(value as ReportsTabKey)}
+        className="w-full"
+      >
         <TabsList className="grid w-full grid-cols-2 max-w-md bg-gray-100 p-1 rounded-xl">
             <TabsTrigger
             value="controle"
