@@ -54,6 +54,7 @@ import { cn } from "@/lib/utils";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import InputMask from "react-input-mask";
 
 const steps = [
   { id: "transport", title: "Transporte" },
@@ -62,6 +63,8 @@ const steps = [
   { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
 ];
+
+const INVOICE_MASK = "999.999.999";
 
 interface FormData {
   client: string;
@@ -512,8 +515,10 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           throw new Error("Adicione ao menos um cliente com produto(s) válido(s).");
         }
 
+        const invoiceDigits = formData.invoiceNumber.replace(/\D/g, "");
+
         const payload: any = {
-          invoiceNumber: Number(formData.invoiceNumber),
+          invoiceNumber: invoiceDigits,
           vehicleTemperature: vehicleTemp,
           hasGoodSanitaryCondition: formData.sanitaryCondition === "conforme",
           driver: formData.driver,
@@ -529,9 +534,9 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
+        // Exibir toast com destaque e maior duração
         toast.success("Relatório diário criado com sucesso!", {
-          duration: 3000,
-          position: "top-center",
+          duration: 5000,
         });
         
         // Resetar o formulário
@@ -563,7 +568,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         // Voltar para a primeira etapa
         setCurrentStep(0);
         
-        // Chamar a função de callback se existir
+        // Chamar a função de callback imediatamente para fechar o popup
         if (onSuccess) {
           onSuccess();
         }
@@ -592,7 +597,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           formData.vehicleTemperature.trim() !== ""
         );
       case 1:
-        return formData.invoiceNumber.trim() !== "";
+        return formData.invoiceNumber.replace(/\D/g, "").trim() !== "";
       case 2: {
         // Validar múltiplos clientes com produtos
         const groups = formData.customerGroups ?? [];
@@ -899,17 +904,22 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     <CardContent className="space-y-5 py-6 px-6">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
-                        <Input
-                          id="invoiceNumber"
-                          inputMode="numeric"
-                          placeholder="Somente números"
+                        <InputMask
+                          mask={INVOICE_MASK}
+                          maskPlaceholder={null}
                           value={formData.invoiceNumber}
-                          onChange={(e) => {
-                            const digits = (e.target.value || "").replace(/\D/g, "");
-                            updateFormData("invoiceNumber", digits);
-                          }}
-                          className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
+                          onChange={(e) => updateFormData("invoiceNumber", e.target.value)}
+                        >
+                          {(inputProps: React.ComponentProps<"input">) => (
+                            <Input
+                              {...inputProps}
+                              id="invoiceNumber"
+                              inputMode="numeric"
+                              placeholder="000.000.000"
+                              className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            />
+                          )}
+                        </InputMask>
                       </motion.div>
                     </CardContent>
                   </>

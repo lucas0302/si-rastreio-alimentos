@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -150,6 +151,20 @@ export class CustomersService {
 
       return { message: "Cliente deletado com sucesso!" };
     } catch (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      }
+
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === "P2003"
+      ) {
+        throw new HttpException(
+          "Nao é possível deletar clientes vinculados a relatórios.",
+          HttpStatus.CONFLICT
+        );
+      }
+
       throw new HttpException(
         "Falha ao deletar Cliente.",
         HttpStatus.BAD_REQUEST

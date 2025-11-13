@@ -30,6 +30,19 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 // Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
+import InputMask from "react-input-mask";
+
+const INVOICE_MASK = "999.999.999";
+const stripInvoiceDigits = (value: string | number | null | undefined) =>
+  value ? String(value).replace(/\D/g, "") : "";
+const formatInvoiceValue = (value: string | number | null | undefined) => {
+  const digits = stripInvoiceDigits(value).slice(0, 9);
+  if (!digits) return "";
+  const part1 = digits.slice(0, 3);
+  const part2 = digits.slice(3, 6);
+  const part3 = digits.slice(6, 9);
+  return [part1, part2, part3].filter((segment) => segment && segment.length > 0).join(".");
+};
 
 export function ReportsPage() {
   const [activeTab, setActiveTab] = useState("controle");
@@ -44,7 +57,7 @@ export function ReportsPage() {
   // Estado para tabela de relatórios
   type ApiDailyReport = {
     id: number;
-    invoiceNumber: number;
+    invoiceNumber: string | number;
     customerCode: number | string; // pode vir como string se BigInt serializado
     products: Array<{ code: number | string; quantity: number; description?: string; sifOrSisbi?: string; productTemperature?: number; productionDate?: string }>;
     shipmentDate: string; // legado
@@ -88,7 +101,7 @@ export function ReportsPage() {
 
   type ReportRow = {
     reportId: number;
-    invoiceNumber: number;
+    invoiceNumber: string;
     customerCode?: number;
     clientName: string;
     destination: string;
@@ -226,7 +239,7 @@ export function ReportsPage() {
         // Para cada relatório, criar UMA linha agregada por cliente no dia (fillingDate)
         const builtRows: ReportRow[] = [];
         for (const r of reports) {
-          const invoice = Number(r.invoiceNumber);
+          const invoice = formatInvoiceValue(r.invoiceNumber);
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
@@ -360,7 +373,7 @@ export function ReportsPage() {
       const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
 
       const payload = {
-        invoiceNumber: editRow.invoiceNumber,
+        invoiceNumber: stripInvoiceDigits(editRow.invoiceNumber),
         customerGroups: [
           {
             customerCode: Number(editRow.customerCode || 0),
@@ -466,12 +479,12 @@ export function ReportsPage() {
               O DialogContent já tem scroll automático.
             */}
             <OnboardingForm onSuccess={() => {
-              // Fechar o diálogo e atualizar a lista de relatórios
+              // Fechar o diálogo imediatamente
               document.querySelector('[aria-label="Close"]')?.dispatchEvent(
                 new MouseEvent('click', { bubbles: true })
               );
-              // Opcionalmente, recarregar os dados
-              setTimeout(() => window.location.reload(), 1500);
+              // Recarregar os dados após o toast ser exibido
+              setTimeout(() => window.location.reload(), 500);
             }} />
           </DialogContent>
         </Dialog>
@@ -850,12 +863,21 @@ export function ReportsPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm">Nº da NF</Label>
-                  <Input
-                    value={String(editRow?.invoiceNumber || "")}
+                  <InputMask
+                    mask={INVOICE_MASK}
+                    maskPlaceholder={null}
+                    value={editRow?.invoiceNumber ?? ""}
                     onChange={(e) =>
-                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: Number(e.target.value) || 0 } : prev))
+                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: e.target.value } : prev))
                     }
-                  />
+                  >
+                    {(inputProps: React.ComponentProps<"input">) => (
+                      <Input
+                        {...inputProps}
+                        placeholder="000.000.000"
+                      />
+                    )}
+                  </InputMask>
                 </div>
                 <div>
                   <Label className="text-sm">Cliente</Label>

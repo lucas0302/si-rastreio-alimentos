@@ -72,9 +72,9 @@ export class CreateDailyReportDto {
   @Min(0)
   quantity?: number;
 
-  @IsInt()
-  @Min(1)
-  invoiceNumber!: number;
+  @IsString()
+  @IsNotEmpty()
+  invoiceNumber!: string;
 
   // Timestamp (ISO string)
   @IsOptional()
