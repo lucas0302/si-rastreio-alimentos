@@ -63,8 +63,6 @@ export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
   };
 
   const toDigits = (value: string) => (value || "").replace(/\D/g, "");
-  const getDocumentMask = (value: string) =>
-    toDigits(value).length > 11 ? "99.999.999/9999-99" : "999.999.999-99";
 
   const validate = () => {
     const errs: { [k: string]: string } = {};
@@ -246,21 +244,12 @@ export function ClientForm({ onCancel, onSuccess }: ClientFormProps = {}) {
               >
                 CNPJ/CPF
               </label>
-              <InputMask
-                mask={getDocumentMask(formData.cnpj_cpf)}
-                maskPlaceholder={null}
+              <Input
+                id="cnpj_cpf"
                 value={formData.cnpj_cpf}
                 onChange={(e) => handleInputChange("cnpj_cpf", e.target.value)}
-              >
-                {(inputProps: React.ComponentProps<"input">) => (
-                  <Input
-                    {...inputProps}
-                    id="cnpj_cpf"
-                    placeholder="00.000.000/0000-00"
-                    className="h-12 text-base border-gray-300 rounded-lg"
-                  />
-                )}
-              </InputMask>
+                className="h-12 text-base border-gray-300 rounded-lg"
+              />
               {showError("cnpj_cpf")}
             </div>
 

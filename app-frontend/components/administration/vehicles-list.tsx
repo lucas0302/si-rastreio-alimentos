@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loader2, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,10 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { AdminListCard } from "./list-card";
 import { TAB_CONFIG } from "./config";
-import { useToast } from "@/hooks/use-toast";
 
 interface ApiVehicle {
   id: number;
@@ -43,14 +41,11 @@ export function VehiclesList({ onAdd }: VehiclesListProps) {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState<{ id: number; label: string } | null>(null);
   const limit = 13;
-  const { toast } = useToast();
 
-  const loadVehicles = useCallback(
-    async (pageToLoad: number) => {
-      const offset = pageToLoad * limit;
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      const offset = page * limit;
 
       try {
         setError(null);
@@ -71,7 +66,6 @@ export function VehiclesList({ onAdd }: VehiclesListProps) {
             ? offset + list.length < total
             : list.length === limit;
         setHasNext(computedHasNext);
-        return list.length;
       } catch (e: any) {
         console.error(e);
         setError(
@@ -79,62 +73,12 @@ export function VehiclesList({ onAdd }: VehiclesListProps) {
             ? "Nao autorizado: verifique seu login/token."
             : "Erro ao carregar veiculos."
         );
-        return 0;
       } finally {
         setLoading(false);
       }
-    },
-    [limit]
-  );
-
-  useEffect(() => {
-    loadVehicles(page);
-  }, [page, loadVehicles]);
-
-  const handleDeleteVehicle = async (vehicleId: number) => {
-    try {
-      setDeletingId(vehicleId);
-      const token =
-        typeof window !== "undefined" ? localStorage.getItem("token") : null;
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/vehicles/${vehicleId}`,
-        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
-      );
-
-      toast({
-        title: "Veiculo deletado",
-        description: "O veiculo foi removido com sucesso.",
-      });
-
-      const items = await loadVehicles(page);
-      if (items === 0 && page > 0) {
-        setPage((current) => Math.max(current - 1, 0));
-      }
-    } catch (e: any) {
-      console.error(e);
-      const message =
-        e?.response?.data?.message ?? "Erro ao deletar veiculo.";
-      toast({
-        variant: "destructive",
-        title: "Falha ao deletar",
-        description: message,
-      });
-    } finally {
-      setDeletingId(null);
-      setConfirmDelete(null);
-    }
-  };
-
-  const handleConfirmDeletion = () => {
-    if (!confirmDelete || deletingId !== null) return;
-    void handleDeleteVehicle(confirmDelete.id);
-  };
-
-  const handleDialogChange = (open: boolean) => {
-    if (!open && deletingId === null) {
-      setConfirmDelete(null);
-    }
-  };
+    };
+    fetchVehicles();
+  }, [page, limit]);
 
   if (loading) {
     return (
@@ -208,25 +152,21 @@ export function VehiclesList({ onAdd }: VehiclesListProps) {
                     size="icon"
                     className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
                   >
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                  >
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                    onClick={() =>
-                      setConfirmDelete({
-                        id: vehicle.id,
-                        label: vehicle.model ?? `#${vehicle.id}`,
-                      })
-                    }
-                    disabled={deletingId === vehicle.id}
                   >
-                    {deletingId === vehicle.id ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Trash2 className="h-4 w-4" />
-                    )}
+                    <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </TableCell>
@@ -252,35 +192,6 @@ export function VehiclesList({ onAdd }: VehiclesListProps) {
           Proximo
         </Button>
       </div>
-
-      <AlertDialog open={!!confirmDelete} onOpenChange={handleDialogChange}>
-        <AlertDialogContent className="w-[90vw] max-w-sm">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Remover veiculo?</AlertDialogTitle>
-            <AlertDialogDescription>
-              {confirmDelete
-                ? `Tem certeza que deseja remover o veiculo "${confirmDelete.label}"? Essa acao nao pode ser desfeita.`
-                : ""}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={deletingId !== null}>
-              Cancelar
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-red-600 text-white hover:bg-red-700"
-              onClick={handleConfirmDeletion}
-              disabled={deletingId !== null}
-            >
-              {deletingId !== null ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                "Deletar"
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </AdminListCard>
   );
 }
