@@ -60,7 +60,6 @@ const steps = [
   { id: "transport", title: "Transporte" },
   { id: "invoice", title: "Nota Fiscal" },
   { id: "client", title: "Cliente" },
-  { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
 ];
 
@@ -1153,7 +1152,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                   </>
                 )}
 
-                {/* Step 3: Produto (desativado, movido para etapa Cliente) */}
+                {/* Step 5: Revisão */}
                 {currentStep === 3 && (
                   <>
                     <CardHeader className="bg-gray-50 border-b py-5 px-6">

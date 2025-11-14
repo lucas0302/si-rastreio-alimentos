@@ -13,7 +13,6 @@ import {
   type ReportsTabKey,
 } from "@/store/navigation-store";
 
-// 1. IMPORTS ADICIONADOS
 import {
   Dialog,
   DialogContent,
@@ -32,7 +31,6 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-// Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
 import InputMask from "react-input-mask";
 
@@ -434,10 +432,17 @@ export function ReportsPage() {
     return parse(b) - parse(a);
   });
 
+  // Estado de mês selecionado para DIPOVA, baseado na data de preenchimento
+  const [dipovaMonth, setDipovaMonth] = useState<string | null>(null);
+  useEffect(() => {
+    if (!dipovaMonth && orderedMonthKeys.length > 0) {
+      setDipovaMonth(orderedMonthKeys[0]);
+    }
+  }, [orderedMonthKeys, dipovaMonth]);
+
   const sumQty = (arr: ReportRow[]) =>
     arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
 
-  // ===== Helpers DIPOVA =====
   const monthAbbr = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
   const formatMonthBr = (iso: string) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
@@ -450,6 +455,13 @@ export function ReportsPage() {
     const mm = d.getMonth();
     const yy = d.getFullYear() % 100;
     return `${monthAbbr[mm]}-${yy}`;
+  };
+
+  // Formata a label exibida nas tabs de mês (Mon-YY)
+  const formatChipLabel = (key: string) => {
+    const [mon, yr] = key.split("-");
+    const yr2 = String(yr).slice(-2);
+    return `${mon}-${yr2}`;
   };
   const isSameMonthYear = (iso: string, ref: Date) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
@@ -739,6 +751,18 @@ export function ReportsPage() {
         <TabsContent value="dipova" className="mt-6">
           <Card className="border-gray-200 shadow-md rounded-xl overflow-hidden">
             <CardContent className="p-0">
+              {/* Seleção de mês da DIPOVA */}
+              <div className="px-4 py-3 border-b">
+                <Tabs value={dipovaMonth ?? ""} onValueChange={(v) => setDipovaMonth(v)}>
+                  <TabsList className="flex flex-wrap gap-2">
+                    {orderedMonthKeys.map((key) => (
+                      <TabsTrigger key={key} value={key} className="rounded-full">
+                        {formatChipLabel(key)}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-100 border-b">
@@ -806,16 +830,18 @@ export function ReportsPage() {
                         return isNaN(n) ? 0 : n;
                       };
 
-                      // Criar um mapa de agregação para Quantidades (para resolver Request 2)
-                      // Somamos todas as quantidades do array 'monthly' para cada productId.
+                      // Criar um mapa de agregação para Quantidades com base nos relatórios diários carregados (rows)
+                      // Isso garante que a aba DIPOVA reflita imediatamente exclusões/edições feitas no frontend e persistidas no backend.
                       const quantityPerProduct = new Map<number, number>();
-                      if (monthly && monthly.length > 0) {
-                        for (const m of monthly) {
-                          const productId = Number(m.productId);
+                      const selectedMonthKey = dipovaMonth ?? (orderedMonthKeys[0] ?? getMonthKey(new Date()));
+                      for (const r of rows) {
+                        // Considerar apenas o mês selecionado (data de preenchimento)
+                        if (getMonthKey(r.fillingDateIso) !== selectedMonthKey) continue;
+                        for (const p of r.products) {
+                          const productId = Number(p.productCode);
                           const currentQty = quantityPerProduct.get(productId) || 0;
-                          // Usa nosso parser corrigido
-                          const newQty = parseQuantity(m.quantity);
-                          quantityPerProduct.set(productId, currentQty + newQty);
+                          const addQty = Number(p.quantity) || 0;
+                          quantityPerProduct.set(productId, currentQty + addQty);
                         }
                       }
 
@@ -826,7 +852,14 @@ export function ReportsPage() {
                       const defaultDeliverer = 'Próprio';
 
                       // Request 1: Fazer o loop sobre 'productsState' em vez de 'monthly'
-                      return productsState.map((product) => {
+                      // Observação: usar um nome diferente de 'rows' para evitar sombra do estado 'rows' (ReportRow[])
+                      // Regra: ocultar produtos com quantidade 0 na tabela DIPOVA
+                      const filteredProducts = productsState.filter((product) => {
+                        const prodCode = Number(product.code);
+                        const qtyNum = quantityPerProduct.get(prodCode) || 0;
+                        return qtyNum > 0;
+                      });
+                      const tableRows = filteredProducts.map((product) => {
                         const prodCode = Number(product.code);
                         const prodName = product.description ?? `Produto ${prodCode}`;
 
@@ -855,6 +888,32 @@ export function ReportsPage() {
                           </tr>
                         );
                       });
+
+                      // Soma total das quantidades exibidas
+                      const totalQty = Array.from(quantityPerProduct.values()).reduce((acc, n) => acc + (Number(n) || 0), 0);
+
+                      // Linha de rodapé com valor apenas em Quant.
+                      const footerRow = (
+                        <tr key="dipova-total" className="bg-gray-50">
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2 font-semibold">
+                            {totalQty.toLocaleString('pt-BR', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                        </tr>
+                      );
+
+                      return [
+                        ...tableRows,
+                        footerRow,
+                      ];
                     })()}
                   </tbody>
                 </table>
