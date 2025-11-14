@@ -3,7 +3,6 @@
 import type React from "react"
 import { useState } from "react"
 import axios from "axios"
-import InputMask from "react-input-mask"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -44,8 +43,6 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const toDigits = (value: string) => (value || "").replace(/\D/g, "")
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -56,7 +53,7 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
       const payload = {
         model: formData.model,
         plate: formData.plate,
-        phone: toDigits(formData.phone),
+        phone: formData.phone,
         maximumLoad: Number(formData.maximumLoad),
         description: formData.description,
       }
@@ -125,22 +122,14 @@ export function VehicleForm({ onCancel, onSuccess }: VehicleFormProps = {}) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col space-y-1">
               <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Telefone para contato</Label>
-              <InputMask
-                mask="(99) 99999-9999"
-                maskPlaceholder={null}
+              <Input
+                id="phone"
+                placeholder="Ex.: 61 99999-9999"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
-              >
-                {(inputProps: React.ComponentProps<"input">) => (
-                  <Input
-                    {...inputProps}
-                    id="phone"
-                    placeholder="(61) 99999-9999"
-                    className="h-12 text-base border-gray-300 rounded-lg"
-                    required
-                  />
-                )}
-              </InputMask>
+                className="h-12 text-base border-gray-300 rounded-lg"
+                required
+              />
             </div>
             <div className="flex flex-col space-y-1">
               <Label htmlFor="maximumLoad" className="text-sm font-medium text-gray-700">Carga Máxima de transporte</Label>
