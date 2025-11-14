@@ -21,7 +21,7 @@ export class UsersController {
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto)
   }
-
+  @UseGuards(AdminRolesGuard)
   @Get()
   findUsers(@Query() paginationDto: PaginationDto) {
     return this.usersService.findAll(paginationDto)

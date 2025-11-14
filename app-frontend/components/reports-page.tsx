@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,10 +8,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronDown, ChevronRight, Edit, Trash2, Filter } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import {
+  useNavigationStore,
+  type ReportsTabKey,
+} from "@/store/navigation-store";
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
@@ -25,9 +32,27 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
 import OnboardingForm from "./multistep-form";
+import InputMask from "react-input-mask";
+
+const INVOICE_MASK = "999.999.999";
+const stripInvoiceDigits = (value: string | number | null | undefined) =>
+  value ? String(value).replace(/\D/g, "") : "";
+const formatInvoiceValue = (value: string | number | null | undefined) => {
+  const digits = stripInvoiceDigits(value).slice(0, 9);
+  if (!digits) return "";
+  const part1 = digits.slice(0, 3);
+  const part2 = digits.slice(3, 6);
+  const part3 = digits.slice(6, 9);
+  return [part1, part2, part3].filter((segment) => segment && segment.length > 0).join(".");
+};
 
 export function ReportsPage() {
-  const [activeTab, setActiveTab] = useState("controle");
+  const { reportsActiveTab, setReportsActiveTab } = useNavigationStore(
+    (state) => ({
+      reportsActiveTab: state.reportsActiveTab,
+      setReportsActiveTab: state.setReportsActiveTab,
+    })
+  );
   const [filters, setFilters] = useState({
     nomeProduto: "",
     lote: "",
@@ -39,7 +64,7 @@ export function ReportsPage() {
   // Estado para tabela de relatórios
   type ApiDailyReport = {
     id: number;
-    invoiceNumber: number;
+    invoiceNumber: string | number;
     customerCode: number | string; // pode vir como string se BigInt serializado
     products: Array<{ code: number | string; quantity: number; description?: string; sifOrSisbi?: string; productTemperature?: number; productionDate?: string }>;
     shipmentDate: string; // legado
@@ -83,7 +108,7 @@ export function ReportsPage() {
 
   type ReportRow = {
     reportId: number;
-    invoiceNumber: number;
+    invoiceNumber: string;
     customerCode?: number;
     clientName: string;
     destination: string;
@@ -221,7 +246,7 @@ export function ReportsPage() {
         // Para cada relatório, criar UMA linha agregada por cliente no dia (fillingDate)
         const builtRows: ReportRow[] = [];
         for (const r of reports) {
-          const invoice = Number(r.invoiceNumber);
+          const invoice = formatInvoiceValue(r.invoiceNumber);
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
@@ -355,7 +380,7 @@ export function ReportsPage() {
       const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
 
       const payload = {
-        invoiceNumber: editRow.invoiceNumber,
+        invoiceNumber: stripInvoiceDigits(editRow.invoiceNumber),
         customerGroups: [
           {
             customerCode: Number(editRow.customerCode || 0),
@@ -458,17 +483,30 @@ export function ReportsPage() {
         {/* ===== 2. IMPLEMENTAÇÃO DO DIALOG ===== */}
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6">
+            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6 rounded-xl shadow-sm">
               + Novo Registro
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-lg p-0">
+          <DialogContent className="w-[600px] max-w-[90vw] p-0 max-h-[85vh] overflow-y-auto">
+            <DialogHeader className="sr-only">
+              <DialogTitle>Novo registro</DialogTitle>
+              <DialogDescription>
+                Preencha o formulário para adicionar um relatório de rastreio.
+              </DialogDescription>
+            </DialogHeader>
             {/* p-0 é adicionado para remover o padding padrão do Dialog,
               pois o OnboardingForm já tem seu próprio padding (py-8).
               max-w-lg é para corresponder ao estilo do formulário.
               O DialogContent já tem scroll automático.
             */}
-            <OnboardingForm />
+            <OnboardingForm onSuccess={() => {
+              // Fechar o diálogo imediatamente
+              document.querySelector('[aria-label="Close"]')?.dispatchEvent(
+                new MouseEvent('click', { bubbles: true })
+              );
+              // Recarregar os dados após o toast ser exibido
+              setTimeout(() => window.location.reload(), 500);
+            }} />
           </DialogContent>
         </Dialog>
         {/* ===== FIM DA IMPLEMENTAÇÃO ===== */}
@@ -476,24 +514,28 @@ export function ReportsPage() {
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
-          <TabsTrigger
+      <Tabs
+        value={reportsActiveTab}
+        onValueChange={(value) => setReportsActiveTab(value as ReportsTabKey)}
+        className="w-full"
+      >
+        <TabsList className="grid w-full grid-cols-2 max-w-md bg-gray-100 p-1 rounded-xl">
+            <TabsTrigger
             value="controle"
-            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black"
+            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:font-medium rounded-lg transition-all duration-200"
           >
             Controle de expedição
           </TabsTrigger>
-          <TabsTrigger
+            <TabsTrigger
             value="dipova"
-            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black"
+            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:font-medium rounded-lg transition-all duration-200"
           >
             DIPOVA
           </TabsTrigger>
         </TabsList>
 
         {/* Filters */}
-        <div className="mt-6 flex items-center gap-2 text-sm text-gray-600">
+        <div className="mt-6 flex items-center gap-2 text-sm font-medium text-gray-700">
           <Filter className="h-4 w-4 text-gray-500" />
           <span>Filtros</span>
         </div>
@@ -543,7 +585,7 @@ export function ReportsPage() {
 
         {/* Controle de Expedição Tab */}
         <TabsContent value="controle" className="mt-6">
-          <Card>
+          <Card className="border-gray-200 shadow-md rounded-xl overflow-hidden">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -575,9 +617,9 @@ export function ReportsPage() {
                       const totalExp = groupRows.length;
                       const totalKg = sumQty(groupRows);
                       return (
-                        <>
+                        <React.Fragment key={`month-${mk}`}>
                           {/* Linha de resumo do mês */}
-                          <tr key={`sum-${mk}`} className="bg-gray-100 border-b">
+                                      <tr className="bg-gray-50 border-b">
                             <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
                               <div className="flex items-center gap-4">
                                 <button
@@ -597,7 +639,7 @@ export function ReportsPage() {
 
                           {/* Headers por mês, dentro da área expansível */}
                           {isExpanded && (
-                            <tr className="bg-gray-50 border-b">
+                                            <tr className="bg-gray-100 border-b font-medium">
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Nº da NF</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Cliente</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Destino</th>
@@ -611,8 +653,8 @@ export function ReportsPage() {
                             const rExpanded = expandedRowKeys.has(rkey);
                             const userName = row.userName ?? "—";
                             return (
-                              <>
-                                <tr key={rkey} className="hover:bg-gray-50">
+                              <React.Fragment key={rkey}>
+                                <tr className="hover:bg-gray-50">
                                   <td className="px-4 py-3 text-sm text-gray-900">
                                     <div className="flex items-center gap-2">
                                       <button
@@ -633,10 +675,10 @@ export function ReportsPage() {
                                   </td>
                                   <td className="px-4 py-3 text-center">
                                     <div className="flex justify-center space-x-2">
-                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => openEdit(row)} aria-label="Editar relatório">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2 hover:bg-yellow-50 hover:text-yellow-600" onClick={() => openEdit(row)} aria-label="Editar relatório">
                                         <Edit className="h-4 w-4" />
                                       </Button>
-                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2 hover:bg-red-50 hover:text-red-600" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
                                         <Trash2 className="h-4 w-4" />
                                       </Button>
                                   </div>
@@ -644,7 +686,7 @@ export function ReportsPage() {
                                 </tr>
 
                                 {rExpanded && (
-                                  <tr key={`${rkey}-details`} className="bg-gray-50">
+                                  <tr className="bg-gray-50">
                                     <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
                                       <div className="mb-3 grid grid-cols-3 gap-6">
                                         <div>
@@ -667,7 +709,7 @@ export function ReportsPage() {
 
                                       <div className="overflow-x-auto">
                                         <table className="w-full">
-                                          <thead className="bg-gray-100 border">
+                                          <thead className="bg-gray-100 border-b">
                                             <tr>
                                               <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Produto</th>
                                               <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Quantidade</th>
@@ -692,10 +734,10 @@ export function ReportsPage() {
                                     </td>
                                   </tr>
                                 )}
-                              </>
+                              </React.Fragment>
                             );
                           })}
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   </tbody>
@@ -707,7 +749,7 @@ export function ReportsPage() {
 
         {/* DIPOVA Tab */}
         <TabsContent value="dipova" className="mt-6">
-          <Card>
+          <Card className="border-gray-200 shadow-md rounded-xl overflow-hidden">
             <CardContent className="p-0">
               {/* Seleção de mês da DIPOVA */}
               <div className="px-4 py-3 border-b">
@@ -883,24 +925,37 @@ export function ReportsPage() {
 
       {/* Modal de edição */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="w-[700px] max-w-[90vw] max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Editar registro</DialogTitle>
+            <DialogDescription>Altere os dados e salve para aplicar as mudanças.</DialogDescription>
+          </DialogHeader>
           {editRow && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm">Nº da NF</Label>
-                  <Input
-                    value={String(editRow.invoiceNumber)}
+                  <InputMask
+                    mask={INVOICE_MASK}
+                    maskPlaceholder={null}
+                    value={editRow?.invoiceNumber ?? ""}
                     onChange={(e) =>
-                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: Number(e.target.value) || 0 } : prev))
+                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: e.target.value } : prev))
                     }
-                  />
+                  >
+                    {(inputProps: React.ComponentProps<"input">) => (
+                      <Input
+                        {...inputProps}
+                        placeholder="000.000.000"
+                      />
+                    )}
+                  </InputMask>
                 </div>
                 <div>
                   <Label className="text-sm">Cliente</Label>
                   <select
                     className="h-10 w-full border rounded px-2"
-                    value={String(editRow.customerCode ?? "")}
+                    value={String(editRow?.customerCode ?? "")}
                     onChange={(e) => {
                       const code = Number(e.target.value);
                       const cust = customersState.find((c) => Number(c.code) === code);
@@ -932,7 +987,7 @@ export function ReportsPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y">
-                    {editRow.products.map((p, i) => (
+                    {editRow?.products?.map((p, i) => (
                       <tr key={`edit-prod-${i}`}>
                         <td className="px-3 py-2">
                           <select
@@ -1068,8 +1123,8 @@ export function ReportsPage() {
               </div>
 
               <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setEditOpen(false)}>Cancelar</Button>
-                <Button className="bg-yellow-400 hover:bg-yellow-500 text-black" onClick={handleEditSave}>Salvar</Button>
+                            <Button variant="outline" onClick={() => setEditOpen(false)} className="hover:border-gray-400">Cancelar</Button>
+                            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium" onClick={handleEditSave}>Salvar</Button>
               </div>
             </div>
           )}
@@ -1078,14 +1133,14 @@ export function ReportsPage() {
 
       {/* Modal de confirmação de exclusão */}
       <AlertDialog open={deleteOpen} onOpenChange={(open) => setDeleteOpen(open)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[400px] max-w-[90vw]">
           <AlertDialogHeader>
             <AlertDialogTitle>Confirmar exclusão?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeleteOpen(false)}>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setDeleteOpen(false)} className="hover:border-gray-400">Cancelar</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-white font-medium"
               onClick={async () => {
                 if (pendingDeleteId == null) return;
                 try {

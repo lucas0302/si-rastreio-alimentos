@@ -67,7 +67,7 @@ model Vehicle {
 model DailyShipmentReport {
   id                       Int       @id @default(autoincrement())
   quantity                 Int
-  invoiceNumber            Int
+  invoiceNumber            String    @db.VarChar(50)
   vehicleTemperature       Float     @db.Real
   hasGoodSanitaryCondition Boolean
   driver                   String

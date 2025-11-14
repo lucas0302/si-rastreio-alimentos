@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useCallback } from "react";
 import axios from "axios";
-import { Pencil, Trash2, Eye } from "lucide-react";
+import { Pencil, Trash2, Eye, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,8 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { AdminListCard } from "./list-card";
 import { TAB_CONFIG } from "./config";
+import { useToast } from "@/hooks/use-toast";
 
 interface ApiClient {
   code: number;
@@ -50,11 +61,14 @@ export function ClientsList({ onAdd }: ClientsListProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const limit = 14;
+  const [deletingCode, setDeletingCode] = useState<number | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<{ code: number; label: string } | null>(null);
+  const limit = 10;
+  const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchClients = async () => {
-      const offset = page * limit;
+  const loadClients = useCallback(
+    async (pageToLoad: number) => {
+      const offset = pageToLoad * limit;
 
       try {
         setLoading(true);
@@ -75,6 +89,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
             ? offset + list.length < total
             : list.length === limit;
         setHasNext(computedHasNext);
+        return list.length;
       } catch (e: any) {
         console.error(e);
         setError(
@@ -82,13 +97,17 @@ export function ClientsList({ onAdd }: ClientsListProps) {
             ? "Nao autorizado: verifique seu login."
             : "Erro ao carregar clientes."
         );
+        return 0;
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [limit]
+  );
 
-    fetchClients();
-  }, [page, limit]);
+  useEffect(() => {
+    loadClients(page);
+  }, [page, loadClients]);
 
   const handleToggleRow = (code: number) => {
     setExpandedRow((prev) => (prev === code ? null : code));
@@ -100,6 +119,59 @@ export function ClientsList({ onAdd }: ClientsListProps) {
     const [year, month, day] = onlyDate.split("-");
     if (!year || !month || !day) return "-";
     return `${day}/${month}/${year}`;
+  };
+
+  const handleDeleteClient = async (code: number) => {
+    try {
+      setDeletingCode(code);
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/customers/${code}`,
+        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+      );
+
+      toast({
+        title: "Cliente deletado",
+        description: "O cliente foi removido com sucesso.",
+      });
+
+      const items = await loadClients(page);
+      if (items === 0 && page > 0) {
+        setPage((current) => Math.max(current - 1, 0));
+      }
+    } catch (e: any) {
+      console.error(e);
+      const status = e?.response?.status;
+      const message =
+        e?.response?.data?.message ?? "Erro ao deletar cliente.";
+
+      if (status === 409) {
+        toast({
+          title: "Ação não permitida",
+          description: message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Falha ao deletar",
+          description: message,
+        });
+      }
+    } finally {
+      setDeletingCode(null);
+      setConfirmDelete(null);
+    }
+  };
+
+  const confirmDeleteClient = () => {
+    if (!confirmDelete || deletingCode !== null) return;
+    void handleDeleteClient(confirmDelete.code);
+  };
+
+  const handleDialogChange = (open: boolean) => {
+    if (!open && deletingCode === null) {
+      setConfirmDelete(null);
+    }
   };
 
   if (loading) {
@@ -128,10 +200,10 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
   return (
     <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
-      <Table className="text-[12px]">
+      <Table className="w-full text-[13px] table-auto">
         <TableHeader>
           <TableRow className="text-gray-500 text-xs">
-            <TableHead className="w-[80px] py-1.5">Cod.</TableHead>
+            <TableHead className="w-[70px] py-1.5">Cod.</TableHead>
             <TableHead className="py-1.5">Razao social</TableHead>
             <TableHead className="py-1.5">Nome fantasia</TableHead>
             <TableHead className="py-1.5">CNPJ/CPF</TableHead>
@@ -147,42 +219,62 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
             return (
               <Fragment key={client.code}>
-                <TableRow className="text-gray-700 text-[12px] h-8">
-                  <TableCell className="font-medium text-gray-900 py-1.5">
+                <TableRow className="text-gray-700 text-[14px] h-auto">
+                  <TableCell className="font-semibold text-gray-900 py-2">
                     {client.code}
                   </TableCell>
-                  <TableCell className="py-1.5">{client.legal_name}</TableCell>
-                  <TableCell className="py-1.5">{client.fantasy_name}</TableCell>
-                  <TableCell className="py-1.5">{client.cnpj_cpf}</TableCell>
-                  <TableCell className="py-1.5">
+                  <TableCell className="py-2 whitespace-normal break-words">
+                    {client.legal_name}
+                  </TableCell>
+                  <TableCell className="py-2 whitespace-normal break-words">
+                    {client.fantasy_name}
+                  </TableCell>
+                  <TableCell className="py-2 whitespace-normal break-words">
+                    {client.cnpj_cpf}
+                  </TableCell>
+                  <TableCell className="py-2 whitespace-normal break-words">
                     {client.state_subscrition}
                   </TableCell>
-                  <TableCell className="py-1.5">
+                  <TableCell className="py-2 whitespace-normal break-words">
                     {formatDate(client.last_sale_date)}
                   </TableCell>
-                  <TableCell className="py-1.5">
-                    <div className="flex items-center justify-end gap-0.5">
+                  <TableCell className="py-2">
+                    <div className="flex items-center justify-end gap-1">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 rounded-full text-gray-500 hover:text-gray-900"
+                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
                         onClick={() => handleToggleRow(client.code)}
                       >
-                        <Eye className="h-3 w-3" />
+                        <Eye className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 rounded-full text-gray-500 hover:text-gray-900"
+                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
                       >
-                        <Pencil className="h-3 w-3" />
+                        <Pencil className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 rounded-full text-gray-500 hover:text-gray-900"
+                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                        onClick={() =>
+                          setConfirmDelete({
+                            code: client.code,
+                            label:
+                              client.legal_name ||
+                              client.fantasy_name ||
+                              `Cliente ${client.code}`,
+                          })
+                        }
+                        disabled={deletingCode === client.code}
                       >
-                        <Trash2 className="h-3 w-3" />
+                        {deletingCode === client.code ? (
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </TableCell>
@@ -190,7 +282,7 @@ export function ClientsList({ onAdd }: ClientsListProps) {
                 {isExpanded && (
                   <TableRow className="bg-gray-50 hover:bg-gray-50">
                     <TableCell colSpan={7} className="p-0">
-                      <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 lg:grid-cols-4">
+                      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4 text-[13px]">
                         <div>
                           <h4 className="font-bold text-gray-800 text-sm">
                             Endereco
@@ -259,6 +351,35 @@ export function ClientsList({ onAdd }: ClientsListProps) {
           Proximo
         </Button>
       </div>
+
+      <AlertDialog open={!!confirmDelete} onOpenChange={handleDialogChange}>
+        <AlertDialogContent className="w-[90vw] max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remover cliente?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {confirmDelete
+                ? `Deseja realmente remover o cliente "${confirmDelete.label}"? Essa acao nao pode ser desfeita.`
+                : ""}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deletingCode !== null}>
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 text-white hover:bg-red-700"
+              onClick={confirmDeleteClient}
+              disabled={deletingCode !== null}
+            >
+              {deletingCode !== null ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "Deletar"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminListCard>
   );
 }

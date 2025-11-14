@@ -80,7 +80,32 @@ export class ProductsService {
     return "Chego";
   }
 
-  remove(id: number) {
-    return "Chego";
+  async remove(id: number) {
+    try {
+      const code = BigInt(id);
+
+      const product = await this.prisma.product.findUnique({
+        where: { code },
+      });
+
+      if (!product) {
+        throw new HttpException(
+          "Esse produto não existe.",
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.prisma.product.delete({
+        where: { code },
+      });
+
+      return { message: "Produto deletado com sucesso!" };
+    } catch (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      }
+
+      throw new HttpException("Falha ao deletar produto.", HttpStatus.BAD_REQUEST);
+    }
   }
 }

@@ -47,4 +47,34 @@ export class VehicleService {
     }
   }
 
+  async deleteVehicle(id: number) {
+    try {
+      const vehicle = await this.prisma.vehicle.findUnique({
+        where: { id },
+      });
+
+      if (!vehicle) {
+        throw new HttpException(
+          "Esse veículo não existe.",
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.prisma.vehicle.delete({
+        where: { id: vehicle.id },
+      });
+
+      return { message: "Veículo deletado com sucesso!" };
+    } catch (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      }
+
+      throw new HttpException(
+        "Falha ao deletar veículo.",
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClientForm } from "@/components/client-form";
@@ -13,30 +13,30 @@ import { ClientsList } from "./administration/clients-list";
 import { ProductsList } from "./administration/products-list";
 import { UsersList } from "./administration/users-list";
 import { VehiclesList } from "./administration/vehicles-list";
+import { useNavigationStore } from "@/store/navigation-store";
 
 interface AdministrationTabsProps {
   defaultTab?: TabKey;
 }
-
-type ViewMode = "list" | "form";
-
-const DEFAULT_VIEW_MODE: Record<TabKey, ViewMode> = {
-  clientes: "list",
-  produtos: "list",
-  usuarios: "list",
-  veiculos: "list",
-};
 
 export function AdministrationTabs({
   defaultTab = "clientes",
 }: AdministrationTabsProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeTab, setActiveTab] = useState<TabKey>(defaultTab);
-  const [viewMode, setViewMode] = useState<Record<TabKey, ViewMode>>({
-    ...DEFAULT_VIEW_MODE,
-    [defaultTab]: DEFAULT_VIEW_MODE[defaultTab] ?? "list",
-  });
+  const {
+    adminActiveTab,
+    adminViewMode,
+    setAdminActiveTab,
+    showAdminForm,
+    showAdminList,
+  } = useNavigationStore((state) => ({
+    adminActiveTab: state.adminActiveTab,
+    adminViewMode: state.adminViewMode,
+    setAdminActiveTab: state.setAdminActiveTab,
+    showAdminForm: state.showAdminForm,
+    showAdminList: state.showAdminList,
+  }));
 
   const TAB_TO_ROUTE: Record<TabKey, string> = {
     clientes: "/clientes",
@@ -45,6 +45,10 @@ export function AdministrationTabs({
     veiculos: "/veiculos",
   };
 
+  useEffect(() => {
+    setAdminActiveTab(defaultTab);
+  }, [defaultTab, setAdminActiveTab]);
+
   // Keep activeTab in sync with current route so the yellow bottom border
   // reflects the route even when navigation comes from outside (e.g., sidebar)
   useEffect(() => {
@@ -52,18 +56,17 @@ export function AdministrationTabs({
     const match = (Object.entries(TAB_TO_ROUTE) as [TabKey, string][]).find(
       ([, href]) => pathname.startsWith(href)
     );
-    if (match && activeTab !== match[0]) {
-      setActiveTab(match[0]);
+    if (match && adminActiveTab !== match[0]) {
+      setAdminActiveTab(match[0]);
     }
-  }, [pathname]);
+  }, [pathname, adminActiveTab, setAdminActiveTab]);
 
   const handleShowForm = (tab: TabKey) => {
-    setViewMode((prev) => ({ ...prev, [tab]: "form" }));
-    setActiveTab(tab);
+    showAdminForm(tab);
   };
 
   const handleBackToList = (tab: TabKey) => {
-    setViewMode((prev) => ({ ...prev, [tab]: "list" }));
+    showAdminList(tab);
   };
 
   const renderList = (tab: TabKey) => {
@@ -101,10 +104,10 @@ export function AdministrationTabs({
   return (
     <div className="flex h-full w-full flex-col gap-6">
       <Tabs
-        value={activeTab}
+        value={adminActiveTab}
         onValueChange={(value) => {
           const tab = value as TabKey;
-          setActiveTab(tab);
+          setAdminActiveTab(tab);
           const href = TAB_TO_ROUTE[tab];
           if (href) router.push(href);
         }}
@@ -112,7 +115,7 @@ export function AdministrationTabs({
       >
         {(Object.keys(TAB_CONFIG) as TabKey[]).map((tab) => (
           <TabsContent key={tab} value={tab} className="flex-1 pt-4">
-            {viewMode[tab] === "form" ? renderForm(tab) : renderList(tab)}
+            {adminViewMode[tab] === "form" ? renderForm(tab) : renderList(tab)}
           </TabsContent>
         ))}
       </Tabs>

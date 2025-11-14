@@ -26,6 +26,9 @@ export class DailyReportService {
         throw new HttpException("Veículo (placa) não encontrado.", HttpStatus.NOT_FOUND);
       }
 
+      console.log(`Usando invoiceNumber: ${createDailyReportDto.invoiceNumber}, tipo: ${typeof createDailyReportDto.invoiceNumber}`);
+      // Não precisamos mais converter para BigInt, vamos usar como string
+
       // Branch: novo payload com múltiplos clientes
       if (createDailyReportDto.customerGroups && createDailyReportDto.customerGroups.length > 0) {
         const results: any[] = [];
@@ -64,22 +67,33 @@ export class DailyReportService {
 
           const primarySifOrSisbi = items[0]?.sifOrSisbi;
 
+          // Criando objeto de dados explicitamente tipado para o Prisma
+          const createData = {
+            quantity: totalQuantity,
+            invoiceNumber: createDailyReportDto.invoiceNumber,
+            productionDate,
+            vehicleTemperature: createDailyReportDto.vehicleTemperature,
+            hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
+            driver: createDailyReportDto.driver,
+            userId: createDailyReportDto.userId,
+            products: productsJson,
+            customerCode: BigInt(group.customerCode),
+            sifOrSisbi: primarySifOrSisbi && primarySifOrSisbi !== "NA" ? primarySifOrSisbi : null,
+            productTemperature: minProductTemp,
+            fillingDate: new Date(createDailyReportDto.fillingDate),
+            deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
+          };
+          
+          // Converter BigInt para string antes de serializar
+          const logData = {
+            ...createData,
+            invoiceNumber: String(createData.invoiceNumber),
+            customerCode: String(createData.customerCode)
+          };
+          console.log(`Dados para criar relatório: ${JSON.stringify(logData)}`);
+          
           const created = await this.prisma.dailyShipmentReport.create({
-            data: {
-              quantity: totalQuantity,
-              invoiceNumber: createDailyReportDto.invoiceNumber,
-              productionDate,
-              vehicleTemperature: createDailyReportDto.vehicleTemperature,
-              hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
-              driver: createDailyReportDto.driver,
-              userId: createDailyReportDto.userId,
-              products: productsJson,
-              customerCode: BigInt(group.customerCode),
-              sifOrSisbi: primarySifOrSisbi && primarySifOrSisbi !== "NA" ? primarySifOrSisbi : null,
-              productTemperature: minProductTemp,
-              fillingDate: new Date(createDailyReportDto.fillingDate),
-              deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
-            } as any,
+            data: createData as any,
           });
 
           results.push(created);
@@ -103,22 +117,33 @@ export class DailyReportService {
         ...(p.description ? { description: p.description } : {}),
       }));
 
+      // Criando objeto de dados para o Prisma
+      const createData = {
+        quantity: createDailyReportDto.quantity!,
+        invoiceNumber: createDailyReportDto.invoiceNumber,
+        productionDate: new Date(createDailyReportDto.productionDate!),
+        vehicleTemperature: createDailyReportDto.vehicleTemperature,
+        hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
+        driver: createDailyReportDto.driver,
+        userId: createDailyReportDto.userId,
+        products: productsJson,
+        customerCode: BigInt(createDailyReportDto.customerCode!),
+        sifOrSisbi: createDailyReportDto.sifOrSisbi && createDailyReportDto.sifOrSisbi !== "NA" ? createDailyReportDto.sifOrSisbi : null,
+        productTemperature: createDailyReportDto.productTemperature!,
+        fillingDate: new Date(createDailyReportDto.fillingDate),
+        deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
+      };
+      
+      // Converter BigInt para string antes de serializar
+      const logData = {
+        ...createData,
+        invoiceNumber: String(createData.invoiceNumber),
+        customerCode: String(createData.customerCode)
+      };
+      console.log(`Dados para criar relatório (single): ${JSON.stringify(logData)}`);
+      
       const created = await this.prisma.dailyShipmentReport.create({
-        data: {
-          quantity: createDailyReportDto.quantity!,
-          invoiceNumber: createDailyReportDto.invoiceNumber,
-          productionDate: new Date(createDailyReportDto.productionDate!),
-          vehicleTemperature: createDailyReportDto.vehicleTemperature,
-          hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
-          driver: createDailyReportDto.driver,
-          userId: createDailyReportDto.userId,
-          products: productsJson,
-          customerCode: BigInt(createDailyReportDto.customerCode!),
-          sifOrSisbi: createDailyReportDto.sifOrSisbi && createDailyReportDto.sifOrSisbi !== "NA" ? createDailyReportDto.sifOrSisbi : null,
-          productTemperature: createDailyReportDto.productTemperature!,
-          fillingDate: new Date(createDailyReportDto.fillingDate),
-          deliverVehicle: createDailyReportDto.deliverVehicle ?? null,
-        } as any,
+        data: createData as any,
       });
 
       return created;
@@ -175,7 +200,9 @@ export class DailyReportService {
       let data: Prisma.DailyShipmentReportUncheckedUpdateInput = {};
 
       // Campos simples (mantém valor atual se não enviados)
-      if (typeof updateDailyReportDto.invoiceNumber === "number") data.invoiceNumber = updateDailyReportDto.invoiceNumber;
+      if (updateDailyReportDto.invoiceNumber) {
+        (data as any).invoiceNumber = updateDailyReportDto.invoiceNumber;
+      }
       if (typeof updateDailyReportDto.vehicleTemperature === "number") data.vehicleTemperature = updateDailyReportDto.vehicleTemperature;
       if (typeof updateDailyReportDto.hasGoodSanitaryCondition === "boolean") data.hasGoodSanitaryCondition = updateDailyReportDto.hasGoodSanitaryCondition;
       if (typeof updateDailyReportDto.driver === "string") data.driver = updateDailyReportDto.driver;
