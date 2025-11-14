@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronDown, ChevronRight, Edit, Trash2, Filter } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
-// 1. IMPORTS ADICIONADOS
 import {
   Dialog,
   DialogContent,
@@ -25,7 +24,6 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-// Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
 
 export function ReportsPage() {
