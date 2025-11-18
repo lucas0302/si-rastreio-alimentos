@@ -49,6 +49,7 @@ model Product {
   weight           Float?
 
   @@map("products")
+  monthlyShipmentReports MonthlyShipmentReport[]
 }
 
 model Vehicle {
@@ -93,7 +94,8 @@ model MonthlyShipmentReport {
   deliverer      String   @db.VarChar(100)
   productionDate DateTime
   shipmentDate   DateTime
-  productId      Int
+  productId      BigInt
+  product        Product  @relation(fields: [productId], references: [code])
   customersId    Int
 
   @@map("monthly_shipment_report")
