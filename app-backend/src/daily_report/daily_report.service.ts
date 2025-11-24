@@ -27,7 +27,6 @@ export class DailyReportService {
       }
 
       console.log(`Usando invoiceNumber: ${createDailyReportDto.invoiceNumber}, tipo: ${typeof createDailyReportDto.invoiceNumber}`);
-      // Não precisamos mais converter para BigInt, vamos usar como string
 
       // Branch: novo payload com múltiplos clientes
       if (createDailyReportDto.customerGroups && createDailyReportDto.customerGroups.length > 0) {
@@ -70,7 +69,7 @@ export class DailyReportService {
           // Criando objeto de dados explicitamente tipado para o Prisma
           const createData = {
             quantity: totalQuantity,
-            invoiceNumber: createDailyReportDto.invoiceNumber,
+            invoiceNumber: Number(createDailyReportDto.invoiceNumber),
             productionDate,
             vehicleTemperature: createDailyReportDto.vehicleTemperature,
             hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
@@ -87,7 +86,7 @@ export class DailyReportService {
           // Converter BigInt para string antes de serializar
           const logData = {
             ...createData,
-            invoiceNumber: String(createData.invoiceNumber),
+            invoiceNumber: Number(createData.invoiceNumber),
             customerCode: String(createData.customerCode)
           };
           console.log(`Dados para criar relatório: ${JSON.stringify(logData)}`);
@@ -120,7 +119,7 @@ export class DailyReportService {
       // Criando objeto de dados para o Prisma
       const createData = {
         quantity: createDailyReportDto.quantity!,
-        invoiceNumber: createDailyReportDto.invoiceNumber,
+        invoiceNumber: Number(createDailyReportDto.invoiceNumber),
         productionDate: new Date(createDailyReportDto.productionDate!),
         vehicleTemperature: createDailyReportDto.vehicleTemperature,
         hasGoodSanitaryCondition: createDailyReportDto.hasGoodSanitaryCondition,
@@ -137,7 +136,7 @@ export class DailyReportService {
       // Converter BigInt para string antes de serializar
       const logData = {
         ...createData,
-        invoiceNumber: String(createData.invoiceNumber),
+        invoiceNumber: Number(createData.invoiceNumber),
         customerCode: String(createData.customerCode)
       };
       console.log(`Dados para criar relatório (single): ${JSON.stringify(logData)}`);
