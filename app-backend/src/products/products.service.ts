@@ -73,11 +73,34 @@ export class ProductsService {
   }
 
   findOne(id: number) {
-    return "Chego";
+    try {
+      const code = BigInt(id);
+      return this.prisma.product.findUnique({ where: { code } });
+    } catch (err) {
+      throw new HttpException('Erro ao buscar produto.', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
-    return "Chego";
+    return this.prisma.$transaction(async (tx) => {
+      const code = BigInt(id);
+      const product = await tx.product.findUnique({ where: { code } });
+      if (!product) {
+        throw new HttpException('Esse produto não existe.', HttpStatus.NOT_FOUND);
+      }
+      const updated = await tx.product.update({
+        where: { code },
+        data: {
+          description: updateProductDto?.description ?? product.description,
+          group: updateProductDto?.group ?? product.group,
+          company: updateProductDto?.company ?? product.company,
+        },
+      });
+      return { updated, message: 'Produto atualizado com sucesso!' };
+    }).catch((err) => {
+      if (err instanceof HttpException) throw err;
+      throw new HttpException('Falha ao atualizar produto.', HttpStatus.BAD_REQUEST);
+    });
   }
 
   async remove(id: number) {
