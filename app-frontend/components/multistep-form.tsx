@@ -49,7 +49,7 @@ import {
   CommandItem,
   CommandEmpty,
 } from "@/components/ui/command";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -135,9 +135,12 @@ type Paginated<T> = {
   total?: number;
 };
 
-const OnboardingForm = () => {
+type OnboardingFormProps = { onSuccess?: () => void };
+
+const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState<FormData>({
     client: "",
     clientCode: "",
@@ -234,7 +237,7 @@ const OnboardingForm = () => {
     const data = productForm;
     // validações simples
     if (!data.code || !data.quantity || !data.productTemperature || !data.productionDate) {
-      toast.error("Preencha todos os campos do produto.");
+      toast({ title: "Preencha todos os campos do produto." });
       return;
     }
     updateCustomerGroup(gIdx, (g) => {
@@ -281,8 +284,8 @@ const OnboardingForm = () => {
       const firstList: ApiClient[] = Array.isArray(firstPayload)
         ? firstPayload
         : Array.isArray(firstPayload?.data)
-        ? firstPayload.data
-        : [];
+          ? firstPayload.data
+          : [];
       const total: number = Array.isArray(firstPayload)
         ? firstList.length
         : Number(firstPayload?.total ?? firstList.length);
@@ -302,8 +305,8 @@ const OnboardingForm = () => {
         const pageList: ApiClient[] = Array.isArray(pagePayload)
           ? pagePayload
           : Array.isArray(pagePayload?.data)
-          ? pagePayload.data
-          : [];
+            ? pagePayload.data
+            : [];
         all = all.concat(pageList);
       }
 
@@ -353,8 +356,8 @@ const OnboardingForm = () => {
         const list: ApiVehicle[] = Array.isArray(payload)
           ? payload
           : Array.isArray(payload?.data)
-          ? payload.data
-          : [];
+            ? payload.data
+            : [];
         setVehicles(list);
       } catch (e: any) {
         console.error(e);
@@ -386,8 +389,8 @@ const OnboardingForm = () => {
         const list: ApiProduct[] = Array.isArray(payload)
           ? payload
           : Array.isArray(payload?.data)
-          ? payload.data
-          : [];
+            ? payload.data
+            : [];
         setProducts(list);
       } catch (e: any) {
         console.error(e);
@@ -432,9 +435,11 @@ const OnboardingForm = () => {
     setFormData((prev) => {
       const groups = [...prev.customerGroups];
       groups.splice(index, 1);
-      return { ...prev, customerGroups: groups.length > 0 ? groups : [
-        { clientCode: "", clientName: "", items: [] },
-      ] };
+      return {
+        ...prev, customerGroups: groups.length > 0 ? groups : [
+          { clientCode: "", clientName: "", items: [] },
+        ]
+      };
     });
   };
 
@@ -512,7 +517,7 @@ const OnboardingForm = () => {
         }
 
         const payload: any = {
-          invoiceNumber: Number(formData.invoiceNumber),
+          invoiceNumber: formData.invoiceNumber,
           vehicleTemperature: vehicleTemp,
           hasGoodSanitaryCondition: formData.sanitaryCondition === "conforme",
           driver: formData.driver,
@@ -528,7 +533,8 @@ const OnboardingForm = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        toast.success("Relatório diário criado com sucesso!");
+        toast({ title: "Relatório diário criado com sucesso!" });
+        onSuccess?.();
       } catch (err: any) {
         console.error(err);
         let message = err?.response?.data?.message || err?.message || "Falha ao enviar o relatório.";
@@ -536,7 +542,7 @@ const OnboardingForm = () => {
         if (Array.isArray(message)) {
           message = message.join("; ");
         }
-        toast.error(message);
+        toast({ title: "Falha ao enviar o relatório.", description: String(message) });
       } finally {
         setIsSubmitting(false);
       }
@@ -592,137 +598,137 @@ const OnboardingForm = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex justify-between mb-2">
-              {steps.map((step, index) => (
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center"
+              whileHover={{ scale: 1.1 }}
+            >
+              {index === 0 ? (
                 <motion.div
-                  key={index}
-                  className="flex flex-col items-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {index === 0 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-primary"
-                          : index === currentStep
-                          ? "text-primary ring-primary/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <Truck className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 1 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-primary"
-                          : index === currentStep
-                          ? "text-primary ring-primary/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <FileText className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 2 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-primary"
-                          : index === currentStep
-                          ? "text-primary ring-primary/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <Store className="h-4 w-4" />
-                    </motion.div>
-              ) : index === 3 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-primary"
-                          : index === currentStep
-                          ? "text-primary ring-primary/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <PiggyBank className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 4 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-primary"
-                          : index === currentStep
-                          ? "text-primary ring-primary/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <ClipboardPen className="h-5 w-5" />
-                    </motion.div>
-              ) : (
-                    <motion.div
-                      className={cn(
-                        "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
-                        index < currentStep
-                          ? "bg-primary"
-                          : index === currentStep
-                          ? "bg-primary ring-4 ring-primary/20"
-                          : "bg-muted"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    />
-                  )}
-                  <motion.span
-                    className={cn(
-                      "text-xs mt-1.5 hidden sm:block",
-                      index === currentStep
-                        ? "text-primary font-medium"
+                  className={cn(
+                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    index < currentStep
+                      ? "text-primary"
+                      : index === currentStep
+                        ? "text-primary ring-primary/20"
                         : "text-muted-foreground"
-                    )}
-                  >
-                    {step.title}
-                  </motion.span>
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Truck className="h-5 w-5" />
                 </motion.div>
-              ))}
+              ) : index === 1 ? (
+                <motion.div
+                  className={cn(
+                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    index < currentStep
+                      ? "text-primary"
+                      : index === currentStep
+                        ? "text-primary ring-primary/20"
+                        : "text-muted-foreground"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FileText className="h-5 w-5" />
+                </motion.div>
+              ) : index === 2 ? (
+                <motion.div
+                  className={cn(
+                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    index < currentStep
+                      ? "text-primary"
+                      : index === currentStep
+                        ? "text-primary ring-primary/20"
+                        : "text-muted-foreground"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Store className="h-4 w-4" />
+                </motion.div>
+              ) : index === 3 ? (
+                <motion.div
+                  className={cn(
+                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    index < currentStep
+                      ? "text-primary"
+                      : index === currentStep
+                        ? "text-primary ring-primary/20"
+                        : "text-muted-foreground"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <PiggyBank className="h-5 w-5" />
+                </motion.div>
+              ) : index === 4 ? (
+                <motion.div
+                  className={cn(
+                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    index < currentStep
+                      ? "text-primary"
+                      : index === currentStep
+                        ? "text-primary ring-primary/20"
+                        : "text-muted-foreground"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ClipboardPen className="h-5 w-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className={cn(
+                    "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
+                    index < currentStep
+                      ? "bg-primary"
+                      : index === currentStep
+                        ? "bg-primary ring-4 ring-primary/20"
+                        : "bg-muted"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                />
+              )}
+              <motion.span
+                className={cn(
+                  "text-xs mt-1.5 hidden sm:block",
+                  index === currentStep
+                    ? "text-primary font-medium"
+                    : "text-muted-foreground"
+                )}
+              >
+                {step.title}
+              </motion.span>
+            </motion.div>
+          ))}
         </div>
         <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
           <motion.div
@@ -863,7 +869,7 @@ const OnboardingForm = () => {
                           placeholder="Somente números"
                           value={formData.invoiceNumber}
                           onChange={(e) => {
-                            const digits = (e.target.value || "").replace(/\D/g, "");
+                            const digits = (e.target.value || "").replace(/\D/g, "").slice(0, 18);
                             updateFormData("invoiceNumber", digits);
                           }}
                           className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"

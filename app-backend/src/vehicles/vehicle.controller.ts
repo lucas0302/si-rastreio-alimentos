@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
 import { VehicleService } from "./vehicle.service";
 import { CreateVehicleDto } from "./dto/create-vehicle.dto";
 import { AuthTokenGuard } from "src/auth/guard/auth-token.guard";
@@ -29,8 +40,10 @@ export class VehicleController {
 
   @UseGuards(AdminRolesGuard)
   @Patch(":id")
-  updateVehicle(@Param("id", ParseIntPipe) id: number, @Body() payload: Partial<CreateVehicleDto>) {
+  updateVehicle(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() payload: Partial<CreateVehicleDto>,
+  ) {
     return this.vehicleService.updateVehicle(id, payload);
   }
-
 }
