@@ -500,7 +500,7 @@ export function ReportsPage() {
           <Filter className="h-4 w-4 text-gray-500" />
           <span>Filtros</span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
           <div className="flex flex-col gap-1">
             <Label
               htmlFor="filtro-nome-produto"
@@ -649,7 +649,7 @@ export function ReportsPage() {
                                 {rExpanded && (
                                   <tr key={`${rkey}-details`} className="bg-gray-50">
                                     <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
-                                      <div className="mb-3 grid grid-cols-3 gap-6">
+                                      <div className="mb-3 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                         <div>
                                           <div className="text-gray-600">Data de preenchimento</div>
                                           <div className="font-medium">{row.fillingDate ?? "—"}</div>

@@ -202,121 +202,123 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
   return (
     <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
-      <Table className="table-fixed w-full">
-        <TableHeader>
-          <TableRow className="text-gray-500">
-            <TableHead className="w-[80px] py-1.5">Cod.</TableHead>
-            <TableHead className="py-1.5">Razao social</TableHead>
-            <TableHead className="py-1.5">Nome fantasia</TableHead>
-            <TableHead className="py-1.5">CNPJ/CPF</TableHead>
-            <TableHead className="py-1.5">Inscricao estadual</TableHead>
-            <TableHead className="py-1.5">Ultima venda</TableHead>
-            <TableHead className="w-[120px] text-right py-1.5">Acoes</TableHead>
-          </TableRow>
-        </TableHeader>
+      <div className="overflow-x-auto">
+        <Table className="table-fixed w-full">
+          <TableHeader>
+            <TableRow className="text-gray-500">
+              <TableHead className="w-[80px] py-1.5">Cod.</TableHead>
+              <TableHead className="py-1.5">Razao social</TableHead>
+              <TableHead className="py-1.5">Nome fantasia</TableHead>
+              <TableHead className="py-1.5">CNPJ/CPF</TableHead>
+              <TableHead className="py-1.5">Inscricao estadual</TableHead>
+              <TableHead className="py-1.5">Ultima venda</TableHead>
+              <TableHead className="w-[120px] text-right py-1.5">Acoes</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {clients.map((client) => {
-            const isExpanded = expandedRow === client.code;
+          <TableBody>
+            {clients.map((client) => {
+              const isExpanded = expandedRow === client.code;
 
-            return (
-              <Fragment key={client.code}>
-                <TableRow className="text-gray-700">
-                  <TableCell className="font-medium text-gray-900 py-1.5 whitespace-nowrap w-[80px]">
-                    {client.code}
-                  </TableCell>
-                  <TableCell className="py-1.5 whitespace-normal break-words">{client.legal_name}</TableCell>
-                  <TableCell className="py-1.5 whitespace-normal break-words">{client.fantasy_name}</TableCell>
-                  <TableCell className="py-1.5 whitespace-normal break-words">{client.cnpj_cpf}</TableCell>
-                  <TableCell className="py-1.5 whitespace-normal break-words">
-                    {client.state_subscrition}
-                  </TableCell>
-                  <TableCell className="py-1.5 whitespace-normal break-words">
-                    {formatDate(client.last_sale_date)}
-                  </TableCell>
-                  <TableCell className="py-1.5 whitespace-nowrap w-[120px]">
-                    <div className="flex items-center justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                        onClick={() => handleToggleRow(client.code)}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                        onClick={() => openEdit(client)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                        onClick={() => openDelete(client)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-                {isExpanded && (
-                  <TableRow className="bg-gray-50 hover:bg-gray-50">
-                    <TableCell colSpan={7} className="p-0">
-                      <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 lg:grid-cols-4">
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-base">
-                            Endereco
-                          </h4>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.address || "-"}
-                          </p>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.neighborhood || "-"}
-                          </p>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.cep} - {client.state}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-base">
-                            Rede
-                          </h4>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.corporate_network || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-base">
-                            Forma de pagamento
-                          </h4>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.payment_method || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-base">
-                            Contatos
-                          </h4>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.email || "Email nao informado"}
-                          </p>
-                          <p className="text-gray-600 text-sm break-words">
-                            {client.phone || "Telefone nao informado"}
-                          </p>
-                        </div>
+              return (
+                <Fragment key={client.code}>
+                  <TableRow className="text-gray-700">
+                    <TableCell className="font-medium text-gray-900 py-1.5 whitespace-nowrap w-[80px]">
+                      {client.code}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.legal_name}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.fantasy_name}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.cnpj_cpf}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">
+                      {client.state_subscrition}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">
+                      {formatDate(client.last_sale_date)}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-nowrap w-[120px]">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => handleToggleRow(client.code)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => openEdit(client)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => openDelete(client)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
-                )}
-              </Fragment>
-            );
-          })}
-        </TableBody>
-      </Table>
+                  {isExpanded && (
+                    <TableRow className="bg-gray-50 hover:bg-gray-50">
+                      <TableCell colSpan={7} className="p-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-3">
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Endereco
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.address || "-"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.neighborhood || "-"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.cep} - {client.state}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Rede
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.corporate_network || "-"}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Forma de pagamento
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.payment_method || "-"}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Contatos
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.email || "Email nao informado"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.phone || "Telefone nao informado"}
+                            </p>
+                          </div>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </Fragment>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
 
       <div className="flex items-center justify-between p-4">
         <Button

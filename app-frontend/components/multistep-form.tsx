@@ -589,7 +589,7 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
   };
 
   return (
-    <div className="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto p-5">
+    <div className="w-full max-w-md sm:max-w-lg md:max-w-3xl lg:max-w-4xl mx-auto p-2 md:p-4 lg:p-6">
       {/* Progress indicator */}
       <motion.div
         className="mb-8"
@@ -597,22 +597,22 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between mb-4">
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
+              className="flex flex-col items-center flex-1"
+              whileHover={{ scale: 1.05 }}
             >
               {index === 0 ? (
                 <motion.div
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
                     index < currentStep
-                      ? "text-primary"
+                      ? "bg-yellow-400 text-black shadow-md"
                       : index === currentStep
-                        ? "text-primary ring-primary/20"
-                        : "text-muted-foreground"
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -626,12 +626,12 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
               ) : index === 1 ? (
                 <motion.div
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
                     index < currentStep
-                      ? "text-primary"
+                      ? "bg-yellow-400 text-black shadow-md"
                       : index === currentStep
-                        ? "text-primary ring-primary/20"
-                        : "text-muted-foreground"
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -645,12 +645,12 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
               ) : index === 2 ? (
                 <motion.div
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
                     index < currentStep
-                      ? "text-primary"
+                      ? "bg-yellow-400 text-black shadow-md"
                       : index === currentStep
-                        ? "text-primary ring-primary/20"
-                        : "text-muted-foreground"
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -659,17 +659,17 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Store className="h-4 w-4" />
+                  <Store className="h-5 w-5" />
                 </motion.div>
               ) : index === 3 ? (
                 <motion.div
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
                     index < currentStep
-                      ? "text-primary"
+                      ? "bg-yellow-400 text-black shadow-md"
                       : index === currentStep
-                        ? "text-primary ring-primary/20"
-                        : "text-muted-foreground"
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -678,17 +678,17 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <PiggyBank className="h-5 w-5" />
+                  <Check className="h-5 w-5" />
                 </motion.div>
               ) : index === 4 ? (
                 <motion.div
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
                     index < currentStep
-                      ? "text-primary"
+                      ? "bg-yellow-400 text-black shadow-md"
                       : index === currentStep
-                        ? "text-primary ring-primary/20"
-                        : "text-muted-foreground"
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -702,12 +702,12 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
               ) : (
                 <motion.div
                   className={cn(
-                    "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
+                    "w-10 h-10 rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center",
                     index < currentStep
-                      ? "bg-primary"
+                      ? "bg-yellow-400 shadow-md"
                       : index === currentStep
-                        ? "bg-primary ring-4 ring-primary/20"
-                        : "bg-muted"
+                        ? "bg-yellow-400 ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200"
                   )}
                   onClick={() => {
                     if (index <= currentStep) {
@@ -719,10 +719,12 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
               )}
               <motion.span
                 className={cn(
-                  "text-xs mt-1.5 hidden sm:block",
+                  "text-xs mt-2 hidden sm:block text-center font-medium",
                   index === currentStep
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground"
+                    ? "text-gray-900"
+                    : index < currentStep
+                      ? "text-gray-700"
+                      : "text-gray-400"
                 )}
               >
                 {step.title}
@@ -730,12 +732,12 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
             </motion.div>
           ))}
         </div>
-        <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
+        <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mt-3">
           <motion.div
-            className="h-full bg-primary"
+            className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-sm"
             initial={{ width: 0 }}
             animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           />
         </div>
       </motion.div>
@@ -746,7 +748,7 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="border shadow-md rounded-3xl overflow-hidden">
+        <Card className="border-2 border-gray-100 shadow-xl rounded-2xl overflow-hidden bg-white">
           <div>
             <AnimatePresence mode="wait">
               <motion.div
@@ -759,10 +761,11 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                 {/* Step 2: Transport Information */}
                 {currentStep === 0 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Informações do Transporte</CardTitle>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Informações do Transporte</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Preencha os dados do transporte e veículo</p>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="driver">
                           Motorista
@@ -856,11 +859,11 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                 {/* Step 1: Nota Fiscal */}
                 {currentStep === 1 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Nota Fiscal</CardTitle>
-                      <CardDescription>Informe o número da Nota Fiscal</CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Nota Fiscal</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Informe o número da Nota Fiscal</p>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
                         <Input
@@ -882,11 +885,11 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                 {/* Step 2: Cliente + Produtos (Accordion + Modal) */}
                 {currentStep === 2 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Clientes e Produtos</CardTitle>
-                      <CardDescription>Selecione um ou mais clientes e associe seus produtos</CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Clientes e Produtos</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Selecione um ou mais clientes e associe seus produtos</p>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-6">
                         <Accordion type="multiple" className="w-full">
                           {formData.customerGroups.map((group, gIdx) => (
@@ -1104,13 +1107,11 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                 {/* Step 5: Revisão */}
                 {currentStep === 3 && (
                   <>
-                    <CardHeader>
-                      <CardTitle>Revisão</CardTitle>
-                      <CardDescription>
-                        Resumo dos dados antes de confirmar
-                      </CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Revisão</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Confira todos os dados antes de confirmar</p>
                     </CardHeader>
-                    <CardContent className="space-y-6">
+                    <CardContent className="space-y-6 pt-6 pb-4 max-h-[60vh] overflow-y-auto">
                       {/* Nota Fiscal */}
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label>Nota Fiscal</Label>
@@ -1220,24 +1221,29 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
               </motion.div>
             </AnimatePresence>
 
-            <CardFooter className="flex justify-between pt-6 pb-4">
+            <CardFooter className="flex justify-between items-center pt-6 pb-6 px-6 bg-gray-50 border-t border-gray-100">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="button"
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
-                  className="flex items-center gap-1 transition-all duration-300 rounded-2xl"
+                  className="flex items-center gap-2 transition-all duration-300 rounded-xl border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 px-6 py-2 h-11 font-medium"
                 >
                   <ChevronLeft className="h-4 w-4" /> Voltar
                 </Button>
               </motion.div>
+
+              {/* Indicador de etapa no centro */}
+              <div className="text-sm font-medium text-gray-500">
+                Etapa {currentStep + 1} de {steps.length}
+              </div>
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="button"
@@ -1246,8 +1252,10 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
                   }
                   disabled={!isStepValid() || isSubmitting}
                   className={cn(
-                    "flex items-center gap-1 transition-all duration-300 rounded-2xl",
-                    currentStep === steps.length - 1 ? "" : ""
+                    "flex items-center gap-2 transition-all duration-300 rounded-xl px-6 py-2 h-11 font-medium shadow-md hover:shadow-lg",
+                    currentStep === steps.length - 1
+                      ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+                      : "bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black"
                   )}
                 >
                   {isSubmitting ? (
@@ -1269,16 +1277,6 @@ const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
             </CardFooter>
           </div>
         </Card>
-      </motion.div>
-
-      {/* Step indicator */}
-      <motion.div
-        className="mt-4 text-center text-sm text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
-        Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
       </motion.div>
     </div>
   );
