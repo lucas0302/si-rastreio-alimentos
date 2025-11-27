@@ -24,12 +24,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 // Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
 
 export function ReportsPage() {
   const [activeTab, setActiveTab] = useState("controle");
+  const [createOpen, setCreateOpen] = useState(false);
   const [filters, setFilters] = useState({
     nomeProduto: "",
     lote: "",
@@ -41,7 +42,7 @@ export function ReportsPage() {
   // Estado para tabela de relatórios
   type ApiDailyReport = {
     id: number;
-    invoiceNumber: number;
+    invoiceNumber: string | number;
     customerCode: number | string; // pode vir como string se BigInt serializado
     products: Array<{ code: number | string; quantity: number; description?: string; sifOrSisbi?: string; productTemperature?: number; productionDate?: string }>;
     shipmentDate: string; // legado
@@ -85,7 +86,7 @@ export function ReportsPage() {
 
   type ReportRow = {
     reportId: number;
-    invoiceNumber: number;
+    invoiceNumber: string;
     customerCode?: number;
     clientName: string;
     destination: string;
@@ -223,7 +224,7 @@ export function ReportsPage() {
         // Para cada relatório, criar UMA linha agregada por cliente no dia (fillingDate)
         const builtRows: ReportRow[] = [];
         for (const r of reports) {
-          const invoice = Number(r.invoiceNumber);
+          const invoice = String(r.invoiceNumber);
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
@@ -402,7 +403,7 @@ export function ReportsPage() {
     // sort by YYYY-MM behind the scenes
     const parse = (key: string) => {
       const [mon, yr] = key.split("-");
-      const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+      const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
       const idx = months.findIndex((m) => m.toLowerCase() === mon.toLowerCase());
       return Number(yr) * 100 + (idx >= 0 ? idx : 0);
     };
@@ -420,11 +421,11 @@ export function ReportsPage() {
   const sumQty = (arr: ReportRow[]) =>
     arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
 
-  const monthAbbr = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const monthAbbr = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const formatMonthBr = (iso: string) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
     let d: Date | null = null;
-    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     else {
       const tryD = new Date(iso);
       if (!isNaN(tryD.getTime())) d = tryD; else return iso;
@@ -443,7 +444,7 @@ export function ReportsPage() {
   const isSameMonthYear = (iso: string, ref: Date) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
     let d: Date | null = null;
-    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     else {
       const tryD = new Date(iso);
       if (!isNaN(tryD.getTime())) d = tryD; else return false;
@@ -458,7 +459,7 @@ export function ReportsPage() {
         <div className="text-xl font-semibold text-gray-900">Relatórios</div>
 
         {/* ===== 2. IMPLEMENTAÇÃO DO DIALOG ===== */}
-        <Dialog>
+        <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
             <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6">
               + Novo Registro
@@ -470,7 +471,7 @@ export function ReportsPage() {
               max-w-lg é para corresponder ao estilo do formulário.
               O DialogContent já tem scroll automático.
             */}
-            <OnboardingForm />
+            <OnboardingForm onSuccess={() => setCreateOpen(false)} />
           </DialogContent>
         </Dialog>
         {/* ===== FIM DA IMPLEMENTAÇÃO ===== */}
@@ -499,7 +500,7 @@ export function ReportsPage() {
           <Filter className="h-4 w-4 text-gray-500" />
           <span>Filtros</span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
           <div className="flex flex-col gap-1">
             <Label
               htmlFor="filtro-nome-produto"
@@ -641,14 +642,14 @@ export function ReportsPage() {
                                       <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
                                         <Trash2 className="h-4 w-4" />
                                       </Button>
-                                  </div>
+                                    </div>
                                   </td>
                                 </tr>
 
                                 {rExpanded && (
                                   <tr key={`${rkey}-details`} className="bg-gray-50">
                                     <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
-                                      <div className="mb-3 grid grid-cols-3 gap-6">
+                                      <div className="mb-3 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                         <div>
                                           <div className="text-gray-600">Data de preenchimento</div>
                                           <div className="font-medium">{row.fillingDate ?? "—"}</div>
@@ -770,11 +771,11 @@ export function ReportsPage() {
 
                         const hasComma = s.includes(',');
                         const hasDot = s.includes('.');
-                        
+
                         // Caso 1: Formato "1.234,56" (pt-BR com milhar)
                         if (hasComma && hasDot && s.lastIndexOf('.') < s.lastIndexOf(',')) {
                           s = s.replace(/\./g, '').replace(/,/g, '.'); // "1.234,56" -> "1234.56"
-                        } 
+                        }
                         // Caso 2: Formato "1,234.56" (en-US com milhar)
                         else if (hasComma && hasDot && s.lastIndexOf(',') < s.lastIndexOf('.')) {
                           s = s.replace(/,/g, ''); // "1,234.56" -> "1234.56"
@@ -785,7 +786,7 @@ export function ReportsPage() {
                         }
                         // Caso 4: Formato "1234.56" (padrão) ou "1234" (inteiro)
                         // Nenhuma ação necessária, 'Number()' já entende.
-                        
+
                         const n = Number(s);
                         return isNaN(n) ? 0 : n;
                       };
@@ -825,7 +826,7 @@ export function ReportsPage() {
 
                         // Request 2: Obter a soma pré-calculada para este produto
                         const qtyNum = quantityPerProduct.get(prodCode) || 0;
-                        
+
                         // Como agregamos a quantidade, colunas como "Destino" perdem o
                         // detalhe transacional. Manteremos os valores padrão que já
                         // estavam no código.
@@ -894,7 +895,10 @@ export function ReportsPage() {
                   <Input
                     value={String(editRow.invoiceNumber)}
                     onChange={(e) =>
-                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: Number(e.target.value) || 0 } : prev))
+                      setEditRow((prev) => {
+                        const digits = (e.target.value || "").replace(/\D/g, "").slice(0, 18);
+                        return prev ? { ...prev, invoiceNumber: digits } : prev;
+                      })
                     }
                   />
                 </div>
