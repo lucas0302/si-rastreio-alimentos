@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getProductsSold, MostProductsSold } from "./requests";
 import axios from "axios";
 
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -24,6 +25,7 @@ const initialStats: DashboardStats = {
 
 export default function DashboardPage() {
 	const [stats, setStats] = useState<DashboardStats>(initialStats);
+	const [mostProductsSold, setMostProductsSold] = useState<MostProductsSold[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -66,6 +68,8 @@ export default function DashboardPage() {
 					token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
 				);
 
+				setMostProductsSold(await getProductsSold());
+
 				setStats(response.data ?? initialStats);
 			} catch (err: any) {
 				console.error(err);
@@ -82,6 +86,10 @@ export default function DashboardPage() {
 
 		fetchStats();
 	}, []);
+
+	useEffect(() => {
+		console.log("Most Products Sold:", mostProductsSold);
+	}, [mostProductsSold]);
 
 	return (
 		<div className="p-6">
@@ -145,10 +153,14 @@ export default function DashboardPage() {
 							<PieChart
 								series={[
 									{
-										data: produtosMaisVendidos,
-										innerRadius: 30,
-										outerRadius: 80,
-										paddingAngle: 2,
+										data: mostProductsSold.map((product) => ({
+											id: product.id,
+											value: product.totalSold,
+											label: product.nome,
+										})),
+										innerRadius: 50,
+										outerRadius: 100,
+										paddingAngle: 1,
 									},
 								]}
 								height={200}
