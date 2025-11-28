@@ -16,4 +16,9 @@ export class DashboardController {
   getMostProductsSold() {
     return this.dashboardService.mostProductsSold();
   }
+
+  @Get('productsSoldByState')
+  getProductsSoldByState() {
+    return this.dashboardService.productsSoldByState();
+  }
 }

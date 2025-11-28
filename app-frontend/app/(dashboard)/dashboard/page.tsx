@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProductsSold, MostProductsSold } from "./requests";
+import { 
+	getProductsSold,
+	getProductsSoldState,
+	MostProductsSold,
+	ProductsSoldByState 
+} from "./requests";
 import axios from "axios";
 
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -26,6 +31,7 @@ const initialStats: DashboardStats = {
 export default function DashboardPage() {
 	const [stats, setStats] = useState<DashboardStats>(initialStats);
 	const [mostProductsSold, setMostProductsSold] = useState<MostProductsSold[]>([]);
+	const [productsSoldState, setProductsSoldState] = useState<ProductsSoldByState[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -37,13 +43,6 @@ export default function DashboardPage() {
 		{ mes: "Abr", valor: 18000 },
 		{ mes: "Mai", valor: 21000 },
 		{ mes: "Jun", valor: 25000 },
-	];
-
-	const produtosMaisVendidos = [
-		{ id: 1, value: 40, label: "Camisa Polo" },
-		{ id: 2, value: 25, label: "Calça Jeans" },
-		{ id: 3, value: 20, label: "Tênis" },
-		{ id: 4, value: 15, label: "Boné" },
 	];
 
 	const entregasPorEstado = [
@@ -68,8 +67,9 @@ export default function DashboardPage() {
 					token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
 				);
 
+				
 				setMostProductsSold(await getProductsSold());
-
+				setProductsSoldState(await getProductsSoldState());
 				setStats(response.data ?? initialStats);
 			} catch (err: any) {
 				console.error(err);
@@ -89,6 +89,7 @@ export default function DashboardPage() {
 
 	useEffect(() => {
 		console.log("Most Products Sold:", mostProductsSold);
+		console.log("Most Products Sold:", productsSoldState);
 	}, [mostProductsSold]);
 
 	return (
@@ -200,12 +201,12 @@ export default function DashboardPage() {
 								xAxis={[
 									{
 										scaleType: "band",
-										data: entregasPorEstado.map((d) => d.estado),
+										data: productsSoldState.map((products) => products.state.toUpperCase()),
 									},
 								]}
 								series={[
 									{
-										data: entregasPorEstado.map((d) => d.entregas),
+										data: productsSoldState.map((products) => products.totalSold),
 										label: "Qtd de Entregas",
 										color: "#F0CC4F",
 									},

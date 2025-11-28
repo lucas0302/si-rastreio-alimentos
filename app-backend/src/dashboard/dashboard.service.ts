@@ -54,6 +54,26 @@ export class DashboardService {
     });
   }
 
+  async productsSoldByState() {
+    const result = await this.prisma.monthlyShipmentReport.groupBy({
+      by: ['destination'],
+      _sum: {
+        quantity: true,
+      },
+      orderBy: {
+        _sum: {
+          quantity: 'desc',
+        }
+      }
+    });
+
+    return result.map(item => ({
+      state: item.destination,
+      totalSold: item._sum.quantity,
+    }));
+  }
+
+
   // async mostProductsSold() {
   //   // 1. Agrupa os produtos
   //   const grouped = await this.prisma.monthlyShipmentReport.groupBy({

@@ -10,9 +10,23 @@ export interface MostProductsSold {
     timesSold: number
 }
 
+export interface ProductsSoldByState {
+    state: string
+	totalSold: number
+}
+
 export async function getProductsSold(): Promise<MostProductsSold[]> {
     const response = await axios.get<MostProductsSold[]>(
         `${apiUrl}/dashboard/mostProductsSold`,{ 
+            headers: { Authorization: `Bearer ${token}` }
+        }
+    );
+    return response.data;
+}
+
+export async function getProductsSoldState(): Promise<ProductsSoldByState[]> {
+    const response = await axios.get<ProductsSoldByState[]>(
+        `${apiUrl}/dashboard/productsSoldByState`,{ 
             headers: { Authorization: `Bearer ${token}` }
         }
     );
