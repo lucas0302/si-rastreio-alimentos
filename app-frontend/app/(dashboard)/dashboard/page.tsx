@@ -158,7 +158,7 @@ export default function DashboardPage() {
 											value: product.totalSold,
 											label: product.nome,
 										})),
-										innerRadius: 50,
+										innerRadius: 40,
 										outerRadius: 100,
 										paddingAngle: 1,
 									},

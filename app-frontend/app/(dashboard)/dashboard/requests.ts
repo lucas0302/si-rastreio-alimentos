@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = localStorage?.getItem("token");
+const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export interface MostProductsSold {
