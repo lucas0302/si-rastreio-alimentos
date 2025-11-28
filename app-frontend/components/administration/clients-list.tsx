@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, Fragment, useCallback } from "react";
+import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
-import { Pencil, Trash2, Eye, Loader2 } from "lucide-react";
+import { Pencil, Trash2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,18 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { AdminListCard } from "./list-card";
 import { TAB_CONFIG } from "./config";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
 interface ApiClient {
@@ -61,14 +55,17 @@ export function ClientsList({ onAdd }: ClientsListProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const [deletingCode, setDeletingCode] = useState<number | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState<{ code: number; label: string } | null>(null);
-  const limit = 10;
+  const limit = 11;
   const { toast } = useToast();
 
-  const loadClients = useCallback(
-    async (pageToLoad: number) => {
-      const offset = pageToLoad * limit;
+  const [editOpen, setEditOpen] = useState(false);
+  const [selected, setSelected] = useState<ApiClient | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editForm, setEditForm] = useState<ApiClient | null>(null);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      const offset = page * limit;
 
       try {
         setLoading(true);
@@ -89,7 +86,6 @@ export function ClientsList({ onAdd }: ClientsListProps) {
             ? offset + list.length < total
             : list.length === limit;
         setHasNext(computedHasNext);
-        return list.length;
       } catch (e: any) {
         console.error(e);
         setError(
@@ -97,20 +93,79 @@ export function ClientsList({ onAdd }: ClientsListProps) {
             ? "Nao autorizado: verifique seu login."
             : "Erro ao carregar clientes."
         );
-        return 0;
       } finally {
         setLoading(false);
       }
-    },
-    [limit]
-  );
+    };
 
-  useEffect(() => {
-    loadClients(page);
-  }, [page, loadClients]);
+    fetchClients();
+  }, [page, limit]);
 
   const handleToggleRow = (code: number) => {
     setExpandedRow((prev) => (prev === code ? null : code));
+  };
+
+  const openEdit = (client: ApiClient) => {
+    setSelected(client);
+    setEditForm({ ...client });
+    setEditOpen(true);
+  };
+
+  const openDelete = (client: ApiClient) => {
+    setSelected(client);
+    setConfirmDelete(true);
+  };
+
+  const handleEditChange = (field: keyof ApiClient, value: string) => {
+    setEditForm((prev) => (prev ? { ...prev, [field]: value } : prev));
+  };
+
+  const submitEdit = async () => {
+    if (!selected || !editForm) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/customers/${selected.code}`,
+        {
+          legal_name: editForm.legal_name,
+          fantasy_name: editForm.fantasy_name,
+          cnpj_cpf: editForm.cnpj_cpf,
+          email: editForm.email,
+          phone: editForm.phone,
+          state: editForm.state,
+          neighborhood: editForm.neighborhood,
+          address: editForm.address,
+          cep: editForm.cep,
+          corporate_network: editForm.corporate_network,
+          payment_method: editForm.payment_method,
+          state_subscrition: editForm.state_subscrition,
+        },
+        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+      );
+      setClients((prev) => prev.map((c) => (c.code === selected.code ? { ...c, ...editForm } : c)));
+      toast?.({ description: "Cliente atualizado com sucesso!", variant: "success" });
+      setEditOpen(false);
+      setSelected(null);
+    } catch (e: any) {
+      toast?.({ description: e?.response?.data?.message || "Erro ao atualizar cliente" });
+    }
+  };
+
+  const confirmDeleteAction = async () => {
+    if (!selected) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/customers/${selected.code}`,
+        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+      );
+      setClients((prev) => prev.filter((c) => c.code !== selected.code));
+      toast?.({ description: "Cliente deletado com sucesso!", variant: "success" });
+      setConfirmDelete(false);
+      setSelected(null);
+    } catch (e: any) {
+      toast?.({ description: e?.response?.data?.message || "Erro ao deletar cliente" });
+    }
   };
 
   const formatDate = (dateString: string | null) => {
@@ -119,59 +174,6 @@ export function ClientsList({ onAdd }: ClientsListProps) {
     const [year, month, day] = onlyDate.split("-");
     if (!year || !month || !day) return "-";
     return `${day}/${month}/${year}`;
-  };
-
-  const handleDeleteClient = async (code: number) => {
-    try {
-      setDeletingCode(code);
-      const token = localStorage.getItem("token");
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/customers/${code}`,
-        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
-      );
-
-      toast({
-        title: "Cliente deletado",
-        description: "O cliente foi removido com sucesso.",
-      });
-
-      const items = await loadClients(page);
-      if (items === 0 && page > 0) {
-        setPage((current) => Math.max(current - 1, 0));
-      }
-    } catch (e: any) {
-      console.error(e);
-      const status = e?.response?.status;
-      const message =
-        e?.response?.data?.message ?? "Erro ao deletar cliente.";
-
-      if (status === 409) {
-        toast({
-          title: "Ação não permitida",
-          description: message,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Falha ao deletar",
-          description: message,
-        });
-      }
-    } finally {
-      setDeletingCode(null);
-      setConfirmDelete(null);
-    }
-  };
-
-  const confirmDeleteClient = () => {
-    if (!confirmDelete || deletingCode !== null) return;
-    void handleDeleteClient(confirmDelete.code);
-  };
-
-  const handleDialogChange = (open: boolean) => {
-    if (!open && deletingCode === null) {
-      setConfirmDelete(null);
-    }
   };
 
   if (loading) {
@@ -200,139 +202,123 @@ export function ClientsList({ onAdd }: ClientsListProps) {
 
   return (
     <AdminListCard meta={TAB_CONFIG.clientes} onAdd={onAdd} actionPlacement="footer">
-      <Table className="w-full text-[13px] table-auto">
-        <TableHeader>
-          <TableRow className="text-gray-500 text-xs">
-            <TableHead className="w-[70px] py-1.5">Cod.</TableHead>
-            <TableHead className="py-1.5">Razao social</TableHead>
-            <TableHead className="py-1.5">Nome fantasia</TableHead>
-            <TableHead className="py-1.5">CNPJ/CPF</TableHead>
-            <TableHead className="py-1.5">Inscricao estadual</TableHead>
-            <TableHead className="py-1.5">Ultima venda</TableHead>
-            <TableHead className="w-[90px] text-right py-1.5">Acoes</TableHead>
-          </TableRow>
-        </TableHeader>
+      <div className="overflow-x-auto">
+        <Table className="table-fixed w-full">
+          <TableHeader>
+            <TableRow className="text-gray-500">
+              <TableHead className="w-[80px] py-1.5">Cod.</TableHead>
+              <TableHead className="py-1.5">Razao social</TableHead>
+              <TableHead className="py-1.5">Nome fantasia</TableHead>
+              <TableHead className="py-1.5">CNPJ/CPF</TableHead>
+              <TableHead className="py-1.5">Inscricao estadual</TableHead>
+              <TableHead className="py-1.5">Ultima venda</TableHead>
+              <TableHead className="w-[120px] text-right py-1.5">Acoes</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {clients.map((client) => {
-            const isExpanded = expandedRow === client.code;
+          <TableBody>
+            {clients.map((client) => {
+              const isExpanded = expandedRow === client.code;
 
-            return (
-              <Fragment key={client.code}>
-                <TableRow className="text-gray-700 text-[14px] h-auto">
-                  <TableCell className="font-semibold text-gray-900 py-2">
-                    {client.code}
-                  </TableCell>
-                  <TableCell className="py-2 whitespace-normal break-words">
-                    {client.legal_name}
-                  </TableCell>
-                  <TableCell className="py-2 whitespace-normal break-words">
-                    {client.fantasy_name}
-                  </TableCell>
-                  <TableCell className="py-2 whitespace-normal break-words">
-                    {client.cnpj_cpf}
-                  </TableCell>
-                  <TableCell className="py-2 whitespace-normal break-words">
-                    {client.state_subscrition}
-                  </TableCell>
-                  <TableCell className="py-2 whitespace-normal break-words">
-                    {formatDate(client.last_sale_date)}
-                  </TableCell>
-                  <TableCell className="py-2">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                        onClick={() => handleToggleRow(client.code)}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                        onClick={() =>
-                          setConfirmDelete({
-                            code: client.code,
-                            label:
-                              client.legal_name ||
-                              client.fantasy_name ||
-                              `Cliente ${client.code}`,
-                          })
-                        }
-                        disabled={deletingCode === client.code}
-                      >
-                        {deletingCode === client.code ? (
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                        ) : (
+              return (
+                <Fragment key={client.code}>
+                  <TableRow className="text-gray-700">
+                    <TableCell className="font-medium text-gray-900 py-1.5 whitespace-nowrap w-[80px]">
+                      {client.code}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.legal_name}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.fantasy_name}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">{client.cnpj_cpf}</TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">
+                      {client.state_subscrition}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-normal break-words">
+                      {formatDate(client.last_sale_date)}
+                    </TableCell>
+                    <TableCell className="py-1.5 whitespace-nowrap w-[120px]">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => handleToggleRow(client.code)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => openEdit(client)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                          onClick={() => openDelete(client)}
+                        >
                           <Trash2 className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-                {isExpanded && (
-                  <TableRow className="bg-gray-50 hover:bg-gray-50">
-                    <TableCell colSpan={7} className="p-0">
-                      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4 text-[13px]">
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-sm">
-                            Endereco
-                          </h4>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.address || "-"}
-                          </p>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.neighborhood || "-"}
-                          </p>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.cep} - {client.state}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-sm">
-                            Rede
-                          </h4>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.corporate_network || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-sm">
-                            Forma de pagamento
-                          </h4>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.payment_method || "-"}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-sm">
-                            Contatos
-                          </h4>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.email || "Email nao informado"}
-                          </p>
-                          <p className="text-gray-600 text-[12px]">
-                            {client.phone || "Telefone nao informado"}
-                          </p>
-                        </div>
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
-                )}
-              </Fragment>
-            );
-          })}
-        </TableBody>
-      </Table>
+                  {isExpanded && (
+                    <TableRow className="bg-gray-50 hover:bg-gray-50">
+                      <TableCell colSpan={7} className="p-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-3">
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Endereco
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.address || "-"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.neighborhood || "-"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.cep} - {client.state}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Rede
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.corporate_network || "-"}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Forma de pagamento
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.payment_method || "-"}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-base">
+                              Contatos
+                            </h4>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.email || "Email nao informado"}
+                            </p>
+                            <p className="text-gray-600 text-sm break-words">
+                              {client.phone || "Telefone nao informado"}
+                            </p>
+                          </div>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </Fragment>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
 
       <div className="flex items-center justify-between p-4">
         <Button
@@ -352,31 +338,78 @@ export function ClientsList({ onAdd }: ClientsListProps) {
         </Button>
       </div>
 
-      <AlertDialog open={!!confirmDelete} onOpenChange={handleDialogChange}>
-        <AlertDialogContent className="w-[90vw] max-w-sm">
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="max-w-3xl border-yellow-200">
+          <DialogHeader>
+            <DialogTitle className="text-yellow-800">Editar Cliente</DialogTitle>
+          </DialogHeader>
+          {editForm ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label>Razao social</Label>
+                <Input value={editForm.legal_name} onChange={(e) => handleEditChange("legal_name", e.target.value)} />
+              </div>
+              <div>
+                <Label>Nome fantasia</Label>
+                <Input value={editForm.fantasy_name} onChange={(e) => handleEditChange("fantasy_name", e.target.value)} />
+              </div>
+              <div>
+                <Label>CNPJ/CPF</Label>
+                <Input value={editForm.cnpj_cpf} onChange={(e) => handleEditChange("cnpj_cpf", e.target.value)} />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input value={editForm.email} onChange={(e) => handleEditChange("email", e.target.value)} />
+              </div>
+              <div>
+                <Label>Telefone</Label>
+                <Input value={editForm.phone} onChange={(e) => handleEditChange("phone", e.target.value)} />
+              </div>
+              <div>
+                <Label>Estado</Label>
+                <Input value={editForm.state} onChange={(e) => handleEditChange("state", e.target.value)} />
+              </div>
+              <div>
+                <Label>Bairro</Label>
+                <Input value={editForm.neighborhood} onChange={(e) => handleEditChange("neighborhood", e.target.value)} />
+              </div>
+              <div>
+                <Label>Endereco</Label>
+                <Input value={editForm.address} onChange={(e) => handleEditChange("address", e.target.value)} />
+              </div>
+              <div>
+                <Label>CEP</Label>
+                <Input value={editForm.cep} onChange={(e) => handleEditChange("cep", e.target.value)} />
+              </div>
+              <div>
+                <Label>Rede</Label>
+                <Input value={editForm.corporate_network} onChange={(e) => handleEditChange("corporate_network", e.target.value)} />
+              </div>
+              <div>
+                <Label>Forma de pagamento</Label>
+                <Input value={editForm.payment_method} onChange={(e) => handleEditChange("payment_method", e.target.value)} />
+              </div>
+              <div>
+                <Label>Inscricao estadual</Label>
+                <Input value={editForm.state_subscrition} onChange={(e) => handleEditChange("state_subscrition", e.target.value)} />
+              </div>
+              <div className="col-span-1 md:col-span-2 flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setEditOpen(false)}>Cancelar</Button>
+                <Button onClick={submitEdit}>Salvar</Button>
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <AlertDialogContent className="border-yellow-200">
           <AlertDialogHeader>
-            <AlertDialogTitle>Remover cliente?</AlertDialogTitle>
-            <AlertDialogDescription>
-              {confirmDelete
-                ? `Deseja realmente remover o cliente "${confirmDelete.label}"? Essa acao nao pode ser desfeita.`
-                : ""}
-            </AlertDialogDescription>
+            <AlertDialogTitle>Deseja deletar este cliente?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deletingCode !== null}>
-              Cancelar
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-red-600 text-white hover:bg-red-700"
-              onClick={confirmDeleteClient}
-              disabled={deletingCode !== null}
-            >
-              {deletingCode !== null ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                "Deletar"
-              )}
-            </AlertDialogAction>
+            <AlertDialogCancel className="border-yellow-300 text-yellow-800 hover:bg-yellow-100">Cancelar</AlertDialogCancel>
+            <AlertDialogAction className="bg-yellow-500 hover:bg-yellow-600 text-white" onClick={confirmDeleteAction}>Deletar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

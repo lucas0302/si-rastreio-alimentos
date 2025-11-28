@@ -17,8 +17,6 @@ type FormDataType = {
   price: string;
   weight: string;
   unit: string;
-  group: string;
-  company: string;
   expiration: string;
   expiration_unit: string;
   informacoesAdicionais: string;
@@ -37,8 +35,6 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
     price: "",
     weight: "",
     unit: "",
-    group: "",
-    company: "",
     expiration: "",
     expiration_unit: "",
     informacoesAdicionais: "",
@@ -67,23 +63,13 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
         setError("Informe a descrição do produto.");
         return;
       }
-      if (!formData.group.trim()) {
-        setError("Informe o grupo do produto.");
-        return;
-      }
-      if (!formData.company.trim()) {
-        setError("Informe a empresa do produto.");
-        return;
-      }
 
       // Normalize decimal strings (accept 10,50 -> 10.50)
       const toDecimal = (v: string) => (v || "").replace(/\./g, "").replace(/,/g, ".");
 
       const payload = {
         code: Number(formData.code),
-        description: formData.name,  // Renomeado para description conforme esperado pelo backend
-        group: formData.group || "Sem grupo",  // Campo específico para grupo
-        company: formData.company || "Empresa", // Campo específico para empresa
+        name: formData.name,
         price: toDecimal(formData.price),
         weight: toDecimal(formData.weight),
         unit: formData.unit,
@@ -120,8 +106,6 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
       price: "",
       weight: "",
       unit: "",
-      group: "",
-      company: "",
       expiration: "",
       expiration_unit: "",
       informacoesAdicionais: "",
@@ -137,15 +121,12 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
     <Card className="max-w-full h-250 mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-gray-900">Cadastrar Produto</CardTitle>
-        {error && <div className="mt-3 text-red-500 text-sm">{error}</div>}
-        <div className="mt-2 text-sm text-gray-500">Os campos marcados com * são obrigatórios</div>
       </CardHeader>
-      <CardContent className="p-6 md:p-8">
+      <CardContent className="p-4 md:p-6 lg:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* First row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Código *</label>
               <Input
                 placeholder="Código"
                 value={formData.code ?? ""}
@@ -154,7 +135,6 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Descrição *</label>
               <Input
                 placeholder="Descrição"
                 value={formData.name}
@@ -163,7 +143,6 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Preço (R$)</label>
               <Input
                 placeholder="Preço (R$)"
                 value={formData.price}
@@ -174,27 +153,8 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
           </div>
 
           {/* Second row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Grupo do Produto *</label>
-              <Input
-                placeholder="Grupo do Produto"
-                value={formData.group}
-                onChange={(e) => handleInputChange("group", e.target.value)}
-                className="h-12 text-base border-gray-300 rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Empresa *</label>
-              <Input
-                placeholder="Empresa"
-                value={formData.company}
-                onChange={(e) => handleInputChange("company", e.target.value)}
-                className="h-12 text-base border-gray-300 rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Peso</label>
               <Input
                 placeholder="Peso"
                 value={formData.weight}
@@ -202,12 +162,7 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
                 className="h-12 text-base border-gray-300 rounded-lg"
               />
             </div>
-          </div>
-
-          {/* Third row */}
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Unidade de Medida</label>
               <Select value={formData.unit} onValueChange={(value) => handleInputChange("unit", value)}>
                 <SelectTrigger className="h-12 text-base border-gray-300 rounded-lg">
                   <SelectValue placeholder="Unidade" />
@@ -223,10 +178,9 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
             </div>
           </div>
 
-          {/* Fourth row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Third row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Validade</label>
               <Input
                 placeholder="Validade"
                 value={formData.expiration}
@@ -235,7 +189,6 @@ export function ProductForm({ onCancel, onSuccess }: ProdutoFormProps = {}) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Unidade de Tempo</label>
               <Select value={formData.expiration_unit} onValueChange={(value) => handleInputChange("expiration_unit", value)}>
                 <SelectTrigger className="h-12 text-base border-gray-300 rounded-lg">
                   <SelectValue placeholder="Unidade de tempo" />

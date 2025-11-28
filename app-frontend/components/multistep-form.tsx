@@ -49,22 +49,18 @@ import {
   CommandItem,
   CommandEmpty,
 } from "@/components/ui/command";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import InputMask from "react-input-mask";
 
 const steps = [
   { id: "transport", title: "Transporte" },
   { id: "invoice", title: "Nota Fiscal" },
   { id: "client", title: "Cliente" },
-  { id: "product", title: "Produto" },
   { id: "review", title: "Revisão" },
 ];
-
-const INVOICE_MASK = "999.999.999";
 
 interface FormData {
   client: string;
@@ -139,9 +135,12 @@ type Paginated<T> = {
   total?: number;
 };
 
-const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
+type OnboardingFormProps = { onSuccess?: () => void };
+
+const OnboardingForm = ({ onSuccess }: OnboardingFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState<FormData>({
     client: "",
     clientCode: "",
@@ -238,7 +237,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     const data = productForm;
     // validações simples
     if (!data.code || !data.quantity || !data.productTemperature || !data.productionDate) {
-      toast.error("Preencha todos os campos do produto.");
+      toast({ title: "Preencha todos os campos do produto." });
       return;
     }
     updateCustomerGroup(gIdx, (g) => {
@@ -285,8 +284,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
       const firstList: ApiClient[] = Array.isArray(firstPayload)
         ? firstPayload
         : Array.isArray(firstPayload?.data)
-        ? firstPayload.data
-        : [];
+          ? firstPayload.data
+          : [];
       const total: number = Array.isArray(firstPayload)
         ? firstList.length
         : Number(firstPayload?.total ?? firstList.length);
@@ -306,8 +305,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         const pageList: ApiClient[] = Array.isArray(pagePayload)
           ? pagePayload
           : Array.isArray(pagePayload?.data)
-          ? pagePayload.data
-          : [];
+            ? pagePayload.data
+            : [];
         all = all.concat(pageList);
       }
 
@@ -357,8 +356,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         const list: ApiVehicle[] = Array.isArray(payload)
           ? payload
           : Array.isArray(payload?.data)
-          ? payload.data
-          : [];
+            ? payload.data
+            : [];
         setVehicles(list);
       } catch (e: any) {
         console.error(e);
@@ -390,8 +389,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         const list: ApiProduct[] = Array.isArray(payload)
           ? payload
           : Array.isArray(payload?.data)
-          ? payload.data
-          : [];
+            ? payload.data
+            : [];
         setProducts(list);
       } catch (e: any) {
         console.error(e);
@@ -436,9 +435,11 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     setFormData((prev) => {
       const groups = [...prev.customerGroups];
       groups.splice(index, 1);
-      return { ...prev, customerGroups: groups.length > 0 ? groups : [
-        { clientCode: "", clientName: "", items: [] },
-      ] };
+      return {
+        ...prev, customerGroups: groups.length > 0 ? groups : [
+          { clientCode: "", clientName: "", items: [] },
+        ]
+      };
     });
   };
 
@@ -515,10 +516,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           throw new Error("Adicione ao menos um cliente com produto(s) válido(s).");
         }
 
-        const invoiceDigits = formData.invoiceNumber.replace(/\D/g, "");
-
         const payload: any = {
-          invoiceNumber: invoiceDigits,
+          invoiceNumber: formData.invoiceNumber,
           vehicleTemperature: vehicleTemp,
           hasGoodSanitaryCondition: formData.sanitaryCondition === "conforme",
           driver: formData.driver,
@@ -534,44 +533,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        // Exibir toast com destaque e maior duração
-        toast.success("Relatório diário criado com sucesso!", {
-          duration: 5000,
-        });
-        
-        // Resetar o formulário
-        setFormData({
-          client: "",
-          clientCode: "",
-          driver: "",
-          company: "",
-          profession: "",
-          experience: "",
-          industry: "",
-          vehicleId: "",
-          sanitaryCondition: "",
-          vehicleTemperature: "",
-          invoiceNumber: "",
-          productItems: [{ code: "", quantity: "" }],
-          sifOrSisbi: "",
-          productTemperature: "",
-          deliverDate: "",
-          customerGroups: [
-            {
-              clientCode: "",
-              clientName: "",
-              items: [],
-            },
-          ],
-        });
-        
-        // Voltar para a primeira etapa
-        setCurrentStep(0);
-        
-        // Chamar a função de callback imediatamente para fechar o popup
-        if (onSuccess) {
-          onSuccess();
-        }
+        toast({ title: "Relatório diário criado com sucesso!" });
+        onSuccess?.();
       } catch (err: any) {
         console.error(err);
         let message = err?.response?.data?.message || err?.message || "Falha ao enviar o relatório.";
@@ -579,7 +542,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         if (Array.isArray(message)) {
           message = message.join("; ");
         }
-        toast.error(message);
+        toast({ title: "Falha ao enviar o relatório.", description: String(message) });
       } finally {
         setIsSubmitting(false);
       }
@@ -597,7 +560,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           formData.vehicleTemperature.trim() !== ""
         );
       case 1:
-        return formData.invoiceNumber.replace(/\D/g, "").trim() !== "";
+        return formData.invoiceNumber.trim() !== "";
       case 2: {
         // Validar múltiplos clientes com produtos
         const groups = formData.customerGroups ?? [];
@@ -626,153 +589,155 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto p-4">
+    <div className="w-full max-w-md sm:max-w-lg md:max-w-3xl lg:max-w-4xl mx-auto p-2 md:p-4 lg:p-6">
       {/* Progress indicator */}
       <motion.div
-        className="mb-6"
+        className="mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between mb-2">
-              {steps.map((step, index) => (
+        <div className="flex justify-between mb-4">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center flex-1"
+              whileHover={{ scale: 1.05 }}
+            >
+              {index === 0 ? (
                 <motion.div
-                  key={index}
-                  className="flex flex-col items-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {index === 0 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-yellow-500"
-                          : index === currentStep
-                          ? "text-yellow-500 ring-yellow-400/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <Truck className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 1 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-yellow-500"
-                          : index === currentStep
-                          ? "text-yellow-500 ring-yellow-400/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <FileText className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 2 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-yellow-500"
-                          : index === currentStep
-                          ? "text-yellow-500 ring-yellow-400/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <Store className="h-4 w-4" />
-                    </motion.div>
-              ) : index === 3 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-yellow-500"
-                          : index === currentStep
-                          ? "text-yellow-500 ring-yellow-400/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <PiggyBank className="h-5 w-5" />
-                    </motion.div>
-              ) : index === 4 ? (
-                    <motion.div
-                      className={cn(
-                        "w-5 h-5 flex items-center justify-center rounded transition-colors duration-300",
-                        index < currentStep
-                          ? "text-yellow-500"
-                          : index === currentStep
-                          ? "text-yellow-500 ring-yellow-400/20"
-                          : "text-muted-foreground"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                    <ClipboardPen className="h-5 w-5" />
-                    </motion.div>
-              ) : (
-                    <motion.div
-                      className={cn(
-                        "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
-                        index < currentStep
-                          ? "bg-yellow-500"
-                          : index === currentStep
-                          ? "bg-yellow-500 ring-4 ring-yellow-400/20"
-                          : "bg-muted"
-                      )}
-                      onClick={() => {
-                        if (index <= currentStep) {
-                          setCurrentStep(index);
-                        }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    />
+                  className={cn(
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
+                    index < currentStep
+                      ? "bg-yellow-400 text-black shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
                   )}
-                  <motion.span
-                    className={cn(
-                      "text-xs mt-1.5 hidden sm:block",
-                      index === currentStep
-                        ? "text-yellow-500 font-medium"
-                        : "text-muted-foreground"
-                    )}
-                  >
-                    {step.title}
-                  </motion.span>
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Truck className="h-5 w-5" />
                 </motion.div>
-              ))}
+              ) : index === 1 ? (
+                <motion.div
+                  className={cn(
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
+                    index < currentStep
+                      ? "bg-yellow-400 text-black shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FileText className="h-5 w-5" />
+                </motion.div>
+              ) : index === 2 ? (
+                <motion.div
+                  className={cn(
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
+                    index < currentStep
+                      ? "bg-yellow-400 text-black shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Store className="h-5 w-5" />
+                </motion.div>
+              ) : index === 3 ? (
+                <motion.div
+                  className={cn(
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
+                    index < currentStep
+                      ? "bg-yellow-400 text-black shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Check className="h-5 w-5" />
+                </motion.div>
+              ) : index === 4 ? (
+                <motion.div
+                  className={cn(
+                    "w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer",
+                    index < currentStep
+                      ? "bg-yellow-400 text-black shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 text-black ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200 text-gray-400"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ClipboardPen className="h-5 w-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className={cn(
+                    "w-10 h-10 rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center",
+                    index < currentStep
+                      ? "bg-yellow-400 shadow-md"
+                      : index === currentStep
+                        ? "bg-yellow-400 ring-4 ring-yellow-400/30 shadow-lg"
+                        : "bg-gray-200"
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                />
+              )}
+              <motion.span
+                className={cn(
+                  "text-xs mt-2 hidden sm:block text-center font-medium",
+                  index === currentStep
+                    ? "text-gray-900"
+                    : index < currentStep
+                      ? "text-gray-700"
+                      : "text-gray-400"
+                )}
+              >
+                {step.title}
+              </motion.span>
+            </motion.div>
+          ))}
         </div>
-        <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
+        <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mt-3">
           <motion.div
-            className="h-full bg-yellow-400"
+            className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-sm"
             initial={{ width: 0 }}
             animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           />
         </div>
       </motion.div>
@@ -783,7 +748,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="border shadow-lg rounded-3xl overflow-hidden bg-white w-full h-auto min-h-[600px] max-h-[85vh]">
+        <Card className="border-2 border-gray-100 shadow-xl rounded-2xl overflow-hidden bg-white">
           <div>
             <AnimatePresence mode="wait">
               <motion.div
@@ -796,12 +761,11 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 {/* Step 2: Transport Information */}
                 {currentStep === 0 && (
                   <>
-                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
-                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                        <Truck className="h-5 w-5 text-yellow-500" /> Informações do Transporte
-                      </CardTitle>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Informações do Transporte</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Preencha os dados do transporte e veículo</p>
                     </CardHeader>
-                    <CardContent className="space-y-5 py-6 px-6">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="driver">
                           Motorista
@@ -860,11 +824,11 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                           onValueChange={(value) => updateFormData("sanitaryCondition", value)}
                           className="space-y-2"
                         >
-                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
+                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
                             <RadioGroupItem value="conforme" id="sanitary-conforme" />
                             <Label htmlFor="sanitary-conforme" className="cursor-pointer w-full">Conforme</Label>
                           </div>
-                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
+                          <div className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
                             <RadioGroupItem value="nao-conforme" id="sanitary-nao-conforme" />
                             <Label htmlFor="sanitary-nao-conforme" className="cursor-pointer w-full">Não conforme</Label>
                           </div>
@@ -895,31 +859,24 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 {/* Step 1: Nota Fiscal */}
                 {currentStep === 1 && (
                   <>
-                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
-                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                        <FileText className="h-5 w-5 text-yellow-500" /> Nota Fiscal
-                      </CardTitle>
-                      <CardDescription>Informe o número da Nota Fiscal</CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Nota Fiscal</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Informe o número da Nota Fiscal</p>
                     </CardHeader>
-                    <CardContent className="space-y-5 py-6 px-6">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label htmlFor="invoiceNumber">N° Nota Fiscal</Label>
-                        <InputMask
-                          mask={INVOICE_MASK}
-                          maskPlaceholder={null}
+                        <Input
+                          id="invoiceNumber"
+                          inputMode="numeric"
+                          placeholder="Somente números"
                           value={formData.invoiceNumber}
-                          onChange={(e) => updateFormData("invoiceNumber", e.target.value)}
-                        >
-                          {(inputProps: React.ComponentProps<"input">) => (
-                            <Input
-                              {...inputProps}
-                              id="invoiceNumber"
-                              inputMode="numeric"
-                              placeholder="000.000.000"
-                              className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                            />
-                          )}
-                        </InputMask>
+                          onChange={(e) => {
+                            const digits = (e.target.value || "").replace(/\D/g, "").slice(0, 18);
+                            updateFormData("invoiceNumber", digits);
+                          }}
+                          className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        />
                       </motion.div>
                     </CardContent>
                   </>
@@ -928,13 +885,11 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 {/* Step 2: Cliente + Produtos (Accordion + Modal) */}
                 {currentStep === 2 && (
                   <>
-                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
-                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                        <Store className="h-5 w-5 text-yellow-500" /> Clientes e Produtos
-                      </CardTitle>
-                      <CardDescription>Selecione um ou mais clientes e associe seus produtos</CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Clientes e Produtos</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Selecione um ou mais clientes e associe seus produtos</p>
                     </CardHeader>
-                    <CardContent className="space-y-5 py-6 px-6">
+                    <CardContent className="space-y-5 pt-6 pb-4">
                       <motion.div variants={fadeInUp} className="space-y-6">
                         <Accordion type="multiple" className="w-full">
                           {formData.customerGroups.map((group, gIdx) => (
@@ -1016,10 +971,10 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                                 </TableCell>
                                                 <TableCell>
                                                   <div className="flex gap-2">
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar" onClick={() => openEditProduct(gIdx, iIdx)} className="hover:border-yellow-400 hover:bg-yellow-50">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar" onClick={() => openEditProduct(gIdx, iIdx)}>
                                                       <ClipboardPen className="h-4 w-4" />
                                                     </Button>
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Remover" onClick={() => deleteProduct(gIdx, iIdx)} className="hover:border-red-400 hover:bg-red-50">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Remover" onClick={() => deleteProduct(gIdx, iIdx)}>
                                                       <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                   </div>
@@ -1035,7 +990,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                   </div>
 
                                   <div className="flex justify-end">
-                                    <Button type="button" variant="secondary" onClick={() => openAddProduct(gIdx)} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">
+                                    <Button type="button" variant="secondary" onClick={() => openAddProduct(gIdx)}>
                                       Adicionar produto
                                     </Button>
                                   </div>
@@ -1044,23 +999,21 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                             </AccordionItem>
                           ))}
                         </Accordion>
-                        <Button type="button" onClick={addCustomerGroup} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">Adicionar cliente</Button>
+                        <Button type="button" onClick={addCustomerGroup}>Adicionar cliente</Button>
                       </motion.div>
 
                       {/* Modal de produto */}
                       <Dialog open={productModalOpen} onOpenChange={setProductModalOpen}>
-                        <DialogContent className="bg-white w-[500px] max-w-[90vw]">
-                          <DialogHeader className="bg-gray-50 border-b pb-4 mb-2">
-                            <DialogTitle className="text-xl font-semibold flex items-center gap-2">
-                              <PiggyBank className="h-5 w-5 text-yellow-500" /> {productEditIndex == null ? "Adicionar produto" : "Editar produto"}
-                            </DialogTitle>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>{productEditIndex == null ? "Adicionar produto" : "Editar produto"}</DialogTitle>
                             <DialogDescription>Preencha os detalhes do produto para o cliente selecionado.</DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4">
                             <div className="space-y-2">
-                              <Label className="text-sm font-medium">Produto expedido</Label>
+                              <Label>Produto expedido</Label>
                               <Select value={productForm.code} onValueChange={(val) => setProductForm((f) => ({ ...f, code: val }))}>
-                                <SelectTrigger className="w-full focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all">
+                                <SelectTrigger className="w-full">
                                   <SelectValue placeholder="Selecione um produto" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1074,7 +1027,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                             </div>
 
                             <div className="space-y-2">
-                              <Label className="text-sm font-medium">Quantidade</Label>
+                              <Label>Quantidade</Label>
                               <Input
                                 inputMode="numeric"
                                 placeholder="Somente números"
@@ -1083,19 +1036,18 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                   const digits = (e.target.value || "").replace(/\D/g, "");
                                   setProductForm((f) => ({ ...f, quantity: digits }));
                                 }}
-                                className="focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                               />
                             </div>
 
                             <div className="space-y-2">
-                              <Label className="text-sm font-medium">SIF ou SISBI?</Label>
+                              <Label>SIF ou SISBI?</Label>
                               <RadioGroup
                                 value={productForm.sifOrSisbi}
                                 onValueChange={(v) => setProductForm((f) => ({ ...f, sifOrSisbi: v as any }))}
                                 className="space-y-2"
                               >
                                 {[{ value: "SIF", label: "SIF" }, { value: "SISBI", label: "SISBI" }, { value: "NA", label: "N/A" }].map((opt, index) => (
-                                  <motion.div key={opt.value} className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors hover:border-yellow-400">
+                                  <motion.div key={opt.value} className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors">
                                     <RadioGroupItem value={opt.value} id={`modal-sis-${index}`} />
                                     <Label htmlFor={`modal-sis-${index}`} className="cursor-pointer w-full">{opt.label}</Label>
                                   </motion.div>
@@ -1104,7 +1056,7 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                             </div>
 
                             <div className="space-y-2">
-                              <Label className="text-sm font-medium">Temperatura do produto (°C)</Label>
+                              <Label>Temperatura do produto (°C)</Label>
                               <Input
                                 inputMode="decimal"
                                 placeholder="Ex.: 4,5"
@@ -1114,15 +1066,14 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                   sanitized = sanitized.replace(/(?!^)-/g, "");
                                   setProductForm((f) => ({ ...f, productTemperature: sanitized }));
                                 }}
-                                className="focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                               />
                             </div>
 
                             <div className="space-y-2">
-                              <Label className="text-sm font-medium">Data de produção</Label>
+                              <Label>Data de produção</Label>
                               <Popover>
                                 <PopoverTrigger asChild>
-                                  <Button variant="outline" className="w-full justify-start text-left font-normal focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all">
+                                  <Button variant="outline" className="w-full justify-start text-left font-normal">
                                     {productForm.productionDate
                                       ? (() => { const [y, m, d] = productForm.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
                                       : "Selecione uma data"}
@@ -1144,8 +1095,8 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                             </div>
                           </div>
                           <DialogFooter>
-                            <Button type="button" variant="outline" onClick={() => setProductModalOpen(false)} className="hover:border-gray-400">Cancelar</Button>
-                            <Button type="button" onClick={saveProductModal} className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium">{productEditIndex == null ? "Adicionar" : "Salvar"}</Button>
+                            <Button type="button" variant="secondary" onClick={() => setProductModalOpen(false)}>Cancelar</Button>
+                            <Button type="button" onClick={saveProductModal}>{productEditIndex == null ? "Adicionar" : "Salvar"}</Button>
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>
@@ -1153,82 +1104,14 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                   </>
                 )}
 
-                {/* Step 3: Produto (desativado, movido para etapa Cliente) */}
+                {/* Step 5: Revisão */}
                 {currentStep === 3 && (
                   <>
-                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
-                      <CardTitle className="flex items-center gap-2">
-                        <PiggyBank className="h-5 w-5 text-yellow-500" /> Resumo de Produtos
-                      </CardTitle>
-                      <CardDescription>Lista de todos os produtos por cliente</CardDescription>
+                    <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100 pb-4">
+                      <CardTitle className="text-2xl font-bold text-gray-900">Revisão</CardTitle>
+                      <p className="text-sm text-gray-500 mt-1">Confira todos os dados antes de confirmar</p>
                     </CardHeader>
-                    <CardContent className="space-y-5 py-6 px-6">
-                      {formData.customerGroups.length === 0 ? (
-                        <div className="text-center py-8">
-                          <PiggyBank className="h-12 w-12 text-yellow-400 opacity-80 mx-auto mb-4" />
-                          <p className="text-sm text-muted-foreground">Nenhum produto adicionado ainda.</p>
-                          <p className="text-sm text-muted-foreground mt-2">Volte à etapa anterior para adicionar produtos.</p>
-                        </div>
-                      ) : (
-                        formData.customerGroups.map((group, gIdx) => (
-                          <div key={`product-summary-${gIdx}`} className="border rounded-lg overflow-hidden mb-6">
-                            <div className="bg-gray-50 px-4 py-3 border-b">
-                              <h3 className="font-medium">{group.clientName || `Cliente #${gIdx + 1}`}</h3>
-                            </div>
-                            {group.items && group.items.length > 0 ? (
-                              <Table>
-                                <TableHeader>
-                                  <TableRow>
-                                    <TableHead>Produto</TableHead>
-                                    <TableHead>Quantidade</TableHead>
-                                    <TableHead>SIF/SISBI</TableHead>
-                                    <TableHead>Temp (°C)</TableHead>
-                                    <TableHead>Produção</TableHead>
-                                  </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                  {group.items.map((item, iIdx) => {
-                                    const pDesc = products.find((p) => String(p.code) === item.code)?.description || item.code;
-                                    return (
-                                      <TableRow key={`prod-summary-${gIdx}-${iIdx}`}>
-                                        <TableCell>{pDesc}</TableCell>
-                                        <TableCell>{item.quantity}</TableCell>
-                                        <TableCell>{item.sifOrSisbi || ""}</TableCell>
-                                        <TableCell>{item.productTemperature}</TableCell>
-                                        <TableCell>
-                                          {item.productionDate
-                                            ? (() => { const [y, m, d] = item.productionDate.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("pt-BR"); })()
-                                            : ""}
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  })}
-                                </TableBody>
-                              </Table>
-                            ) : (
-                              <div className="p-4 text-center text-sm text-muted-foreground">
-                                Nenhum produto adicionado para este cliente.
-                              </div>
-                            )}
-                          </div>
-                        ))
-                      )}
-                    </CardContent>
-                  </>
-                )}
-
-                {/* Step 5: Revisão */}
-                {currentStep === 4 && (
-                  <>
-                    <CardHeader className="bg-gray-50 border-b py-5 px-6">
-                      <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                        <ClipboardPen className="h-5 w-5 text-yellow-500" /> Revisão
-                      </CardTitle>
-                      <CardDescription>
-                        Resumo dos dados antes de confirmar
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
+                    <CardContent className="space-y-6 pt-6 pb-4 max-h-[60vh] overflow-y-auto">
                       {/* Nota Fiscal */}
                       <motion.div variants={fadeInUp} className="space-y-2">
                         <Label>Nota Fiscal</Label>
@@ -1249,10 +1132,10 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                 </AccordionTrigger>
                                 <AccordionContent>
                                   <div className="flex justify-end gap-2 mb-3">
-                                    <Button type="button" variant="outline" onClick={() => setCurrentStep(2)} className="hover:border-yellow-400 hover:bg-yellow-50">
+                                    <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
                                       <ClipboardPen className="mr-2 h-4 w-4" /> Editar cliente
                                     </Button>
-                                    <Button type="button" variant="outline" onClick={() => removeCustomerGroup(gIdx)} className="hover:border-red-400 hover:bg-red-50">
+                                    <Button type="button" variant="outline" onClick={() => removeCustomerGroup(gIdx)}>
                                       <Trash2 className="mr-2 h-4 w-4" /> Excluir cliente
                                     </Button>
                                   </div>
@@ -1287,10 +1170,10 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                                                 </TableCell>
                                                 <TableCell>
                                                   <div className="flex gap-2">
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar produto" onClick={() => { setCurrentStep(2); openEditProduct(gIdx, idx); }} className="hover:border-yellow-400 hover:bg-yellow-50">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Editar produto" onClick={() => { setCurrentStep(2); openEditProduct(gIdx, idx); }}>
                                                       <ClipboardPen className="h-4 w-4" />
                                                     </Button>
-                                                    <Button type="button" variant="outline" size="icon" aria-label="Excluir produto" onClick={() => deleteProduct(gIdx, idx)} className="hover:border-red-400 hover:bg-red-50">
+                                                    <Button type="button" variant="outline" size="icon" aria-label="Excluir produto" onClick={() => deleteProduct(gIdx, idx)}>
                                                       <Trash2 className="h-4 w-4" />
                                                     </Button>
                                                   </div>
@@ -1338,29 +1221,29 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
               </motion.div>
             </AnimatePresence>
 
-            <CardFooter className="flex items-center justify-between py-5 px-6 bg-gray-50 border-t">
+            <CardFooter className="flex justify-between items-center pt-6 pb-6 px-6 bg-gray-50 border-t border-gray-100">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="button"
                   variant="outline"
                   onClick={prevStep}
                   disabled={currentStep === 0}
-                  className="flex items-center gap-1 transition-all duration-300 rounded-2xl hover:border-yellow-400"
+                  className="flex items-center gap-2 transition-all duration-300 rounded-xl border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 px-6 py-2 h-11 font-medium"
                 >
                   <ChevronLeft className="h-4 w-4" /> Voltar
                 </Button>
               </motion.div>
-              
-              <div className="text-center text-sm text-muted-foreground">
-                Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
+
+              {/* Indicador de etapa no centro */}
+              <div className="text-sm font-medium text-gray-500">
+                Etapa {currentStep + 1} de {steps.length}
               </div>
-              
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="button"
@@ -1369,8 +1252,10 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                   }
                   disabled={!isStepValid() || isSubmitting}
                   className={cn(
-                    "flex items-center gap-1 transition-all duration-300 rounded-2xl",
-                    currentStep === steps.length - 1 ? "bg-yellow-400 hover:bg-yellow-500 text-black font-medium" : "bg-yellow-400 hover:bg-yellow-500 text-black font-medium"
+                    "flex items-center gap-2 transition-all duration-300 rounded-xl px-6 py-2 h-11 font-medium shadow-md hover:shadow-lg",
+                    currentStep === steps.length - 1
+                      ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+                      : "bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black"
                   )}
                 >
                   {isSubmitting ? (
@@ -1393,8 +1278,6 @@ const OnboardingForm = ({ onSuccess }: { onSuccess?: () => void }) => {
           </div>
         </Card>
       </motion.div>
-
-      {/* Step indicator */}
     </div>
   );
 };

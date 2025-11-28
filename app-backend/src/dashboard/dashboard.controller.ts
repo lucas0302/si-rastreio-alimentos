@@ -1,13 +1,13 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { DashboardService } from './dashboard.service';
-import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
+import { Controller, Get, UseGuards } from "@nestjs/common";
+import { DashboardService } from "./dashboard.service";
+import { AuthTokenGuard } from "src/auth/guard/auth-token.guard";
 
 @UseGuards(AuthTokenGuard)
-@Controller('dashboard')
+@Controller("dashboard")
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
-  @Get('stats')
+  @Get("stats")
   getStats() {
     return this.dashboardService.getStats();
   }

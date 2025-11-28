@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,9 +13,6 @@ import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
@@ -27,25 +24,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 // Assuma que OnboardingForm.tsx está na mesma pasta
 import OnboardingForm from "./multistep-form";
-import InputMask from "react-input-mask";
-
-const INVOICE_MASK = "999.999.999";
-const stripInvoiceDigits = (value: string | number | null | undefined) =>
-  value ? String(value).replace(/\D/g, "") : "";
-const formatInvoiceValue = (value: string | number | null | undefined) => {
-  const digits = stripInvoiceDigits(value).slice(0, 9);
-  if (!digits) return "";
-  const part1 = digits.slice(0, 3);
-  const part2 = digits.slice(3, 6);
-  const part3 = digits.slice(6, 9);
-  return [part1, part2, part3].filter((segment) => segment && segment.length > 0).join(".");
-};
 
 export function ReportsPage() {
   const [activeTab, setActiveTab] = useState("controle");
+  const [createOpen, setCreateOpen] = useState(false);
   const [filters, setFilters] = useState({
     nomeProduto: "",
     lote: "",
@@ -239,7 +224,7 @@ export function ReportsPage() {
         // Para cada relatório, criar UMA linha agregada por cliente no dia (fillingDate)
         const builtRows: ReportRow[] = [];
         for (const r of reports) {
-          const invoice = formatInvoiceValue(r.invoiceNumber);
+          const invoice = String(r.invoiceNumber);
           const cust = customerByCode.get(Number(r.customerCode));
           const clientName = cust?.legal_name ?? "N/A";
           const destination = cust?.state ?? "N/A";
@@ -373,7 +358,7 @@ export function ReportsPage() {
       const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
 
       const payload = {
-        invoiceNumber: stripInvoiceDigits(editRow.invoiceNumber),
+        invoiceNumber: editRow.invoiceNumber,
         customerGroups: [
           {
             customerCode: Number(editRow.customerCode || 0),
@@ -418,22 +403,29 @@ export function ReportsPage() {
     // sort by YYYY-MM behind the scenes
     const parse = (key: string) => {
       const [mon, yr] = key.split("-");
-      const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+      const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
       const idx = months.findIndex((m) => m.toLowerCase() === mon.toLowerCase());
       return Number(yr) * 100 + (idx >= 0 ? idx : 0);
     };
     return parse(b) - parse(a);
   });
 
+  // Estado de mês selecionado para DIPOVA, baseado na data de preenchimento
+  const [dipovaMonth, setDipovaMonth] = useState<string | null>(null);
+  useEffect(() => {
+    if (!dipovaMonth && orderedMonthKeys.length > 0) {
+      setDipovaMonth(orderedMonthKeys[0]);
+    }
+  }, [orderedMonthKeys, dipovaMonth]);
+
   const sumQty = (arr: ReportRow[]) =>
     arr.reduce((s, r) => s + r.products.reduce((sp, p) => sp + (Number(p.quantity) || 0), 0), 0);
 
-  // ===== Helpers DIPOVA =====
-  const monthAbbr = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const monthAbbr = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const formatMonthBr = (iso: string) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
     let d: Date | null = null;
-    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     else {
       const tryD = new Date(iso);
       if (!isNaN(tryD.getTime())) d = tryD; else return iso;
@@ -442,10 +434,17 @@ export function ReportsPage() {
     const yy = d.getFullYear() % 100;
     return `${monthAbbr[mm]}-${yy}`;
   };
+
+  // Formata a label exibida nas tabs de mês (Mon-YY)
+  const formatChipLabel = (key: string) => {
+    const [mon, yr] = key.split("-");
+    const yr2 = String(yr).slice(-2);
+    return `${mon}-${yr2}`;
+  };
   const isSameMonthYear = (iso: string, ref: Date) => {
     const m = iso.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})(?:[T\s].*)?$/);
     let d: Date | null = null;
-    if (m) d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     else {
       const tryD = new Date(iso);
       if (!isNaN(tryD.getTime())) d = tryD; else return false;
@@ -460,32 +459,19 @@ export function ReportsPage() {
         <div className="text-xl font-semibold text-gray-900">Relatórios</div>
 
         {/* ===== 2. IMPLEMENTAÇÃO DO DIALOG ===== */}
-        <Dialog>
+        <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6 rounded-xl shadow-sm">
+            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6">
               + Novo Registro
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[600px] max-w-[90vw] p-0 max-h-[85vh] overflow-y-auto">
-            <DialogHeader className="sr-only">
-              <DialogTitle>Novo registro</DialogTitle>
-              <DialogDescription>
-                Preencha o formulário para adicionar um relatório de rastreio.
-              </DialogDescription>
-            </DialogHeader>
+          <DialogContent className="max-w-lg p-0">
             {/* p-0 é adicionado para remover o padding padrão do Dialog,
               pois o OnboardingForm já tem seu próprio padding (py-8).
               max-w-lg é para corresponder ao estilo do formulário.
               O DialogContent já tem scroll automático.
             */}
-            <OnboardingForm onSuccess={() => {
-              // Fechar o diálogo imediatamente
-              document.querySelector('[aria-label="Close"]')?.dispatchEvent(
-                new MouseEvent('click', { bubbles: true })
-              );
-              // Recarregar os dados após o toast ser exibido
-              setTimeout(() => window.location.reload(), 500);
-            }} />
+            <OnboardingForm onSuccess={() => setCreateOpen(false)} />
           </DialogContent>
         </Dialog>
         {/* ===== FIM DA IMPLEMENTAÇÃO ===== */}
@@ -494,27 +480,27 @@ export function ReportsPage() {
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 max-w-md bg-gray-100 p-1 rounded-xl">
-            <TabsTrigger
+        <TabsList className="grid w-full grid-cols-2 max-w-md">
+          <TabsTrigger
             value="controle"
-            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:font-medium rounded-lg transition-all duration-200"
+            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black"
           >
             Controle de expedição
           </TabsTrigger>
-            <TabsTrigger
+          <TabsTrigger
             value="dipova"
-            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:font-medium rounded-lg transition-all duration-200"
+            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black"
           >
             DIPOVA
           </TabsTrigger>
         </TabsList>
 
         {/* Filters */}
-        <div className="mt-6 flex items-center gap-2 text-sm font-medium text-gray-700">
+        <div className="mt-6 flex items-center gap-2 text-sm text-gray-600">
           <Filter className="h-4 w-4 text-gray-500" />
           <span>Filtros</span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
           <div className="flex flex-col gap-1">
             <Label
               htmlFor="filtro-nome-produto"
@@ -560,7 +546,7 @@ export function ReportsPage() {
 
         {/* Controle de Expedição Tab */}
         <TabsContent value="controle" className="mt-6">
-          <Card className="border-gray-200 shadow-md rounded-xl overflow-hidden">
+          <Card>
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -592,9 +578,9 @@ export function ReportsPage() {
                       const totalExp = groupRows.length;
                       const totalKg = sumQty(groupRows);
                       return (
-                        <React.Fragment key={`month-${mk}`}>
+                        <>
                           {/* Linha de resumo do mês */}
-                                      <tr className="bg-gray-50 border-b">
+                          <tr key={`sum-${mk}`} className="bg-gray-100 border-b">
                             <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
                               <div className="flex items-center gap-4">
                                 <button
@@ -614,7 +600,7 @@ export function ReportsPage() {
 
                           {/* Headers por mês, dentro da área expansível */}
                           {isExpanded && (
-                                            <tr className="bg-gray-100 border-b font-medium">
+                            <tr className="bg-gray-50 border-b">
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Nº da NF</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Cliente</th>
                               <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Destino</th>
@@ -628,8 +614,8 @@ export function ReportsPage() {
                             const rExpanded = expandedRowKeys.has(rkey);
                             const userName = row.userName ?? "—";
                             return (
-                              <React.Fragment key={rkey}>
-                                <tr className="hover:bg-gray-50">
+                              <>
+                                <tr key={rkey} className="hover:bg-gray-50">
                                   <td className="px-4 py-3 text-sm text-gray-900">
                                     <div className="flex items-center gap-2">
                                       <button
@@ -650,20 +636,20 @@ export function ReportsPage() {
                                   </td>
                                   <td className="px-4 py-3 text-center">
                                     <div className="flex justify-center space-x-2">
-                                      <Button variant="ghost" size="sm" className="h-8 px-2 hover:bg-yellow-50 hover:text-yellow-600" onClick={() => openEdit(row)} aria-label="Editar relatório">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => openEdit(row)} aria-label="Editar relatório">
                                         <Edit className="h-4 w-4" />
                                       </Button>
-                                      <Button variant="ghost" size="sm" className="h-8 px-2 hover:bg-red-50 hover:text-red-600" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
+                                      <Button variant="ghost" size="sm" className="h-8 px-2" onClick={() => handleDelete(row.reportId)} aria-label="Excluir relatório">
                                         <Trash2 className="h-4 w-4" />
                                       </Button>
-                                  </div>
+                                    </div>
                                   </td>
                                 </tr>
 
                                 {rExpanded && (
-                                  <tr className="bg-gray-50">
+                                  <tr key={`${rkey}-details`} className="bg-gray-50">
                                     <td colSpan={4} className="px-4 py-3 text-sm text-gray-900">
-                                      <div className="mb-3 grid grid-cols-3 gap-6">
+                                      <div className="mb-3 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                         <div>
                                           <div className="text-gray-600">Data de preenchimento</div>
                                           <div className="font-medium">{row.fillingDate ?? "—"}</div>
@@ -684,7 +670,7 @@ export function ReportsPage() {
 
                                       <div className="overflow-x-auto">
                                         <table className="w-full">
-                                          <thead className="bg-gray-100 border-b">
+                                          <thead className="bg-gray-100 border">
                                             <tr>
                                               <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Produto</th>
                                               <th className="px-3 py-2 text-left text-sm font-medium text-gray-900">Quantidade</th>
@@ -709,10 +695,10 @@ export function ReportsPage() {
                                     </td>
                                   </tr>
                                 )}
-                              </React.Fragment>
+                              </>
                             );
                           })}
-                        </React.Fragment>
+                        </>
                       );
                     })}
                   </tbody>
@@ -724,8 +710,20 @@ export function ReportsPage() {
 
         {/* DIPOVA Tab */}
         <TabsContent value="dipova" className="mt-6">
-          <Card className="border-gray-200 shadow-md rounded-xl overflow-hidden">
+          <Card>
             <CardContent className="p-0">
+              {/* Seleção de mês da DIPOVA */}
+              <div className="px-4 py-3 border-b">
+                <Tabs value={dipovaMonth ?? ""} onValueChange={(v) => setDipovaMonth(v)}>
+                  <TabsList className="flex flex-wrap gap-2">
+                    {orderedMonthKeys.map((key) => (
+                      <TabsTrigger key={key} value={key} className="rounded-full">
+                        {formatChipLabel(key)}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-100 border-b">
@@ -773,11 +771,11 @@ export function ReportsPage() {
 
                         const hasComma = s.includes(',');
                         const hasDot = s.includes('.');
-                        
+
                         // Caso 1: Formato "1.234,56" (pt-BR com milhar)
                         if (hasComma && hasDot && s.lastIndexOf('.') < s.lastIndexOf(',')) {
                           s = s.replace(/\./g, '').replace(/,/g, '.'); // "1.234,56" -> "1234.56"
-                        } 
+                        }
                         // Caso 2: Formato "1,234.56" (en-US com milhar)
                         else if (hasComma && hasDot && s.lastIndexOf(',') < s.lastIndexOf('.')) {
                           s = s.replace(/,/g, ''); // "1,234.56" -> "1234.56"
@@ -788,21 +786,23 @@ export function ReportsPage() {
                         }
                         // Caso 4: Formato "1234.56" (padrão) ou "1234" (inteiro)
                         // Nenhuma ação necessária, 'Number()' já entende.
-                        
+
                         const n = Number(s);
                         return isNaN(n) ? 0 : n;
                       };
 
-                      // Criar um mapa de agregação para Quantidades (para resolver Request 2)
-                      // Somamos todas as quantidades do array 'monthly' para cada productId.
+                      // Criar um mapa de agregação para Quantidades com base nos relatórios diários carregados (rows)
+                      // Isso garante que a aba DIPOVA reflita imediatamente exclusões/edições feitas no frontend e persistidas no backend.
                       const quantityPerProduct = new Map<number, number>();
-                      if (monthly && monthly.length > 0) {
-                        for (const m of monthly) {
-                          const productId = Number(m.productId);
+                      const selectedMonthKey = dipovaMonth ?? (orderedMonthKeys[0] ?? getMonthKey(new Date()));
+                      for (const r of rows) {
+                        // Considerar apenas o mês selecionado (data de preenchimento)
+                        if (getMonthKey(r.fillingDateIso) !== selectedMonthKey) continue;
+                        for (const p of r.products) {
+                          const productId = Number(p.productCode);
                           const currentQty = quantityPerProduct.get(productId) || 0;
-                          // Usa nosso parser corrigido
-                          const newQty = parseQuantity(m.quantity);
-                          quantityPerProduct.set(productId, currentQty + newQty);
+                          const addQty = Number(p.quantity) || 0;
+                          quantityPerProduct.set(productId, currentQty + addQty);
                         }
                       }
 
@@ -813,13 +813,20 @@ export function ReportsPage() {
                       const defaultDeliverer = 'Próprio';
 
                       // Request 1: Fazer o loop sobre 'productsState' em vez de 'monthly'
-                      return productsState.map((product) => {
+                      // Observação: usar um nome diferente de 'rows' para evitar sombra do estado 'rows' (ReportRow[])
+                      // Regra: ocultar produtos com quantidade 0 na tabela DIPOVA
+                      const filteredProducts = productsState.filter((product) => {
+                        const prodCode = Number(product.code);
+                        const qtyNum = quantityPerProduct.get(prodCode) || 0;
+                        return qtyNum > 0;
+                      });
+                      const tableRows = filteredProducts.map((product) => {
                         const prodCode = Number(product.code);
                         const prodName = product.description ?? `Produto ${prodCode}`;
 
                         // Request 2: Obter a soma pré-calculada para este produto
                         const qtyNum = quantityPerProduct.get(prodCode) || 0;
-                        
+
                         // Como agregamos a quantidade, colunas como "Destino" perdem o
                         // detalhe transacional. Manteremos os valores padrão que já
                         // estavam no código.
@@ -842,6 +849,32 @@ export function ReportsPage() {
                           </tr>
                         );
                       });
+
+                      // Soma total das quantidades exibidas
+                      const totalQty = Array.from(quantityPerProduct.values()).reduce((acc, n) => acc + (Number(n) || 0), 0);
+
+                      // Linha de rodapé com valor apenas em Quant.
+                      const footerRow = (
+                        <tr key="dipova-total" className="bg-gray-50">
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2 font-semibold">
+                            {totalQty.toLocaleString('pt-BR', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                          <td className="px-3 py-2"></td>
+                        </tr>
+                      );
+
+                      return [
+                        ...tableRows,
+                        footerRow,
+                      ];
                     })()}
                   </tbody>
                 </table>
@@ -853,37 +886,27 @@ export function ReportsPage() {
 
       {/* Modal de edição */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <DialogContent className="w-[700px] max-w-[90vw] max-h-[85vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Editar registro</DialogTitle>
-            <DialogDescription>Altere os dados e salve para aplicar as mudanças.</DialogDescription>
-          </DialogHeader>
+        <DialogContent className="max-w-2xl">
           {editRow && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm">Nº da NF</Label>
-                  <InputMask
-                    mask={INVOICE_MASK}
-                    maskPlaceholder={null}
-                    value={editRow?.invoiceNumber ?? ""}
+                  <Input
+                    value={String(editRow.invoiceNumber)}
                     onChange={(e) =>
-                      setEditRow((prev) => (prev ? { ...prev, invoiceNumber: e.target.value } : prev))
+                      setEditRow((prev) => {
+                        const digits = (e.target.value || "").replace(/\D/g, "").slice(0, 18);
+                        return prev ? { ...prev, invoiceNumber: digits } : prev;
+                      })
                     }
-                  >
-                    {(inputProps: React.ComponentProps<"input">) => (
-                      <Input
-                        {...inputProps}
-                        placeholder="000.000.000"
-                      />
-                    )}
-                  </InputMask>
+                  />
                 </div>
                 <div>
                   <Label className="text-sm">Cliente</Label>
                   <select
                     className="h-10 w-full border rounded px-2"
-                    value={String(editRow?.customerCode ?? "")}
+                    value={String(editRow.customerCode ?? "")}
                     onChange={(e) => {
                       const code = Number(e.target.value);
                       const cust = customersState.find((c) => Number(c.code) === code);
@@ -915,7 +938,7 @@ export function ReportsPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y">
-                    {editRow?.products?.map((p, i) => (
+                    {editRow.products.map((p, i) => (
                       <tr key={`edit-prod-${i}`}>
                         <td className="px-3 py-2">
                           <select
@@ -1051,8 +1074,8 @@ export function ReportsPage() {
               </div>
 
               <div className="flex justify-end gap-2">
-                            <Button variant="outline" onClick={() => setEditOpen(false)} className="hover:border-gray-400">Cancelar</Button>
-                            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium" onClick={handleEditSave}>Salvar</Button>
+                <Button variant="outline" onClick={() => setEditOpen(false)}>Cancelar</Button>
+                <Button className="bg-yellow-400 hover:bg-yellow-500 text-black" onClick={handleEditSave}>Salvar</Button>
               </div>
             </div>
           )}
@@ -1061,14 +1084,14 @@ export function ReportsPage() {
 
       {/* Modal de confirmação de exclusão */}
       <AlertDialog open={deleteOpen} onOpenChange={(open) => setDeleteOpen(open)}>
-        <AlertDialogContent className="w-[400px] max-w-[90vw]">
+        <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Confirmar exclusão?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeleteOpen(false)} className="hover:border-gray-400">Cancelar</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setDeleteOpen(false)}>Cancelar</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-600 hover:bg-red-700 text-white font-medium"
+              className="bg-red-600 hover:bg-red-700 text-white"
               onClick={async () => {
                 if (pendingDeleteId == null) return;
                 try {

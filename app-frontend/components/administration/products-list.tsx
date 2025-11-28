@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loader2, Pencil, Trash2 } from "lucide-react";
+import { Copy, Maximize2, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,18 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { AdminListCard } from "./list-card";
 import { TAB_CONFIG } from "./config";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
 interface ApiProduct {
@@ -52,14 +46,17 @@ export function ProductsList({ onAdd }: ProductsListProps) {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const [deletingCode, setDeletingCode] = useState<number | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState<{ code: number; label: string } | null>(null);
   const limit = 10;
   const { toast } = useToast();
 
-  const loadProducts = useCallback(
-    async (pageToLoad: number) => {
-      const offset = pageToLoad * limit;
+  const [editOpen, setEditOpen] = useState(false);
+  const [selected, setSelected] = useState<ApiProduct | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editForm, setEditForm] = useState<{ description: string; group: string; company: string } | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      const offset = page * limit;
 
       try {
         setLoading(true);
@@ -79,7 +76,6 @@ export function ProductsList({ onAdd }: ProductsListProps) {
             ? offset + list.length < total
             : list.length === limit;
         setHasNext(computedHasNext);
-        return list.length;
       } catch (e: any) {
         console.error(e);
         setError(
@@ -87,61 +83,13 @@ export function ProductsList({ onAdd }: ProductsListProps) {
             ? "Nao autorizado: verifique seu login."
             : "Erro ao carregar produtos."
         );
-        return 0;
       } finally {
         setLoading(false);
       }
-    },
-    [limit]
-  );
+    };
 
-  useEffect(() => {
-    loadProducts(page);
-  }, [page, loadProducts]);
-
-  const handleDeleteProduct = async (code: number) => {
-    try {
-      setDeletingCode(code);
-      const token = localStorage.getItem("token");
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${code}`,
-        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
-      );
-
-      toast({
-        title: "Produto deletado",
-        description: "O produto foi removido com sucesso.",
-      });
-
-      const items = await loadProducts(page);
-      if (items === 0 && page > 0) {
-        setPage((current) => Math.max(current - 1, 0));
-      }
-    } catch (e: any) {
-      console.error(e);
-      const message =
-        e?.response?.data?.message ?? "Erro ao deletar produto.";
-      toast({
-        variant: "destructive",
-        title: "Falha ao deletar",
-        description: message,
-      });
-    } finally {
-      setDeletingCode(null);
-      setConfirmDelete(null);
-    }
-  };
-
-  const handleConfirmDelete = () => {
-    if (!confirmDelete || deletingCode !== null) return;
-    void handleDeleteProduct(confirmDelete.code);
-  };
-
-  const handleDialogChange = (open: boolean) => {
-    if (!open && deletingCode === null) {
-      setConfirmDelete(null);
-    }
-  };
+    load();
+  }, [page, limit]);
 
   const formatDate = (dateString: string | null) => {
     if (!dateString || dateString.trim() === "") return "-";
@@ -166,6 +114,60 @@ export function ProductsList({ onAdd }: ProductsListProps) {
     }
 
     return `${day}/${month}/${year}`;
+  };
+
+  const openEdit = (product: ApiProduct) => {
+    setSelected(product);
+    setEditForm({ description: product.description, group: product.group, company: product.company });
+    setEditOpen(true);
+  };
+
+  const openDelete = (product: ApiProduct) => {
+    setSelected(product);
+    setConfirmDelete(true);
+  };
+
+  const handleEditChange = (field: keyof NonNullable<typeof editForm>, value: string) => {
+    setEditForm((prev) => (prev ? { ...prev, [field]: value } : prev));
+  };
+
+  const submitEdit = async () => {
+    if (!selected || !editForm) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${selected.code}`,
+        {
+          description: editForm.description,
+          group: editForm.group,
+          company: editForm.company,
+        },
+        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+      );
+      setProducts((prev) => prev.map((p) => (p.code === selected.code ? { ...p, ...editForm } as ApiProduct : p)));
+      toast?.({ description: "Produto atualizado com sucesso!", variant: "success" });
+      setEditOpen(false);
+      setSelected(null);
+    } catch (e: any) {
+      toast?.({ description: e?.response?.data?.message || "Erro ao atualizar produto" });
+    }
+  };
+
+  const confirmDeleteAction = async () => {
+    if (!selected) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${selected.code}`,
+        token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+      );
+      setProducts((prev) => prev.filter((p) => p.code !== selected.code));
+      toast?.({ description: "Produto deletado com sucesso!", variant: "success" });
+      setConfirmDelete(false);
+      setSelected(null);
+    } catch (e: any) {
+      toast?.({ description: e?.response?.data?.message || "Erro ao deletar produto" });
+    }
   };
 
   if (loading) {
@@ -224,7 +226,6 @@ export function ProductsList({ onAdd }: ProductsListProps) {
               <TableHead>Marca</TableHead>
               <TableHead>Dt. Ultima Compra</TableHead>
               <TableHead>Dt. Ultima Venda</TableHead>
-              <TableHead className="text-end">Acoes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -245,25 +246,30 @@ export function ProductsList({ onAdd }: ProductsListProps) {
                       size="icon"
                       className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
                     >
+                      <Maximize2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
+                      onClick={() => openEdit(product)}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 rounded-full text-gray-500 hover:text-gray-900"
-                      onClick={() =>
-                        setConfirmDelete({
-                          code: product.code,
-                          label: product.description || `Produto ${product.code}`,
-                        })
-                      }
-                      disabled={deletingCode === product.code}
+                      onClick={() => openDelete(product)}
                     >
-                      {deletingCode === product.code ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Trash2 className="h-4 w-4" />
-                      )}
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </TableCell>
@@ -291,31 +297,42 @@ export function ProductsList({ onAdd }: ProductsListProps) {
         </Button>
       </div>
 
-      <AlertDialog open={!!confirmDelete} onOpenChange={handleDialogChange}>
-        <AlertDialogContent className="w-[90vw] max-w-sm">
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="max-w-xl border-yellow-200">
+          <DialogHeader>
+            <DialogTitle className="text-yellow-800">Editar Produto</DialogTitle>
+          </DialogHeader>
+          {editForm ? (
+            <div className="space-y-3">
+              <div>
+                <Label>Descricao</Label>
+                <Input value={editForm.description} onChange={(e) => handleEditChange("description", e.target.value)} />
+              </div>
+              <div>
+                <Label>Grupo</Label>
+                <Input value={editForm.group} onChange={(e) => handleEditChange("group", e.target.value)} />
+              </div>
+              <div>
+                <Label>Marca</Label>
+                <Input value={editForm.company} onChange={(e) => handleEditChange("company", e.target.value)} />
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button variant="outline" onClick={() => setEditOpen(false)}>Cancelar</Button>
+                <Button onClick={submitEdit}>Salvar</Button>
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <AlertDialogContent className="border-yellow-200">
           <AlertDialogHeader>
-            <AlertDialogTitle>Remover produto?</AlertDialogTitle>
-            <AlertDialogDescription>
-              {confirmDelete
-                ? `Deseja realmente remover o produto "${confirmDelete.label}"? Essa acao nao pode ser desfeita.`
-                : ""}
-            </AlertDialogDescription>
+            <AlertDialogTitle>Deseja deletar este produto?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deletingCode !== null}>
-              Cancelar
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-red-600 text-white hover:bg-red-700"
-              onClick={handleConfirmDelete}
-              disabled={deletingCode !== null}
-            >
-              {deletingCode !== null ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                "Deletar"
-              )}
-            </AlertDialogAction>
+            <AlertDialogCancel className="border-yellow-300 text-yellow-800 hover:bg-yellow-100">Cancelar</AlertDialogCancel>
+            <AlertDialogAction className="bg-yellow-500 hover:bg-yellow-600 text-white" onClick={confirmDeleteAction}>Deletar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

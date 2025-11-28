@@ -9,6 +9,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Matches,
   Min,
   ValidateNested,
 } from "class-validator";
@@ -74,6 +75,7 @@ export class CreateDailyReportDto {
 
   @IsString()
   @IsNotEmpty()
+  @Matches(/^\d{1,18}$/)
   invoiceNumber!: string;
 
   // Timestamp (ISO string)
@@ -109,7 +111,7 @@ export class CreateDailyReportDto {
   // Agora aceita também "NA"; manter opcional
   @IsOptional()
   @IsString()
-  @IsIn(["SIF", "SISBI", "NA"]) 
+  @IsIn(["SIF", "SISBI", "NA"])
   sifOrSisbi?: string;
 
   @IsOptional()
