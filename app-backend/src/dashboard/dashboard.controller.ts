@@ -11,4 +11,14 @@ export class DashboardController {
   getStats() {
     return this.dashboardService.getStats();
   }
+
+  @Get('mostProductsSold')
+  getMostProductsSold() {
+    return this.dashboardService.mostProductsSold();
+  }
+
+  @Get('productsSoldByState')
+  getProductsSoldByState() {
+    return this.dashboardService.productsSoldByState();
+  }
 }
