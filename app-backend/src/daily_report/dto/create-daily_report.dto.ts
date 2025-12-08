@@ -9,7 +9,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  Matches,
   Min,
   ValidateNested,
 } from "class-validator";
@@ -73,10 +72,10 @@ export class CreateDailyReportDto {
   @Min(0)
   quantity?: number;
 
-  @IsString()
-  @IsNotEmpty()
-  @Matches(/^\d{1,18}$/)
-  invoiceNumber!: string;
+  @IsInt()
+  @Min(1)
+  @Type(() => Number)
+  invoiceNumber!: number;
 
   // Timestamp (ISO string)
   @IsOptional()
@@ -111,7 +110,7 @@ export class CreateDailyReportDto {
   // Agora aceita também "NA"; manter opcional
   @IsOptional()
   @IsString()
-  @IsIn(["SIF", "SISBI", "NA"])
+  @IsIn(["SIF", "SISBI", "NA"]) 
   sifOrSisbi?: string;
 
   @IsOptional()
